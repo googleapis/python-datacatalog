@@ -988,11 +988,11 @@ Taxonomy = _reflection.GeneratedProtocolMessageType(
     dict(
         DESCRIPTOR=_TAXONOMY,
         __module__="google.cloud.datacatalog_v1beta1.proto.policytagmanager_pb2",
-        __doc__="""A taxonomy is a collection of policy tags that classify
-  data along a common axis. For instance a data *sensitivity* taxonomy
-  could contain policy tags denoting PII such as age, zipcode, and SSN. A
-  data *origin* taxonomy could contain policy tags to distinguish user
-  data, employee data, partner data, public data.
+        __doc__="""A taxonomy is a collection of policy tags that classify data along a
+  common axis. For instance a data *sensitivity* taxonomy could contain
+  policy tags denoting PII such as age, zipcode, and SSN. A data *origin*
+  taxonomy could contain policy tags to distinguish user data, employee
+  data, partner data, public data.
   
   
   Attributes:
