@@ -1025,11 +1025,10 @@ PolicyTag = _reflection.GeneratedProtocolMessageType(
     dict(
         DESCRIPTOR=_POLICYTAG,
         __module__="google.cloud.datacatalog_v1beta1.proto.policytagmanager_pb2",
-        __doc__="""Denotes one policy tag in a taxonomy (e.g. ssn). Policy
-  Tags can be defined in a hierarchy. For example, consider the following
-  hierarchy: Geolocation -> (LatLong, City, ZipCode). PolicyTag
-  "Geolocation" contains three child policy tags: "LatLong", "City", and
-  "ZipCode".
+        __doc__="""Denotes one policy tag in a taxonomy (e.g. ssn). Policy Tags can be
+  defined in a hierarchy. For example, consider the following hierarchy:
+  Geolocation -> (LatLong, City, ZipCode). PolicyTag "Geolocation"
+  contains three child policy tags: "LatLong", "City", and "ZipCode".
   
   
   Attributes:
