@@ -1045,7 +1045,8 @@ FieldType = _reflection.GeneratedProtocolMessageType(
                     {
                         "DESCRIPTOR": _FIELDTYPE_ENUMTYPE_ENUMVALUE,
                         "__module__": "google.cloud.datacatalog_v1beta1.proto.tags_pb2",
-                        "__doc__": """Attributes:
+                        "__doc__": """
+    Attributes:
           display_name:
               Required. The display name of the enum value. Must not be an
               empty string.
@@ -1055,7 +1056,8 @@ FieldType = _reflection.GeneratedProtocolMessageType(
                 ),
                 "DESCRIPTOR": _FIELDTYPE_ENUMTYPE,
                 "__module__": "google.cloud.datacatalog_v1beta1.proto.tags_pb2",
-                "__doc__": """Attributes:
+                "__doc__": """
+    Attributes:
         allowed_values:
             Required on create; optional on update. The set of allowed
             values for this enum. This set must not be empty, the display
@@ -1070,7 +1072,8 @@ FieldType = _reflection.GeneratedProtocolMessageType(
         ),
         "DESCRIPTOR": _FIELDTYPE,
         "__module__": "google.cloud.datacatalog_v1beta1.proto.tags_pb2",
-        "__doc__": """Attributes:
+        "__doc__": """
+    Attributes:
       type_decl:
           Required.
       primitive_type:

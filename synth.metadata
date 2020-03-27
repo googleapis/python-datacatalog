@@ -1,11 +1,11 @@
 {
-  "updateTime": "2020-03-27T17:34:58.619377Z",
+  "updateTime": "2020-03-27T17:42:23.096126Z",
   "sources": [
     {
       "git": {
         "name": ".",
         "remote": "git@github.com:googleapis/python-datacatalog",
-        "sha": "aefc92e8e748bf0e3fd4deb52e9905bdaf2cd76d"
+        "sha": "9323589a08498263831913cdf4b8dfac0689f476"
       }
     },
     {
