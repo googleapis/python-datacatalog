@@ -270,7 +270,7 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Request message for ``CreateEntry``.
+        javalite_serializable
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -298,35 +298,21 @@ class DataCatalogClient(object):
             ...         pass
 
         Args:
-            scope (Union[dict, ~google.cloud.datacatalog_v1.types.Scope]): Creates a field in a tag template. The user should enable the Data
-                Catalog API in the project identified by the ``parent`` parameter (see
-                `Data Catalog Resource
-                Project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__
-                for more information).
+            scope (Union[dict, ~google.cloud.datacatalog_v1.types.Scope]): Request message for ``CreateEntry``.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1.types.Scope`
-            query (str): A ``TagTemplate``.
+            query (str): Request message for ``SetIamPolicy`` method.
             page_size (int): The maximum number of resources contained in the
                 underlying API response. If page streaming is performed per-
                 resource, this parameter does not affect the return value. If page
                 streaming is performed per-page, this determines the maximum number
                 of resources in a page.
-            order_by (str): Set true to use the old proto1 MessageSet wire format for
-                extensions. This is provided for backwards-compatibility with the
-                MessageSet wire format. You should not use this for any other reason:
-                It's less efficient, has fewer features, and is more complicated.
-
-                The message must be defined exactly as follows: message Foo { option
-                message_set_wire_format = true; extensions 4 to max; } Note that the
-                message cannot have any defined fields; MessageSets only have
-                extensions.
-
-                All extensions of your type must be singular messages; e.g. they cannot
-                be int32s, enums, or repeated messages.
-
-                Because this is an option, the above two restrictions are not enforced
-                by the protocol compiler.
+            order_by (str): Deletes a tag template and all tags using the template. Users should
+                enable the Data Catalog API in the project identified by the ``name``
+                parameter (see [Data Catalog Resource Project]
+                (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+                for more information).
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -388,12 +374,10 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Required. The name of the entry group this entry is in. Example:
-
-        -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}
-
-        Note that this Entry and its child resources may not actually be stored
-        in the location in this name.
+        Sub-type of the search result. This is a dot-delimited description
+        of the resource's full type, and is the same as the value callers would
+        provide in the "type" search facet. Examples: ``entry.table``,
+        ``entry.dataStream``, ``tagTemplate``.
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -408,7 +392,24 @@ class DataCatalogClient(object):
             >>> response = client.create_entry_group(parent, entry_group_id)
 
         Args:
-            parent (str): Request message for ``RenameTagTemplateField``.
+            parent (str): Optional. The historical or future-looking state of the resource
+                pattern.
+
+                Example:
+
+                ::
+
+                    // The InspectTemplate message originally only supported resource
+                    // names with organization, and project was added later.
+                    message InspectTemplate {
+                      option (google.api.resource) = {
+                        type: "dlp.googleapis.com/InspectTemplate"
+                        pattern:
+                        "organizations/{organization}/inspectTemplates/{inspect_template}"
+                        pattern: "projects/{project}/inspectTemplates/{inspect_template}"
+                        history: ORIGINALLY_SINGLE_PATTERN
+                      };
+                    }
             entry_group_id (str): Required. The id of the entry group to create.
                 The id must begin with a letter or underscore, contain only English
                 letters, numbers and underscores, and be at most 64 characters.
@@ -487,7 +488,7 @@ class DataCatalogClient(object):
             >>> response = client.get_entry_group(name)
 
         Args:
-            name (str): Request message for ``DeleteEntry``.
+            name (str): A ``TagTemplate``.
             read_mask (Union[dict, ~google.cloud.datacatalog_v1.types.FieldMask]): The fields to return. If not set or empty, all fields are returned.
 
                 If a dict is provided, it must be of the same form as the protobuf
@@ -549,11 +550,7 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        The full name of the cloud resource the entry belongs to. See:
-        https://cloud.google.com/apis/design/resource_names#full_resource_name.
-        Example:
-
-        -  ``//bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId``
+        Associates ``members`` with a ``role``.
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -634,10 +631,9 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        JSON name of this field. The value is set by protocol compiler. If
-        the user has set a "json_name" option on this field, that option's value
-        will be used. Otherwise, it's deduced from the field's name by
-        converting it to camelCase.
+        Spec for a group of BigQuery tables with name pattern
+        ``[prefix]YYYYMMDD``. Context:
+        https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -649,22 +645,7 @@ class DataCatalogClient(object):
             >>> client.delete_entry_group(name)
 
         Args:
-            name (str): Identifies which part of the FileDescriptorProto was defined at this
-                location.
-
-                Each element is a field number or an index. They form a path from the
-                root FileDescriptorProto to the place where the definition. For example,
-                this path: [ 4, 3, 2, 7, 1 ] refers to: file.message_type(3) // 4, 3
-                .field(7) // 2, 7 .name() // 1 This is because
-                FileDescriptorProto.message_type has field number 4: repeated
-                DescriptorProto message_type = 4; and DescriptorProto.field has field
-                number 2: repeated FieldDescriptorProto field = 2; and
-                FieldDescriptorProto.name has field number 1: optional string name = 1;
-
-                Thus, the above path gives the location of a field name. If we removed
-                the last element: [ 4, 3, 2, 7 ] this path refers to the whole field
-                declaration (from the beginning of the label to the terminating
-                semicolon).
+            name (str): Request message for ``GetIamPolicy`` method.
             force (bool): Optional. If true, deletes all entries in the entry group.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
@@ -744,17 +725,7 @@ class DataCatalogClient(object):
             ...         pass
 
         Args:
-            parent (str): The resource type that the annotated field references.
-
-                Example:
-
-                ::
-
-                    message Subscription {
-                      string topic = 2 [(google.api.resource_reference) = {
-                        type: "pubsub.googleapis.com/Topic"
-                      }];
-                    }
+            parent (str): An ``EntryGroup``.
             page_size (int): The maximum number of resources contained in the
                 underlying API response. If page streaming is performed per-
                 resource, this parameter does not affect the return value. If page
@@ -834,11 +805,127 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        The name of the uninterpreted option. Each string represents a
-        segment in a dot-separated name. is_extension is true iff a segment
-        represents an extension (denoted with parentheses in options specs in
-        .proto files). E.g.,{ ["foo", false], ["bar.baz", true], ["qux", false]
-        } represents "foo.(bar.baz).qux".
+        A simple descriptor of a resource type.
+
+        ResourceDescriptor annotates a resource message (either by means of a
+        protobuf annotation or use in the service config), and associates the
+        resource's schema, the resource type, and the pattern of the resource
+        name.
+
+        Example:
+
+        ::
+
+            message Topic {
+              // Indicates this message defines a resource schema.
+              // Declares the resource type in the format of {service}/{kind}.
+              // For Kubernetes resources, the format is {api group}/{kind}.
+              option (google.api.resource) = {
+                type: "pubsub.googleapis.com/Topic"
+                name_descriptor: {
+                  pattern: "projects/{project}/topics/{topic}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Project"
+                  parent_name_extractor: "projects/{project}"
+                }
+              };
+            }
+
+        The ResourceDescriptor Yaml config will look like:
+
+        ::
+
+            resources:
+            - type: "pubsub.googleapis.com/Topic"
+              name_descriptor:
+                - pattern: "projects/{project}/topics/{topic}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Project"
+                  parent_name_extractor: "projects/{project}"
+
+        Sometimes, resources have multiple patterns, typically because they can
+        live under multiple parents.
+
+        Example:
+
+        ::
+
+            message LogEntry {
+              option (google.api.resource) = {
+                type: "logging.googleapis.com/LogEntry"
+                name_descriptor: {
+                  pattern: "projects/{project}/logs/{log}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Project"
+                  parent_name_extractor: "projects/{project}"
+                }
+                name_descriptor: {
+                  pattern: "folders/{folder}/logs/{log}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Folder"
+                  parent_name_extractor: "folders/{folder}"
+                }
+                name_descriptor: {
+                  pattern: "organizations/{organization}/logs/{log}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Organization"
+                  parent_name_extractor: "organizations/{organization}"
+                }
+                name_descriptor: {
+                  pattern: "billingAccounts/{billing_account}/logs/{log}"
+                  parent_type: "billing.googleapis.com/BillingAccount"
+                  parent_name_extractor: "billingAccounts/{billing_account}"
+                }
+              };
+            }
+
+        The ResourceDescriptor Yaml config will look like:
+
+        ::
+
+            resources:
+            - type: 'logging.googleapis.com/LogEntry'
+              name_descriptor:
+                - pattern: "projects/{project}/logs/{log}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Project"
+                  parent_name_extractor: "projects/{project}"
+                - pattern: "folders/{folder}/logs/{log}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Folder"
+                  parent_name_extractor: "folders/{folder}"
+                - pattern: "organizations/{organization}/logs/{log}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Organization"
+                  parent_name_extractor: "organizations/{organization}"
+                - pattern: "billingAccounts/{billing_account}/logs/{log}"
+                  parent_type: "billing.googleapis.com/BillingAccount"
+                  parent_name_extractor: "billingAccounts/{billing_account}"
+
+        For flexible resources, the resource name doesn't contain parent names,
+        but the resource itself has parents for policy evaluation.
+
+        Example:
+
+        ::
+
+            message Shelf {
+              option (google.api.resource) = {
+                type: "library.googleapis.com/Shelf"
+                name_descriptor: {
+                  pattern: "shelves/{shelf}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Project"
+                }
+                name_descriptor: {
+                  pattern: "shelves/{shelf}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Folder"
+                }
+              };
+            }
+
+        The ResourceDescriptor Yaml config will look like:
+
+        ::
+
+            resources:
+            - type: 'library.googleapis.com/Shelf'
+              name_descriptor:
+                - pattern: "shelves/{shelf}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Project"
+                - pattern: "shelves/{shelf}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Folder"
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -856,19 +943,22 @@ class DataCatalogClient(object):
             >>> response = client.create_entry(parent, entry_id, entry)
 
         Args:
-            parent (str): The resource type of a child collection that the annotated field
-                references. This is useful for annotating the ``parent`` field that
-                doesn't have a fixed resource type.
+            parent (str): Identifies which part of the FileDescriptorProto was defined at this
+                location.
 
-                Example:
+                Each element is a field number or an index. They form a path from the
+                root FileDescriptorProto to the place where the definition. For example,
+                this path: [ 4, 3, 2, 7, 1 ] refers to: file.message_type(3) // 4, 3
+                .field(7) // 2, 7 .name() // 1 This is because
+                FileDescriptorProto.message_type has field number 4: repeated
+                DescriptorProto message_type = 4; and DescriptorProto.field has field
+                number 2: repeated FieldDescriptorProto field = 2; and
+                FieldDescriptorProto.name has field number 1: optional string name = 1;
 
-                ::
-
-                    message ListLogEntriesRequest {
-                      string parent = 1 [(google.api.resource_reference) = {
-                        child_type: "logging.googleapis.com/LogEntry"
-                      };
-                    }
+                Thus, the above path gives the location of a field name. If we removed
+                the last element: [ 4, 3, 2, 7 ] this path refers to the whole field
+                declaration (from the beginning of the label to the terminating
+                semicolon).
             entry_id (str): Required. The id of the entry to create.
             entry (Union[dict, ~google.cloud.datacatalog_v1.types.Entry]): Required. The entry to create.
 
@@ -933,13 +1023,8 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Updates a tag template. This method cannot be used to update the
-        fields of a template. The tag template fields are represented as
-        separate resources and should be updated using their own
-        create/update/delete methods. Users should enable the Data Catalog API
-        in the project identified by the ``tag_template.name`` parameter (see
-        [Data Catalog Resource Project]
-        (/data-catalog/docs/concepts/resource-project) for more information).
+        EntryGroup Metadata. An EntryGroup resource represents a logical
+        grouping of zero or more Data Catalog ``Entry`` resources.
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -956,9 +1041,17 @@ class DataCatalogClient(object):
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1.types.Entry`
-            update_mask (Union[dict, ~google.cloud.datacatalog_v1.types.FieldMask]): Required. The name of the entry. Example:
+            update_mask (Union[dict, ~google.cloud.datacatalog_v1.types.FieldMask]): The resource type that the annotated field references.
 
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}
+                Example:
+
+                ::
+
+                    message Subscription {
+                      string topic = 2 [(google.api.resource_reference) = {
+                        type: "pubsub.googleapis.com/Topic"
+                      }];
+                    }
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1.types.FieldMask`
@@ -1020,8 +1113,10 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        The source system of the entry. Only applicable when
-        ``search_result_type`` is ENTRY.
+        The relative resource name of the resource in URL format. Examples:
+
+        -  ``projects/{project_id}/locations/{location_id}/entryGroups/{entry_group_id}/entries/{entry_id}``
+        -  ``projects/{project_id}/tagTemplates/{tag_template_id}``
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -1033,37 +1128,32 @@ class DataCatalogClient(object):
             >>> client.delete_entry(name)
 
         Args:
-            name (str): Protocol Buffers - Google's data interchange format Copyright 2008
-                Google Inc. All rights reserved.
-                https://developers.google.com/protocol-buffers/
+            name (str): The fields to update on the entry. If absent or empty, all
+                modifiable fields are updated.
 
-                Redistribution and use in source and binary forms, with or without
-                modification, are permitted provided that the following conditions are
-                met:
+                The following fields are modifiable:
 
-                ::
+                -  For entries with type ``DATA_STREAM``:
 
-                    * Redistributions of source code must retain the above copyright
+                   -  ``schema``
 
-                notice, this list of conditions and the following disclaimer. \*
-                Redistributions in binary form must reproduce the above copyright
-                notice, this list of conditions and the following disclaimer in the
-                documentation and/or other materials provided with the distribution. \*
-                Neither the name of Google Inc. nor the names of its contributors may be
-                used to endorse or promote products derived from this software without
-                specific prior written permission.
+                -  For entries with type ``FILESET``
 
-                THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
-                IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
-                TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-                PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
-                OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-                EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-                PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-                PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-                LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-                NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-                SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+                   -  ``schema``
+                   -  ``display_name``
+                   -  ``description``
+                   -  ``gcs_fileset_spec``
+                   -  ``gcs_fileset_spec.file_patterns``
+
+                -  For entries with ``user_specified_type``
+
+                   -  ``schema``
+                   -  ``display_name``
+                   -  ``description``
+                   -  user_specified_type
+                   -  user_specified_system
+                   -  linked_resource
+                   -  source_system_timestamps
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -1129,22 +1219,9 @@ class DataCatalogClient(object):
             >>> response = client.get_entry(name)
 
         Args:
-            name (str): Whether the message is an automatically generated map entry type for
-                the maps field.
+            name (str): Required. The name of the tag template. Example:
 
-                For maps fields: map<KeyType, ValueType> map_field = 1; The parsed
-                descriptor looks like: message MapFieldEntry { option map_entry = true;
-                optional KeyType key = 1; optional ValueType value = 2; } repeated
-                MapFieldEntry map_field = 1;
-
-                Implementations may choose not to generate the map_entry=true message,
-                but use a native map in the target language to hold the keys and values.
-                The reflection APIs in such implementations still need to work as if the
-                field is a repeated message field.
-
-                NOTE: Do not set the option in .proto files. Always use the maps syntax
-                instead. The option should only be implicitly set by the proto compiler
-                parser.
+                -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -1214,14 +1291,53 @@ class DataCatalogClient(object):
             >>> response = client.lookup_entry()
 
         Args:
-            linked_resource (str): Request message for ``LookupEntry``.
-            sql_resource (str): Output only. The resource name of the tag template field in URL
-                format. Example:
+            linked_resource (str): Protocol Buffers - Google's data interchange format Copyright 2008
+                Google Inc. All rights reserved.
+                https://developers.google.com/protocol-buffers/
 
-                -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template}/fields/{field}
+                Redistribution and use in source and binary forms, with or without
+                modification, are permitted provided that the following conditions are
+                met:
 
-                Note that this TagTemplateField may not actually be stored in the
-                location in this name.
+                ::
+
+                    * Redistributions of source code must retain the above copyright
+
+                notice, this list of conditions and the following disclaimer. \*
+                Redistributions in binary form must reproduce the above copyright
+                notice, this list of conditions and the following disclaimer in the
+                documentation and/or other materials provided with the distribution. \*
+                Neither the name of Google Inc. nor the names of its contributors may be
+                used to endorse or promote products derived from this software without
+                specific prior written permission.
+
+                THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+                IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+                TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+                PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+                OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+                EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+                PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+                PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+                LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+                NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+                SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+            sql_resource (str): Whether the message is an automatically generated map entry type for
+                the maps field.
+
+                For maps fields: map<KeyType, ValueType> map_field = 1; The parsed
+                descriptor looks like: message MapFieldEntry { option map_entry = true;
+                optional KeyType key = 1; optional ValueType value = 2; } repeated
+                MapFieldEntry map_field = 1;
+
+                Implementations may choose not to generate the map_entry=true message,
+                but use a native map in the target language to hold the keys and values.
+                The reflection APIs in such implementations still need to work as if the
+                field is a repeated message field.
+
+                NOTE: Do not set the option in .proto files. Always use the maps syntax
+                instead. The option should only be implicitly set by the proto compiler
+                parser.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -1305,7 +1421,34 @@ class DataCatalogClient(object):
                 resource, this parameter does not affect the return value. If page
                 streaming is performed per-page, this determines the maximum number
                 of resources in a page.
-            read_mask (Union[dict, ~google.cloud.datacatalog_v1.types.FieldMask]): Request message for ``UpdateEntryGroup``.
+            read_mask (Union[dict, ~google.cloud.datacatalog_v1.types.FieldMask]): Should this field be parsed lazily? Lazy applies only to
+                message-type fields. It means that when the outer message is initially
+                parsed, the inner message's contents will not be parsed but instead
+                stored in encoded form. The inner message will actually be parsed when
+                it is first accessed.
+
+                This is only a hint. Implementations are free to choose whether to use
+                eager or lazy parsing regardless of the value of this option. However,
+                setting this option true suggests that the protocol author believes that
+                using lazy parsing on this field is worth the additional bookkeeping
+                overhead typically needed to implement it.
+
+                This option does not affect the public interface of any generated code;
+                all method signatures remain the same. Furthermore, thread-safety of the
+                interface is not affected by this option; const methods remain safe to
+                call from multiple threads concurrently, while non-const methods
+                continue to require exclusive access.
+
+                Note that implementations may choose not to check required fields within
+                a lazy sub-message. That is, calling IsInitialized() on the outer
+                message may return true even if the inner message has missing required
+                fields. This is necessary because otherwise the inner message would have
+                to be parsed in order to perform the check, defeating the purpose of
+                lazy parsing. An implementation which chooses not to check required
+                fields must be consistent about it. That is, for any particular
+                sub-message, the implementation must either *always* check its required
+                fields, or *never* check its required fields, regardless of whether or
+                not the message has been parsed.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1.types.FieldMask`
@@ -1383,9 +1526,8 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        The resource has one pattern, but the API owner expects to add more
-        later. (This is the inverse of ORIGINALLY_SINGLE_PATTERN, and prevents
-        that from being necessary once there are multiple patterns.)
+        If set, gives the index of a oneof in the containing type's
+        oneof_decl list. This field is a member of that oneof.
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -1403,7 +1545,9 @@ class DataCatalogClient(object):
             >>> response = client.create_tag_template(parent, tag_template_id, tag_template)
 
         Args:
-            parent (str): Request message for ``GetEntry``.
+            parent (str): Required. Currently, this field must always be set to ``true``. This
+                confirms the deletion of this field from any tags using this field.
+                ``force = false`` will be supported in the future.
             tag_template_id (str): Required. The id of the tag template to create.
             tag_template (Union[dict, ~google.cloud.datacatalog_v1.types.TagTemplate]): Required. The tag template to create.
 
@@ -1479,8 +1623,99 @@ class DataCatalogClient(object):
             >>> response = client.get_tag_template(name)
 
         Args:
-            name (str): Spec of a BigQuery table. This field should only be populated if
-                ``table_source_type`` is ``BIGQUERY_TABLE``.
+            name (str): A Timestamp represents a point in time independent of any time zone
+                or local calendar, encoded as a count of seconds and fractions of
+                seconds at nanosecond resolution. The count is relative to an epoch at
+                UTC midnight on January 1, 1970, in the proleptic Gregorian calendar
+                which extends the Gregorian calendar backwards to year one.
+
+                All minutes are 60 seconds long. Leap seconds are "smeared" so that no
+                leap second table is needed for interpretation, using a `24-hour linear
+                smear <https://developers.google.com/time/smear>`__.
+
+                The range is from 0001-01-01T00:00:00Z to
+                9999-12-31T23:59:59.999999999Z. By restricting to that range, we ensure
+                that we can convert to and from `RFC
+                3339 <https://www.ietf.org/rfc/rfc3339.txt>`__ date strings.
+
+                # Examples
+
+                Example 1: Compute Timestamp from POSIX ``time()``.
+
+                ::
+
+                    Timestamp timestamp;
+                    timestamp.set_seconds(time(NULL));
+                    timestamp.set_nanos(0);
+
+                Example 2: Compute Timestamp from POSIX ``gettimeofday()``.
+
+                ::
+
+                    struct timeval tv;
+                    gettimeofday(&tv, NULL);
+
+                    Timestamp timestamp;
+                    timestamp.set_seconds(tv.tv_sec);
+                    timestamp.set_nanos(tv.tv_usec * 1000);
+
+                Example 3: Compute Timestamp from Win32 ``GetSystemTimeAsFileTime()``.
+
+                ::
+
+                    FILETIME ft;
+                    GetSystemTimeAsFileTime(&ft);
+                    UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
+
+                    // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
+                    // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
+                    Timestamp timestamp;
+                    timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
+                    timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
+
+                Example 4: Compute Timestamp from Java ``System.currentTimeMillis()``.
+
+                ::
+
+                    long millis = System.currentTimeMillis();
+
+                    Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
+                        .setNanos((int) ((millis % 1000) * 1000000)).build();
+
+                Example 5: Compute Timestamp from current time in Python.
+
+                ::
+
+                    timestamp = Timestamp()
+                    timestamp.GetCurrentTime()
+
+                # JSON Mapping
+
+                In JSON format, the Timestamp type is encoded as a string in the `RFC
+                3339 <https://www.ietf.org/rfc/rfc3339.txt>`__ format. That is, the
+                format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z" where
+                {year} is always expressed using four digits while {month}, {day},
+                {hour}, {min}, and {sec} are zero-padded to two digits each. The
+                fractional seconds, which can go up to 9 digits (i.e. up to 1 nanosecond
+                resolution), are optional. The "Z" suffix indicates the timezone
+                ("UTC"); the timezone is required. A proto3 JSON serializer should
+                always use UTC (as indicated by "Z") when printing the Timestamp type
+                and a proto3 JSON parser should be able to accept both UTC and other
+                timezones (as indicated by an offset).
+
+                For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past 01:30
+                UTC on January 15, 2017.
+
+                In JavaScript, one can convert a Date object to this format using the
+                standard
+                `toISOString() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString>`__
+                method. In Python, a standard ``datetime.datetime`` object can be
+                converted to this format using
+                ```strftime`` <https://docs.python.org/2/library/time.html#time.strftime>`__
+                with the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java,
+                one can use the Joda Time's
+                ```ISODateTimeFormat.dateTime()`` <http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime%2D%2D>`__
+                to obtain a formatter capable of generating timestamps in this format.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -1538,7 +1773,7 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Request message for ``UpdateTagTemplateField``.
+        Request message for ``CreateTagTemplateField``.
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -1555,9 +1790,37 @@ class DataCatalogClient(object):
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1.types.TagTemplate`
-            update_mask (Union[dict, ~google.cloud.datacatalog_v1.types.FieldMask]): Number of results in the search page. If <=0 then defaults to 10.
-                Max limit for page_size is 1000. Throws an invalid argument for
-                page_size > 1000.
+            update_mask (Union[dict, ~google.cloud.datacatalog_v1.types.FieldMask]): Protocol Buffers - Google's data interchange format Copyright 2008
+                Google Inc. All rights reserved.
+                https://developers.google.com/protocol-buffers/
+
+                Redistribution and use in source and binary forms, with or without
+                modification, are permitted provided that the following conditions are
+                met:
+
+                ::
+
+                    * Redistributions of source code must retain the above copyright
+
+                notice, this list of conditions and the following disclaimer. \*
+                Redistributions in binary form must reproduce the above copyright
+                notice, this list of conditions and the following disclaimer in the
+                documentation and/or other materials provided with the distribution. \*
+                Neither the name of Google Inc. nor the names of its contributors may be
+                used to endorse or promote products derived from this software without
+                specific prior written permission.
+
+                THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+                IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+                TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+                PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+                OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+                EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+                PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+                PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+                LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+                NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+                SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1.types.FieldMask`
@@ -1620,16 +1883,7 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        The resource type. It must be in the format of
-        {service_name}/{resource_type_kind}. The ``resource_type_kind`` must be
-        singular and must not include version numbers.
-
-        Example: ``storage.googleapis.com/Bucket``
-
-        The value of the resource_type_kind must follow the regular expression
-        /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
-        should use PascalCase (UpperCamelCase). The maximum number of characters
-        allowed for the ``resource_type_kind`` is 100.
+        Response message for ``ListEntryGroups``.
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -1644,46 +1898,27 @@ class DataCatalogClient(object):
             >>> client.delete_tag_template(name, force)
 
         Args:
-            name (str): If this SourceCodeInfo represents a complete declaration, these are
-                any comments appearing before and after the declaration which appear to
-                be attached to the declaration.
-
-                A series of line comments appearing on consecutive lines, with no other
-                tokens appearing on those lines, will be treated as a single comment.
-
-                leading_detached_comments will keep paragraphs of comments that appear
-                before (but not connected to) the current element. Each paragraph,
-                separated by empty lines, will be one comment element in the repeated
-                field.
-
-                Only the comment content is provided; comment markers (e.g. //) are
-                stripped out. For block comments, leading whitespace and an asterisk
-                will be stripped from the beginning of each line other than the first.
-                Newlines are included in the output.
+            name (str): The full name of the Google Cloud Platform resource the Data Catalog
+                entry represents. See:
+                https://cloud.google.com/apis/design/resource_names#full_resource_name.
+                Full names are case-sensitive.
 
                 Examples:
 
-                optional int32 foo = 1; // Comment attached to foo. // Comment attached
-                to bar. optional int32 bar = 2;
+                -  //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId
+                -  //pubsub.googleapis.com/projects/projectId/topics/topicId
+            force (bool): The SQL name of the entry. SQL names are case-sensitive.
 
-                optional string baz = 3; // Comment attached to baz. // Another line
-                attached to baz.
+                Examples:
 
-                // Comment attached to qux. // // Another line attached to qux. optional
-                double qux = 4;
+                -  ``pubsub.project_id.topic_id``
+                -  :literal:`pubsub.project_id.`topic.id.with.dots\``
+                -  ``bigquery.table.project_id.dataset_id.table_id``
+                -  ``bigquery.dataset.project_id.dataset_id``
+                -  ``datacatalog.entry.project_id.location_id.entry_group_id.entry_id``
 
-                // Detached comment for corge. This is not leading or trailing comments
-                // to qux or corge because there are blank lines separating it from //
-                both.
-
-                // Detached comment for corge paragraph 2.
-
-                optional string corge = 5; /\* Block comment attached \* to corge.
-                Leading asterisks \* will be removed. */ /* Block comment attached to \*
-                grault. \*/ optional int32 grault = 6;
-
-                // ignored detached comments.
-            force (bool): Response message for ``ListTags``.
+                ``*_id``\ s shoud satisfy the standard SQL rules for identifiers.
+                https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -1739,9 +1974,12 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Required. The name of the tag template field. Example:
+        Required. The name of the project and the template location
+        `region <https://cloud.google.com/data-catalog/docs/concepts/regions>`__.
 
-        -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}
+        Example:
+
+        -  projects/{project_id}/locations/us-central1/tagTemplates/{tag_template_id}
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -1759,15 +1997,38 @@ class DataCatalogClient(object):
             >>> response = client.create_tag_template_field(parent, tag_template_field_id, tag_template_field)
 
         Args:
-            parent (str): Required. The name of the entry group that contains the entries,
-                which can be provided in URL format. Example:
+            parent (str): Lists the tags on an ``Entry``.
+            tag_template_field_id (str): Protocol Buffers - Google's data interchange format Copyright 2008
+                Google Inc. All rights reserved.
+                https://developers.google.com/protocol-buffers/
 
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}
-            tag_template_field_id (str): Output only. If the table is a dated shard, i.e., with name pattern
-                ``[prefix]YYYYMMDD``, ``grouped_entry`` is the Data Catalog resource
-                name of the date sharded grouped entry, for example,
-                ``projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}``.
-                Otherwise, ``grouped_entry`` is empty.
+                Redistribution and use in source and binary forms, with or without
+                modification, are permitted provided that the following conditions are
+                met:
+
+                ::
+
+                    * Redistributions of source code must retain the above copyright
+
+                notice, this list of conditions and the following disclaimer. \*
+                Redistributions in binary form must reproduce the above copyright
+                notice, this list of conditions and the following disclaimer in the
+                documentation and/or other materials provided with the distribution. \*
+                Neither the name of Google Inc. nor the names of its contributors may be
+                used to endorse or promote products derived from this software without
+                specific prior written permission.
+
+                THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+                IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+                TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+                PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+                OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+                EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+                PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+                PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+                LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+                NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+                SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             tag_template_field (Union[dict, ~google.cloud.datacatalog_v1.types.TagTemplateField]): Required. The tag template field to create.
 
                 If a dict is provided, it must be of the same form as the protobuf
@@ -1834,7 +2095,11 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Request message for ``SetIamPolicy`` method.
+        The full name of the cloud resource the entry belongs to. See:
+        https://cloud.google.com/apis/design/resource_names#full_resource_name.
+        Example:
+
+        -  ``//bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId``
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -1849,18 +2114,31 @@ class DataCatalogClient(object):
             >>> response = client.update_tag_template_field(name, tag_template_field)
 
         Args:
-            name (str): This field indicates the entry's source system that Data Catalog
-                does not integrate with. ``user_specified_system`` strings must begin
-                with a letter or underscore and can only contain letters, numbers, and
-                underscores; are case insensitive; must be at least 1 character and at
-                most 64 characters long.
+            name (str): Output only. If the table is a dated shard, i.e., with name pattern
+                ``[prefix]YYYYMMDD``, ``grouped_entry`` is the Data Catalog resource
+                name of the date sharded grouped entry, for example,
+                ``projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}``.
+                Otherwise, ``grouped_entry`` is empty.
             tag_template_field (Union[dict, ~google.cloud.datacatalog_v1.types.TagTemplateField]): Required. The template to update.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1.types.TagTemplateField`
-            update_mask (Union[dict, ~google.cloud.datacatalog_v1.types.FieldMask]): Required. The name of the tag template. Example:
+            update_mask (Union[dict, ~google.cloud.datacatalog_v1.types.FieldMask]): Sets the access control policy for a resource. Replaces any existing
+                policy. Supported resources are:
 
-                -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}
+                -  Tag templates.
+                -  Entries.
+                -  Entry groups. Note, this method cannot be used to manage policies for
+                   BigQuery, Pub/Sub and any external Google Cloud Platform resources
+                   synced to Data Catalog.
+
+                Callers must have following Google IAM permission
+
+                -  ``datacatalog.tagTemplates.setIamPolicy`` to set policies on tag
+                   templates.
+                -  ``datacatalog.entries.setIamPolicy`` to set policies on entries.
+                -  ``datacatalog.entryGroups.setIamPolicy`` to set policies on entry
+                   groups.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1.types.FieldMask`
@@ -1923,12 +2201,9 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        The resource name of the tag in URL format. Example:
-
-        -  projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}
-
-        where ``tag_id`` is a system-generated identifier. Note that this Tag
-        may not actually be stored in the location in this name.
+        A single identity that is exempted from "data access" audit logging
+        for the ``service`` specified above. Follows the same format of
+        Binding.members.
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -1943,27 +2218,18 @@ class DataCatalogClient(object):
             >>> response = client.rename_tag_template_field(name, new_tag_template_field_id)
 
         Args:
-            name (str): The maximum number of items to return. Default is 10. Max limit is
-                1000. Throws an invalid argument for ``page_size > 1000``.
-            new_tag_template_field_id (str): Gets the access control policy for a resource. A ``NOT_FOUND`` error
-                is returned if the resource does not exist. An empty policy is returned
-                if the resource exists but does not have a policy set on it.
+            name (str): The jstype option determines the JavaScript type used for values of
+                the field. The option is permitted only for 64 bit integral and fixed
+                types (int64, uint64, sint64, fixed64, sfixed64). A field with jstype
+                JS_STRING is represented as JavaScript string, which avoids loss of
+                precision that can happen when a large value is converted to a floating
+                point JavaScript. Specifying JS_NUMBER for the jstype causes the
+                generated JavaScript code to use the JavaScript "number" type. The
+                behavior of the default option JS_NORMAL is implementation dependent.
 
-                Supported resources are:
-
-                -  Tag templates.
-                -  Entries.
-                -  Entry groups. Note, this method cannot be used to manage policies for
-                   BigQuery, Pub/Sub and any external Google Cloud Platform resources
-                   synced to Data Catalog.
-
-                Callers must have following Google IAM permission
-
-                -  ``datacatalog.tagTemplates.getIamPolicy`` to get policies on tag
-                   templates.
-                -  ``datacatalog.entries.getIamPolicy`` to get policies on entries.
-                -  ``datacatalog.entryGroups.getIamPolicy`` to get policies on entry
-                   groups.
+                This option is an enum to permit additional types to be added, e.g.
+                goog.math.Integer.
+            new_tag_template_field_id (str): Request message for ``RenameTagTemplateField``.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -2061,7 +2327,10 @@ class DataCatalogClient(object):
             >>> client.delete_tag_template_field(name, force)
 
         Args:
-            name (str): ``FieldMask`` represents a set of symbolic field paths, for example:
+            name (str): Output only. The Data Catalog resource name of the dataset entry the
+                current table belongs to, for example,
+                ``projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}``.
+            force (bool): ``FieldMask`` represents a set of symbolic field paths, for example:
 
                 ::
 
@@ -2281,14 +2550,6 @@ class DataCatalogClient(object):
                 The implementation of any API method which has a FieldMask type field in
                 the request should verify the included field paths, and return an
                 ``INVALID_ARGUMENT`` error if any path is unmappable.
-            force (bool): Creates an entry. Only entries of 'FILESET' type or user-specified
-                type can be created.
-
-                Users should enable the Data Catalog API in the project identified by
-                the ``parent`` parameter (see [Data Catalog Resource Project]
-                (/data-catalog/docs/concepts/resource-project) for more information).
-
-                A maximum of 100,000 entries may be created per entry group.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -2343,10 +2604,10 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Deletes a tag template and all tags using the template. Users should
-        enable the Data Catalog API in the project identified by the ``name``
-        parameter (see [Data Catalog Resource Project]
-        (/data-catalog/docs/concepts/resource-project) for more information).
+        JSON name of this field. The value is set by protocol compiler. If
+        the user has set a "json_name" option on this field, that option's value
+        will be used. Otherwise, it's deduced from the field's name by
+        converting it to camelCase.
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -2361,17 +2622,13 @@ class DataCatalogClient(object):
             >>> response = client.create_tag(parent, tag)
 
         Args:
-            parent (str): A generic empty message that you can re-use to avoid defining
-                duplicated empty messages in your APIs. A typical example is to use it
-                as the request or the response type of an API method. For instance:
+            parent (str): Required. The name of the Data Catalog resource to list the tags of.
+                The resource could be an ``Entry`` or an ``EntryGroup``.
 
-                ::
+                Examples:
 
-                    service Foo {
-                      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);
-                    }
-
-                The JSON representation for ``Empty`` is empty JSON object ``{}``.
+                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}
+                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}
             tag (Union[dict, ~google.cloud.datacatalog_v1.types.Tag]): Required. The tag to create.
 
                 If a dict is provided, it must be of the same form as the protobuf
@@ -2450,7 +2707,45 @@ class DataCatalogClient(object):
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1.types.Tag`
-            update_mask (Union[dict, ~google.cloud.datacatalog_v1.types.FieldMask]): Lists the tags on an ``Entry``.
+            update_mask (Union[dict, ~google.cloud.datacatalog_v1.types.FieldMask]): If this SourceCodeInfo represents a complete declaration, these are
+                any comments appearing before and after the declaration which appear to
+                be attached to the declaration.
+
+                A series of line comments appearing on consecutive lines, with no other
+                tokens appearing on those lines, will be treated as a single comment.
+
+                leading_detached_comments will keep paragraphs of comments that appear
+                before (but not connected to) the current element. Each paragraph,
+                separated by empty lines, will be one comment element in the repeated
+                field.
+
+                Only the comment content is provided; comment markers (e.g. //) are
+                stripped out. For block comments, leading whitespace and an asterisk
+                will be stripped from the beginning of each line other than the first.
+                Newlines are included in the output.
+
+                Examples:
+
+                optional int32 foo = 1; // Comment attached to foo. // Comment attached
+                to bar. optional int32 bar = 2;
+
+                optional string baz = 3; // Comment attached to baz. // Another line
+                attached to baz.
+
+                // Comment attached to qux. // // Another line attached to qux. optional
+                double qux = 4;
+
+                // Detached comment for corge. This is not leading or trailing comments
+                // to qux or corge because there are blank lines separating it from //
+                both.
+
+                // Detached comment for corge paragraph 2.
+
+                optional string corge = 5; /\* Block comment attached \* to corge.
+                Leading asterisks \* will be removed. */ /* Block comment attached to \*
+                grault. \*/ optional int32 grault = 6;
+
+                // ignored detached comments.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1.types.FieldMask`
@@ -2522,15 +2817,9 @@ class DataCatalogClient(object):
             >>> client.delete_tag(name)
 
         Args:
-            name (str): The full name of the Google Cloud Platform resource the Data Catalog
-                entry represents. See:
-                https://cloud.google.com/apis/design/resource_names#full_resource_name.
-                Full names are case-sensitive.
-
-                Examples:
-
-                -  //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId
-                -  //pubsub.googleapis.com/projects/projectId/topics/topicId
+            name (str): Output only. The table name prefix of the shards. The name of any
+                given shard is ``[table_prefix]YYYYMMDD``, for example, for shard
+                ``MyTable20180101``, the ``table_prefix`` is ``MyTable``.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -2585,18 +2874,11 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        The SQL name of the entry. SQL names are case-sensitive.
-
-        Examples:
-
-        -  ``cloud_pubsub.project_id.topic_id``
-        -  :literal:`pubsub.project_id.`topic.id.with.dots\``
-        -  ``bigquery.table.project_id.dataset_id.table_id``
-        -  ``bigquery.dataset.project_id.dataset_id``
-        -  ``datacatalog.entry.project_id.location_id.entry_group_id.entry_id``
-
-        ``*_id``\ s shoud satisfy the standard SQL rules for identifiers.
-        https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.
+        The name of the uninterpreted option. Each string represents a
+        segment in a dot-separated name. is_extension is true iff a segment
+        represents an extension (denoted with parentheses in options specs in
+        .proto files). E.g.,{ ["foo", false], ["bar.baz", true], ["qux", false]
+        } represents "foo.(bar.baz).qux".
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -2620,8 +2902,20 @@ class DataCatalogClient(object):
             ...         pass
 
         Args:
-            parent (str): Specification that applies to a BigQuery table. This is only valid
-                on entries of type ``TABLE``.
+            parent (str): Returns the caller's permissions on a resource. If the resource does
+                not exist, an empty set of permissions is returned (We don't return a
+                ``NOT_FOUND`` error).
+
+                Supported resources are:
+
+                -  Tag templates.
+                -  Entries.
+                -  Entry groups. Note, this method cannot be used to manage policies for
+                   BigQuery, Pub/Sub and any external Google Cloud Platform resources
+                   synced to Data Catalog.
+
+                A caller is not required to have Google IAM permission to make this
+                request.
             page_size (int): The maximum number of resources contained in the
                 underlying API response. If page streaming is performed per-
                 resource, this parameter does not affect the return value. If page
@@ -2698,7 +2992,14 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        ``Tag`` details.
+        Updates a tag template. This method cannot be used to update the
+        fields of a template. The tag template fields are represented as
+        separate resources and should be updated using their own
+        create/update/delete methods. Users should enable the Data Catalog API
+        in the project identified by the ``tag_template.name`` parameter (see
+        [Data Catalog Resource Project]
+        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+        for more information).
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -2716,11 +3017,9 @@ class DataCatalogClient(object):
         Args:
             resource (str): REQUIRED: The resource for which the policy is being specified.
                 See the operation documentation for the appropriate value for this field.
-            policy (Union[dict, ~google.cloud.datacatalog_v1.types.Policy]): Deletes an EntryGroup. Only entry groups that do not contain entries
-                can be deleted. Users should enable the Data Catalog API in the project
-                identified by the ``name`` parameter (see [Data Catalog Resource
-                Project] (/data-catalog/docs/concepts/resource-project) for more
-                information).
+            policy (Union[dict, ~google.cloud.datacatalog_v1.types.Policy]): Associates a list of ``members`` to a ``role``. Optionally may
+                specify a ``condition`` that determines when binding is in effect.
+                ``bindings`` with no members will result in an error.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1.types.Policy`
@@ -2781,7 +3080,8 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Request message for ``UpdateEntry``.
+        The source system of the entry. Only applicable when
+        ``search_result_type`` is ENTRY.
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -2796,8 +3096,8 @@ class DataCatalogClient(object):
         Args:
             resource (str): REQUIRED: The resource for which the policy is being requested.
                 See the operation documentation for the appropriate value for this field.
-            options_ (Union[dict, ~google.cloud.datacatalog_v1.types.GetPolicyOptions]): For extensions, this is the name of the type being extended. It is
-                resolved in the same manner as type_name.
+            options_ (Union[dict, ~google.cloud.datacatalog_v1.types.GetPolicyOptions]): An annotation that describes a resource definition without a
+                corresponding message; see ``ResourceDescriptor``.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1.types.GetPolicyOptions`
@@ -2860,10 +3160,9 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        REQUIRED: The complete policy to be applied to the ``resource``. The
-        size of the policy is limited to a few 10s of KB. An empty policy is a
-        valid policy but certain Cloud Platform services (such as Projects)
-        might reject them.
+        The resource has one pattern, but the API owner expects to add more
+        later. (This is the inverse of ORIGINALLY_SINGLE_PATTERN, and prevents
+        that from being necessary once there are multiple patterns.)
 
         Example:
             >>> from google.cloud import datacatalog_v1
@@ -2881,8 +3180,12 @@ class DataCatalogClient(object):
         Args:
             resource (str): REQUIRED: The resource for which the policy detail is being requested.
                 See the operation documentation for the appropriate value for this field.
-            permissions (list[str]): An annotation that describes a resource definition, see
-                ``ResourceDescriptor``.
+            permissions (list[str]): Deletes an EntryGroup. Only entry groups that do not contain entries
+                can be deleted. Users should enable the Data Catalog API in the project
+                identified by the ``name`` parameter (see [Data Catalog Resource
+                Project]
+                (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+                for more information).
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.

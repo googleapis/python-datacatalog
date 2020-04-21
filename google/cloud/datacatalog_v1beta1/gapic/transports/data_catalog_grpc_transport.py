@@ -111,8 +111,9 @@ class DataCatalogGrpcTransport(object):
     def search_catalog(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.search_catalog`.
 
-        Output only. Resource name of this policy tag, whose format is:
-        "projects/{project_number}/locations/{location_id}/taxonomies/{taxonomy_id}/policyTags/{id}".
+        If type_name is set, this need not be set. If both this and
+        type_name are set, this must be one of TYPE_ENUM, TYPE_MESSAGE or
+        TYPE_GROUP.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -125,7 +126,12 @@ class DataCatalogGrpcTransport(object):
     def create_entry_group(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.create_entry_group`.
 
-        Request message for ``LookupEntry``.
+        Required. The name of the project and the template location
+        `region <https://cloud.google.com/data-catalog/docs/concepts/regions>`__.
+
+        Example:
+
+        -  projects/{project_id}/locations/us-central1/tagTemplates/{tag_template_id}
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -151,7 +157,11 @@ class DataCatalogGrpcTransport(object):
     def delete_entry_group(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.delete_entry_group`.
 
-        Request message for ``GetEntry``.
+        Required. The ID of the tag template field to create. Field ids can
+        contain letters (both uppercase and lowercase), numbers (0-9),
+        underscores (_) and dashes (-). Field IDs must be at least 1 character
+        long and at most 128 characters long. Field IDs must also be unique
+        within their template.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -164,8 +174,7 @@ class DataCatalogGrpcTransport(object):
     def create_entry(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.create_entry`.
 
-        For extensions, this is the name of the type being extended. It is
-        resolved in the same manner as type_name.
+        Request message for ``CreateEntry``.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -178,7 +187,8 @@ class DataCatalogGrpcTransport(object):
     def update_entry(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.update_entry`.
 
-        A ``TagTemplate``.
+        For extensions, this is the name of the type being extended. It is
+        resolved in the same manner as type_name.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -191,15 +201,12 @@ class DataCatalogGrpcTransport(object):
     def delete_entry(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.delete_entry`.
 
-        The full name of the Google Cloud Platform resource the Data Catalog
-        entry represents. See:
-        https://cloud.google.com/apis/design/resource_names#full_resource_name.
-        Full names are case-sensitive.
+        Required. The name of the entry group this entry is in. Example:
 
-        Examples:
+        -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}
 
-        -  //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId
-        -  //pubsub.googleapis.com/projects/projectId/topics/topicId
+        Note that this Entry and its child resources may not actually be stored
+        in the location in this name.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -266,7 +273,8 @@ class DataCatalogGrpcTransport(object):
     def update_entry_group(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.update_entry_group`.
 
-        An ``Entry``.
+        An annotation that describes a resource definition without a
+        corresponding message; see ``ResourceDescriptor``.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -279,10 +287,8 @@ class DataCatalogGrpcTransport(object):
     def create_tag_template(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.create_tag_template`.
 
-        The set of permissions to check for the ``resource``. Permissions
-        with wildcards (such as '*' or 'storage.*') are not allowed. For more
-        information see `IAM
-        Overview <https://cloud.google.com/iam/docs/overview#permissions>`__.
+        An annotation that describes a resource definition, see
+        ``ResourceDescriptor``.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -308,8 +314,14 @@ class DataCatalogGrpcTransport(object):
     def update_tag_template(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.update_tag_template`.
 
-        An annotation that describes a resource definition, see
-        ``ResourceDescriptor``.
+        Updates a tag template. This method cannot be used to update the
+        fields of a template. The tag template fields are represented as
+        separate resources and should be updated using their own
+        create/update/delete methods. Users should enable the Data Catalog API
+        in the project identified by the ``tag_template.name`` parameter (see
+        [Data Catalog Resource Project]
+        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+        for more information).
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -322,10 +334,10 @@ class DataCatalogGrpcTransport(object):
     def delete_tag_template(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.delete_tag_template`.
 
-        The relative resource name of the resource in URL format. Examples:
-
-        -  ``projects/{project_id}/locations/{location_id}/entryGroups/{entry_group_id}/entries/{entry_id}``
-        -  ``projects/{project_id}/tagTemplates/{tag_template_id}``
+        Sub-type of the search result. This is a dot-delimited description
+        of the resource's full type, and is the same as the value callers would
+        provide in the "type" search facet. Examples: ``entry.table``,
+        ``entry.dataStream``, ``tagTemplate``.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -337,61 +349,6 @@ class DataCatalogGrpcTransport(object):
     @property
     def create_tag_template_field(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.create_tag_template_field`.
-
-        An ``EntryGroup``.
-
-        Returns:
-            Callable: A callable which accepts the appropriate
-                deserialized request object and returns a
-                deserialized response object.
-        """
-        return self._stubs["data_catalog_stub"].CreateTagTemplateField
-
-    @property
-    def update_tag_template_field(self):
-        """Return the gRPC stub for :meth:`DataCatalogClient.update_tag_template_field`.
-
-        Creates a tag on an ``Entry``. Note: The project identified by the
-        ``parent`` parameter for the
-        `tag <https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters>`__
-        and the `tag
-        template <https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters>`__
-        used to create the tag must be from the same organization.
-
-        Returns:
-            Callable: A callable which accepts the appropriate
-                deserialized request object and returns a
-                deserialized response object.
-        """
-        return self._stubs["data_catalog_stub"].UpdateTagTemplateField
-
-    @property
-    def rename_tag_template_field(self):
-        """Return the gRPC stub for :meth:`DataCatalogClient.rename_tag_template_field`.
-
-        The SQL name of the entry. SQL names are case-sensitive.
-
-        Examples:
-
-        -  ``cloud_pubsub.project_id.topic_id``
-        -  :literal:`pubsub.project_id.`topic.id.with.dots\``
-        -  ``bigquery.table.project_id.dataset_id.table_id``
-        -  ``bigquery.dataset.project_id.dataset_id``
-        -  ``datacatalog.entry.project_id.location_id.entry_group_id.entry_id``
-
-        ``*_id``\ s shoud satisfy the standard SQL rules for identifiers.
-        https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.
-
-        Returns:
-            Callable: A callable which accepts the appropriate
-                deserialized request object and returns a
-                deserialized response object.
-        """
-        return self._stubs["data_catalog_stub"].RenameTagTemplateField
-
-    @property
-    def delete_tag_template_field(self):
-        """Return the gRPC stub for :meth:`DataCatalogClient.delete_tag_template_field`.
 
         A simple descriptor of a resource type.
 
@@ -520,13 +477,56 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
+        return self._stubs["data_catalog_stub"].CreateTagTemplateField
+
+    @property
+    def update_tag_template_field(self):
+        """Return the gRPC stub for :meth:`DataCatalogClient.update_tag_template_field`.
+
+        The relative resource name of the resource in URL format. Examples:
+
+        -  ``projects/{project_id}/locations/{location_id}/entryGroups/{entry_group_id}/entries/{entry_id}``
+        -  ``projects/{project_id}/tagTemplates/{tag_template_id}``
+
+        Returns:
+            Callable: A callable which accepts the appropriate
+                deserialized request object and returns a
+                deserialized response object.
+        """
+        return self._stubs["data_catalog_stub"].UpdateTagTemplateField
+
+    @property
+    def rename_tag_template_field(self):
+        """Return the gRPC stub for :meth:`DataCatalogClient.rename_tag_template_field`.
+
+        Request message for ``UpdateTagTemplateField``.
+
+        Returns:
+            Callable: A callable which accepts the appropriate
+                deserialized request object and returns a
+                deserialized response object.
+        """
+        return self._stubs["data_catalog_stub"].RenameTagTemplateField
+
+    @property
+    def delete_tag_template_field(self):
+        """Return the gRPC stub for :meth:`DataCatalogClient.delete_tag_template_field`.
+
+        If set, gives the index of a oneof in the containing type's
+        oneof_decl list. This field is a member of that oneof.
+
+        Returns:
+            Callable: A callable which accepts the appropriate
+                deserialized request object and returns a
+                deserialized response object.
+        """
         return self._stubs["data_catalog_stub"].DeleteTagTemplateField
 
     @property
     def create_tag(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.create_tag`.
 
-        Response message for ``ListTags``.
+        Request message for ``GetEntryGroup``.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -565,7 +565,7 @@ class DataCatalogGrpcTransport(object):
     def list_tags(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.list_tags`.
 
-        Request message for ``ExportTaxonomies``.
+        Request message for ``SetIamPolicy`` method.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -578,7 +578,9 @@ class DataCatalogGrpcTransport(object):
     def set_iam_policy(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.set_iam_policy`.
 
-        Response message for ``TestIamPermissions`` method.
+        Required. The name of the tag template field. Example:
+
+        -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -591,14 +593,11 @@ class DataCatalogGrpcTransport(object):
     def get_iam_policy(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.get_iam_policy`.
 
-        Entry Metadata. A Data Catalog Entry resource represents another
-        resource in Google Cloud Platform (such as a BigQuery dataset or a Cloud
-        Pub/Sub topic), or outside of Google Cloud Platform. Clients can use the
-        ``linked_resource`` field in the Entry resource to refer to the original
-        resource ID of the source system.
+        The full name of the cloud resource the entry belongs to. See:
+        https://cloud.google.com/apis/design/resource_names#full_resource_name.
+        Example:
 
-        An Entry resource contains resource details, such as its schema. An
-        Entry can also be used to attach flexible metadata, such as a ``Tag``.
+        -  ``//bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId``
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -611,8 +610,11 @@ class DataCatalogGrpcTransport(object):
     def test_iam_permissions(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.test_iam_permissions`.
 
-        If set, gives the index of a oneof in the containing type's
-        oneof_decl list. This field is a member of that oneof.
+        A taxonomy is a collection of policy tags that classify data along a
+        common axis. For instance a data *sensitivity* taxonomy could contain
+        policy tags denoting PII such as age, zipcode, and SSN. A data *origin*
+        taxonomy could contain policy tags to distinguish user data, employee
+        data, partner data, public data.
 
         Returns:
             Callable: A callable which accepts the appropriate

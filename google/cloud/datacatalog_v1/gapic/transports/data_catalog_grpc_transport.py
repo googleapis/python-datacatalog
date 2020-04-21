@@ -111,7 +111,7 @@ class DataCatalogGrpcTransport(object):
     def search_catalog(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.search_catalog`.
 
-        Request message for ``CreateEntry``.
+        javalite_serializable
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -124,12 +124,10 @@ class DataCatalogGrpcTransport(object):
     def create_entry_group(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.create_entry_group`.
 
-        Required. The name of the entry group this entry is in. Example:
-
-        -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}
-
-        Note that this Entry and its child resources may not actually be stored
-        in the location in this name.
+        Sub-type of the search result. This is a dot-delimited description
+        of the resource's full type, and is the same as the value callers would
+        provide in the "type" search facet. Examples: ``entry.table``,
+        ``entry.dataStream``, ``tagTemplate``.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -155,11 +153,7 @@ class DataCatalogGrpcTransport(object):
     def update_entry_group(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.update_entry_group`.
 
-        The full name of the cloud resource the entry belongs to. See:
-        https://cloud.google.com/apis/design/resource_names#full_resource_name.
-        Example:
-
-        -  ``//bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId``
+        Associates ``members`` with a ``role``.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -172,10 +166,9 @@ class DataCatalogGrpcTransport(object):
     def delete_entry_group(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.delete_entry_group`.
 
-        JSON name of this field. The value is set by protocol compiler. If
-        the user has set a "json_name" option on this field, that option's value
-        will be used. Otherwise, it's deduced from the field's name by
-        converting it to camelCase.
+        Spec for a group of BigQuery tables with name pattern
+        ``[prefix]YYYYMMDD``. Context:
+        https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -201,11 +194,127 @@ class DataCatalogGrpcTransport(object):
     def create_entry(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.create_entry`.
 
-        The name of the uninterpreted option. Each string represents a
-        segment in a dot-separated name. is_extension is true iff a segment
-        represents an extension (denoted with parentheses in options specs in
-        .proto files). E.g.,{ ["foo", false], ["bar.baz", true], ["qux", false]
-        } represents "foo.(bar.baz).qux".
+        A simple descriptor of a resource type.
+
+        ResourceDescriptor annotates a resource message (either by means of a
+        protobuf annotation or use in the service config), and associates the
+        resource's schema, the resource type, and the pattern of the resource
+        name.
+
+        Example:
+
+        ::
+
+            message Topic {
+              // Indicates this message defines a resource schema.
+              // Declares the resource type in the format of {service}/{kind}.
+              // For Kubernetes resources, the format is {api group}/{kind}.
+              option (google.api.resource) = {
+                type: "pubsub.googleapis.com/Topic"
+                name_descriptor: {
+                  pattern: "projects/{project}/topics/{topic}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Project"
+                  parent_name_extractor: "projects/{project}"
+                }
+              };
+            }
+
+        The ResourceDescriptor Yaml config will look like:
+
+        ::
+
+            resources:
+            - type: "pubsub.googleapis.com/Topic"
+              name_descriptor:
+                - pattern: "projects/{project}/topics/{topic}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Project"
+                  parent_name_extractor: "projects/{project}"
+
+        Sometimes, resources have multiple patterns, typically because they can
+        live under multiple parents.
+
+        Example:
+
+        ::
+
+            message LogEntry {
+              option (google.api.resource) = {
+                type: "logging.googleapis.com/LogEntry"
+                name_descriptor: {
+                  pattern: "projects/{project}/logs/{log}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Project"
+                  parent_name_extractor: "projects/{project}"
+                }
+                name_descriptor: {
+                  pattern: "folders/{folder}/logs/{log}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Folder"
+                  parent_name_extractor: "folders/{folder}"
+                }
+                name_descriptor: {
+                  pattern: "organizations/{organization}/logs/{log}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Organization"
+                  parent_name_extractor: "organizations/{organization}"
+                }
+                name_descriptor: {
+                  pattern: "billingAccounts/{billing_account}/logs/{log}"
+                  parent_type: "billing.googleapis.com/BillingAccount"
+                  parent_name_extractor: "billingAccounts/{billing_account}"
+                }
+              };
+            }
+
+        The ResourceDescriptor Yaml config will look like:
+
+        ::
+
+            resources:
+            - type: 'logging.googleapis.com/LogEntry'
+              name_descriptor:
+                - pattern: "projects/{project}/logs/{log}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Project"
+                  parent_name_extractor: "projects/{project}"
+                - pattern: "folders/{folder}/logs/{log}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Folder"
+                  parent_name_extractor: "folders/{folder}"
+                - pattern: "organizations/{organization}/logs/{log}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Organization"
+                  parent_name_extractor: "organizations/{organization}"
+                - pattern: "billingAccounts/{billing_account}/logs/{log}"
+                  parent_type: "billing.googleapis.com/BillingAccount"
+                  parent_name_extractor: "billingAccounts/{billing_account}"
+
+        For flexible resources, the resource name doesn't contain parent names,
+        but the resource itself has parents for policy evaluation.
+
+        Example:
+
+        ::
+
+            message Shelf {
+              option (google.api.resource) = {
+                type: "library.googleapis.com/Shelf"
+                name_descriptor: {
+                  pattern: "shelves/{shelf}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Project"
+                }
+                name_descriptor: {
+                  pattern: "shelves/{shelf}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Folder"
+                }
+              };
+            }
+
+        The ResourceDescriptor Yaml config will look like:
+
+        ::
+
+            resources:
+            - type: 'library.googleapis.com/Shelf'
+              name_descriptor:
+                - pattern: "shelves/{shelf}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Project"
+                - pattern: "shelves/{shelf}"
+                  parent_type: "cloudresourcemanager.googleapis.com/Folder"
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -218,13 +327,8 @@ class DataCatalogGrpcTransport(object):
     def update_entry(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.update_entry`.
 
-        Updates a tag template. This method cannot be used to update the
-        fields of a template. The tag template fields are represented as
-        separate resources and should be updated using their own
-        create/update/delete methods. Users should enable the Data Catalog API
-        in the project identified by the ``tag_template.name`` parameter (see
-        [Data Catalog Resource Project]
-        (/data-catalog/docs/concepts/resource-project) for more information).
+        EntryGroup Metadata. An EntryGroup resource represents a logical
+        grouping of zero or more Data Catalog ``Entry`` resources.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -237,8 +341,10 @@ class DataCatalogGrpcTransport(object):
     def delete_entry(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.delete_entry`.
 
-        The source system of the entry. Only applicable when
-        ``search_result_type`` is ENTRY.
+        The relative resource name of the resource in URL format. Examples:
+
+        -  ``projects/{project_id}/locations/{location_id}/entryGroups/{entry_group_id}/entries/{entry_id}``
+        -  ``projects/{project_id}/tagTemplates/{tag_template_id}``
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -292,9 +398,8 @@ class DataCatalogGrpcTransport(object):
     def create_tag_template(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.create_tag_template`.
 
-        The resource has one pattern, but the API owner expects to add more
-        later. (This is the inverse of ORIGINALLY_SINGLE_PATTERN, and prevents
-        that from being necessary once there are multiple patterns.)
+        If set, gives the index of a oneof in the containing type's
+        oneof_decl list. This field is a member of that oneof.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -320,7 +425,7 @@ class DataCatalogGrpcTransport(object):
     def update_tag_template(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.update_tag_template`.
 
-        Request message for ``UpdateTagTemplateField``.
+        Request message for ``CreateTagTemplateField``.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -333,16 +438,7 @@ class DataCatalogGrpcTransport(object):
     def delete_tag_template(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.delete_tag_template`.
 
-        The resource type. It must be in the format of
-        {service_name}/{resource_type_kind}. The ``resource_type_kind`` must be
-        singular and must not include version numbers.
-
-        Example: ``storage.googleapis.com/Bucket``
-
-        The value of the resource_type_kind must follow the regular expression
-        /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
-        should use PascalCase (UpperCamelCase). The maximum number of characters
-        allowed for the ``resource_type_kind`` is 100.
+        Response message for ``ListEntryGroups``.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -355,9 +451,12 @@ class DataCatalogGrpcTransport(object):
     def create_tag_template_field(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.create_tag_template_field`.
 
-        Required. The name of the tag template field. Example:
+        Required. The name of the project and the template location
+        `region <https://cloud.google.com/data-catalog/docs/concepts/regions>`__.
 
-        -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}
+        Example:
+
+        -  projects/{project_id}/locations/us-central1/tagTemplates/{tag_template_id}
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -370,7 +469,11 @@ class DataCatalogGrpcTransport(object):
     def update_tag_template_field(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.update_tag_template_field`.
 
-        Request message for ``SetIamPolicy`` method.
+        The full name of the cloud resource the entry belongs to. See:
+        https://cloud.google.com/apis/design/resource_names#full_resource_name.
+        Example:
+
+        -  ``//bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId``
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -383,12 +486,9 @@ class DataCatalogGrpcTransport(object):
     def rename_tag_template_field(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.rename_tag_template_field`.
 
-        The resource name of the tag in URL format. Example:
-
-        -  projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}
-
-        where ``tag_id`` is a system-generated identifier. Note that this Tag
-        may not actually be stored in the location in this name.
+        A single identity that is exempted from "data access" audit logging
+        for the ``service`` specified above. Follows the same format of
+        Binding.members.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -437,10 +537,10 @@ class DataCatalogGrpcTransport(object):
     def create_tag(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.create_tag`.
 
-        Deletes a tag template and all tags using the template. Users should
-        enable the Data Catalog API in the project identified by the ``name``
-        parameter (see [Data Catalog Resource Project]
-        (/data-catalog/docs/concepts/resource-project) for more information).
+        JSON name of this field. The value is set by protocol compiler. If
+        the user has set a "json_name" option on this field, that option's value
+        will be used. Otherwise, it's deduced from the field's name by
+        converting it to camelCase.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -479,18 +579,11 @@ class DataCatalogGrpcTransport(object):
     def list_tags(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.list_tags`.
 
-        The SQL name of the entry. SQL names are case-sensitive.
-
-        Examples:
-
-        -  ``cloud_pubsub.project_id.topic_id``
-        -  :literal:`pubsub.project_id.`topic.id.with.dots\``
-        -  ``bigquery.table.project_id.dataset_id.table_id``
-        -  ``bigquery.dataset.project_id.dataset_id``
-        -  ``datacatalog.entry.project_id.location_id.entry_group_id.entry_id``
-
-        ``*_id``\ s shoud satisfy the standard SQL rules for identifiers.
-        https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.
+        The name of the uninterpreted option. Each string represents a
+        segment in a dot-separated name. is_extension is true iff a segment
+        represents an extension (denoted with parentheses in options specs in
+        .proto files). E.g.,{ ["foo", false], ["bar.baz", true], ["qux", false]
+        } represents "foo.(bar.baz).qux".
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -503,7 +596,14 @@ class DataCatalogGrpcTransport(object):
     def set_iam_policy(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.set_iam_policy`.
 
-        ``Tag`` details.
+        Updates a tag template. This method cannot be used to update the
+        fields of a template. The tag template fields are represented as
+        separate resources and should be updated using their own
+        create/update/delete methods. Users should enable the Data Catalog API
+        in the project identified by the ``tag_template.name`` parameter (see
+        [Data Catalog Resource Project]
+        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+        for more information).
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -516,7 +616,8 @@ class DataCatalogGrpcTransport(object):
     def get_iam_policy(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.get_iam_policy`.
 
-        Request message for ``UpdateEntry``.
+        The source system of the entry. Only applicable when
+        ``search_result_type`` is ENTRY.
 
         Returns:
             Callable: A callable which accepts the appropriate
@@ -529,10 +630,9 @@ class DataCatalogGrpcTransport(object):
     def test_iam_permissions(self):
         """Return the gRPC stub for :meth:`DataCatalogClient.test_iam_permissions`.
 
-        REQUIRED: The complete policy to be applied to the ``resource``. The
-        size of the policy is limited to a few 10s of KB. An empty policy is a
-        valid policy but certain Cloud Platform services (such as Projects)
-        might reject them.
+        The resource has one pattern, but the API owner expects to add more
+        later. (This is the inverse of ORIGINALLY_SINGLE_PATTERN, and prevents
+        that from being necessary once there are multiple patterns.)
 
         Returns:
             Callable: A callable which accepts the appropriate

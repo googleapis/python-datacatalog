@@ -272,8 +272,9 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Output only. Resource name of this policy tag, whose format is:
-        "projects/{project_number}/locations/{location_id}/taxonomies/{taxonomy_id}/policyTags/{id}".
+        If type_name is set, this need not be set. If both this and
+        type_name are set, this must be one of TYPE_ENUM, TYPE_MESSAGE or
+        TYPE_GROUP.
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -301,35 +302,32 @@ class DataCatalogClient(object):
             ...         pass
 
         Args:
-            scope (Union[dict, ~google.cloud.datacatalog_v1beta1.types.Scope]): Required. The scope of this search request.
+            scope (Union[dict, ~google.cloud.datacatalog_v1beta1.types.Scope]): The name of the uninterpreted option. Each string represents a
+                segment in a dot-separated name. is_extension is true iff a segment
+                represents an extension (denoted with parentheses in options specs in
+                .proto files). E.g.,{ ["foo", false], ["bar.baz", true], ["qux", false]
+                } represents "foo.(bar.baz).qux".
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.Scope`
-            query (str): The Data Catalog resource name of the entry in URL format. Example:
-
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}
-
-                Note that this Entry and its child resources may not actually be stored
-                in the location in this name.
+            query (str): The resource has one pattern, but the API owner expects to add more
+                later. (This is the inverse of ORIGINALLY_SINGLE_PATTERN, and prevents
+                that from being necessary once there are multiple patterns.)
             page_size (int): The maximum number of resources contained in the
                 underlying API response. If page streaming is performed per-
                 resource, this parameter does not affect the return value. If page
                 streaming is performed per-page, this determines the maximum number
                 of resources in a page.
-            order_by (str): ``etag`` is used for optimistic concurrency control as a way to help
-                prevent simultaneous updates of a policy from overwriting each other. It
-                is strongly suggested that systems make use of the ``etag`` in the
-                read-modify-write cycle to perform policy updates in order to avoid race
-                conditions: An ``etag`` is returned in the response to ``getIamPolicy``,
-                and systems are expected to put that etag in the request to
-                ``setIamPolicy`` to ensure that their change will be applied to the same
-                version of the policy.
+            order_by (str): The resource type. It must be in the format of
+                {service_name}/{resource_type_kind}. The ``resource_type_kind`` must be
+                singular and must not include version numbers.
 
-                If no ``etag`` is provided in the call to ``setIamPolicy``, then the
-                existing policy is overwritten. Due to blind-set semantics of an
-                etag-less policy, 'setIamPolicy' will not fail even if the incoming
-                policy version does not meet the requirements for modifying the stored
-                policy.
+                Example: ``storage.googleapis.com/Bucket``
+
+                The value of the resource_type_kind must follow the regular expression
+                /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
+                should use PascalCase (UpperCamelCase). The maximum number of characters
+                allowed for the ``resource_type_kind`` is 100.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -391,7 +389,12 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Request message for ``LookupEntry``.
+        Required. The name of the project and the template location
+        `region <https://cloud.google.com/data-catalog/docs/concepts/regions>`__.
+
+        Example:
+
+        -  projects/{project_id}/locations/us-central1/tagTemplates/{tag_template_id}
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -409,19 +412,8 @@ class DataCatalogClient(object):
             >>> response = client.create_entry_group(parent, entry_group_id, entry_group)
 
         Args:
-            parent (str): The resource this metadata entry refers to.
-
-                For Google Cloud Platform resources, ``linked_resource`` is the `full
-                name of the
-                resource <https://cloud.google.com/apis/design/resource_names#full_resource_name>`__.
-                For example, the ``linked_resource`` for a table resource from BigQuery
-                is:
-
-                -  //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId
-
-                Output only when Entry is of type in the EntryType enum. For entries
-                with user_specified_type, this field is optional and defaults to an
-                empty string.
+            parent (str): Output only. Resource name of this taxonomy, whose format is:
+                "projects/{project_number}/locations/{location_id}/taxonomies/{id}".
             entry_group_id (str): Required. The id of the entry group to create.
                 The id must begin with a letter or underscore, contain only English
                 letters, numbers and underscores, and be at most 64 characters.
@@ -500,30 +492,7 @@ class DataCatalogClient(object):
             >>> response = client.get_entry_group(name)
 
         Args:
-            name (str): Optional. The relative resource name pattern associated with this
-                resource type. The DNS prefix of the full resource name shouldn't be
-                specified here.
-
-                The path pattern must follow the syntax, which aligns with HTTP binding
-                syntax:
-
-                ::
-
-                    Template = Segment { "/" Segment } ;
-                    Segment = LITERAL | Variable ;
-                    Variable = "{" LITERAL "}" ;
-
-                Examples:
-
-                ::
-
-                    - "projects/{project}/topics/{topic}"
-                    - "projects/{project}/knowledgeBases/{knowledge_base}"
-
-                The components in braces correspond to the IDs for each resource in the
-                hierarchy. It is expected that, if multiple patterns are provided, the
-                same component name (e.g. "project") refers to IDs of the same type of
-                resource.
+            name (str): Request message for ``GetIamPolicy`` method.
             read_mask (Union[dict, ~google.cloud.datacatalog_v1beta1.types.FieldMask]): The fields to return. If not set or empty, all fields are returned.
 
                 If a dict is provided, it must be of the same form as the protobuf
@@ -585,7 +554,11 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Request message for ``GetEntry``.
+        Required. The ID of the tag template field to create. Field ids can
+        contain letters (both uppercase and lowercase), numbers (0-9),
+        underscores (_) and dashes (-). Field IDs must be at least 1 character
+        long and at most 128 characters long. Field IDs must also be unique
+        within their template.
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -597,11 +570,7 @@ class DataCatalogClient(object):
             >>> client.delete_entry_group(name)
 
         Args:
-            name (str): The full name of the cloud resource the entry belongs to. See:
-                https://cloud.google.com/apis/design/resource_names#full_resource_name.
-                Example:
-
-                -  ``//bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId``
+            name (str): An ``EntryGroup``.
             force (bool): Optional. If true, deletes all entries in the entry group.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
@@ -658,8 +627,7 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        For extensions, this is the name of the type being extended. It is
-        resolved in the same manner as type_name.
+        Request message for ``CreateEntry``.
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -677,8 +645,8 @@ class DataCatalogClient(object):
             >>> response = client.create_entry(parent, entry_id, entry)
 
         Args:
-            parent (str): Spec of a BigQuery table. This field should only be populated if
-                ``table_source_type`` is ``BIGQUERY_TABLE``.
+            parent (str): OPTIONAL: A ``GetPolicyOptions`` object for specifying options to
+                ``GetIamPolicy``. This field is only used by Cloud IAM.
             entry_id (str): Required. The id of the entry to create.
             entry (Union[dict, ~google.cloud.datacatalog_v1beta1.types.Entry]): Required. The entry to create.
 
@@ -743,7 +711,8 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        A ``TagTemplate``.
+        For extensions, this is the name of the type being extended. It is
+        resolved in the same manner as type_name.
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -825,15 +794,12 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        The full name of the Google Cloud Platform resource the Data Catalog
-        entry represents. See:
-        https://cloud.google.com/apis/design/resource_names#full_resource_name.
-        Full names are case-sensitive.
+        Required. The name of the entry group this entry is in. Example:
 
-        Examples:
+        -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}
 
-        -  //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId
-        -  //pubsub.googleapis.com/projects/projectId/topics/topicId
+        Note that this Entry and its child resources may not actually be stored
+        in the location in this name.
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -845,21 +811,8 @@ class DataCatalogClient(object):
             >>> client.delete_entry(name)
 
         Args:
-            name (str): Set true to use the old proto1 MessageSet wire format for
-                extensions. This is provided for backwards-compatibility with the
-                MessageSet wire format. You should not use this for any other reason:
-                It's less efficient, has fewer features, and is more complicated.
-
-                The message must be defined exactly as follows: message Foo { option
-                message_set_wire_format = true; extensions 4 to max; } Note that the
-                message cannot have any defined fields; MessageSets only have
-                extensions.
-
-                All extensions of your type must be singular messages; e.g. they cannot
-                be int32s, enums, or repeated messages.
-
-                Because this is an option, the above two restrictions are not enforced
-                by the protocol compiler.
+            name (str): Required. The new ID of this tag template field. For example,
+                ``my_new_field``.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -925,10 +878,7 @@ class DataCatalogClient(object):
             >>> response = client.get_entry(name)
 
         Args:
-            name (str): The same concept of the ``singular`` field in k8s CRD spec
-                https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
-                Such as "project" for the ``resourcemanager.googleapis.com/Project``
-                type.
+            name (str): javalite_serializable
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -998,26 +948,10 @@ class DataCatalogClient(object):
             >>> response = client.lookup_entry()
 
         Args:
-            linked_resource (str): Gets the access control policy for a resource. A ``NOT_FOUND`` error
-                is returned if the resource does not exist. An empty policy is returned
-                if the resource exists but does not have a policy set on it.
+            linked_resource (str): Required. The name of the entry. Example:
 
-                Supported resources are:
-
-                -  Tag templates.
-                -  Entries.
-                -  Entry groups. Note, this method cannot be used to manage policies for
-                   BigQuery, Cloud Pub/Sub and any external Google Cloud Platform
-                   resources synced to Cloud Data Catalog.
-
-                Callers must have following Google IAM permission
-
-                -  ``datacatalog.tagTemplates.getIamPolicy`` to get policies on tag
-                   templates.
-                -  ``datacatalog.entries.getIamPolicy`` to get policies on entries.
-                -  ``datacatalog.entryGroups.getIamPolicy`` to get policies on entry
-                   groups.
-            sql_resource (str): Request message for ``UpdateTaxonomy``.
+                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}
+            sql_resource (str): Request message for ``DeleteTagTemplateField``.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -1083,20 +1017,10 @@ class DataCatalogClient(object):
             >>> response = client.list_entry_groups(parent)
 
         Args:
-            parent (str): Entry type if it does not fit any of the input-allowed values listed
-                in ``EntryType`` enum above. When creating an entry, users should check
-                the enum values first, if nothing matches the entry to be created, then
-                provide a custom value, for example "my_special_type".
-                ``user_specified_type`` strings must begin with a letter or underscore
-                and can only contain letters, numbers, and underscores; are case
-                insensitive; must be at least 1 character and at most 64 characters
-                long.
-
-                Currently, only FILESET enum value is allowed. All other entries created
-                through Data Catalog must use ``user_specified_type``.
-            page_size (int): Lists the tags on an ``Entry``.
-            page_token (str): Optional. Token that specifies which page is requested. If empty, the first
-                page is returned.
+            parent (str): Request message for ``ListPolicyTags``.
+            page_size (int): Request message for ``DeleteEntry``.
+            page_token (str): Optional. Token that specifies which page is requested. If empty, the first page is
+                returned.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -1170,39 +1094,18 @@ class DataCatalogClient(object):
             >>> response = client.list_entries(parent)
 
         Args:
-            parent (str): Creates an EntryGroup.
-
-                An entry group contains logically related entries together with Cloud
-                Identity and Access Management policies that specify the users who can
-                create, edit, and view entries within the entry group.
-
-                Data Catalog automatically creates an entry group for BigQuery entries
-                ("@bigquery") and Pub/Sub topics ("@pubsub"). Users create their own
-                entry group to contain Cloud Storage fileset entries or custom type
-                entries, and the IAM policies associated with those entries. Entry
-                groups, like entries, can be searched.
-
-                A maximum of 10,000 entry groups may be created per organization across
-                all locations.
-
-                Users should enable the Data Catalog API in the project identified by
-                the ``parent`` parameter (see [Data Catalog Resource Project]
-                (/data-catalog/docs/concepts/resource-project) for more information).
-            page_size (int): Required. The name of the project and the template location
-                `region <https://cloud.google.com/compute/docs/regions-zones/#available>`__.
-                NOTE: Currently, only the ``us-central1 region`` is supported.
-
-                Example:
-
-                -  projects/{project_id}/locations/us-central1
+            parent (str): Optional. Pagination token returned in an earlier
+                ``SearchCatalogResponse.next_page_token``, which indicates that this is
+                a continuation of a prior ``SearchCatalogRequest`` call, and that the
+                system should return the next page of data. If empty, the first page is
+                returned.
+            page_size (int): The maximum number of items to return. Default is 10. Max limit is
+                1000. Throws an invalid argument for ``page_size > 1000``.
             page_token (str): Token that specifies which page is requested. If empty, the first page is
                 returned.
-            read_mask (Union[dict, ~google.cloud.datacatalog_v1beta1.types.FieldMask]): Tags are used to attach custom metadata to Data Catalog resources.
-                Tags conform to the specifications within their tag template.
-
-                See `Data Catalog
-                IAM <https://cloud.google.com/data-catalog/docs/concepts/iam>`__ for
-                information on the permissions needed to create or view tags.
+            read_mask (Union[dict, ~google.cloud.datacatalog_v1beta1.types.FieldMask]): Output only. The Data Catalog resource name of the dataset entry the
+                current table belongs to, for example,
+                ``projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}``.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.FieldMask`
@@ -1268,7 +1171,8 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        An ``Entry``.
+        An annotation that describes a resource definition without a
+        corresponding message; see ``ResourceDescriptor``.
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -1350,10 +1254,8 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        The set of permissions to check for the ``resource``. Permissions
-        with wildcards (such as '*' or 'storage.*') are not allowed. For more
-        information see `IAM
-        Overview <https://cloud.google.com/iam/docs/overview#permissions>`__.
+        An annotation that describes a resource definition, see
+        ``ResourceDescriptor``.
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -1371,7 +1273,8 @@ class DataCatalogClient(object):
             >>> response = client.create_tag_template(parent, tag_template_id, tag_template)
 
         Args:
-            parent (str): Request message for ``SearchCatalog``.
+            parent (str): A subset of ``TestPermissionsRequest.permissions`` that the caller
+                is allowed.
             tag_template_id (str): Required. The id of the tag template to create.
             tag_template (Union[dict, ~google.cloud.datacatalog_v1beta1.types.TagTemplate]): Required. The tag template to create.
 
@@ -1520,8 +1423,14 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        An annotation that describes a resource definition, see
-        ``ResourceDescriptor``.
+        Updates a tag template. This method cannot be used to update the
+        fields of a template. The tag template fields are represented as
+        separate resources and should be updated using their own
+        create/update/delete methods. Users should enable the Data Catalog API
+        in the project identified by the ``tag_template.name`` parameter (see
+        [Data Catalog Resource Project]
+        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+        for more information).
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -1538,29 +1447,14 @@ class DataCatalogClient(object):
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.TagTemplate`
-            update_mask (Union[dict, ~google.cloud.datacatalog_v1beta1.types.FieldMask]): Specifies the identities requesting access for a Cloud Platform
-                resource. ``members`` can have the following values:
+            update_mask (Union[dict, ~google.cloud.datacatalog_v1beta1.types.FieldMask]): Entry Metadata. A Data Catalog Entry resource represents another
+                resource in Google Cloud Platform (such as a BigQuery dataset or a
+                Pub/Sub topic), or outside of Google Cloud Platform. Clients can use the
+                ``linked_resource`` field in the Entry resource to refer to the original
+                resource ID of the source system.
 
-                -  ``allUsers``: A special identifier that represents anyone who is on
-                   the internet; with or without a Google account.
-
-                -  ``allAuthenticatedUsers``: A special identifier that represents
-                   anyone who is authenticated with a Google account or a service
-                   account.
-
-                -  ``user:{emailid}``: An email address that represents a specific
-                   Google account. For example, ``alice@example.com`` .
-
-                -  ``serviceAccount:{emailid}``: An email address that represents a
-                   service account. For example,
-                   ``my-other-app@appspot.gserviceaccount.com``.
-
-                -  ``group:{emailid}``: An email address that represents a Google group.
-                   For example, ``admins@example.com``.
-
-                -  ``domain:{domain}``: The G Suite domain (primary) that represents all
-                   the users of that domain. For example, ``google.com`` or
-                   ``example.com``.
+                An Entry resource contains resource details, such as its schema. An
+                Entry can also be used to attach flexible metadata, such as a ``Tag``.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.FieldMask`
@@ -1623,10 +1517,10 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        The relative resource name of the resource in URL format. Examples:
-
-        -  ``projects/{project_id}/locations/{location_id}/entryGroups/{entry_group_id}/entries/{entry_id}``
-        -  ``projects/{project_id}/tagTemplates/{tag_template_id}``
+        Sub-type of the search result. This is a dot-delimited description
+        of the resource's full type, and is the same as the value callers would
+        provide in the "type" search facet. Examples: ``entry.table``,
+        ``entry.dataStream``, ``tagTemplate``.
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -1641,47 +1535,39 @@ class DataCatalogClient(object):
             >>> client.delete_tag_template(name, force)
 
         Args:
-            name (str): A Location identifies a piece of source code in a .proto file which
-                corresponds to a particular definition. This information is intended to
-                be useful to IDEs, code indexers, documentation generators, and similar
-                tools.
+            name (str): Protocol Buffers - Google's data interchange format Copyright 2008
+                Google Inc. All rights reserved.
+                https://developers.google.com/protocol-buffers/
 
-                For example, say we have a file like: message Foo { optional string foo
-                = 1; } Let's look at just the field definition: optional string foo = 1;
-                ^ ^^ ^^ ^ ^^^ a bc de f ghi We have the following locations: span path
-                represents [a,i) [ 4, 0, 2, 0 ] The whole field definition. [a,b) [ 4,
-                0, 2, 0, 4 ] The label (optional). [c,d) [ 4, 0, 2, 0, 5 ] The type
-                (string). [e,f) [ 4, 0, 2, 0, 1 ] The name (foo). [g,h) [ 4, 0, 2, 0, 3
-                ] The number (1).
+                Redistribution and use in source and binary forms, with or without
+                modification, are permitted provided that the following conditions are
+                met:
 
-                Notes:
+                ::
 
-                -  A location may refer to a repeated field itself (i.e. not to any
-                   particular index within it). This is used whenever a set of elements
-                   are logically enclosed in a single code segment. For example, an
-                   entire extend block (possibly containing multiple extension
-                   definitions) will have an outer location whose path refers to the
-                   "extensions" repeated field without an index.
-                -  Multiple locations may have the same path. This happens when a single
-                   logical declaration is spread out across multiple places. The most
-                   obvious example is the "extend" block again -- there may be multiple
-                   extend blocks in the same scope, each of which will have the same
-                   path.
-                -  A location's span is not always a subset of its parent's span. For
-                   example, the "extendee" of an extension declaration appears at the
-                   beginning of the "extend" block and is shared by all extensions
-                   within the block.
-                -  Just because a location's span is a subset of some other location's
-                   span does not mean that it is a descendant. For example, a "group"
-                   defines both a type and a field in a single declaration. Thus, the
-                   locations corresponding to the type and field and their components
-                   will overlap.
-                -  Code which tries to interpret locations should probably be designed
-                   to ignore those that it doesn't understand, as more types of
-                   locations could be recorded in the future.
-            force (bool): Spec for a group of BigQuery tables with name pattern
-                ``[prefix]YYYYMMDD``. Context:
-                https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding
+                    * Redistributions of source code must retain the above copyright
+
+                notice, this list of conditions and the following disclaimer. \*
+                Redistributions in binary form must reproduce the above copyright
+                notice, this list of conditions and the following disclaimer in the
+                documentation and/or other materials provided with the distribution. \*
+                Neither the name of Google Inc. nor the names of its contributors may be
+                used to endorse or promote products derived from this software without
+                specific prior written permission.
+
+                THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+                IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+                TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+                PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+                OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+                EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+                PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+                PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+                LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+                NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+                SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+            force (bool): Spec of a BigQuery table. This field should only be populated if
+                ``table_source_type`` is ``BIGQUERY_TABLE``.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -1732,289 +1618,6 @@ class DataCatalogClient(object):
         parent,
         tag_template_field_id,
         tag_template_field,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
-        """
-        An ``EntryGroup``.
-
-        Example:
-            >>> from google.cloud import datacatalog_v1beta1
-            >>>
-            >>> client = datacatalog_v1beta1.DataCatalogClient()
-            >>>
-            >>> parent = client.tag_template_path('[PROJECT]', '[LOCATION]', '[TAG_TEMPLATE]')
-            >>>
-            >>> # TODO: Initialize `tag_template_field_id`:
-            >>> tag_template_field_id = ''
-            >>>
-            >>> # TODO: Initialize `tag_template_field`:
-            >>> tag_template_field = {}
-            >>>
-            >>> response = client.create_tag_template_field(parent, tag_template_field_id, tag_template_field)
-
-        Args:
-            parent (str): Required. Currently, this field must always be set to ``true``. This
-                confirms the deletion of any possible tags using this template.
-                ``force = false`` will be supported in the future.
-            tag_template_field_id (str): Output only. The table name prefix of the shards. The name of any
-                given shard is ``[table_prefix]YYYYMMDD``, for example, for shard
-                ``MyTable20180101``, the ``table_prefix`` is ``MyTable``.
-            tag_template_field (Union[dict, ~google.cloud.datacatalog_v1beta1.types.TagTemplateField]): Required. The tag template field to create.
-
-                If a dict is provided, it must be of the same form as the protobuf
-                message :class:`~google.cloud.datacatalog_v1beta1.types.TagTemplateField`
-            retry (Optional[google.api_core.retry.Retry]):  A retry object used
-                to retry requests. If ``None`` is specified, requests will
-                be retried using a default configuration.
-            timeout (Optional[float]): The amount of time, in seconds, to wait
-                for the request to complete. Note that if ``retry`` is
-                specified, the timeout applies to each individual attempt.
-            metadata (Optional[Sequence[Tuple[str, str]]]): Additional metadata
-                that is provided to the method.
-
-        Returns:
-            A :class:`~google.cloud.datacatalog_v1beta1.types.TagTemplateField` instance.
-
-        Raises:
-            google.api_core.exceptions.GoogleAPICallError: If the request
-                    failed for any reason.
-            google.api_core.exceptions.RetryError: If the request failed due
-                    to a retryable error and retry attempts failed.
-            ValueError: If the parameters are invalid.
-        """
-        # Wrap the transport method to add retry and timeout logic.
-        if "create_tag_template_field" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "create_tag_template_field"
-            ] = google.api_core.gapic_v1.method.wrap_method(
-                self.transport.create_tag_template_field,
-                default_retry=self._method_configs["CreateTagTemplateField"].retry,
-                default_timeout=self._method_configs["CreateTagTemplateField"].timeout,
-                client_info=self._client_info,
-            )
-
-        request = datacatalog_pb2.CreateTagTemplateFieldRequest(
-            parent=parent,
-            tag_template_field_id=tag_template_field_id,
-            tag_template_field=tag_template_field,
-        )
-        if metadata is None:
-            metadata = []
-        metadata = list(metadata)
-        try:
-            routing_header = [("parent", parent)]
-        except AttributeError:
-            pass
-        else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
-            metadata.append(routing_metadata)
-
-        return self._inner_api_calls["create_tag_template_field"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
-
-    def update_tag_template_field(
-        self,
-        name,
-        tag_template_field,
-        update_mask=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
-        """
-        Creates a tag on an ``Entry``. Note: The project identified by the
-        ``parent`` parameter for the
-        `tag <https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters>`__
-        and the `tag
-        template <https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters>`__
-        used to create the tag must be from the same organization.
-
-        Example:
-            >>> from google.cloud import datacatalog_v1beta1
-            >>>
-            >>> client = datacatalog_v1beta1.DataCatalogClient()
-            >>>
-            >>> name = client.field_path('[PROJECT]', '[LOCATION]', '[TAG_TEMPLATE]', '[FIELD]')
-            >>>
-            >>> # TODO: Initialize `tag_template_field`:
-            >>> tag_template_field = {}
-            >>>
-            >>> response = client.update_tag_template_field(name, tag_template_field)
-
-        Args:
-            name (str): Required. The name of the tag template. Example:
-
-                -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}
-            tag_template_field (Union[dict, ~google.cloud.datacatalog_v1beta1.types.TagTemplateField]): Required. The template to update.
-
-                If a dict is provided, it must be of the same form as the protobuf
-                message :class:`~google.cloud.datacatalog_v1beta1.types.TagTemplateField`
-            update_mask (Union[dict, ~google.cloud.datacatalog_v1beta1.types.FieldMask]): Required. The query string in search query syntax. The query must be
-                non-empty.
-
-                Query strings can be simple as "x" or more qualified as:
-
-                -  name:x
-                -  column:x
-                -  description:y
-
-                Note: Query tokens need to have a minimum of 3 characters for substring
-                matching to work correctly. See `Data Catalog Search
-                Syntax <https://cloud.google.com/data-catalog/docs/how-to/search-reference>`__
-                for more information.
-
-                If a dict is provided, it must be of the same form as the protobuf
-                message :class:`~google.cloud.datacatalog_v1beta1.types.FieldMask`
-            retry (Optional[google.api_core.retry.Retry]):  A retry object used
-                to retry requests. If ``None`` is specified, requests will
-                be retried using a default configuration.
-            timeout (Optional[float]): The amount of time, in seconds, to wait
-                for the request to complete. Note that if ``retry`` is
-                specified, the timeout applies to each individual attempt.
-            metadata (Optional[Sequence[Tuple[str, str]]]): Additional metadata
-                that is provided to the method.
-
-        Returns:
-            A :class:`~google.cloud.datacatalog_v1beta1.types.TagTemplateField` instance.
-
-        Raises:
-            google.api_core.exceptions.GoogleAPICallError: If the request
-                    failed for any reason.
-            google.api_core.exceptions.RetryError: If the request failed due
-                    to a retryable error and retry attempts failed.
-            ValueError: If the parameters are invalid.
-        """
-        # Wrap the transport method to add retry and timeout logic.
-        if "update_tag_template_field" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "update_tag_template_field"
-            ] = google.api_core.gapic_v1.method.wrap_method(
-                self.transport.update_tag_template_field,
-                default_retry=self._method_configs["UpdateTagTemplateField"].retry,
-                default_timeout=self._method_configs["UpdateTagTemplateField"].timeout,
-                client_info=self._client_info,
-            )
-
-        request = datacatalog_pb2.UpdateTagTemplateFieldRequest(
-            name=name, tag_template_field=tag_template_field, update_mask=update_mask
-        )
-        if metadata is None:
-            metadata = []
-        metadata = list(metadata)
-        try:
-            routing_header = [("name", name)]
-        except AttributeError:
-            pass
-        else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
-            metadata.append(routing_metadata)
-
-        return self._inner_api_calls["update_tag_template_field"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
-
-    def rename_tag_template_field(
-        self,
-        name,
-        new_tag_template_field_id,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
-        """
-        The SQL name of the entry. SQL names are case-sensitive.
-
-        Examples:
-
-        -  ``cloud_pubsub.project_id.topic_id``
-        -  :literal:`pubsub.project_id.`topic.id.with.dots\``
-        -  ``bigquery.table.project_id.dataset_id.table_id``
-        -  ``bigquery.dataset.project_id.dataset_id``
-        -  ``datacatalog.entry.project_id.location_id.entry_group_id.entry_id``
-
-        ``*_id``\ s shoud satisfy the standard SQL rules for identifiers.
-        https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.
-
-        Example:
-            >>> from google.cloud import datacatalog_v1beta1
-            >>>
-            >>> client = datacatalog_v1beta1.DataCatalogClient()
-            >>>
-            >>> name = client.field_path('[PROJECT]', '[LOCATION]', '[TAG_TEMPLATE]', '[FIELD]')
-            >>>
-            >>> # TODO: Initialize `new_tag_template_field_id`:
-            >>> new_tag_template_field_id = ''
-            >>>
-            >>> response = client.rename_tag_template_field(name, new_tag_template_field_id)
-
-        Args:
-            name (str): Required. The name of the entry group that contains the entries,
-                which can be provided in URL format. Example:
-
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}
-            new_tag_template_field_id (str): Output only. Resource name of this taxonomy, whose format is:
-                "projects/{project_number}/locations/{location_id}/taxonomies/{id}".
-            retry (Optional[google.api_core.retry.Retry]):  A retry object used
-                to retry requests. If ``None`` is specified, requests will
-                be retried using a default configuration.
-            timeout (Optional[float]): The amount of time, in seconds, to wait
-                for the request to complete. Note that if ``retry`` is
-                specified, the timeout applies to each individual attempt.
-            metadata (Optional[Sequence[Tuple[str, str]]]): Additional metadata
-                that is provided to the method.
-
-        Returns:
-            A :class:`~google.cloud.datacatalog_v1beta1.types.TagTemplateField` instance.
-
-        Raises:
-            google.api_core.exceptions.GoogleAPICallError: If the request
-                    failed for any reason.
-            google.api_core.exceptions.RetryError: If the request failed due
-                    to a retryable error and retry attempts failed.
-            ValueError: If the parameters are invalid.
-        """
-        # Wrap the transport method to add retry and timeout logic.
-        if "rename_tag_template_field" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "rename_tag_template_field"
-            ] = google.api_core.gapic_v1.method.wrap_method(
-                self.transport.rename_tag_template_field,
-                default_retry=self._method_configs["RenameTagTemplateField"].retry,
-                default_timeout=self._method_configs["RenameTagTemplateField"].timeout,
-                client_info=self._client_info,
-            )
-
-        request = datacatalog_pb2.RenameTagTemplateFieldRequest(
-            name=name, new_tag_template_field_id=new_tag_template_field_id
-        )
-        if metadata is None:
-            metadata = []
-        metadata = list(metadata)
-        try:
-            routing_header = [("name", name)]
-        except AttributeError:
-            pass
-        else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
-            metadata.append(routing_metadata)
-
-        return self._inner_api_calls["rename_tag_template_field"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
-
-    def delete_tag_template_field(
-        self,
-        name,
-        force,
         retry=google.api_core.gapic_v1.method.DEFAULT,
         timeout=google.api_core.gapic_v1.method.DEFAULT,
         metadata=None,
@@ -2147,6 +1750,303 @@ class DataCatalogClient(object):
             >>>
             >>> client = datacatalog_v1beta1.DataCatalogClient()
             >>>
+            >>> parent = client.tag_template_path('[PROJECT]', '[LOCATION]', '[TAG_TEMPLATE]')
+            >>>
+            >>> # TODO: Initialize `tag_template_field_id`:
+            >>> tag_template_field_id = ''
+            >>>
+            >>> # TODO: Initialize `tag_template_field`:
+            >>> tag_template_field = {}
+            >>>
+            >>> response = client.create_tag_template_field(parent, tag_template_field_id, tag_template_field)
+
+        Args:
+            parent (str): Response message for ``ListTags``.
+            tag_template_field_id (str): A generic empty message that you can re-use to avoid defining
+                duplicated empty messages in your APIs. A typical example is to use it
+                as the request or the response type of an API method. For instance:
+
+                ::
+
+                    service Foo {
+                      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);
+                    }
+
+                The JSON representation for ``Empty`` is empty JSON object ``{}``.
+            tag_template_field (Union[dict, ~google.cloud.datacatalog_v1beta1.types.TagTemplateField]): Required. The tag template field to create.
+
+                If a dict is provided, it must be of the same form as the protobuf
+                message :class:`~google.cloud.datacatalog_v1beta1.types.TagTemplateField`
+            retry (Optional[google.api_core.retry.Retry]):  A retry object used
+                to retry requests. If ``None`` is specified, requests will
+                be retried using a default configuration.
+            timeout (Optional[float]): The amount of time, in seconds, to wait
+                for the request to complete. Note that if ``retry`` is
+                specified, the timeout applies to each individual attempt.
+            metadata (Optional[Sequence[Tuple[str, str]]]): Additional metadata
+                that is provided to the method.
+
+        Returns:
+            A :class:`~google.cloud.datacatalog_v1beta1.types.TagTemplateField` instance.
+
+        Raises:
+            google.api_core.exceptions.GoogleAPICallError: If the request
+                    failed for any reason.
+            google.api_core.exceptions.RetryError: If the request failed due
+                    to a retryable error and retry attempts failed.
+            ValueError: If the parameters are invalid.
+        """
+        # Wrap the transport method to add retry and timeout logic.
+        if "create_tag_template_field" not in self._inner_api_calls:
+            self._inner_api_calls[
+                "create_tag_template_field"
+            ] = google.api_core.gapic_v1.method.wrap_method(
+                self.transport.create_tag_template_field,
+                default_retry=self._method_configs["CreateTagTemplateField"].retry,
+                default_timeout=self._method_configs["CreateTagTemplateField"].timeout,
+                client_info=self._client_info,
+            )
+
+        request = datacatalog_pb2.CreateTagTemplateFieldRequest(
+            parent=parent,
+            tag_template_field_id=tag_template_field_id,
+            tag_template_field=tag_template_field,
+        )
+        if metadata is None:
+            metadata = []
+        metadata = list(metadata)
+        try:
+            routing_header = [("parent", parent)]
+        except AttributeError:
+            pass
+        else:
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
+                routing_header
+            )
+            metadata.append(routing_metadata)
+
+        return self._inner_api_calls["create_tag_template_field"](
+            request, retry=retry, timeout=timeout, metadata=metadata
+        )
+
+    def update_tag_template_field(
+        self,
+        name,
+        tag_template_field,
+        update_mask=None,
+        retry=google.api_core.gapic_v1.method.DEFAULT,
+        timeout=google.api_core.gapic_v1.method.DEFAULT,
+        metadata=None,
+    ):
+        """
+        The relative resource name of the resource in URL format. Examples:
+
+        -  ``projects/{project_id}/locations/{location_id}/entryGroups/{entry_group_id}/entries/{entry_id}``
+        -  ``projects/{project_id}/tagTemplates/{tag_template_id}``
+
+        Example:
+            >>> from google.cloud import datacatalog_v1beta1
+            >>>
+            >>> client = datacatalog_v1beta1.DataCatalogClient()
+            >>>
+            >>> name = client.field_path('[PROJECT]', '[LOCATION]', '[TAG_TEMPLATE]', '[FIELD]')
+            >>>
+            >>> # TODO: Initialize `tag_template_field`:
+            >>> tag_template_field = {}
+            >>>
+            >>> response = client.update_tag_template_field(name, tag_template_field)
+
+        Args:
+            name (str): Request message for ``CreateTaxonomy``.
+            tag_template_field (Union[dict, ~google.cloud.datacatalog_v1beta1.types.TagTemplateField]): Required. The template to update.
+
+                If a dict is provided, it must be of the same form as the protobuf
+                message :class:`~google.cloud.datacatalog_v1beta1.types.TagTemplateField`
+            update_mask (Union[dict, ~google.cloud.datacatalog_v1beta1.types.FieldMask]): Lists the tags on an ``Entry``.
+
+                If a dict is provided, it must be of the same form as the protobuf
+                message :class:`~google.cloud.datacatalog_v1beta1.types.FieldMask`
+            retry (Optional[google.api_core.retry.Retry]):  A retry object used
+                to retry requests. If ``None`` is specified, requests will
+                be retried using a default configuration.
+            timeout (Optional[float]): The amount of time, in seconds, to wait
+                for the request to complete. Note that if ``retry`` is
+                specified, the timeout applies to each individual attempt.
+            metadata (Optional[Sequence[Tuple[str, str]]]): Additional metadata
+                that is provided to the method.
+
+        Returns:
+            A :class:`~google.cloud.datacatalog_v1beta1.types.TagTemplateField` instance.
+
+        Raises:
+            google.api_core.exceptions.GoogleAPICallError: If the request
+                    failed for any reason.
+            google.api_core.exceptions.RetryError: If the request failed due
+                    to a retryable error and retry attempts failed.
+            ValueError: If the parameters are invalid.
+        """
+        # Wrap the transport method to add retry and timeout logic.
+        if "update_tag_template_field" not in self._inner_api_calls:
+            self._inner_api_calls[
+                "update_tag_template_field"
+            ] = google.api_core.gapic_v1.method.wrap_method(
+                self.transport.update_tag_template_field,
+                default_retry=self._method_configs["UpdateTagTemplateField"].retry,
+                default_timeout=self._method_configs["UpdateTagTemplateField"].timeout,
+                client_info=self._client_info,
+            )
+
+        request = datacatalog_pb2.UpdateTagTemplateFieldRequest(
+            name=name, tag_template_field=tag_template_field, update_mask=update_mask
+        )
+        if metadata is None:
+            metadata = []
+        metadata = list(metadata)
+        try:
+            routing_header = [("name", name)]
+        except AttributeError:
+            pass
+        else:
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
+                routing_header
+            )
+            metadata.append(routing_metadata)
+
+        return self._inner_api_calls["update_tag_template_field"](
+            request, retry=retry, timeout=timeout, metadata=metadata
+        )
+
+    def rename_tag_template_field(
+        self,
+        name,
+        new_tag_template_field_id,
+        retry=google.api_core.gapic_v1.method.DEFAULT,
+        timeout=google.api_core.gapic_v1.method.DEFAULT,
+        metadata=None,
+    ):
+        """
+        Request message for ``UpdateTagTemplateField``.
+
+        Example:
+            >>> from google.cloud import datacatalog_v1beta1
+            >>>
+            >>> client = datacatalog_v1beta1.DataCatalogClient()
+            >>>
+            >>> name = client.field_path('[PROJECT]', '[LOCATION]', '[TAG_TEMPLATE]', '[FIELD]')
+            >>>
+            >>> # TODO: Initialize `new_tag_template_field_id`:
+            >>> new_tag_template_field_id = ''
+            >>>
+            >>> response = client.rename_tag_template_field(name, new_tag_template_field_id)
+
+        Args:
+            name (str): Request message for ``GetTaxonomy``.
+            new_tag_template_field_id (str): If this SourceCodeInfo represents a complete declaration, these are
+                any comments appearing before and after the declaration which appear to
+                be attached to the declaration.
+
+                A series of line comments appearing on consecutive lines, with no other
+                tokens appearing on those lines, will be treated as a single comment.
+
+                leading_detached_comments will keep paragraphs of comments that appear
+                before (but not connected to) the current element. Each paragraph,
+                separated by empty lines, will be one comment element in the repeated
+                field.
+
+                Only the comment content is provided; comment markers (e.g. //) are
+                stripped out. For block comments, leading whitespace and an asterisk
+                will be stripped from the beginning of each line other than the first.
+                Newlines are included in the output.
+
+                Examples:
+
+                optional int32 foo = 1; // Comment attached to foo. // Comment attached
+                to bar. optional int32 bar = 2;
+
+                optional string baz = 3; // Comment attached to baz. // Another line
+                attached to baz.
+
+                // Comment attached to qux. // // Another line attached to qux. optional
+                double qux = 4;
+
+                // Detached comment for corge. This is not leading or trailing comments
+                // to qux or corge because there are blank lines separating it from //
+                both.
+
+                // Detached comment for corge paragraph 2.
+
+                optional string corge = 5; /\* Block comment attached \* to corge.
+                Leading asterisks \* will be removed. */ /* Block comment attached to \*
+                grault. \*/ optional int32 grault = 6;
+
+                // ignored detached comments.
+            retry (Optional[google.api_core.retry.Retry]):  A retry object used
+                to retry requests. If ``None`` is specified, requests will
+                be retried using a default configuration.
+            timeout (Optional[float]): The amount of time, in seconds, to wait
+                for the request to complete. Note that if ``retry`` is
+                specified, the timeout applies to each individual attempt.
+            metadata (Optional[Sequence[Tuple[str, str]]]): Additional metadata
+                that is provided to the method.
+
+        Returns:
+            A :class:`~google.cloud.datacatalog_v1beta1.types.TagTemplateField` instance.
+
+        Raises:
+            google.api_core.exceptions.GoogleAPICallError: If the request
+                    failed for any reason.
+            google.api_core.exceptions.RetryError: If the request failed due
+                    to a retryable error and retry attempts failed.
+            ValueError: If the parameters are invalid.
+        """
+        # Wrap the transport method to add retry and timeout logic.
+        if "rename_tag_template_field" not in self._inner_api_calls:
+            self._inner_api_calls[
+                "rename_tag_template_field"
+            ] = google.api_core.gapic_v1.method.wrap_method(
+                self.transport.rename_tag_template_field,
+                default_retry=self._method_configs["RenameTagTemplateField"].retry,
+                default_timeout=self._method_configs["RenameTagTemplateField"].timeout,
+                client_info=self._client_info,
+            )
+
+        request = datacatalog_pb2.RenameTagTemplateFieldRequest(
+            name=name, new_tag_template_field_id=new_tag_template_field_id
+        )
+        if metadata is None:
+            metadata = []
+        metadata = list(metadata)
+        try:
+            routing_header = [("name", name)]
+        except AttributeError:
+            pass
+        else:
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
+                routing_header
+            )
+            metadata.append(routing_metadata)
+
+        return self._inner_api_calls["rename_tag_template_field"](
+            request, retry=retry, timeout=timeout, metadata=metadata
+        )
+
+    def delete_tag_template_field(
+        self,
+        name,
+        force,
+        retry=google.api_core.gapic_v1.method.DEFAULT,
+        timeout=google.api_core.gapic_v1.method.DEFAULT,
+        metadata=None,
+    ):
+        """
+        If set, gives the index of a oneof in the containing type's
+        oneof_decl list. This field is a member of that oneof.
+
+        Example:
+            >>> from google.cloud import datacatalog_v1beta1
+            >>>
+            >>> client = datacatalog_v1beta1.DataCatalogClient()
+            >>>
             >>> name = client.field_path('[PROJECT]', '[LOCATION]', '[TAG_TEMPLATE]', '[FIELD]')
             >>>
             >>> # TODO: Initialize `force`:
@@ -2155,14 +2055,27 @@ class DataCatalogClient(object):
             >>> client.delete_tag_template_field(name, force)
 
         Args:
-            name (str): A taxonomy is a collection of policy tags that classify data along a
-                common axis. For instance a data *sensitivity* taxonomy could contain
-                policy tags denoting PII such as age, zipcode, and SSN. A data *origin*
-                taxonomy could contain policy tags to distinguish user data, employee
-                data, partner data, public data.
-            force (bool): Number of results in the search page. If <=0 then defaults to 10.
-                Max limit for page_size is 1000. Throws an invalid argument for
-                page_size > 1000.
+            name (str): Output only. If the table is a dated shard, i.e., with name pattern
+                ``[prefix]YYYYMMDD``, ``grouped_entry`` is the Data Catalog resource
+                name of the date sharded grouped entry, for example,
+                ``projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}``.
+                Otherwise, ``grouped_entry`` is empty.
+            force (bool): Sets the access control policy for a resource. Replaces any existing
+                policy. Supported resources are:
+
+                -  Tag templates.
+                -  Entries.
+                -  Entry groups. Note, this method cannot be used to manage policies for
+                   BigQuery, Pub/Sub and any external Google Cloud Platform resources
+                   synced to Data Catalog.
+
+                Callers must have following Google IAM permission
+
+                -  ``datacatalog.tagTemplates.setIamPolicy`` to set policies on tag
+                   templates.
+                -  ``datacatalog.entries.setIamPolicy`` to set policies on entries.
+                -  ``datacatalog.entryGroups.setIamPolicy`` to set policies on entry
+                   groups.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -2217,7 +2130,7 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Response message for ``ListTags``.
+        Request message for ``GetEntryGroup``.
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -2232,8 +2145,9 @@ class DataCatalogClient(object):
             >>> response = client.create_tag(parent, tag)
 
         Args:
-            parent (str): The next_page_token value returned from a previous list request, if
-                any. If not set, defaults to an empty string.
+            parent (str): Required. The name of the entry. Example:
+
+                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}
             tag (Union[dict, ~google.cloud.datacatalog_v1beta1.types.Tag]): Required. The tag to create.
 
                 If a dict is provided, it must be of the same form as the protobuf
@@ -2312,10 +2226,19 @@ class DataCatalogClient(object):
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.Tag`
-            update_mask (Union[dict, ~google.cloud.datacatalog_v1beta1.types.FieldMask]): If ``true``, include Google Cloud Platform (GCP) public datasets in
-                the search results. Info on GCP public datasets is available at
-                https://cloud.google.com/public-datasets/. By default, GCP public
-                datasets are excluded.
+            update_mask (Union[dict, ~google.cloud.datacatalog_v1beta1.types.FieldMask]): The resource this metadata entry refers to.
+
+                For Google Cloud Platform resources, ``linked_resource`` is the `full
+                name of the
+                resource <https://cloud.google.com/apis/design/resource_names#full_resource_name>`__.
+                For example, the ``linked_resource`` for a table resource from BigQuery
+                is:
+
+                -  //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId
+
+                Output only when Entry is of type in the EntryType enum. For entries
+                with user_specified_type, this field is optional and defaults to an
+                empty string.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.FieldMask`
@@ -2387,22 +2310,99 @@ class DataCatalogClient(object):
             >>> client.delete_tag(name)
 
         Args:
-            name (str): Identifies which part of the FileDescriptorProto was defined at this
-                location.
+            name (str): A Timestamp represents a point in time independent of any time zone
+                or local calendar, encoded as a count of seconds and fractions of
+                seconds at nanosecond resolution. The count is relative to an epoch at
+                UTC midnight on January 1, 1970, in the proleptic Gregorian calendar
+                which extends the Gregorian calendar backwards to year one.
 
-                Each element is a field number or an index. They form a path from the
-                root FileDescriptorProto to the place where the definition. For example,
-                this path: [ 4, 3, 2, 7, 1 ] refers to: file.message_type(3) // 4, 3
-                .field(7) // 2, 7 .name() // 1 This is because
-                FileDescriptorProto.message_type has field number 4: repeated
-                DescriptorProto message_type = 4; and DescriptorProto.field has field
-                number 2: repeated FieldDescriptorProto field = 2; and
-                FieldDescriptorProto.name has field number 1: optional string name = 1;
+                All minutes are 60 seconds long. Leap seconds are "smeared" so that no
+                leap second table is needed for interpretation, using a `24-hour linear
+                smear <https://developers.google.com/time/smear>`__.
 
-                Thus, the above path gives the location of a field name. If we removed
-                the last element: [ 4, 3, 2, 7 ] this path refers to the whole field
-                declaration (from the beginning of the label to the terminating
-                semicolon).
+                The range is from 0001-01-01T00:00:00Z to
+                9999-12-31T23:59:59.999999999Z. By restricting to that range, we ensure
+                that we can convert to and from `RFC
+                3339 <https://www.ietf.org/rfc/rfc3339.txt>`__ date strings.
+
+                # Examples
+
+                Example 1: Compute Timestamp from POSIX ``time()``.
+
+                ::
+
+                    Timestamp timestamp;
+                    timestamp.set_seconds(time(NULL));
+                    timestamp.set_nanos(0);
+
+                Example 2: Compute Timestamp from POSIX ``gettimeofday()``.
+
+                ::
+
+                    struct timeval tv;
+                    gettimeofday(&tv, NULL);
+
+                    Timestamp timestamp;
+                    timestamp.set_seconds(tv.tv_sec);
+                    timestamp.set_nanos(tv.tv_usec * 1000);
+
+                Example 3: Compute Timestamp from Win32 ``GetSystemTimeAsFileTime()``.
+
+                ::
+
+                    FILETIME ft;
+                    GetSystemTimeAsFileTime(&ft);
+                    UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
+
+                    // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
+                    // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
+                    Timestamp timestamp;
+                    timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
+                    timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
+
+                Example 4: Compute Timestamp from Java ``System.currentTimeMillis()``.
+
+                ::
+
+                    long millis = System.currentTimeMillis();
+
+                    Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
+                        .setNanos((int) ((millis % 1000) * 1000000)).build();
+
+                Example 5: Compute Timestamp from current time in Python.
+
+                ::
+
+                    timestamp = Timestamp()
+                    timestamp.GetCurrentTime()
+
+                # JSON Mapping
+
+                In JSON format, the Timestamp type is encoded as a string in the `RFC
+                3339 <https://www.ietf.org/rfc/rfc3339.txt>`__ format. That is, the
+                format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z" where
+                {year} is always expressed using four digits while {month}, {day},
+                {hour}, {min}, and {sec} are zero-padded to two digits each. The
+                fractional seconds, which can go up to 9 digits (i.e. up to 1 nanosecond
+                resolution), are optional. The "Z" suffix indicates the timezone
+                ("UTC"); the timezone is required. A proto3 JSON serializer should
+                always use UTC (as indicated by "Z") when printing the Timestamp type
+                and a proto3 JSON parser should be able to accept both UTC and other
+                timezones (as indicated by an offset).
+
+                For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past 01:30
+                UTC on January 15, 2017.
+
+                In JavaScript, one can convert a Date object to this format using the
+                standard
+                `toISOString() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString>`__
+                method. In Python, a standard ``datetime.datetime`` object can be
+                converted to this format using
+                ```strftime`` <https://docs.python.org/2/library/time.html#time.strftime>`__
+                with the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java,
+                one can use the Joda Time's
+                ```ISODateTimeFormat.dateTime()`` <http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime%2D%2D>`__
+                to obtain a formatter capable of generating timestamps in this format.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -2457,7 +2457,7 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Request message for ``ExportTaxonomies``.
+        Request message for ``SetIamPolicy`` method.
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -2481,22 +2481,11 @@ class DataCatalogClient(object):
             ...         pass
 
         Args:
-            parent (str): Searches Data Catalog for multiple resources like entries, tags that
-                match a query.
-
-                This is a custom method
-                (https://cloud.google.com/apis/design/custom_methods) and does not
-                return the complete resource, only the resource identifier and high
-                level fields. Clients can subsequentally call ``Get`` methods.
-
-                Note that Data Catalog search queries do not guarantee full recall.
-                Query results that match your query may not be returned, even in
-                subsequent result pages. Also note that results returned (and not
-                returned) can vary across repeated search queries.
-
-                See `Data Catalog Search
-                Syntax <https://cloud.google.com/data-catalog/docs/how-to/search-reference>`__
-                for more information.
+            parent (str): This field indicates the entry's source system that Data Catalog
+                does not integrate with. ``user_specified_system`` strings must begin
+                with a letter or underscore and can only contain letters, numbers, and
+                underscores; are case insensitive; must be at least 1 character and at
+                most 64 characters long.
             page_size (int): The maximum number of resources contained in the
                 underlying API response. If page streaming is performed per-
                 resource, this parameter does not affect the return value. If page
@@ -2573,7 +2562,9 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Response message for ``TestIamPermissions`` method.
+        Required. The name of the tag template field. Example:
+
+        -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -2590,8 +2581,8 @@ class DataCatalogClient(object):
         Args:
             resource (str): REQUIRED: The resource for which the policy is being specified.
                 See the operation documentation for the appropriate value for this field.
-            policy (Union[dict, ~google.cloud.datacatalog_v1beta1.types.Policy]): Required. The name of the entry group. For example,
-                ``projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}``.
+            policy (Union[dict, ~google.cloud.datacatalog_v1beta1.types.Policy]): Optional. The maximum number of items to return. Default is 10. Max
+                limit is 1000. Throws an invalid argument for ``page_size > 1000``.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.Policy`
@@ -2652,14 +2643,11 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        Entry Metadata. A Data Catalog Entry resource represents another
-        resource in Google Cloud Platform (such as a BigQuery dataset or a Cloud
-        Pub/Sub topic), or outside of Google Cloud Platform. Clients can use the
-        ``linked_resource`` field in the Entry resource to refer to the original
-        resource ID of the source system.
+        The full name of the cloud resource the entry belongs to. See:
+        https://cloud.google.com/apis/design/resource_names#full_resource_name.
+        Example:
 
-        An Entry resource contains resource details, such as its schema. An
-        Entry can also be used to attach flexible metadata, such as a ``Tag``.
+        -  ``//bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId``
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -2673,11 +2661,13 @@ class DataCatalogClient(object):
         Args:
             resource (str): REQUIRED: The resource for which the policy is being requested.
                 See the operation documentation for the appropriate value for this field.
-            options_ (Union[dict, ~google.cloud.datacatalog_v1beta1.types.GetPolicyOptions]): Renames a field in a tag template. The user should enable the Data
-                Catalog API in the project identified by the ``name`` parameter (see
-                `Data Catalog Resource
-                Project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__
-                for more information).
+            options_ (Union[dict, ~google.cloud.datacatalog_v1beta1.types.GetPolicyOptions]): Output only. The resource name of the tag template field in URL
+                format. Example:
+
+                -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template}/fields/{field}
+
+                Note that this TagTemplateField may not actually be stored in the
+                location in this name.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.GetPolicyOptions`
@@ -2740,8 +2730,11 @@ class DataCatalogClient(object):
         metadata=None,
     ):
         """
-        If set, gives the index of a oneof in the containing type's
-        oneof_decl list. This field is a member of that oneof.
+        A taxonomy is a collection of policy tags that classify data along a
+        common axis. For instance a data *sensitivity* taxonomy could contain
+        policy tags denoting PII such as age, zipcode, and SSN. A data *origin*
+        taxonomy could contain policy tags to distinguish user data, employee
+        data, partner data, public data.
 
         Example:
             >>> from google.cloud import datacatalog_v1beta1
@@ -2758,8 +2751,9 @@ class DataCatalogClient(object):
         Args:
             resource (str): REQUIRED: The resource for which the policy detail is being requested.
                 See the operation documentation for the appropriate value for this field.
-            permissions (list[str]): An annotation that describes a resource reference, see
-                ``ResourceReference``.
+            permissions (list[str]): Required. The name of the tag to delete. Example:
+
+                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.

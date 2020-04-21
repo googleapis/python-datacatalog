@@ -355,16 +355,23 @@ class PolicyTagManagerClient(object):
             >>> response = client.update_taxonomy()
 
         Args:
-            taxonomy (Union[dict, ~google.cloud.datacatalog_v1beta1.types.Taxonomy]): Request message for ``CreateEntryGroup``.
+            taxonomy (Union[dict, ~google.cloud.datacatalog_v1beta1.types.Taxonomy]): The jstype option determines the JavaScript type used for values of
+                the field. The option is permitted only for 64 bit integral and fixed
+                types (int64, uint64, sint64, fixed64, sfixed64). A field with jstype
+                JS_STRING is represented as JavaScript string, which avoids loss of
+                precision that can happen when a large value is converted to a floating
+                point JavaScript. Specifying JS_NUMBER for the jstype causes the
+                generated JavaScript code to use the JavaScript "number" type. The
+                behavior of the default option JS_NORMAL is implementation dependent.
+
+                This option is an enum to permit additional types to be added, e.g.
+                goog.math.Integer.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.Taxonomy`
-            update_mask (Union[dict, ~google.cloud.datacatalog_v1beta1.types.FieldMask]): Required. The name of the project this entry group is in. Example:
-
-                -  projects/{project_id}/locations/{location}
-
-                Note that this EntryGroup and its child resources may not actually be
-                stored in the location in this name.
+            update_mask (Union[dict, ~google.cloud.datacatalog_v1beta1.types.FieldMask]): Specification for a group of BigQuery tables with name pattern
+                ``[prefix]YYYYMMDD``. Context:
+                https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.FieldMask`
@@ -442,8 +449,7 @@ class PolicyTagManagerClient(object):
             parent (str): Required. Resource name of the project to list the taxonomies of.
             page_size (int): The maximum number of items to return. Must be a value between 1 and 1000.
                 If not set, defaults to 50.
-            page_token (str): Input and output type names. These are resolved in the same way as
-                FieldDescriptorProto.type_name, but must refer to a message type.
+            page_token (str): Response message for ``ListEntries``.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -719,18 +725,14 @@ class PolicyTagManagerClient(object):
             >>> response = client.update_policy_tag()
 
         Args:
-            policy_tag (Union[dict, ~google.cloud.datacatalog_v1beta1.types.PolicyTag]): Resources like Entry can have schemas associated with them. This
-                scope allows users to attach tags to an individual column based on that
-                schema.
-
-                For attaching a tag to a nested column, use ``.`` to separate the column
-                names. Example:
-
-                -  ``outer_column.inner_column``
+            policy_tag (Union[dict, ~google.cloud.datacatalog_v1beta1.types.PolicyTag]): Input and output type names. These are resolved in the same way as
+                FieldDescriptorProto.type_name, but must refer to a message type.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.PolicyTag`
-            update_mask (Union[dict, ~google.cloud.datacatalog_v1beta1.types.FieldMask]): Associates ``members`` with a ``role``.
+            update_mask (Union[dict, ~google.cloud.datacatalog_v1beta1.types.FieldMask]): Entry resources in Data Catalog can be of different types e.g. a
+                BigQuery Table entry is of type ``TABLE``. This enum describes all the
+                possible types Data Catalog contains.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.FieldMask`
@@ -807,22 +809,66 @@ class PolicyTagManagerClient(object):
             parent (str): Required. Resource name of the taxonomy to list the policy tags of.
             page_size (int): The maximum number of items to return. Must be a value between 1 and 1000.
                 If not set, defaults to 50.
-            page_token (str): Sets the access control policy for a resource. Replaces any existing
-                policy. Supported resources are:
+            page_token (str): Defines an Identity and Access Management (IAM) policy. It is used
+                to specify access control policies for Cloud Platform resources.
 
-                -  Tag templates.
-                -  Entries.
-                -  Entry groups. Note, this method cannot be used to manage policies for
-                   BigQuery, Cloud Pub/Sub and any external Google Cloud Platform
-                   resources synced to Cloud Data Catalog.
+                A ``Policy`` is a collection of ``bindings``. A ``binding`` binds one or
+                more ``members`` to a single ``role``. Members can be user accounts,
+                service accounts, Google groups, and domains (such as G Suite). A
+                ``role`` is a named list of permissions (defined by IAM or configured by
+                users). A ``binding`` can optionally specify a ``condition``, which is a
+                logic expression that further constrains the role binding based on
+                attributes about the request and/or target resource.
 
-                Callers must have following Google IAM permission
+                **JSON Example**
 
-                -  ``datacatalog.tagTemplates.setIamPolicy`` to set policies on tag
-                   templates.
-                -  ``datacatalog.entries.setIamPolicy`` to set policies on entries.
-                -  ``datacatalog.entryGroups.setIamPolicy`` to set policies on entry
-                   groups.
+                ::
+
+                    {
+                      "bindings": [
+                        {
+                          "role": "roles/resourcemanager.organizationAdmin",
+                          "members": [
+                            "user:mike@example.com",
+                            "group:admins@example.com",
+                            "domain:google.com",
+                            "serviceAccount:my-project-id@appspot.gserviceaccount.com"
+                          ]
+                        },
+                        {
+                          "role": "roles/resourcemanager.organizationViewer",
+                          "members": ["user:eve@example.com"],
+                          "condition": {
+                            "title": "expirable access",
+                            "description": "Does not grant access after Sep 2020",
+                            "expression": "request.time <
+                            timestamp('2020-10-01T00:00:00.000Z')",
+                          }
+                        }
+                      ]
+                    }
+
+                **YAML Example**
+
+                ::
+
+                    bindings:
+                    - members:
+                      - user:mike@example.com
+                      - group:admins@example.com
+                      - domain:google.com
+                      - serviceAccount:my-project-id@appspot.gserviceaccount.com
+                      role: roles/resourcemanager.organizationAdmin
+                    - members:
+                      - user:eve@example.com
+                      role: roles/resourcemanager.organizationViewer
+                      condition:
+                        title: expirable access
+                        description: Does not grant access after Sep 2020
+                        expression: request.time < timestamp('2020-10-01T00:00:00.000Z')
+
+                For a description of IAM and its features, see the `IAM developer's
+                guide <https://cloud.google.com/iam/docs>`__.
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.
@@ -961,11 +1007,13 @@ class PolicyTagManagerClient(object):
         Args:
             resource (str): REQUIRED: The resource for which the policy is being requested.
                 See the operation documentation for the appropriate value for this field.
-            options_ (Union[dict, ~google.cloud.datacatalog_v1beta1.types.GetPolicyOptions]): Renames a field in a tag template. The user should enable the Data
-                Catalog API in the project identified by the ``name`` parameter (see
-                `Data Catalog Resource
-                Project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__
-                for more information).
+            options_ (Union[dict, ~google.cloud.datacatalog_v1beta1.types.GetPolicyOptions]): Output only. The resource name of the tag template field in URL
+                format. Example:
+
+                -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template}/fields/{field}
+
+                Note that this TagTemplateField may not actually be stored in the
+                location in this name.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.GetPolicyOptions`
@@ -1040,8 +1088,8 @@ class PolicyTagManagerClient(object):
         Args:
             resource (str): REQUIRED: The resource for which the policy is being specified.
                 See the operation documentation for the appropriate value for this field.
-            policy (Union[dict, ~google.cloud.datacatalog_v1beta1.types.Policy]): Required. The name of the entry group. For example,
-                ``projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}``.
+            policy (Union[dict, ~google.cloud.datacatalog_v1beta1.types.Policy]): Optional. The maximum number of items to return. Default is 10. Max
+                limit is 1000. Throws an invalid argument for ``page_size > 1000``.
 
                 If a dict is provided, it must be of the same form as the protobuf
                 message :class:`~google.cloud.datacatalog_v1beta1.types.Policy`
@@ -1115,8 +1163,9 @@ class PolicyTagManagerClient(object):
         Args:
             resource (str): REQUIRED: The resource for which the policy detail is being requested.
                 See the operation documentation for the appropriate value for this field.
-            permissions (list[str]): An annotation that describes a resource reference, see
-                ``ResourceReference``.
+            permissions (list[str]): Required. The name of the tag to delete. Example:
+
+                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}
             retry (Optional[google.api_core.retry.Retry]):  A retry object used
                 to retry requests. If ``None`` is specified, requests will
                 be retried using a default configuration.

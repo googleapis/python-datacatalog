@@ -755,10 +755,12 @@ class TestDataCatalogClient(object):
         name = "name3373707"
         display_name = "displayName1615086568"
         is_required = True
+        order = 106006350
         expected_response = {
             "name": name,
             "display_name": display_name,
             "is_required": is_required,
+            "order": order,
         }
         expected_response = tags_pb2.TagTemplateField(**expected_response)
 
@@ -811,10 +813,12 @@ class TestDataCatalogClient(object):
         name_2 = "name2-1052831874"
         display_name = "displayName1615086568"
         is_required = True
+        order = 106006350
         expected_response = {
             "name": name_2,
             "display_name": display_name,
             "is_required": is_required,
+            "order": order,
         }
         expected_response = tags_pb2.TagTemplateField(**expected_response)
 
@@ -859,10 +863,12 @@ class TestDataCatalogClient(object):
         name_2 = "name2-1052831874"
         display_name = "displayName1615086568"
         is_required = True
+        order = 106006350
         expected_response = {
             "name": name_2,
             "display_name": display_name,
             "is_required": is_required,
+            "order": order,
         }
         expected_response = tags_pb2.TagTemplateField(**expected_response)
 
