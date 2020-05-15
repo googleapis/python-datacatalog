@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from google.cloud import datacatalog_v1beta1
+from google.cloud import datacatalog_v1
 
 from ...quickstart import create_fileset_entry_quickstart
 
@@ -33,7 +33,7 @@ def test_create_fileset_entry_quickstart(
         in out
     )
 
-    expected_entry_name = datacatalog_v1beta1.DataCatalogClient.entry_path(
+    expected_entry_name = datacatalog_v1.DataCatalogClient.entry_path(
         project_id, "us-central1", random_entry_group_id, random_entry_id
     )
 

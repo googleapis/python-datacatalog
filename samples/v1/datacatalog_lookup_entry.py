@@ -14,54 +14,55 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# DO NOT EDIT! This is a generated sample ("Request",  "datacatalog_lookup_entry_sql_resource")
+# DO NOT EDIT! This is a generated sample ("Request",  "datacatalog_lookup_entry")
 
 # To install the latest published package dependency, execute the following:
 #   pip install google-cloud-datacatalog
 
 # sample-metadata
 #   title:
-#   description: Lookup Entry using SQL resource
-#   usage: python3 samples/v1beta1/datacatalog_lookup_entry_sql_resource.py [--sql_name "[SQL Resource Name]"]
+#   description: Lookup Entry
+#   usage: python3 samples/v1/datacatalog_lookup_entry.py [--resource_name "[Full Resource Name]"]
 
-# [START datacatalog_lookup_entry_sql_resource]
-from google.cloud import datacatalog_v1beta1
-from google.cloud.datacatalog_v1beta1 import enums
+# [START datacatalog_lookup_entry]
+from google.cloud import datacatalog_v1
+from google.cloud.datacatalog_v1 import enums
 
 
-def sample_lookup_entry(sql_name):
+def sample_lookup_entry(resource_name):
     """
-    Lookup Entry using SQL resource
+    Lookup Entry
 
     Args:
-      sql_name The SQL name of the Google Cloud Platform resource the Data Catalog
-      entry represents.
+      resource_name The full name of the Google Cloud Platform resource the Data
+      Catalog entry represents.
+      See: https://cloud.google.com/apis/design/resource_names#full_resource_name
       Examples:
-      bigquery.table.`bigquery-public-data`.new_york_taxi_trips.taxi_zone_geom
-      pubsub.topic.`pubsub-public-data`.`taxirides-realtime`
+      //bigquery.googleapis.com/projects/bigquery-public-data/datasets/new_york_taxi_trips/tables/taxi_zone_geom
+      //pubsub.googleapis.com/projects/pubsub-public-data/topics/taxirides-realtime
     """
 
-    client = datacatalog_v1beta1.DataCatalogClient()
+    client = datacatalog_v1.DataCatalogClient()
 
-    # sql_name = '[SQL Resource Name]'
-    response = client.lookup_entry(sql_resource=sql_name)
+    # resource_name = '[Full Resource Name]'
+    response = client.lookup_entry(linked_resource=resource_name)
     entry = response
     print(u"Entry name: {}".format(entry.name))
     print(u"Entry type: {}".format(enums.EntryType(entry.type).name))
     print(u"Linked resource: {}".format(entry.linked_resource))
 
 
-# [END datacatalog_lookup_entry_sql_resource]
+# [END datacatalog_lookup_entry]
 
 
 def main():
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--sql_name", type=str, default="[SQL Resource Name]")
+    parser.add_argument("--resource_name", type=str, default="[Full Resource Name]")
     args = parser.parse_args()
 
-    sample_lookup_entry(args.sql_name)
+    sample_lookup_entry(args.resource_name)
 
 
 if __name__ == "__main__":

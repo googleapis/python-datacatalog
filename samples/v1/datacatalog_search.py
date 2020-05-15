@@ -22,11 +22,11 @@
 # sample-metadata
 #   title:
 #   description: Search Catalog
-#   usage: python3 samples/v1beta1/datacatalog_search.py [--include_project_id "[Google Cloud Project ID]"] [--include_gcp_public_datasets false] [--query "[String in search query syntax]"]
+#   usage: python3 samples/v1/datacatalog_search.py [--include_project_id "[Google Cloud Project ID]"] [--include_gcp_public_datasets false] [--query "[String in search query syntax]"]
 
 # [START datacatalog_search]
-from google.cloud import datacatalog_v1beta1
-from google.cloud.datacatalog_v1beta1 import enums
+from google.cloud import datacatalog_v1
+from google.cloud.datacatalog_v1 import enums
 
 
 def sample_search_catalog(include_project_id, include_gcp_public_datasets, query):
@@ -42,7 +42,7 @@ def sample_search_catalog(include_project_id, include_gcp_public_datasets, query
       Example: system=bigquery type=dataset
     """
 
-    client = datacatalog_v1beta1.DataCatalogClient()
+    client = datacatalog_v1.DataCatalogClient()
 
     # include_project_id = '[Google Cloud Project ID]'
     # include_gcp_public_datasets = False
