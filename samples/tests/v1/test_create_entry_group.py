@@ -13,18 +13,17 @@
 # limitations under the License.
 
 
-import re
-
-from ..v1beta1 import create_fileset_entry
+from ...v1 import create_entry_group
 
 
-def test_create_fileset_entry(capsys, client, random_entry_name):
+def test_create_entry_group(capsys, client, project_id, random_entry_group_id):
 
-    entry_name_pattern = "(?P<entry_group_name>.+?)/entries/(?P<entry_id>.+?$)"
-    entry_name_matches = re.match(entry_name_pattern, random_entry_name)
-    entry_group_name = entry_name_matches.group("entry_group_name")
-    entry_id = entry_name_matches.group("entry_id")
-
-    create_fileset_entry.create_fileset_entry(client, entry_group_name, entry_id)
+    create_entry_group.create_entry_group(client, project_id, random_entry_group_id)
     out, err = capsys.readouterr()
-    assert "Created entry {}".format(random_entry_name) in out
+    assert (
+        "Created entry group"
+        " projects/{}/locations/{}/entryGroups/{}".format(
+            project_id, "us-central1", random_entry_group_id
+        )
+        in out
+    )

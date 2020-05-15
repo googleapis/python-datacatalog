@@ -16,10 +16,10 @@
 def create_fileset_entry(client, entry_group_name, entry_id):
 
     # [START datacatalog_create_fileset_tag]
-    from google.cloud import datacatalog_v1beta1
+    from google.cloud import datacatalog_v1
 
     # TODO(developer): Construct a Data Catalog client object.
-    # client = datacatalog_v1beta1.DataCatalogClient()
+    # client = datacatalog_v1.DataCatalogClient()
 
     # TODO(developer): Set entry_group_name to the Name of the entry group
     #  the entry will belong.
@@ -29,16 +29,16 @@ def create_fileset_entry(client, entry_group_name, entry_id):
     # entry_id = "your_entry_id"
 
     # Construct a full Entry object to send to the API.
-    entry = datacatalog_v1beta1.types.Entry()
+    entry = datacatalog_v1.types.Entry()
     entry.display_name = "My Fileset"
     entry.description = "This Fileset consists of ..."
     entry.gcs_fileset_spec.file_patterns.append("gs://my_bucket/*")
-    entry.type = datacatalog_v1beta1.enums.EntryType.FILESET
+    entry.type = datacatalog_v1.enums.EntryType.FILESET
 
     # Create the Schema, for example when you have a csv file.
     columns = []
     columns.append(
-        datacatalog_v1beta1.types.ColumnSchema(
+        datacatalog_v1.types.ColumnSchema(
             column="first_name",
             description="First name",
             mode="REQUIRED",
@@ -47,7 +47,7 @@ def create_fileset_entry(client, entry_group_name, entry_id):
     )
 
     columns.append(
-        datacatalog_v1beta1.types.ColumnSchema(
+        datacatalog_v1.types.ColumnSchema(
             column="last_name", description="Last name", mode="REQUIRED", type="STRING"
         )
     )
@@ -55,19 +55,19 @@ def create_fileset_entry(client, entry_group_name, entry_id):
     # Create sub columns for the addresses parent column
     subcolumns = []
     subcolumns.append(
-        datacatalog_v1beta1.types.ColumnSchema(
+        datacatalog_v1.types.ColumnSchema(
             column="city", description="City", mode="NULLABLE", type="STRING"
         )
     )
 
     subcolumns.append(
-        datacatalog_v1beta1.types.ColumnSchema(
+        datacatalog_v1.types.ColumnSchema(
             column="state", description="State", mode="NULLABLE", type="STRING"
         )
     )
 
     columns.append(
-        datacatalog_v1beta1.types.ColumnSchema(
+        datacatalog_v1.types.ColumnSchema(
             column="addresses",
             description="Addresses",
             mode="REPEATED",
