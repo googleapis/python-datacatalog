@@ -753,7 +753,7 @@ class DataCatalogClient(object):
             >>>
             >>> client = datacatalog_v1.DataCatalogClient()
             >>>
-            >>> parent = client.entry_group_path('[PROJECT]', '[LOCATION]', '[ENTRY_GROUP]')
+            >>> parent = client.location_path('[PROJECT]', '[LOCATION]')
             >>>
             >>> # Iterate over all results
             >>> for element in client.list_entry_groups(parent):
