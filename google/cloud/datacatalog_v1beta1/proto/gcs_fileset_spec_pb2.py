@@ -190,8 +190,8 @@ GcsFilesetSpec = _reflection.GeneratedProtocolMessageType(
   Attributes:
       file_patterns:
           Required. Patterns to identify a set of files in Google Cloud
-          Storage. See `Cloud Storage documentation
-          </storage/docs/gsutil/addlhelp/WildcardNames>`__ for more
+          Storage. See `Cloud Storage documentation <https://cloud.googl
+          e.com/storage/docs/gsutil/addlhelp/WildcardNames>`__ for more
           information. Note that bucket wildcards are currently not
           supported.  Examples of valid file_patterns:  -
           ``gs://bucket_name/dir/*``: matches all files within
