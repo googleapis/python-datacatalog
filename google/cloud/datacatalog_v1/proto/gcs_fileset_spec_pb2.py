@@ -187,6 +187,7 @@ GcsFilesetSpec = _reflection.GeneratedProtocolMessageType(
         "DESCRIPTOR": _GCSFILESETSPEC,
         "__module__": "google.cloud.datacatalog_v1.proto.gcs_fileset_spec_pb2",
         "__doc__": """Describes a Cloud Storage fileset entry.
+  
   Attributes:
       file_patterns:
           Required. Patterns to identify a set of files in Google Cloud
@@ -228,6 +229,7 @@ GcsFileSpec = _reflection.GeneratedProtocolMessageType(
         "DESCRIPTOR": _GCSFILESPEC,
         "__module__": "google.cloud.datacatalog_v1.proto.gcs_fileset_spec_pb2",
         "__doc__": """Specifications of a single file in Cloud Storage.
+  
   Attributes:
       file_path:
           Required. The full file path. Example:
