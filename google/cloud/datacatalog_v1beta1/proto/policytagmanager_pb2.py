@@ -165,7 +165,7 @@ _TAXONOMY = _descriptor.Descriptor(
     ],
     extensions=[],
     nested_types=[],
-    enum_types=[_TAXONOMY_POLICYTYPE],
+    enum_types=[_TAXONOMY_POLICYTYPE,],
     serialized_options=b"\352Ad\n#datacatalog.googleapis.com/Taxonomy\022=projects/{project}/locations/{location}/taxonomies/{taxonomy}",
     is_extendable=False,
     syntax="proto3",
@@ -379,7 +379,7 @@ _DELETETAXONOMYREQUEST = _descriptor.Descriptor(
             serialized_options=b"\340A\002\372A%\n#datacatalog.googleapis.com/Taxonomy",
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        )
+        ),
     ],
     extensions=[],
     nested_types=[],
@@ -619,7 +619,7 @@ _GETTAXONOMYREQUEST = _descriptor.Descriptor(
             serialized_options=b"\340A\002\372A%\n#datacatalog.googleapis.com/Taxonomy",
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        )
+        ),
     ],
     extensions=[],
     nested_types=[],
@@ -720,7 +720,7 @@ _DELETEPOLICYTAGREQUEST = _descriptor.Descriptor(
             serialized_options=b"\340A\002\372A&\n$datacatalog.googleapis.com/PolicyTag",
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        )
+        ),
     ],
     extensions=[],
     nested_types=[],
@@ -960,7 +960,7 @@ _GETPOLICYTAGREQUEST = _descriptor.Descriptor(
             serialized_options=b"\340A\002\372A&\n$datacatalog.googleapis.com/PolicyTag",
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        )
+        ),
     ],
     extensions=[],
     nested_types=[],

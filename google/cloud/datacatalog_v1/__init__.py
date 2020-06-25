@@ -38,4 +38,8 @@ class DataCatalogClient(data_catalog_client.DataCatalogClient):
     enums = enums
 
 
-__all__ = ("enums", "types", "DataCatalogClient")
+__all__ = (
+    "enums",
+    "types",
+    "DataCatalogClient",
+)
