@@ -49,7 +49,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
     package="google.cloud.datacatalog.v1",
     syntax="proto3",
     serialized_options=b"\n\037com.google.cloud.datacatalog.v1P\001ZFgoogle.golang.org/genproto/googleapis/cloud/datacatalog/v1;datacatalog\370\001\001\252\002\033Google.Cloud.DataCatalog.V1\312\002\033Google\\Cloud\\DataCatalog\\V1\352\002\036Google::Cloud::DataCatalog::V1",
-    serialized_pb=b'\n3google/cloud/datacatalog_v1/proto/datacatalog.proto\x12\x1bgoogle.cloud.datacatalog.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a.google/cloud/datacatalog_v1/proto/common.proto\x1a\x38google/cloud/datacatalog_v1/proto/gcs_fileset_spec.proto\x1a.google/cloud/datacatalog_v1/proto/schema.proto\x1a.google/cloud/datacatalog_v1/proto/search.proto\x1a\x32google/cloud/datacatalog_v1/proto/table_spec.proto\x1a,google/cloud/datacatalog_v1/proto/tags.proto\x1a\x32google/cloud/datacatalog_v1/proto/timestamps.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto"\x99\x02\n\x14SearchCatalogRequest\x12K\n\x05scope\x18\x06 \x01(\x0b\x32\x37.google.cloud.datacatalog.v1.SearchCatalogRequest.ScopeB\x03\xe0\x41\x02\x12\x12\n\x05query\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x17\n\npage_token\x18\x03 \x01(\tB\x03\xe0\x41\x01\x12\x10\n\x08order_by\x18\x05 \x01(\t\x1a\x62\n\x05Scope\x12\x17\n\x0finclude_org_ids\x18\x02 \x03(\t\x12\x1b\n\x13include_project_ids\x18\x03 \x03(\t\x12#\n\x1binclude_gcp_public_datasets\x18\x07 \x01(\x08"s\n\x15SearchCatalogResponse\x12\x41\n\x07results\x18\x01 \x03(\x0b\x32\x30.google.cloud.datacatalog.v1.SearchCatalogResult\x12\x17\n\x0fnext_page_token\x18\x03 \x01(\t"\xb3\x01\n\x17\x43reateEntryGroupRequest\x12=\n\x06parent\x18\x01 \x01(\tB-\xe0\x41\x02\xfa\x41\'\x12%datacatalog.googleapis.com/EntryGroup\x12\x1b\n\x0e\x65ntry_group_id\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12<\n\x0b\x65ntry_group\x18\x02 \x01(\x0b\x32\'.google.cloud.datacatalog.v1.EntryGroup"\x8d\x01\n\x17UpdateEntryGroupRequest\x12\x41\n\x0b\x65ntry_group\x18\x01 \x01(\x0b\x32\'.google.cloud.datacatalog.v1.EntryGroupB\x03\xe0\x41\x02\x12/\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"\x82\x01\n\x14GetEntryGroupRequest\x12;\n\x04name\x18\x01 \x01(\tB-\xe0\x41\x02\xfa\x41\'\n%datacatalog.googleapis.com/EntryGroup\x12-\n\tread_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"j\n\x17\x44\x65leteEntryGroupRequest\x12;\n\x04name\x18\x01 \x01(\tB-\xe0\x41\x02\xfa\x41\'\n%datacatalog.googleapis.com/EntryGroup\x12\x12\n\x05\x66orce\x18\x02 \x01(\x08\x42\x03\xe0\x41\x01"\x88\x01\n\x16ListEntryGroupsRequest\x12=\n\x06parent\x18\x01 \x01(\tB-\xe0\x41\x02\xfa\x41\'\n%datacatalog.googleapis.com/EntryGroup\x12\x16\n\tpage_size\x18\x02 \x01(\x05\x42\x03\xe0\x41\x01\x12\x17\n\npage_token\x18\x03 \x01(\tB\x03\xe0\x41\x01"q\n\x17ListEntryGroupsResponse\x12=\n\x0c\x65ntry_groups\x18\x01 \x03(\x0b\x32\'.google.cloud.datacatalog.v1.EntryGroup\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t"\xa2\x01\n\x12\x43reateEntryRequest\x12=\n\x06parent\x18\x01 \x01(\tB-\xe0\x41\x02\xfa\x41\'\n%datacatalog.googleapis.com/EntryGroup\x12\x15\n\x08\x65ntry_id\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12\x36\n\x05\x65ntry\x18\x02 \x01(\x0b\x32".google.cloud.datacatalog.v1.EntryB\x03\xe0\x41\x02"}\n\x12UpdateEntryRequest\x12\x36\n\x05\x65ntry\x18\x01 \x01(\x0b\x32".google.cloud.datacatalog.v1.EntryB\x03\xe0\x41\x02\x12/\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"L\n\x12\x44\x65leteEntryRequest\x12\x36\n\x04name\x18\x01 \x01(\tB(\xe0\x41\x02\xfa\x41"\n datacatalog.googleapis.com/Entry"I\n\x0fGetEntryRequest\x12\x36\n\x04name\x18\x01 \x01(\tB(\xe0\x41\x02\xfa\x41"\n datacatalog.googleapis.com/Entry"V\n\x12LookupEntryRequest\x12\x19\n\x0flinked_resource\x18\x01 \x01(\tH\x00\x12\x16\n\x0csql_resource\x18\x03 \x01(\tH\x00\x42\r\n\x0btarget_name"\xe7\x06\n\x05\x45ntry\x12\x38\n\x04name\x18\x01 \x01(\tB*\xfa\x41\'\n%datacatalog.googleapis.com/EntryGroup\x12\x17\n\x0flinked_resource\x18\t \x01(\t\x12\x36\n\x04type\x18\x02 \x01(\x0e\x32&.google.cloud.datacatalog.v1.EntryTypeH\x00\x12\x1d\n\x13user_specified_type\x18\x10 \x01(\tH\x00\x12O\n\x11integrated_system\x18\x11 \x01(\x0e\x32-.google.cloud.datacatalog.v1.IntegratedSystemB\x03\xe0\x41\x03H\x01\x12\x1f\n\x15user_specified_system\x18\x12 \x01(\tH\x01\x12G\n\x10gcs_fileset_spec\x18\x06 \x01(\x0b\x32+.google.cloud.datacatalog.v1.GcsFilesetSpecH\x02\x12M\n\x13\x62igquery_table_spec\x18\x0c \x01(\x0b\x32..google.cloud.datacatalog.v1.BigQueryTableSpecH\x02\x12Z\n\x1a\x62igquery_date_sharded_spec\x18\x0f \x01(\x0b\x32\x34.google.cloud.datacatalog.v1.BigQueryDateShardedSpecH\x02\x12\x14\n\x0c\x64isplay_name\x18\x03 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12\x33\n\x06schema\x18\x05 \x01(\x0b\x32#.google.cloud.datacatalog.v1.Schema\x12O\n\x18source_system_timestamps\x18\x07 \x01(\x0b\x32-.google.cloud.datacatalog.v1.SystemTimestamps:x\xea\x41u\n datacatalog.googleapis.com/Entry\x12Qprojects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{entry}B\x0c\n\nentry_typeB\x08\n\x06systemB\x0b\n\ttype_spec"\x89\x02\n\nEntryGroup\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12S\n\x17\x64\x61ta_catalog_timestamps\x18\x04 \x01(\x0b\x32-.google.cloud.datacatalog.v1.SystemTimestampsB\x03\xe0\x41\x03:m\xea\x41j\n%datacatalog.googleapis.com/EntryGroup\x12\x41projects/{project}/locations/{location}/entryGroups/{entry_group}"\xbd\x01\n\x18\x43reateTagTemplateRequest\x12>\n\x06parent\x18\x01 \x01(\tB.\xe0\x41\x02\xfa\x41(\x12&datacatalog.googleapis.com/TagTemplate\x12\x1c\n\x0ftag_template_id\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12\x43\n\x0ctag_template\x18\x02 \x01(\x0b\x32(.google.cloud.datacatalog.v1.TagTemplateB\x03\xe0\x41\x02"U\n\x15GetTagTemplateRequest\x12<\n\x04name\x18\x01 \x01(\tB.\xe0\x41\x02\xfa\x41(\n&datacatalog.googleapis.com/TagTemplate"\x90\x01\n\x18UpdateTagTemplateRequest\x12\x43\n\x0ctag_template\x18\x01 \x01(\x0b\x32(.google.cloud.datacatalog.v1.TagTemplateB\x03\xe0\x41\x02\x12/\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"l\n\x18\x44\x65leteTagTemplateRequest\x12<\n\x04name\x18\x01 \x01(\tB.\xe0\x41\x02\xfa\x41(\n&datacatalog.googleapis.com/TagTemplate\x12\x12\n\x05\x66orce\x18\x02 \x01(\x08\x42\x03\xe0\x41\x02"~\n\x10\x43reateTagRequest\x12\x36\n\x06parent\x18\x01 \x01(\tB&\xe0\x41\x02\xfa\x41 \n\x1e\x64\x61tacatalog.googleapis.com/Tag\x12\x32\n\x03tag\x18\x02 \x01(\x0b\x32 .google.cloud.datacatalog.v1.TagB\x03\xe0\x41\x02"w\n\x10UpdateTagRequest\x12\x32\n\x03tag\x18\x01 \x01(\x0b\x32 .google.cloud.datacatalog.v1.TagB\x03\xe0\x41\x02\x12/\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"H\n\x10\x44\x65leteTagRequest\x12\x34\n\x04name\x18\x01 \x01(\tB&\xe0\x41\x02\xfa\x41 \x12\x1e\x64\x61tacatalog.googleapis.com/Tag"\xd3\x01\n\x1d\x43reateTagTemplateFieldRequest\x12>\n\x06parent\x18\x01 \x01(\tB.\xe0\x41\x02\xfa\x41(\n&datacatalog.googleapis.com/TagTemplate\x12"\n\x15tag_template_field_id\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12N\n\x12tag_template_field\x18\x03 \x01(\x0b\x32-.google.cloud.datacatalog.v1.TagTemplateFieldB\x03\xe0\x41\x02"\xe8\x01\n\x1dUpdateTagTemplateFieldRequest\x12\x41\n\x04name\x18\x01 \x01(\tB3\xe0\x41\x02\xfa\x41-\n+datacatalog.googleapis.com/TagTemplateField\x12N\n\x12tag_template_field\x18\x02 \x01(\x0b\x32-.google.cloud.datacatalog.v1.TagTemplateFieldB\x03\xe0\x41\x02\x12\x34\n\x0bupdate_mask\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskB\x03\xe0\x41\x01"\x8a\x01\n\x1dRenameTagTemplateFieldRequest\x12\x41\n\x04name\x18\x01 \x01(\tB3\xe0\x41\x02\xfa\x41-\n+datacatalog.googleapis.com/TagTemplateField\x12&\n\x19new_tag_template_field_id\x18\x02 \x01(\tB\x03\xe0\x41\x02"v\n\x1d\x44\x65leteTagTemplateFieldRequest\x12\x41\n\x04name\x18\x01 \x01(\tB3\xe0\x41\x02\xfa\x41-\n+datacatalog.googleapis.com/TagTemplateField\x12\x12\n\x05\x66orce\x18\x02 \x01(\x08\x42\x03\xe0\x41\x02"p\n\x0fListTagsRequest\x12\x36\n\x06parent\x18\x01 \x01(\tB&\xe0\x41\x02\xfa\x41 \x12\x1e\x64\x61tacatalog.googleapis.com/Tag\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t"[\n\x10ListTagsResponse\x12.\n\x04tags\x18\x01 \x03(\x0b\x32 .google.cloud.datacatalog.v1.Tag\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t"\xa9\x01\n\x12ListEntriesRequest\x12=\n\x06parent\x18\x01 \x01(\tB-\xe0\x41\x02\xfa\x41\'\n%datacatalog.googleapis.com/EntryGroup\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t\x12-\n\tread_mask\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"c\n\x13ListEntriesResponse\x12\x33\n\x07\x65ntries\x18\x01 \x03(\x0b\x32".google.cloud.datacatalog.v1.Entry\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t*[\n\tEntryType\x12\x1a\n\x16\x45NTRY_TYPE_UNSPECIFIED\x10\x00\x12\t\n\x05TABLE\x10\x02\x12\t\n\x05MODEL\x10\x05\x12\x0f\n\x0b\x44\x41TA_STREAM\x10\x03\x12\x0b\n\x07\x46ILESET\x10\x04\x32\x90/\n\x0b\x44\x61taCatalog\x12\xa3\x01\n\rSearchCatalog\x12\x31.google.cloud.datacatalog.v1.SearchCatalogRequest\x1a\x32.google.cloud.datacatalog.v1.SearchCatalogResponse"+\x82\xd3\xe4\x93\x02\x17"\x12/v1/catalog:search:\x01*\xda\x41\x0bscope,query\x12\xdb\x01\n\x10\x43reateEntryGroup\x12\x34.google.cloud.datacatalog.v1.CreateEntryGroupRequest\x1a\'.google.cloud.datacatalog.v1.EntryGroup"h\x82\xd3\xe4\x93\x02>"//v1/{parent=projects/*/locations/*}/entryGroups:\x0b\x65ntry_group\xda\x41!parent,entry_group_id,entry_group\x12\xbc\x01\n\rGetEntryGroup\x12\x31.google.cloud.datacatalog.v1.GetEntryGroupRequest\x1a\'.google.cloud.datacatalog.v1.EntryGroup"O\x82\xd3\xe4\x93\x02\x31\x12//v1/{name=projects/*/locations/*/entryGroups/*}\xda\x41\x04name\xda\x41\x0ename,read_mask\x12\xeb\x01\n\x10UpdateEntryGroup\x12\x34.google.cloud.datacatalog.v1.UpdateEntryGroupRequest\x1a\'.google.cloud.datacatalog.v1.EntryGroup"x\x82\xd3\xe4\x93\x02J2;/v1/{entry_group.name=projects/*/locations/*/entryGroups/*}:\x0b\x65ntry_group\xda\x41\x0b\x65ntry_group\xda\x41\x17\x65ntry_group,update_mask\x12\xa0\x01\n\x10\x44\x65leteEntryGroup\x12\x34.google.cloud.datacatalog.v1.DeleteEntryGroupRequest\x1a\x16.google.protobuf.Empty">\x82\xd3\xe4\x93\x02\x31*//v1/{name=projects/*/locations/*/entryGroups/*}\xda\x41\x04name\x12\xbe\x01\n\x0fListEntryGroups\x12\x33.google.cloud.datacatalog.v1.ListEntryGroupsRequest\x1a\x34.google.cloud.datacatalog.v1.ListEntryGroupsResponse"@\x82\xd3\xe4\x93\x02\x31\x12//v1/{parent=projects/*/locations/*}/entryGroups\xda\x41\x06parent\x12\xc4\x01\n\x0b\x43reateEntry\x12/.google.cloud.datacatalog.v1.CreateEntryRequest\x1a".google.cloud.datacatalog.v1.Entry"`\x82\xd3\xe4\x93\x02\x42"9/v1/{parent=projects/*/locations/*/entryGroups/*}/entries:\x05\x65ntry\xda\x41\x15parent,entry_id,entry\x12\xce\x01\n\x0bUpdateEntry\x12/.google.cloud.datacatalog.v1.UpdateEntryRequest\x1a".google.cloud.datacatalog.v1.Entry"j\x82\xd3\xe4\x93\x02H2?/v1/{entry.name=projects/*/locations/*/entryGroups/*/entries/*}:\x05\x65ntry\xda\x41\x05\x65ntry\xda\x41\x11\x65ntry,update_mask\x12\xa0\x01\n\x0b\x44\x65leteEntry\x12/.google.cloud.datacatalog.v1.DeleteEntryRequest\x1a\x16.google.protobuf.Empty"H\x82\xd3\xe4\x93\x02;*9/v1/{name=projects/*/locations/*/entryGroups/*/entries/*}\xda\x41\x04name\x12\xa6\x01\n\x08GetEntry\x12,.google.cloud.datacatalog.v1.GetEntryRequest\x1a".google.cloud.datacatalog.v1.Entry"H\x82\xd3\xe4\x93\x02;\x12\x39/v1/{name=projects/*/locations/*/entryGroups/*/entries/*}\xda\x41\x04name\x12~\n\x0bLookupEntry\x12/.google.cloud.datacatalog.v1.LookupEntryRequest\x1a".google.cloud.datacatalog.v1.Entry"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/v1/entries:lookup\x12\xbc\x01\n\x0bListEntries\x12/.google.cloud.datacatalog.v1.ListEntriesRequest\x1a\x30.google.cloud.datacatalog.v1.ListEntriesResponse"J\x82\xd3\xe4\x93\x02;\x12\x39/v1/{parent=projects/*/locations/*/entryGroups/*}/entries\xda\x41\x06parent\x12\xe2\x01\n\x11\x43reateTagTemplate\x12\x35.google.cloud.datacatalog.v1.CreateTagTemplateRequest\x1a(.google.cloud.datacatalog.v1.TagTemplate"l\x82\xd3\xe4\x93\x02@"0/v1/{parent=projects/*/locations/*}/tagTemplates:\x0ctag_template\xda\x41#parent,tag_template_id,tag_template\x12\xaf\x01\n\x0eGetTagTemplate\x12\x32.google.cloud.datacatalog.v1.GetTagTemplateRequest\x1a(.google.cloud.datacatalog.v1.TagTemplate"?\x82\xd3\xe4\x93\x02\x32\x12\x30/v1/{name=projects/*/locations/*/tagTemplates/*}\xda\x41\x04name\x12\xf3\x01\n\x11UpdateTagTemplate\x12\x35.google.cloud.datacatalog.v1.UpdateTagTemplateRequest\x1a(.google.cloud.datacatalog.v1.TagTemplate"}\x82\xd3\xe4\x93\x02M2=/v1/{tag_template.name=projects/*/locations/*/tagTemplates/*}:\x0ctag_template\xda\x41\x0ctag_template\xda\x41\x18tag_template,update_mask\x12\xa9\x01\n\x11\x44\x65leteTagTemplate\x12\x35.google.cloud.datacatalog.v1.DeleteTagTemplateRequest\x1a\x16.google.protobuf.Empty"E\x82\xd3\xe4\x93\x02\x32*0/v1/{name=projects/*/locations/*/tagTemplates/*}\xda\x41\nname,force\x12\x8d\x02\n\x16\x43reateTagTemplateField\x12:.google.cloud.datacatalog.v1.CreateTagTemplateFieldRequest\x1a-.google.cloud.datacatalog.v1.TagTemplateField"\x87\x01\x82\xd3\xe4\x93\x02O"9/v1/{parent=projects/*/locations/*/tagTemplates/*}/fields:\x12tag_template_field\xda\x41/parent,tag_template_field_id,tag_template_field\x12\x9b\x02\n\x16UpdateTagTemplateField\x12:.google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest\x1a-.google.cloud.datacatalog.v1.TagTemplateField"\x95\x01\x82\xd3\xe4\x93\x02O29/v1/{name=projects/*/locations/*/tagTemplates/*/fields/*}:\x12tag_template_field\xda\x41\x17name,tag_template_field\xda\x41#name,tag_template_field,update_mask\x12\xf1\x01\n\x16RenameTagTemplateField\x12:.google.cloud.datacatalog.v1.RenameTagTemplateFieldRequest\x1a-.google.cloud.datacatalog.v1.TagTemplateField"l\x82\xd3\xe4\x93\x02\x45"@/v1/{name=projects/*/locations/*/tagTemplates/*/fields/*}:rename:\x01*\xda\x41\x1ename,new_tag_template_field_id\x12\xbc\x01\n\x16\x44\x65leteTagTemplateField\x12:.google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest\x1a\x16.google.protobuf.Empty"N\x82\xd3\xe4\x93\x02;*9/v1/{name=projects/*/locations/*/tagTemplates/*/fields/*}\xda\x41\nname,force\x12\xf9\x01\n\tCreateTag\x12-.google.cloud.datacatalog.v1.CreateTagRequest\x1a .google.cloud.datacatalog.v1.Tag"\x9a\x01\x82\xd3\xe4\x93\x02\x86\x01"@/v1/{parent=projects/*/locations/*/entryGroups/*/entries/*}/tags:\x03tagZ="6/v1/{parent=projects/*/locations/*/entryGroups/*}/tags:\x03tag\xda\x41\nparent,tag\x12\x8c\x02\n\tUpdateTag\x12-.google.cloud.datacatalog.v1.UpdateTagRequest\x1a .google.cloud.datacatalog.v1.Tag"\xad\x01\x82\xd3\xe4\x93\x02\x8e\x01\x32\x44/v1/{tag.name=projects/*/locations/*/entryGroups/*/entries/*/tags/*}:\x03tagZA2:/v1/{tag.name=projects/*/locations/*/entryGroups/*/tags/*}:\x03tag\xda\x41\x03tag\xda\x41\x0ftag,update_mask\x12\xde\x01\n\tDeleteTag\x12-.google.cloud.datacatalog.v1.DeleteTagRequest\x1a\x16.google.protobuf.Empty"\x89\x01\x82\xd3\xe4\x93\x02|*@/v1/{name=projects/*/locations/*/entryGroups/*/entries/*/tags/*}Z8*6/v1/{name=projects/*/locations/*/entryGroups/*/tags/*}\xda\x41\x04name\x12\xf5\x01\n\x08ListTags\x12,.google.cloud.datacatalog.v1.ListTagsRequest\x1a-.google.cloud.datacatalog.v1.ListTagsResponse"\x8b\x01\x82\xd3\xe4\x93\x02|\x12@/v1/{parent=projects/*/locations/*/entryGroups/*/entries/*}/tagsZ8\x12\x36/v1/{parent=projects/*/locations/*/entryGroups/*}/tags\xda\x41\x06parent\x12\xe0\x01\n\x0cSetIamPolicy\x12".google.iam.v1.SetIamPolicyRequest\x1a\x15.google.iam.v1.Policy"\x94\x01\x82\xd3\xe4\x93\x02\x8d\x01"A/v1/{resource=projects/*/locations/*/tagTemplates/*}:setIamPolicy:\x01*ZE"@/v1/{resource=projects/*/locations/*/entryGroups/*}:setIamPolicy:\x01*\x12\xb1\x02\n\x0cGetIamPolicy\x12".google.iam.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy"\xe5\x01\x82\xd3\xe4\x93\x02\xde\x01"A/v1/{resource=projects/*/locations/*/tagTemplates/*}:getIamPolicy:\x01*ZE"@/v1/{resource=projects/*/locations/*/entryGroups/*}:getIamPolicy:\x01*ZO"J/v1/{resource=projects/*/locations/*/entryGroups/*/entries/*}:getIamPolicy:\x01*\x12\xe3\x02\n\x12TestIamPermissions\x12(.google.iam.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermissionsResponse"\xf7\x01\x82\xd3\xe4\x93\x02\xf0\x01"G/v1/{resource=projects/*/locations/*/tagTemplates/*}:testIamPermissions:\x01*ZK"F/v1/{resource=projects/*/locations/*/entryGroups/*}:testIamPermissions:\x01*ZU"P/v1/{resource=projects/*/locations/*/entryGroups/*/entries/*}:testIamPermissions:\x01*\x1aN\xca\x41\x1a\x64\x61tacatalog.googleapis.com\xd2\x41.https://www.googleapis.com/auth/cloud-platformB\xcb\x01\n\x1f\x63om.google.cloud.datacatalog.v1P\x01ZFgoogle.golang.org/genproto/googleapis/cloud/datacatalog/v1;datacatalog\xf8\x01\x01\xaa\x02\x1bGoogle.Cloud.DataCatalog.V1\xca\x02\x1bGoogle\\Cloud\\DataCatalog\\V1\xea\x02\x1eGoogle::Cloud::DataCatalog::V1b\x06proto3',
+    create_key=_descriptor._internal_create_key,
+    serialized_pb=b'\n3google/cloud/datacatalog_v1/proto/datacatalog.proto\x12\x1bgoogle.cloud.datacatalog.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x17google/api/client.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\x1a.google/cloud/datacatalog_v1/proto/common.proto\x1a\x38google/cloud/datacatalog_v1/proto/gcs_fileset_spec.proto\x1a.google/cloud/datacatalog_v1/proto/schema.proto\x1a.google/cloud/datacatalog_v1/proto/search.proto\x1a\x32google/cloud/datacatalog_v1/proto/table_spec.proto\x1a,google/cloud/datacatalog_v1/proto/tags.proto\x1a\x32google/cloud/datacatalog_v1/proto/timestamps.proto\x1a\x1egoogle/iam/v1/iam_policy.proto\x1a\x1agoogle/iam/v1/policy.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a google/protobuf/field_mask.proto"\xbd\x02\n\x14SearchCatalogRequest\x12K\n\x05scope\x18\x06 \x01(\x0b\x32\x37.google.cloud.datacatalog.v1.SearchCatalogRequest.ScopeB\x03\xe0\x41\x02\x12\x12\n\x05query\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x17\n\npage_token\x18\x03 \x01(\tB\x03\xe0\x41\x01\x12\x10\n\x08order_by\x18\x05 \x01(\t\x1a\x85\x01\n\x05Scope\x12\x17\n\x0finclude_org_ids\x18\x02 \x03(\t\x12\x1b\n\x13include_project_ids\x18\x03 \x03(\t\x12#\n\x1binclude_gcp_public_datasets\x18\x07 \x01(\x08\x12!\n\x14restricted_locations\x18\x10 \x03(\tB\x03\xe0\x41\x01"\x88\x01\n\x15SearchCatalogResponse\x12\x41\n\x07results\x18\x01 \x03(\x0b\x32\x30.google.cloud.datacatalog.v1.SearchCatalogResult\x12\x17\n\x0fnext_page_token\x18\x03 \x01(\t\x12\x13\n\x0bunreachable\x18\x06 \x03(\t"\xb3\x01\n\x17\x43reateEntryGroupRequest\x12=\n\x06parent\x18\x01 \x01(\tB-\xe0\x41\x02\xfa\x41\'\x12%datacatalog.googleapis.com/EntryGroup\x12\x1b\n\x0e\x65ntry_group_id\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12<\n\x0b\x65ntry_group\x18\x02 \x01(\x0b\x32\'.google.cloud.datacatalog.v1.EntryGroup"\x8d\x01\n\x17UpdateEntryGroupRequest\x12\x41\n\x0b\x65ntry_group\x18\x01 \x01(\x0b\x32\'.google.cloud.datacatalog.v1.EntryGroupB\x03\xe0\x41\x02\x12/\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"\x82\x01\n\x14GetEntryGroupRequest\x12;\n\x04name\x18\x01 \x01(\tB-\xe0\x41\x02\xfa\x41\'\n%datacatalog.googleapis.com/EntryGroup\x12-\n\tread_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"j\n\x17\x44\x65leteEntryGroupRequest\x12;\n\x04name\x18\x01 \x01(\tB-\xe0\x41\x02\xfa\x41\'\n%datacatalog.googleapis.com/EntryGroup\x12\x12\n\x05\x66orce\x18\x02 \x01(\x08\x42\x03\xe0\x41\x01"\x88\x01\n\x16ListEntryGroupsRequest\x12=\n\x06parent\x18\x01 \x01(\tB-\xe0\x41\x02\xfa\x41\'\n%datacatalog.googleapis.com/EntryGroup\x12\x16\n\tpage_size\x18\x02 \x01(\x05\x42\x03\xe0\x41\x01\x12\x17\n\npage_token\x18\x03 \x01(\tB\x03\xe0\x41\x01"q\n\x17ListEntryGroupsResponse\x12=\n\x0c\x65ntry_groups\x18\x01 \x03(\x0b\x32\'.google.cloud.datacatalog.v1.EntryGroup\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t"\xa2\x01\n\x12\x43reateEntryRequest\x12=\n\x06parent\x18\x01 \x01(\tB-\xe0\x41\x02\xfa\x41\'\n%datacatalog.googleapis.com/EntryGroup\x12\x15\n\x08\x65ntry_id\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12\x36\n\x05\x65ntry\x18\x02 \x01(\x0b\x32".google.cloud.datacatalog.v1.EntryB\x03\xe0\x41\x02"}\n\x12UpdateEntryRequest\x12\x36\n\x05\x65ntry\x18\x01 \x01(\x0b\x32".google.cloud.datacatalog.v1.EntryB\x03\xe0\x41\x02\x12/\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"L\n\x12\x44\x65leteEntryRequest\x12\x36\n\x04name\x18\x01 \x01(\tB(\xe0\x41\x02\xfa\x41"\n datacatalog.googleapis.com/Entry"I\n\x0fGetEntryRequest\x12\x36\n\x04name\x18\x01 \x01(\tB(\xe0\x41\x02\xfa\x41"\n datacatalog.googleapis.com/Entry"V\n\x12LookupEntryRequest\x12\x19\n\x0flinked_resource\x18\x01 \x01(\tH\x00\x12\x16\n\x0csql_resource\x18\x03 \x01(\tH\x00\x42\r\n\x0btarget_name"\xe7\x06\n\x05\x45ntry\x12\x38\n\x04name\x18\x01 \x01(\tB*\xfa\x41\'\n%datacatalog.googleapis.com/EntryGroup\x12\x17\n\x0flinked_resource\x18\t \x01(\t\x12\x36\n\x04type\x18\x02 \x01(\x0e\x32&.google.cloud.datacatalog.v1.EntryTypeH\x00\x12\x1d\n\x13user_specified_type\x18\x10 \x01(\tH\x00\x12O\n\x11integrated_system\x18\x11 \x01(\x0e\x32-.google.cloud.datacatalog.v1.IntegratedSystemB\x03\xe0\x41\x03H\x01\x12\x1f\n\x15user_specified_system\x18\x12 \x01(\tH\x01\x12G\n\x10gcs_fileset_spec\x18\x06 \x01(\x0b\x32+.google.cloud.datacatalog.v1.GcsFilesetSpecH\x02\x12M\n\x13\x62igquery_table_spec\x18\x0c \x01(\x0b\x32..google.cloud.datacatalog.v1.BigQueryTableSpecH\x02\x12Z\n\x1a\x62igquery_date_sharded_spec\x18\x0f \x01(\x0b\x32\x34.google.cloud.datacatalog.v1.BigQueryDateShardedSpecH\x02\x12\x14\n\x0c\x64isplay_name\x18\x03 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12\x33\n\x06schema\x18\x05 \x01(\x0b\x32#.google.cloud.datacatalog.v1.Schema\x12O\n\x18source_system_timestamps\x18\x07 \x01(\x0b\x32-.google.cloud.datacatalog.v1.SystemTimestamps:x\xea\x41u\n datacatalog.googleapis.com/Entry\x12Qprojects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{entry}B\x0c\n\nentry_typeB\x08\n\x06systemB\x0b\n\ttype_spec"\x89\x02\n\nEntryGroup\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12S\n\x17\x64\x61ta_catalog_timestamps\x18\x04 \x01(\x0b\x32-.google.cloud.datacatalog.v1.SystemTimestampsB\x03\xe0\x41\x03:m\xea\x41j\n%datacatalog.googleapis.com/EntryGroup\x12\x41projects/{project}/locations/{location}/entryGroups/{entry_group}"\xbd\x01\n\x18\x43reateTagTemplateRequest\x12>\n\x06parent\x18\x01 \x01(\tB.\xe0\x41\x02\xfa\x41(\x12&datacatalog.googleapis.com/TagTemplate\x12\x1c\n\x0ftag_template_id\x18\x03 \x01(\tB\x03\xe0\x41\x02\x12\x43\n\x0ctag_template\x18\x02 \x01(\x0b\x32(.google.cloud.datacatalog.v1.TagTemplateB\x03\xe0\x41\x02"U\n\x15GetTagTemplateRequest\x12<\n\x04name\x18\x01 \x01(\tB.\xe0\x41\x02\xfa\x41(\n&datacatalog.googleapis.com/TagTemplate"\x90\x01\n\x18UpdateTagTemplateRequest\x12\x43\n\x0ctag_template\x18\x01 \x01(\x0b\x32(.google.cloud.datacatalog.v1.TagTemplateB\x03\xe0\x41\x02\x12/\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"l\n\x18\x44\x65leteTagTemplateRequest\x12<\n\x04name\x18\x01 \x01(\tB.\xe0\x41\x02\xfa\x41(\n&datacatalog.googleapis.com/TagTemplate\x12\x12\n\x05\x66orce\x18\x02 \x01(\x08\x42\x03\xe0\x41\x02"~\n\x10\x43reateTagRequest\x12\x36\n\x06parent\x18\x01 \x01(\tB&\xe0\x41\x02\xfa\x41 \n\x1e\x64\x61tacatalog.googleapis.com/Tag\x12\x32\n\x03tag\x18\x02 \x01(\x0b\x32 .google.cloud.datacatalog.v1.TagB\x03\xe0\x41\x02"w\n\x10UpdateTagRequest\x12\x32\n\x03tag\x18\x01 \x01(\x0b\x32 .google.cloud.datacatalog.v1.TagB\x03\xe0\x41\x02\x12/\n\x0bupdate_mask\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"H\n\x10\x44\x65leteTagRequest\x12\x34\n\x04name\x18\x01 \x01(\tB&\xe0\x41\x02\xfa\x41 \x12\x1e\x64\x61tacatalog.googleapis.com/Tag"\xd3\x01\n\x1d\x43reateTagTemplateFieldRequest\x12>\n\x06parent\x18\x01 \x01(\tB.\xe0\x41\x02\xfa\x41(\n&datacatalog.googleapis.com/TagTemplate\x12"\n\x15tag_template_field_id\x18\x02 \x01(\tB\x03\xe0\x41\x02\x12N\n\x12tag_template_field\x18\x03 \x01(\x0b\x32-.google.cloud.datacatalog.v1.TagTemplateFieldB\x03\xe0\x41\x02"\xe8\x01\n\x1dUpdateTagTemplateFieldRequest\x12\x41\n\x04name\x18\x01 \x01(\tB3\xe0\x41\x02\xfa\x41-\n+datacatalog.googleapis.com/TagTemplateField\x12N\n\x12tag_template_field\x18\x02 \x01(\x0b\x32-.google.cloud.datacatalog.v1.TagTemplateFieldB\x03\xe0\x41\x02\x12\x34\n\x0bupdate_mask\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.FieldMaskB\x03\xe0\x41\x01"\x8a\x01\n\x1dRenameTagTemplateFieldRequest\x12\x41\n\x04name\x18\x01 \x01(\tB3\xe0\x41\x02\xfa\x41-\n+datacatalog.googleapis.com/TagTemplateField\x12&\n\x19new_tag_template_field_id\x18\x02 \x01(\tB\x03\xe0\x41\x02"v\n\x1d\x44\x65leteTagTemplateFieldRequest\x12\x41\n\x04name\x18\x01 \x01(\tB3\xe0\x41\x02\xfa\x41-\n+datacatalog.googleapis.com/TagTemplateField\x12\x12\n\x05\x66orce\x18\x02 \x01(\x08\x42\x03\xe0\x41\x02"p\n\x0fListTagsRequest\x12\x36\n\x06parent\x18\x01 \x01(\tB&\xe0\x41\x02\xfa\x41 \x12\x1e\x64\x61tacatalog.googleapis.com/Tag\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t"[\n\x10ListTagsResponse\x12.\n\x04tags\x18\x01 \x03(\x0b\x32 .google.cloud.datacatalog.v1.Tag\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t"\xa9\x01\n\x12ListEntriesRequest\x12=\n\x06parent\x18\x01 \x01(\tB-\xe0\x41\x02\xfa\x41\'\n%datacatalog.googleapis.com/EntryGroup\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t\x12-\n\tread_mask\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.FieldMask"c\n\x13ListEntriesResponse\x12\x33\n\x07\x65ntries\x18\x01 \x03(\x0b\x32".google.cloud.datacatalog.v1.Entry\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t*[\n\tEntryType\x12\x1a\n\x16\x45NTRY_TYPE_UNSPECIFIED\x10\x00\x12\t\n\x05TABLE\x10\x02\x12\t\n\x05MODEL\x10\x05\x12\x0f\n\x0b\x44\x41TA_STREAM\x10\x03\x12\x0b\n\x07\x46ILESET\x10\x04\x32\xad/\n\x0b\x44\x61taCatalog\x12\xa3\x01\n\rSearchCatalog\x12\x31.google.cloud.datacatalog.v1.SearchCatalogRequest\x1a\x32.google.cloud.datacatalog.v1.SearchCatalogResponse"+\x82\xd3\xe4\x93\x02\x17"\x12/v1/catalog:search:\x01*\xda\x41\x0bscope,query\x12\xdb\x01\n\x10\x43reateEntryGroup\x12\x34.google.cloud.datacatalog.v1.CreateEntryGroupRequest\x1a\'.google.cloud.datacatalog.v1.EntryGroup"h\x82\xd3\xe4\x93\x02>"//v1/{parent=projects/*/locations/*}/entryGroups:\x0b\x65ntry_group\xda\x41!parent,entry_group_id,entry_group\x12\xbc\x01\n\rGetEntryGroup\x12\x31.google.cloud.datacatalog.v1.GetEntryGroupRequest\x1a\'.google.cloud.datacatalog.v1.EntryGroup"O\x82\xd3\xe4\x93\x02\x31\x12//v1/{name=projects/*/locations/*/entryGroups/*}\xda\x41\x04name\xda\x41\x0ename,read_mask\x12\xeb\x01\n\x10UpdateEntryGroup\x12\x34.google.cloud.datacatalog.v1.UpdateEntryGroupRequest\x1a\'.google.cloud.datacatalog.v1.EntryGroup"x\x82\xd3\xe4\x93\x02J2;/v1/{entry_group.name=projects/*/locations/*/entryGroups/*}:\x0b\x65ntry_group\xda\x41\x0b\x65ntry_group\xda\x41\x17\x65ntry_group,update_mask\x12\xa0\x01\n\x10\x44\x65leteEntryGroup\x12\x34.google.cloud.datacatalog.v1.DeleteEntryGroupRequest\x1a\x16.google.protobuf.Empty">\x82\xd3\xe4\x93\x02\x31*//v1/{name=projects/*/locations/*/entryGroups/*}\xda\x41\x04name\x12\xbe\x01\n\x0fListEntryGroups\x12\x33.google.cloud.datacatalog.v1.ListEntryGroupsRequest\x1a\x34.google.cloud.datacatalog.v1.ListEntryGroupsResponse"@\x82\xd3\xe4\x93\x02\x31\x12//v1/{parent=projects/*/locations/*}/entryGroups\xda\x41\x06parent\x12\xc4\x01\n\x0b\x43reateEntry\x12/.google.cloud.datacatalog.v1.CreateEntryRequest\x1a".google.cloud.datacatalog.v1.Entry"`\x82\xd3\xe4\x93\x02\x42"9/v1/{parent=projects/*/locations/*/entryGroups/*}/entries:\x05\x65ntry\xda\x41\x15parent,entry_id,entry\x12\xce\x01\n\x0bUpdateEntry\x12/.google.cloud.datacatalog.v1.UpdateEntryRequest\x1a".google.cloud.datacatalog.v1.Entry"j\x82\xd3\xe4\x93\x02H2?/v1/{entry.name=projects/*/locations/*/entryGroups/*/entries/*}:\x05\x65ntry\xda\x41\x05\x65ntry\xda\x41\x11\x65ntry,update_mask\x12\xa0\x01\n\x0b\x44\x65leteEntry\x12/.google.cloud.datacatalog.v1.DeleteEntryRequest\x1a\x16.google.protobuf.Empty"H\x82\xd3\xe4\x93\x02;*9/v1/{name=projects/*/locations/*/entryGroups/*/entries/*}\xda\x41\x04name\x12\xa6\x01\n\x08GetEntry\x12,.google.cloud.datacatalog.v1.GetEntryRequest\x1a".google.cloud.datacatalog.v1.Entry"H\x82\xd3\xe4\x93\x02;\x12\x39/v1/{name=projects/*/locations/*/entryGroups/*/entries/*}\xda\x41\x04name\x12~\n\x0bLookupEntry\x12/.google.cloud.datacatalog.v1.LookupEntryRequest\x1a".google.cloud.datacatalog.v1.Entry"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/v1/entries:lookup\x12\xbc\x01\n\x0bListEntries\x12/.google.cloud.datacatalog.v1.ListEntriesRequest\x1a\x30.google.cloud.datacatalog.v1.ListEntriesResponse"J\x82\xd3\xe4\x93\x02;\x12\x39/v1/{parent=projects/*/locations/*/entryGroups/*}/entries\xda\x41\x06parent\x12\xe2\x01\n\x11\x43reateTagTemplate\x12\x35.google.cloud.datacatalog.v1.CreateTagTemplateRequest\x1a(.google.cloud.datacatalog.v1.TagTemplate"l\x82\xd3\xe4\x93\x02@"0/v1/{parent=projects/*/locations/*}/tagTemplates:\x0ctag_template\xda\x41#parent,tag_template_id,tag_template\x12\xaf\x01\n\x0eGetTagTemplate\x12\x32.google.cloud.datacatalog.v1.GetTagTemplateRequest\x1a(.google.cloud.datacatalog.v1.TagTemplate"?\x82\xd3\xe4\x93\x02\x32\x12\x30/v1/{name=projects/*/locations/*/tagTemplates/*}\xda\x41\x04name\x12\xf3\x01\n\x11UpdateTagTemplate\x12\x35.google.cloud.datacatalog.v1.UpdateTagTemplateRequest\x1a(.google.cloud.datacatalog.v1.TagTemplate"}\x82\xd3\xe4\x93\x02M2=/v1/{tag_template.name=projects/*/locations/*/tagTemplates/*}:\x0ctag_template\xda\x41\x0ctag_template\xda\x41\x18tag_template,update_mask\x12\xa9\x01\n\x11\x44\x65leteTagTemplate\x12\x35.google.cloud.datacatalog.v1.DeleteTagTemplateRequest\x1a\x16.google.protobuf.Empty"E\x82\xd3\xe4\x93\x02\x32*0/v1/{name=projects/*/locations/*/tagTemplates/*}\xda\x41\nname,force\x12\x8d\x02\n\x16\x43reateTagTemplateField\x12:.google.cloud.datacatalog.v1.CreateTagTemplateFieldRequest\x1a-.google.cloud.datacatalog.v1.TagTemplateField"\x87\x01\x82\xd3\xe4\x93\x02O"9/v1/{parent=projects/*/locations/*/tagTemplates/*}/fields:\x12tag_template_field\xda\x41/parent,tag_template_field_id,tag_template_field\x12\x9b\x02\n\x16UpdateTagTemplateField\x12:.google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest\x1a-.google.cloud.datacatalog.v1.TagTemplateField"\x95\x01\x82\xd3\xe4\x93\x02O29/v1/{name=projects/*/locations/*/tagTemplates/*/fields/*}:\x12tag_template_field\xda\x41\x17name,tag_template_field\xda\x41#name,tag_template_field,update_mask\x12\xf1\x01\n\x16RenameTagTemplateField\x12:.google.cloud.datacatalog.v1.RenameTagTemplateFieldRequest\x1a-.google.cloud.datacatalog.v1.TagTemplateField"l\x82\xd3\xe4\x93\x02\x45"@/v1/{name=projects/*/locations/*/tagTemplates/*/fields/*}:rename:\x01*\xda\x41\x1ename,new_tag_template_field_id\x12\xbc\x01\n\x16\x44\x65leteTagTemplateField\x12:.google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest\x1a\x16.google.protobuf.Empty"N\x82\xd3\xe4\x93\x02;*9/v1/{name=projects/*/locations/*/tagTemplates/*/fields/*}\xda\x41\nname,force\x12\xf9\x01\n\tCreateTag\x12-.google.cloud.datacatalog.v1.CreateTagRequest\x1a .google.cloud.datacatalog.v1.Tag"\x9a\x01\x82\xd3\xe4\x93\x02\x86\x01"@/v1/{parent=projects/*/locations/*/entryGroups/*/entries/*}/tags:\x03tagZ="6/v1/{parent=projects/*/locations/*/entryGroups/*}/tags:\x03tag\xda\x41\nparent,tag\x12\x8c\x02\n\tUpdateTag\x12-.google.cloud.datacatalog.v1.UpdateTagRequest\x1a .google.cloud.datacatalog.v1.Tag"\xad\x01\x82\xd3\xe4\x93\x02\x8e\x01\x32\x44/v1/{tag.name=projects/*/locations/*/entryGroups/*/entries/*/tags/*}:\x03tagZA2:/v1/{tag.name=projects/*/locations/*/entryGroups/*/tags/*}:\x03tag\xda\x41\x03tag\xda\x41\x0ftag,update_mask\x12\xde\x01\n\tDeleteTag\x12-.google.cloud.datacatalog.v1.DeleteTagRequest\x1a\x16.google.protobuf.Empty"\x89\x01\x82\xd3\xe4\x93\x02|*@/v1/{name=projects/*/locations/*/entryGroups/*/entries/*/tags/*}Z8*6/v1/{name=projects/*/locations/*/entryGroups/*/tags/*}\xda\x41\x04name\x12\xf5\x01\n\x08ListTags\x12,.google.cloud.datacatalog.v1.ListTagsRequest\x1a-.google.cloud.datacatalog.v1.ListTagsResponse"\x8b\x01\x82\xd3\xe4\x93\x02|\x12@/v1/{parent=projects/*/locations/*/entryGroups/*/entries/*}/tagsZ8\x12\x36/v1/{parent=projects/*/locations/*/entryGroups/*}/tags\xda\x41\x06parent\x12\xf2\x01\n\x0cSetIamPolicy\x12".google.iam.v1.SetIamPolicyRequest\x1a\x15.google.iam.v1.Policy"\xa6\x01\x82\xd3\xe4\x93\x02\x8d\x01"A/v1/{resource=projects/*/locations/*/tagTemplates/*}:setIamPolicy:\x01*ZE"@/v1/{resource=projects/*/locations/*/entryGroups/*}:setIamPolicy:\x01*\xda\x41\x0fresource,policy\x12\xbc\x02\n\x0cGetIamPolicy\x12".google.iam.v1.GetIamPolicyRequest\x1a\x15.google.iam.v1.Policy"\xf0\x01\x82\xd3\xe4\x93\x02\xde\x01"A/v1/{resource=projects/*/locations/*/tagTemplates/*}:getIamPolicy:\x01*ZE"@/v1/{resource=projects/*/locations/*/entryGroups/*}:getIamPolicy:\x01*ZO"J/v1/{resource=projects/*/locations/*/entryGroups/*/entries/*}:getIamPolicy:\x01*\xda\x41\x08resource\x12\xe3\x02\n\x12TestIamPermissions\x12(.google.iam.v1.TestIamPermissionsRequest\x1a).google.iam.v1.TestIamPermissionsResponse"\xf7\x01\x82\xd3\xe4\x93\x02\xf0\x01"G/v1/{resource=projects/*/locations/*/tagTemplates/*}:testIamPermissions:\x01*ZK"F/v1/{resource=projects/*/locations/*/entryGroups/*}:testIamPermissions:\x01*ZU"P/v1/{resource=projects/*/locations/*/entryGroups/*/entries/*}:testIamPermissions:\x01*\x1aN\xca\x41\x1a\x64\x61tacatalog.googleapis.com\xd2\x41.https://www.googleapis.com/auth/cloud-platformB\xcb\x01\n\x1f\x63om.google.cloud.datacatalog.v1P\x01ZFgoogle.golang.org/genproto/googleapis/cloud/datacatalog/v1;datacatalog\xf8\x01\x01\xaa\x02\x1bGoogle.Cloud.DataCatalog.V1\xca\x02\x1bGoogle\\Cloud\\DataCatalog\\V1\xea\x02\x1eGoogle::Cloud::DataCatalog::V1b\x06proto3',
     dependencies=[
         google_dot_api_dot_annotations__pb2.DESCRIPTOR,
         google_dot_api_dot_client__pb2.DESCRIPTOR,
@@ -74,6 +75,7 @@ _ENTRYTYPE = _descriptor.EnumDescriptor(
     full_name="google.cloud.datacatalog.v1.EntryType",
     filename=None,
     file=DESCRIPTOR,
+    create_key=_descriptor._internal_create_key,
     values=[
         _descriptor.EnumValueDescriptor(
             name="ENTRY_TYPE_UNSPECIFIED",
@@ -81,24 +83,45 @@ _ENTRYTYPE = _descriptor.EnumDescriptor(
             number=0,
             serialized_options=None,
             type=None,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.EnumValueDescriptor(
-            name="TABLE", index=1, number=2, serialized_options=None, type=None
+            name="TABLE",
+            index=1,
+            number=2,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.EnumValueDescriptor(
-            name="MODEL", index=2, number=5, serialized_options=None, type=None
+            name="MODEL",
+            index=2,
+            number=5,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.EnumValueDescriptor(
-            name="DATA_STREAM", index=3, number=3, serialized_options=None, type=None
+            name="DATA_STREAM",
+            index=3,
+            number=3,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.EnumValueDescriptor(
-            name="FILESET", index=4, number=4, serialized_options=None, type=None
+            name="FILESET",
+            index=4,
+            number=4,
+            serialized_options=None,
+            type=None,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     containing_type=None,
     serialized_options=None,
-    serialized_start=5620,
-    serialized_end=5711,
+    serialized_start=5678,
+    serialized_end=5769,
 )
 _sym_db.RegisterEnumDescriptor(_ENTRYTYPE)
 
@@ -116,6 +139,7 @@ _SEARCHCATALOGREQUEST_SCOPE = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="include_org_ids",
@@ -134,6 +158,7 @@ _SEARCHCATALOGREQUEST_SCOPE = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="include_project_ids",
@@ -152,6 +177,7 @@ _SEARCHCATALOGREQUEST_SCOPE = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="include_gcp_public_datasets",
@@ -170,6 +196,26 @@ _SEARCHCATALOGREQUEST_SCOPE = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="restricted_locations",
+            full_name="google.cloud.datacatalog.v1.SearchCatalogRequest.Scope.restricted_locations",
+            index=3,
+            number=16,
+            type=9,
+            cpp_type=9,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=b"\340A\001",
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -180,8 +226,8 @@ _SEARCHCATALOGREQUEST_SCOPE = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=858,
-    serialized_end=956,
+    serialized_start=859,
+    serialized_end=992,
 )
 
 _SEARCHCATALOGREQUEST = _descriptor.Descriptor(
@@ -190,6 +236,7 @@ _SEARCHCATALOGREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="scope",
@@ -208,6 +255,7 @@ _SEARCHCATALOGREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="query",
@@ -226,6 +274,7 @@ _SEARCHCATALOGREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="page_size",
@@ -244,6 +293,7 @@ _SEARCHCATALOGREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="page_token",
@@ -262,6 +312,7 @@ _SEARCHCATALOGREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\001",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="order_by",
@@ -280,6 +331,7 @@ _SEARCHCATALOGREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -291,7 +343,7 @@ _SEARCHCATALOGREQUEST = _descriptor.Descriptor(
     extension_ranges=[],
     oneofs=[],
     serialized_start=675,
-    serialized_end=956,
+    serialized_end=992,
 )
 
 
@@ -301,6 +353,7 @@ _SEARCHCATALOGRESPONSE = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="results",
@@ -319,6 +372,7 @@ _SEARCHCATALOGRESPONSE = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="next_page_token",
@@ -337,6 +391,26 @@ _SEARCHCATALOGRESPONSE = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
+        ),
+        _descriptor.FieldDescriptor(
+            name="unreachable",
+            full_name="google.cloud.datacatalog.v1.SearchCatalogResponse.unreachable",
+            index=2,
+            number=6,
+            type=9,
+            cpp_type=9,
+            label=3,
+            has_default_value=False,
+            default_value=[],
+            message_type=None,
+            enum_type=None,
+            containing_type=None,
+            is_extension=False,
+            extension_scope=None,
+            serialized_options=None,
+            file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -347,8 +421,8 @@ _SEARCHCATALOGRESPONSE = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=958,
-    serialized_end=1073,
+    serialized_start=995,
+    serialized_end=1131,
 )
 
 
@@ -358,6 +432,7 @@ _CREATEENTRYGROUPREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="parent",
@@ -376,6 +451,7 @@ _CREATEENTRYGROUPREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A'\022%datacatalog.googleapis.com/EntryGroup",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="entry_group_id",
@@ -394,6 +470,7 @@ _CREATEENTRYGROUPREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="entry_group",
@@ -412,6 +489,7 @@ _CREATEENTRYGROUPREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -422,8 +500,8 @@ _CREATEENTRYGROUPREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=1076,
-    serialized_end=1255,
+    serialized_start=1134,
+    serialized_end=1313,
 )
 
 
@@ -433,6 +511,7 @@ _UPDATEENTRYGROUPREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="entry_group",
@@ -451,6 +530,7 @@ _UPDATEENTRYGROUPREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="update_mask",
@@ -469,6 +549,7 @@ _UPDATEENTRYGROUPREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -479,8 +560,8 @@ _UPDATEENTRYGROUPREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=1258,
-    serialized_end=1399,
+    serialized_start=1316,
+    serialized_end=1457,
 )
 
 
@@ -490,6 +571,7 @@ _GETENTRYGROUPREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="name",
@@ -508,6 +590,7 @@ _GETENTRYGROUPREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A'\n%datacatalog.googleapis.com/EntryGroup",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="read_mask",
@@ -526,6 +609,7 @@ _GETENTRYGROUPREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -536,8 +620,8 @@ _GETENTRYGROUPREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=1402,
-    serialized_end=1532,
+    serialized_start=1460,
+    serialized_end=1590,
 )
 
 
@@ -547,6 +631,7 @@ _DELETEENTRYGROUPREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="name",
@@ -565,6 +650,7 @@ _DELETEENTRYGROUPREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A'\n%datacatalog.googleapis.com/EntryGroup",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="force",
@@ -583,6 +669,7 @@ _DELETEENTRYGROUPREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\001",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -593,8 +680,8 @@ _DELETEENTRYGROUPREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=1534,
-    serialized_end=1640,
+    serialized_start=1592,
+    serialized_end=1698,
 )
 
 
@@ -604,6 +691,7 @@ _LISTENTRYGROUPSREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="parent",
@@ -622,6 +710,7 @@ _LISTENTRYGROUPSREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A'\n%datacatalog.googleapis.com/EntryGroup",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="page_size",
@@ -640,6 +729,7 @@ _LISTENTRYGROUPSREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\001",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="page_token",
@@ -658,6 +748,7 @@ _LISTENTRYGROUPSREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\001",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -668,8 +759,8 @@ _LISTENTRYGROUPSREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=1643,
-    serialized_end=1779,
+    serialized_start=1701,
+    serialized_end=1837,
 )
 
 
@@ -679,6 +770,7 @@ _LISTENTRYGROUPSRESPONSE = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="entry_groups",
@@ -697,6 +789,7 @@ _LISTENTRYGROUPSRESPONSE = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="next_page_token",
@@ -715,6 +808,7 @@ _LISTENTRYGROUPSRESPONSE = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -725,8 +819,8 @@ _LISTENTRYGROUPSRESPONSE = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=1781,
-    serialized_end=1894,
+    serialized_start=1839,
+    serialized_end=1952,
 )
 
 
@@ -736,6 +830,7 @@ _CREATEENTRYREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="parent",
@@ -754,6 +849,7 @@ _CREATEENTRYREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A'\n%datacatalog.googleapis.com/EntryGroup",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="entry_id",
@@ -772,6 +868,7 @@ _CREATEENTRYREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="entry",
@@ -790,6 +887,7 @@ _CREATEENTRYREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -800,8 +898,8 @@ _CREATEENTRYREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=1897,
-    serialized_end=2059,
+    serialized_start=1955,
+    serialized_end=2117,
 )
 
 
@@ -811,6 +909,7 @@ _UPDATEENTRYREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="entry",
@@ -829,6 +928,7 @@ _UPDATEENTRYREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="update_mask",
@@ -847,6 +947,7 @@ _UPDATEENTRYREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -857,8 +958,8 @@ _UPDATEENTRYREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=2061,
-    serialized_end=2186,
+    serialized_start=2119,
+    serialized_end=2244,
 )
 
 
@@ -868,6 +969,7 @@ _DELETEENTRYREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="name",
@@ -886,6 +988,7 @@ _DELETEENTRYREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b'\340A\002\372A"\n datacatalog.googleapis.com/Entry',
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         )
     ],
     extensions=[],
@@ -896,8 +999,8 @@ _DELETEENTRYREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=2188,
-    serialized_end=2264,
+    serialized_start=2246,
+    serialized_end=2322,
 )
 
 
@@ -907,6 +1010,7 @@ _GETENTRYREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="name",
@@ -925,6 +1029,7 @@ _GETENTRYREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b'\340A\002\372A"\n datacatalog.googleapis.com/Entry',
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         )
     ],
     extensions=[],
@@ -935,8 +1040,8 @@ _GETENTRYREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=2266,
-    serialized_end=2339,
+    serialized_start=2324,
+    serialized_end=2397,
 )
 
 
@@ -946,6 +1051,7 @@ _LOOKUPENTRYREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="linked_resource",
@@ -964,6 +1070,7 @@ _LOOKUPENTRYREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="sql_resource",
@@ -982,6 +1089,7 @@ _LOOKUPENTRYREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -997,11 +1105,12 @@ _LOOKUPENTRYREQUEST = _descriptor.Descriptor(
             full_name="google.cloud.datacatalog.v1.LookupEntryRequest.target_name",
             index=0,
             containing_type=None,
+            create_key=_descriptor._internal_create_key,
             fields=[],
         )
     ],
-    serialized_start=2341,
-    serialized_end=2427,
+    serialized_start=2399,
+    serialized_end=2485,
 )
 
 
@@ -1011,6 +1120,7 @@ _ENTRY = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="name",
@@ -1029,6 +1139,7 @@ _ENTRY = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\372A'\n%datacatalog.googleapis.com/EntryGroup",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="linked_resource",
@@ -1047,6 +1158,7 @@ _ENTRY = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="type",
@@ -1065,6 +1177,7 @@ _ENTRY = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="user_specified_type",
@@ -1083,6 +1196,7 @@ _ENTRY = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="integrated_system",
@@ -1101,6 +1215,7 @@ _ENTRY = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\003",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="user_specified_system",
@@ -1119,6 +1234,7 @@ _ENTRY = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="gcs_fileset_spec",
@@ -1137,6 +1253,7 @@ _ENTRY = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="bigquery_table_spec",
@@ -1155,6 +1272,7 @@ _ENTRY = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="bigquery_date_sharded_spec",
@@ -1173,6 +1291,7 @@ _ENTRY = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="display_name",
@@ -1191,6 +1310,7 @@ _ENTRY = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="description",
@@ -1209,6 +1329,7 @@ _ENTRY = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="schema",
@@ -1227,6 +1348,7 @@ _ENTRY = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="source_system_timestamps",
@@ -1245,6 +1367,7 @@ _ENTRY = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -1260,6 +1383,7 @@ _ENTRY = _descriptor.Descriptor(
             full_name="google.cloud.datacatalog.v1.Entry.entry_type",
             index=0,
             containing_type=None,
+            create_key=_descriptor._internal_create_key,
             fields=[],
         ),
         _descriptor.OneofDescriptor(
@@ -1267,6 +1391,7 @@ _ENTRY = _descriptor.Descriptor(
             full_name="google.cloud.datacatalog.v1.Entry.system",
             index=1,
             containing_type=None,
+            create_key=_descriptor._internal_create_key,
             fields=[],
         ),
         _descriptor.OneofDescriptor(
@@ -1274,11 +1399,12 @@ _ENTRY = _descriptor.Descriptor(
             full_name="google.cloud.datacatalog.v1.Entry.type_spec",
             index=2,
             containing_type=None,
+            create_key=_descriptor._internal_create_key,
             fields=[],
         ),
     ],
-    serialized_start=2430,
-    serialized_end=3301,
+    serialized_start=2488,
+    serialized_end=3359,
 )
 
 
@@ -1288,6 +1414,7 @@ _ENTRYGROUP = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="name",
@@ -1306,6 +1433,7 @@ _ENTRYGROUP = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="display_name",
@@ -1324,6 +1452,7 @@ _ENTRYGROUP = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="description",
@@ -1342,6 +1471,7 @@ _ENTRYGROUP = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="data_catalog_timestamps",
@@ -1360,6 +1490,7 @@ _ENTRYGROUP = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\003",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -1370,8 +1501,8 @@ _ENTRYGROUP = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=3304,
-    serialized_end=3569,
+    serialized_start=3362,
+    serialized_end=3627,
 )
 
 
@@ -1381,6 +1512,7 @@ _CREATETAGTEMPLATEREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="parent",
@@ -1399,6 +1531,7 @@ _CREATETAGTEMPLATEREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A(\022&datacatalog.googleapis.com/TagTemplate",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="tag_template_id",
@@ -1417,6 +1550,7 @@ _CREATETAGTEMPLATEREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="tag_template",
@@ -1435,6 +1569,7 @@ _CREATETAGTEMPLATEREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -1445,8 +1580,8 @@ _CREATETAGTEMPLATEREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=3572,
-    serialized_end=3761,
+    serialized_start=3630,
+    serialized_end=3819,
 )
 
 
@@ -1456,6 +1591,7 @@ _GETTAGTEMPLATEREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="name",
@@ -1474,6 +1610,7 @@ _GETTAGTEMPLATEREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A(\n&datacatalog.googleapis.com/TagTemplate",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         )
     ],
     extensions=[],
@@ -1484,8 +1621,8 @@ _GETTAGTEMPLATEREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=3763,
-    serialized_end=3848,
+    serialized_start=3821,
+    serialized_end=3906,
 )
 
 
@@ -1495,6 +1632,7 @@ _UPDATETAGTEMPLATEREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="tag_template",
@@ -1513,6 +1651,7 @@ _UPDATETAGTEMPLATEREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="update_mask",
@@ -1531,6 +1670,7 @@ _UPDATETAGTEMPLATEREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -1541,8 +1681,8 @@ _UPDATETAGTEMPLATEREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=3851,
-    serialized_end=3995,
+    serialized_start=3909,
+    serialized_end=4053,
 )
 
 
@@ -1552,6 +1692,7 @@ _DELETETAGTEMPLATEREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="name",
@@ -1570,6 +1711,7 @@ _DELETETAGTEMPLATEREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A(\n&datacatalog.googleapis.com/TagTemplate",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="force",
@@ -1588,6 +1730,7 @@ _DELETETAGTEMPLATEREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -1598,8 +1741,8 @@ _DELETETAGTEMPLATEREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=3997,
-    serialized_end=4105,
+    serialized_start=4055,
+    serialized_end=4163,
 )
 
 
@@ -1609,6 +1752,7 @@ _CREATETAGREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="parent",
@@ -1627,6 +1771,7 @@ _CREATETAGREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A \n\036datacatalog.googleapis.com/Tag",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="tag",
@@ -1645,6 +1790,7 @@ _CREATETAGREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -1655,8 +1801,8 @@ _CREATETAGREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=4107,
-    serialized_end=4233,
+    serialized_start=4165,
+    serialized_end=4291,
 )
 
 
@@ -1666,6 +1812,7 @@ _UPDATETAGREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="tag",
@@ -1684,6 +1831,7 @@ _UPDATETAGREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="update_mask",
@@ -1702,6 +1850,7 @@ _UPDATETAGREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -1712,8 +1861,8 @@ _UPDATETAGREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=4235,
-    serialized_end=4354,
+    serialized_start=4293,
+    serialized_end=4412,
 )
 
 
@@ -1723,6 +1872,7 @@ _DELETETAGREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="name",
@@ -1741,6 +1891,7 @@ _DELETETAGREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A \022\036datacatalog.googleapis.com/Tag",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         )
     ],
     extensions=[],
@@ -1751,8 +1902,8 @@ _DELETETAGREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=4356,
-    serialized_end=4428,
+    serialized_start=4414,
+    serialized_end=4486,
 )
 
 
@@ -1762,6 +1913,7 @@ _CREATETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="parent",
@@ -1780,6 +1932,7 @@ _CREATETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A(\n&datacatalog.googleapis.com/TagTemplate",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="tag_template_field_id",
@@ -1798,6 +1951,7 @@ _CREATETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="tag_template_field",
@@ -1816,6 +1970,7 @@ _CREATETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -1826,8 +1981,8 @@ _CREATETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=4431,
-    serialized_end=4642,
+    serialized_start=4489,
+    serialized_end=4700,
 )
 
 
@@ -1837,6 +1992,7 @@ _UPDATETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="name",
@@ -1855,6 +2011,7 @@ _UPDATETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A-\n+datacatalog.googleapis.com/TagTemplateField",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="tag_template_field",
@@ -1873,6 +2030,7 @@ _UPDATETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="update_mask",
@@ -1891,6 +2049,7 @@ _UPDATETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\001",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -1901,8 +2060,8 @@ _UPDATETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=4645,
-    serialized_end=4877,
+    serialized_start=4703,
+    serialized_end=4935,
 )
 
 
@@ -1912,6 +2071,7 @@ _RENAMETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="name",
@@ -1930,6 +2090,7 @@ _RENAMETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A-\n+datacatalog.googleapis.com/TagTemplateField",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="new_tag_template_field_id",
@@ -1948,6 +2109,7 @@ _RENAMETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -1958,8 +2120,8 @@ _RENAMETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=4880,
-    serialized_end=5018,
+    serialized_start=4938,
+    serialized_end=5076,
 )
 
 
@@ -1969,6 +2131,7 @@ _DELETETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="name",
@@ -1987,6 +2150,7 @@ _DELETETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A-\n+datacatalog.googleapis.com/TagTemplateField",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="force",
@@ -2005,6 +2169,7 @@ _DELETETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -2015,8 +2180,8 @@ _DELETETAGTEMPLATEFIELDREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=5020,
-    serialized_end=5138,
+    serialized_start=5078,
+    serialized_end=5196,
 )
 
 
@@ -2026,6 +2191,7 @@ _LISTTAGSREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="parent",
@@ -2044,6 +2210,7 @@ _LISTTAGSREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A \022\036datacatalog.googleapis.com/Tag",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="page_size",
@@ -2062,6 +2229,7 @@ _LISTTAGSREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="page_token",
@@ -2080,6 +2248,7 @@ _LISTTAGSREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -2090,8 +2259,8 @@ _LISTTAGSREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=5140,
-    serialized_end=5252,
+    serialized_start=5198,
+    serialized_end=5310,
 )
 
 
@@ -2101,6 +2270,7 @@ _LISTTAGSRESPONSE = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="tags",
@@ -2119,6 +2289,7 @@ _LISTTAGSRESPONSE = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="next_page_token",
@@ -2137,6 +2308,7 @@ _LISTTAGSRESPONSE = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -2147,8 +2319,8 @@ _LISTTAGSRESPONSE = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=5254,
-    serialized_end=5345,
+    serialized_start=5312,
+    serialized_end=5403,
 )
 
 
@@ -2158,6 +2330,7 @@ _LISTENTRIESREQUEST = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="parent",
@@ -2176,6 +2349,7 @@ _LISTENTRIESREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=b"\340A\002\372A'\n%datacatalog.googleapis.com/EntryGroup",
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="page_size",
@@ -2194,6 +2368,7 @@ _LISTENTRIESREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="page_token",
@@ -2212,6 +2387,7 @@ _LISTENTRIESREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="read_mask",
@@ -2230,6 +2406,7 @@ _LISTENTRIESREQUEST = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -2240,8 +2417,8 @@ _LISTENTRIESREQUEST = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=5348,
-    serialized_end=5517,
+    serialized_start=5406,
+    serialized_end=5575,
 )
 
 
@@ -2251,6 +2428,7 @@ _LISTENTRIESRESPONSE = _descriptor.Descriptor(
     filename=None,
     file=DESCRIPTOR,
     containing_type=None,
+    create_key=_descriptor._internal_create_key,
     fields=[
         _descriptor.FieldDescriptor(
             name="entries",
@@ -2269,6 +2447,7 @@ _LISTENTRIESRESPONSE = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.FieldDescriptor(
             name="next_page_token",
@@ -2287,6 +2466,7 @@ _LISTENTRIESRESPONSE = _descriptor.Descriptor(
             extension_scope=None,
             serialized_options=None,
             file=DESCRIPTOR,
+            create_key=_descriptor._internal_create_key,
         ),
     ],
     extensions=[],
@@ -2297,8 +2477,8 @@ _LISTENTRIESRESPONSE = _descriptor.Descriptor(
     syntax="proto3",
     extension_ranges=[],
     oneofs=[],
-    serialized_start=5519,
-    serialized_end=5618,
+    serialized_start=5577,
+    serialized_end=5676,
 )
 
 _SEARCHCATALOGREQUEST_SCOPE.containing_type = _SEARCHCATALOGREQUEST
@@ -2499,9 +2679,7 @@ SearchCatalogRequest = _reflection.GeneratedProtocolMessageType(
             {
                 "DESCRIPTOR": _SEARCHCATALOGREQUEST_SCOPE,
                 "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-                "__doc__": """The criteria that select the subspace used for query
-    matching.
-    
+                "__doc__": """The criteria that select the subspace used for query matching.
     
     Attributes:
         include_org_ids:
@@ -2518,15 +2696,30 @@ SearchCatalogRequest = _reflection.GeneratedProtocolMessageType(
             datasets in the search results. Info on GCP public datasets is
             available at https://cloud.google.com/public-datasets/. By
             default, GCP public datasets are excluded.
+        restricted_locations:
+            Optional. The list of locations to search within. 1. If empty,
+            search will be performed in all locations; 2. If any of the
+            locations are NOT in the valid locations list, error will be
+            returned; 3. Otherwise, search only the given locations for
+            matching results. Typical usage is to leave this field empty.
+            When a location is unreachable as returned in the
+            ``SearchCatalogResponse.unreachable`` field, users can repeat
+            the search request with this parameter set to get additional
+            information on the error.  Valid locations: \* asia-east1 \*
+            asia-east2 \* asia-northeast1 \* asia-northeast2 \* asia-
+            northeast3 \* asia-south1 \* asia-southeast1 \* australia-
+            southeast1 \* eu \* europe-north1 \* europe-west1 \* europe-
+            west2 \* europe-west3 \* europe-west4 \* europe-west6 \*
+            global \* northamerica-northeast1 \* southamerica-east1 \* us
+            \* us-central1 \* us-east1 \* us-east4 \* us-west1 \* us-west2
     """,
                 # @@protoc_insertion_point(class_scope:google.cloud.datacatalog.v1.SearchCatalogRequest.Scope)
             },
         ),
         "DESCRIPTOR": _SEARCHCATALOGREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [SearchCatalog][google.cloud.datacatalog.v1.DataCatalog.SearchCatalog].
-  
+        "__doc__": """Request message for [SearchCatalog][google.cloud.datacatalog.v1.DataCa
+  talog.SearchCatalog].
   
   Attributes:
       scope:
@@ -2540,8 +2733,8 @@ SearchCatalogRequest = _reflection.GeneratedProtocolMessageType(
           qualified as:  -  name:x -  column:x -  description:y  Note:
           Query tokens need to have a minimum of 3 characters for
           substring matching to work correctly. See `Data Catalog Search
-          Syntax </data-catalog/docs/how-to/search-reference>`__ for
-          more information.
+          Syntax <https://cloud.google.com/data-catalog/docs/how-
+          to/search-reference>`__ for more information.
       page_size:
           Number of results in the search page. If <=0 then defaults to
           10. Max limit for page_size is 1000. Throws an invalid
@@ -2573,9 +2766,8 @@ SearchCatalogResponse = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _SEARCHCATALOGRESPONSE,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Response message for
-  [SearchCatalog][google.cloud.datacatalog.v1.DataCatalog.SearchCatalog].
-  
+        "__doc__": """Response message for [SearchCatalog][google.cloud.datacatalog.v1.DataC
+  atalog.SearchCatalog].
   
   Attributes:
       results:
@@ -2583,6 +2775,12 @@ SearchCatalogResponse = _reflection.GeneratedProtocolMessageType(
       next_page_token:
           The token that can be used to retrieve the next page of
           results.
+      unreachable:
+          Unreachable locations. Search result does not include data
+          from those locations. Users can get additional information on
+          the error by repeating the search request with a more
+          restrictive parameter – setting the value for
+          ``SearchDataCatalogRequest.scope.include_locations``.
   """,
         # @@protoc_insertion_point(class_scope:google.cloud.datacatalog.v1.SearchCatalogResponse)
     },
@@ -2595,9 +2793,8 @@ CreateEntryGroupRequest = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _CREATEENTRYGROUPREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [CreateEntryGroup][google.cloud.datacatalog.v1.DataCatalog.CreateEntryGroup].
-  
+        "__doc__": """Request message for [CreateEntryGroup][google.cloud.datacatalog.v1.Dat
+  aCatalog.CreateEntryGroup].
   
   Attributes:
       parent:
@@ -2624,9 +2821,8 @@ UpdateEntryGroupRequest = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _UPDATEENTRYGROUPREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [UpdateEntryGroup][google.cloud.datacatalog.v1.DataCatalog.UpdateEntryGroup].
-  
+        "__doc__": """Request message for [UpdateEntryGroup][google.cloud.datacatalog.v1.Dat
+  aCatalog.UpdateEntryGroup].
   
   Attributes:
       entry_group:
@@ -2646,9 +2842,8 @@ GetEntryGroupRequest = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _GETENTRYGROUPREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [GetEntryGroup][google.cloud.datacatalog.v1.DataCatalog.GetEntryGroup].
-  
+        "__doc__": """Request message for [GetEntryGroup][google.cloud.datacatalog.v1.DataCa
+  talog.GetEntryGroup].
   
   Attributes:
       name:
@@ -2670,9 +2865,8 @@ DeleteEntryGroupRequest = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _DELETEENTRYGROUPREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [DeleteEntryGroup][google.cloud.datacatalog.v1.DataCatalog.DeleteEntryGroup].
-  
+        "__doc__": """Request message for [DeleteEntryGroup][google.cloud.datacatalog.v1.Dat
+  aCatalog.DeleteEntryGroup].
   
   Attributes:
       name:
@@ -2693,9 +2887,8 @@ ListEntryGroupsRequest = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _LISTENTRYGROUPSREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [ListEntryGroups][google.cloud.datacatalog.v1.DataCatalog.ListEntryGroups].
-  
+        "__doc__": """Request message for [ListEntryGroups][google.cloud.datacatalog.v1.Data
+  Catalog.ListEntryGroups].
   
   Attributes:
       parent:
@@ -2721,9 +2914,8 @@ ListEntryGroupsResponse = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _LISTENTRYGROUPSRESPONSE,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Response message for
-  [ListEntryGroups][google.cloud.datacatalog.v1.DataCatalog.ListEntryGroups].
-  
+        "__doc__": """Response message for [ListEntryGroups][google.cloud.datacatalog.v1.Dat
+  aCatalog.ListEntryGroups].
   
   Attributes:
       entry_groups:
@@ -2745,7 +2937,6 @@ CreateEntryRequest = _reflection.GeneratedProtocolMessageType(
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
         "__doc__": """Request message for
   [CreateEntry][google.cloud.datacatalog.v1.DataCatalog.CreateEntry].
-  
   
   Attributes:
       parent:
@@ -2772,7 +2963,6 @@ UpdateEntryRequest = _reflection.GeneratedProtocolMessageType(
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
         "__doc__": """Request message for
   [UpdateEntry][google.cloud.datacatalog.v1.DataCatalog.UpdateEntry].
-  
   
   Attributes:
       entry:
@@ -2803,7 +2993,6 @@ DeleteEntryRequest = _reflection.GeneratedProtocolMessageType(
         "__doc__": """Request message for
   [DeleteEntry][google.cloud.datacatalog.v1.DataCatalog.DeleteEntry].
   
-  
   Attributes:
       name:
           Required. The name of the entry. Example:  -  projects/{projec
@@ -2823,7 +3012,6 @@ GetEntryRequest = _reflection.GeneratedProtocolMessageType(
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
         "__doc__": """Request message for
   [GetEntry][google.cloud.datacatalog.v1.DataCatalog.GetEntry].
-  
   
   Attributes:
       name:
@@ -2845,7 +3033,6 @@ LookupEntryRequest = _reflection.GeneratedProtocolMessageType(
         "__doc__": """Request message for
   [LookupEntry][google.cloud.datacatalog.v1.DataCatalog.LookupEntry].
   
-  
   Attributes:
       target_name:
           Required. Represents either the Google Cloud Platform resource
@@ -2859,14 +3046,15 @@ LookupEntryRequest = _reflection.GeneratedProtocolMessageType(
           //pubsub.googleapis.com/projects/projectId/topics/topicId
       sql_resource:
           The SQL name of the entry. SQL names are case-sensitive.
-          Examples:  -  ``cloud_pubsub.project_id.topic_id`` -
+          Examples:  -  ``pubsub.project_id.topic_id`` -
           :literal:`pubsub.project_id.`topic.id.with.dots\`` -
           ``bigquery.table.project_id.dataset_id.table_id`` -
           ``bigquery.dataset.project_id.dataset_id`` -  ``datacatalog.en
           try.project_id.location_id.entry_group_id.entry_id``
           ``*_id``\ s shoud satisfy the standard SQL rules for
-          identifiers. https://cloud.google.com/bigquery/docs/reference
-          /standard-sql/lexical.
+          identifiers.
+          https://cloud.google.com/bigquery/docs/reference/standard-
+          sql/lexical.
   """,
         # @@protoc_insertion_point(class_scope:google.cloud.datacatalog.v1.LookupEntryRequest)
     },
@@ -2879,16 +3067,14 @@ Entry = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _ENTRY,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Entry Metadata. A Data Catalog Entry resource represents
-  another resource in Google Cloud Platform (such as a BigQuery dataset or
-  a Pub/Sub topic) or outside of Google Cloud Platform. Clients can use
+        "__doc__": """Entry Metadata. A Data Catalog Entry resource represents another
+  resource in Google Cloud Platform (such as a BigQuery dataset or a
+  Pub/Sub topic) or outside of Google Cloud Platform. Clients can use
   the ``linked_resource`` field in the Entry resource to refer to the
-  original resource ID of the source system.
-  
-  An Entry resource contains resource details, such as its schema. An
-  Entry can also be used to attach flexible metadata, such as a
+  original resource ID of the source system.  An Entry resource contains
+  resource details, such as its schema. An Entry can also be used to
+  attach flexible metadata, such as a
   [Tag][google.cloud.datacatalog.v1.Tag].
-  
   
   Attributes:
       name:
@@ -2978,10 +3164,9 @@ EntryGroup = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _ENTRYGROUP,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """EntryGroup Metadata. An EntryGroup resource represents a
-  logical grouping of zero or more Data Catalog
+        "__doc__": """EntryGroup Metadata. An EntryGroup resource represents a logical
+  grouping of zero or more Data Catalog
   [Entry][google.cloud.datacatalog.v1.Entry] resources.
-  
   
   Attributes:
       name:
@@ -3012,16 +3197,15 @@ CreateTagTemplateRequest = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _CREATETAGTEMPLATEREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [CreateTagTemplate][google.cloud.datacatalog.v1.DataCatalog.CreateTagTemplate].
-  
+        "__doc__": """Request message for [CreateTagTemplate][google.cloud.datacatalog.v1.Da
+  taCatalog.CreateTagTemplate].
   
   Attributes:
       parent:
           Required. The name of the project and the template location
-          `region </compute/docs/regions-zones/#available>`__. NOTE:
-          Currently, only the ``us-central1 region`` is supported.
-          Example:  -  projects/{project_id}/locations/us-central1
+          `region <https://cloud.google.com/data-
+          catalog/docs/concepts/regions>`__.  Example:  -
+          projects/{project_id}/locations/us-central1
       tag_template_id:
           Required. The id of the tag template to create.
       tag_template:
@@ -3038,9 +3222,8 @@ GetTagTemplateRequest = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _GETTAGTEMPLATEREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [GetTagTemplate][google.cloud.datacatalog.v1.DataCatalog.GetTagTemplate].
-  
+        "__doc__": """Request message for [GetTagTemplate][google.cloud.datacatalog.v1.DataC
+  atalog.GetTagTemplate].
   
   Attributes:
       name:
@@ -3059,9 +3242,8 @@ UpdateTagTemplateRequest = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _UPDATETAGTEMPLATEREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [UpdateTagTemplate][google.cloud.datacatalog.v1.DataCatalog.UpdateTagTemplate].
-  
+        "__doc__": """Request message for [UpdateTagTemplate][google.cloud.datacatalog.v1.Da
+  taCatalog.UpdateTagTemplate].
   
   Attributes:
       tag_template:
@@ -3083,9 +3265,8 @@ DeleteTagTemplateRequest = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _DELETETAGTEMPLATEREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [DeleteTagTemplate][google.cloud.datacatalog.v1.DataCatalog.DeleteTagTemplate].
-  
+        "__doc__": """Request message for [DeleteTagTemplate][google.cloud.datacatalog.v1.Da
+  taCatalog.DeleteTagTemplate].
   
   Attributes:
       name:
@@ -3112,7 +3293,6 @@ CreateTagRequest = _reflection.GeneratedProtocolMessageType(
         "__doc__": """Request message for
   [CreateTag][google.cloud.datacatalog.v1.DataCatalog.CreateTag].
   
-  
   Attributes:
       parent:
           Required. The name of the resource to attach this tag to. Tags
@@ -3137,7 +3317,6 @@ UpdateTagRequest = _reflection.GeneratedProtocolMessageType(
         "__doc__": """Request message for
   [UpdateTag][google.cloud.datacatalog.v1.DataCatalog.UpdateTag].
   
-  
   Attributes:
       tag:
           Required. The updated tag. The “name” field must be set.
@@ -3160,7 +3339,6 @@ DeleteTagRequest = _reflection.GeneratedProtocolMessageType(
         "__doc__": """Request message for
   [DeleteTag][google.cloud.datacatalog.v1.DataCatalog.DeleteTag].
   
-  
   Attributes:
       name:
           Required. The name of the tag to delete. Example:  -  projects
@@ -3178,16 +3356,15 @@ CreateTagTemplateFieldRequest = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _CREATETAGTEMPLATEFIELDREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [CreateTagTemplateField][google.cloud.datacatalog.v1.DataCatalog.CreateTagTemplateField].
-  
+        "__doc__": """Request message for [CreateTagTemplateField][google.cloud.datacatalog.
+  v1.DataCatalog.CreateTagTemplateField].
   
   Attributes:
       parent:
           Required. The name of the project and the template location
-          `region </compute/docs/regions-zones/#available>`__. NOTE:
-          Currently, only the ``us-central1 region`` is supported.
-          Example:  -  projects/{project_id}/locations/us-
+          `region <https://cloud.google.com/data-
+          catalog/docs/concepts/regions>`__.  Example:  -
+          projects/{project_id}/locations/us-
           central1/tagTemplates/{tag_template_id}
       tag_template_field_id:
           Required. The ID of the tag template field to create. Field
@@ -3209,9 +3386,8 @@ UpdateTagTemplateFieldRequest = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _UPDATETAGTEMPLATEFIELDREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [UpdateTagTemplateField][google.cloud.datacatalog.v1.DataCatalog.UpdateTagTemplateField].
-  
+        "__doc__": """Request message for [UpdateTagTemplateField][google.cloud.datacatalog.
+  v1.DataCatalog.UpdateTagTemplateField].
   
   Attributes:
       name:
@@ -3242,9 +3418,8 @@ RenameTagTemplateFieldRequest = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _RENAMETAGTEMPLATEFIELDREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [RenameTagTemplateField][google.cloud.datacatalog.v1.DataCatalog.RenameTagTemplateField].
-  
+        "__doc__": """Request message for [RenameTagTemplateField][google.cloud.datacatalog.
+  v1.DataCatalog.RenameTagTemplateField].
   
   Attributes:
       name:
@@ -3266,9 +3441,8 @@ DeleteTagTemplateFieldRequest = _reflection.GeneratedProtocolMessageType(
     {
         "DESCRIPTOR": _DELETETAGTEMPLATEFIELDREQUEST,
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
-        "__doc__": """Request message for
-  [DeleteTagTemplateField][google.cloud.datacatalog.v1.DataCatalog.DeleteTagTemplateField].
-  
+        "__doc__": """Request message for [DeleteTagTemplateField][google.cloud.datacatalog.
+  v1.DataCatalog.DeleteTagTemplateField].
   
   Attributes:
       name:
@@ -3294,7 +3468,6 @@ ListTagsRequest = _reflection.GeneratedProtocolMessageType(
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
         "__doc__": """Request message for
   [ListTags][google.cloud.datacatalog.v1.DataCatalog.ListTags].
-  
   
   Attributes:
       parent:
@@ -3326,7 +3499,6 @@ ListTagsResponse = _reflection.GeneratedProtocolMessageType(
         "__doc__": """Response message for
   [ListTags][google.cloud.datacatalog.v1.DataCatalog.ListTags].
   
-  
   Attributes:
       tags:
           [Tag][google.cloud.datacatalog.v1.Tag] details.
@@ -3347,7 +3519,6 @@ ListEntriesRequest = _reflection.GeneratedProtocolMessageType(
         "__module__": "google.cloud.datacatalog_v1.proto.datacatalog_pb2",
         "__doc__": """Request message for
   [ListEntries][google.cloud.datacatalog.v1.DataCatalog.ListEntries].
-  
   
   Attributes:
       parent:
@@ -3382,7 +3553,6 @@ ListEntriesResponse = _reflection.GeneratedProtocolMessageType(
         "__doc__": """Response message for
   [ListEntries][google.cloud.datacatalog.v1.DataCatalog.ListEntries].
   
-  
   Attributes:
       entries:
           Entry details.
@@ -3397,6 +3567,7 @@ _sym_db.RegisterMessage(ListEntriesResponse)
 
 
 DESCRIPTOR._options = None
+_SEARCHCATALOGREQUEST_SCOPE.fields_by_name["restricted_locations"]._options = None
 _SEARCHCATALOGREQUEST.fields_by_name["scope"]._options = None
 _SEARCHCATALOGREQUEST.fields_by_name["query"]._options = None
 _SEARCHCATALOGREQUEST.fields_by_name["page_token"]._options = None
@@ -3452,8 +3623,9 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
     file=DESCRIPTOR,
     index=0,
     serialized_options=b"\312A\032datacatalog.googleapis.com\322A.https://www.googleapis.com/auth/cloud-platform",
-    serialized_start=5714,
-    serialized_end=11746,
+    create_key=_descriptor._internal_create_key,
+    serialized_start=5772,
+    serialized_end=11833,
     methods=[
         _descriptor.MethodDescriptor(
             name="SearchCatalog",
@@ -3463,6 +3635,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_SEARCHCATALOGREQUEST,
             output_type=_SEARCHCATALOGRESPONSE,
             serialized_options=b'\202\323\344\223\002\027"\022/v1/catalog:search:\001*\332A\013scope,query',
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="CreateEntryGroup",
@@ -3472,6 +3645,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_CREATEENTRYGROUPREQUEST,
             output_type=_ENTRYGROUP,
             serialized_options=b'\202\323\344\223\002>"//v1/{parent=projects/*/locations/*}/entryGroups:\013entry_group\332A!parent,entry_group_id,entry_group',
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="GetEntryGroup",
@@ -3481,6 +3655,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_GETENTRYGROUPREQUEST,
             output_type=_ENTRYGROUP,
             serialized_options=b"\202\323\344\223\0021\022//v1/{name=projects/*/locations/*/entryGroups/*}\332A\004name\332A\016name,read_mask",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="UpdateEntryGroup",
@@ -3490,6 +3665,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_UPDATEENTRYGROUPREQUEST,
             output_type=_ENTRYGROUP,
             serialized_options=b"\202\323\344\223\002J2;/v1/{entry_group.name=projects/*/locations/*/entryGroups/*}:\013entry_group\332A\013entry_group\332A\027entry_group,update_mask",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="DeleteEntryGroup",
@@ -3499,6 +3675,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_DELETEENTRYGROUPREQUEST,
             output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
             serialized_options=b"\202\323\344\223\0021*//v1/{name=projects/*/locations/*/entryGroups/*}\332A\004name",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="ListEntryGroups",
@@ -3508,6 +3685,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_LISTENTRYGROUPSREQUEST,
             output_type=_LISTENTRYGROUPSRESPONSE,
             serialized_options=b"\202\323\344\223\0021\022//v1/{parent=projects/*/locations/*}/entryGroups\332A\006parent",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="CreateEntry",
@@ -3517,6 +3695,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_CREATEENTRYREQUEST,
             output_type=_ENTRY,
             serialized_options=b'\202\323\344\223\002B"9/v1/{parent=projects/*/locations/*/entryGroups/*}/entries:\005entry\332A\025parent,entry_id,entry',
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="UpdateEntry",
@@ -3526,6 +3705,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_UPDATEENTRYREQUEST,
             output_type=_ENTRY,
             serialized_options=b"\202\323\344\223\002H2?/v1/{entry.name=projects/*/locations/*/entryGroups/*/entries/*}:\005entry\332A\005entry\332A\021entry,update_mask",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="DeleteEntry",
@@ -3535,6 +3715,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_DELETEENTRYREQUEST,
             output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
             serialized_options=b"\202\323\344\223\002;*9/v1/{name=projects/*/locations/*/entryGroups/*/entries/*}\332A\004name",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="GetEntry",
@@ -3544,6 +3725,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_GETENTRYREQUEST,
             output_type=_ENTRY,
             serialized_options=b"\202\323\344\223\002;\0229/v1/{name=projects/*/locations/*/entryGroups/*/entries/*}\332A\004name",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="LookupEntry",
@@ -3553,6 +3735,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_LOOKUPENTRYREQUEST,
             output_type=_ENTRY,
             serialized_options=b"\202\323\344\223\002\024\022\022/v1/entries:lookup",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="ListEntries",
@@ -3562,6 +3745,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_LISTENTRIESREQUEST,
             output_type=_LISTENTRIESRESPONSE,
             serialized_options=b"\202\323\344\223\002;\0229/v1/{parent=projects/*/locations/*/entryGroups/*}/entries\332A\006parent",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="CreateTagTemplate",
@@ -3571,6 +3755,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_CREATETAGTEMPLATEREQUEST,
             output_type=google_dot_cloud_dot_datacatalog__v1_dot_proto_dot_tags__pb2._TAGTEMPLATE,
             serialized_options=b'\202\323\344\223\002@"0/v1/{parent=projects/*/locations/*}/tagTemplates:\014tag_template\332A#parent,tag_template_id,tag_template',
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="GetTagTemplate",
@@ -3580,6 +3765,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_GETTAGTEMPLATEREQUEST,
             output_type=google_dot_cloud_dot_datacatalog__v1_dot_proto_dot_tags__pb2._TAGTEMPLATE,
             serialized_options=b"\202\323\344\223\0022\0220/v1/{name=projects/*/locations/*/tagTemplates/*}\332A\004name",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="UpdateTagTemplate",
@@ -3589,6 +3775,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_UPDATETAGTEMPLATEREQUEST,
             output_type=google_dot_cloud_dot_datacatalog__v1_dot_proto_dot_tags__pb2._TAGTEMPLATE,
             serialized_options=b"\202\323\344\223\002M2=/v1/{tag_template.name=projects/*/locations/*/tagTemplates/*}:\014tag_template\332A\014tag_template\332A\030tag_template,update_mask",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="DeleteTagTemplate",
@@ -3598,6 +3785,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_DELETETAGTEMPLATEREQUEST,
             output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
             serialized_options=b"\202\323\344\223\0022*0/v1/{name=projects/*/locations/*/tagTemplates/*}\332A\nname,force",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="CreateTagTemplateField",
@@ -3607,6 +3795,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_CREATETAGTEMPLATEFIELDREQUEST,
             output_type=google_dot_cloud_dot_datacatalog__v1_dot_proto_dot_tags__pb2._TAGTEMPLATEFIELD,
             serialized_options=b'\202\323\344\223\002O"9/v1/{parent=projects/*/locations/*/tagTemplates/*}/fields:\022tag_template_field\332A/parent,tag_template_field_id,tag_template_field',
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="UpdateTagTemplateField",
@@ -3616,6 +3805,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_UPDATETAGTEMPLATEFIELDREQUEST,
             output_type=google_dot_cloud_dot_datacatalog__v1_dot_proto_dot_tags__pb2._TAGTEMPLATEFIELD,
             serialized_options=b"\202\323\344\223\002O29/v1/{name=projects/*/locations/*/tagTemplates/*/fields/*}:\022tag_template_field\332A\027name,tag_template_field\332A#name,tag_template_field,update_mask",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="RenameTagTemplateField",
@@ -3625,6 +3815,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_RENAMETAGTEMPLATEFIELDREQUEST,
             output_type=google_dot_cloud_dot_datacatalog__v1_dot_proto_dot_tags__pb2._TAGTEMPLATEFIELD,
             serialized_options=b'\202\323\344\223\002E"@/v1/{name=projects/*/locations/*/tagTemplates/*/fields/*}:rename:\001*\332A\036name,new_tag_template_field_id',
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="DeleteTagTemplateField",
@@ -3634,6 +3825,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_DELETETAGTEMPLATEFIELDREQUEST,
             output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
             serialized_options=b"\202\323\344\223\002;*9/v1/{name=projects/*/locations/*/tagTemplates/*/fields/*}\332A\nname,force",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="CreateTag",
@@ -3643,6 +3835,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_CREATETAGREQUEST,
             output_type=google_dot_cloud_dot_datacatalog__v1_dot_proto_dot_tags__pb2._TAG,
             serialized_options=b'\202\323\344\223\002\206\001"@/v1/{parent=projects/*/locations/*/entryGroups/*/entries/*}/tags:\003tagZ="6/v1/{parent=projects/*/locations/*/entryGroups/*}/tags:\003tag\332A\nparent,tag',
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="UpdateTag",
@@ -3652,6 +3845,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_UPDATETAGREQUEST,
             output_type=google_dot_cloud_dot_datacatalog__v1_dot_proto_dot_tags__pb2._TAG,
             serialized_options=b"\202\323\344\223\002\216\0012D/v1/{tag.name=projects/*/locations/*/entryGroups/*/entries/*/tags/*}:\003tagZA2:/v1/{tag.name=projects/*/locations/*/entryGroups/*/tags/*}:\003tag\332A\003tag\332A\017tag,update_mask",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="DeleteTag",
@@ -3661,6 +3855,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_DELETETAGREQUEST,
             output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
             serialized_options=b"\202\323\344\223\002|*@/v1/{name=projects/*/locations/*/entryGroups/*/entries/*/tags/*}Z8*6/v1/{name=projects/*/locations/*/entryGroups/*/tags/*}\332A\004name",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="ListTags",
@@ -3670,6 +3865,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=_LISTTAGSREQUEST,
             output_type=_LISTTAGSRESPONSE,
             serialized_options=b"\202\323\344\223\002|\022@/v1/{parent=projects/*/locations/*/entryGroups/*/entries/*}/tagsZ8\0226/v1/{parent=projects/*/locations/*/entryGroups/*}/tags\332A\006parent",
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="SetIamPolicy",
@@ -3678,7 +3874,8 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             containing_service=None,
             input_type=google_dot_iam_dot_v1_dot_iam__policy__pb2._SETIAMPOLICYREQUEST,
             output_type=google_dot_iam_dot_v1_dot_policy__pb2._POLICY,
-            serialized_options=b'\202\323\344\223\002\215\001"A/v1/{resource=projects/*/locations/*/tagTemplates/*}:setIamPolicy:\001*ZE"@/v1/{resource=projects/*/locations/*/entryGroups/*}:setIamPolicy:\001*',
+            serialized_options=b'\202\323\344\223\002\215\001"A/v1/{resource=projects/*/locations/*/tagTemplates/*}:setIamPolicy:\001*ZE"@/v1/{resource=projects/*/locations/*/entryGroups/*}:setIamPolicy:\001*\332A\017resource,policy',
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="GetIamPolicy",
@@ -3687,7 +3884,8 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             containing_service=None,
             input_type=google_dot_iam_dot_v1_dot_iam__policy__pb2._GETIAMPOLICYREQUEST,
             output_type=google_dot_iam_dot_v1_dot_policy__pb2._POLICY,
-            serialized_options=b'\202\323\344\223\002\336\001"A/v1/{resource=projects/*/locations/*/tagTemplates/*}:getIamPolicy:\001*ZE"@/v1/{resource=projects/*/locations/*/entryGroups/*}:getIamPolicy:\001*ZO"J/v1/{resource=projects/*/locations/*/entryGroups/*/entries/*}:getIamPolicy:\001*',
+            serialized_options=b'\202\323\344\223\002\336\001"A/v1/{resource=projects/*/locations/*/tagTemplates/*}:getIamPolicy:\001*ZE"@/v1/{resource=projects/*/locations/*/entryGroups/*}:getIamPolicy:\001*ZO"J/v1/{resource=projects/*/locations/*/entryGroups/*/entries/*}:getIamPolicy:\001*\332A\010resource',
+            create_key=_descriptor._internal_create_key,
         ),
         _descriptor.MethodDescriptor(
             name="TestIamPermissions",
@@ -3697,6 +3895,7 @@ _DATACATALOG = _descriptor.ServiceDescriptor(
             input_type=google_dot_iam_dot_v1_dot_iam__policy__pb2._TESTIAMPERMISSIONSREQUEST,
             output_type=google_dot_iam_dot_v1_dot_iam__policy__pb2._TESTIAMPERMISSIONSRESPONSE,
             serialized_options=b'\202\323\344\223\002\360\001"G/v1/{resource=projects/*/locations/*/tagTemplates/*}:testIamPermissions:\001*ZK"F/v1/{resource=projects/*/locations/*/entryGroups/*}:testIamPermissions:\001*ZU"P/v1/{resource=projects/*/locations/*/entryGroups/*/entries/*}:testIamPermissions:\001*',
+            create_key=_descriptor._internal_create_key,
         ),
     ],
 )
