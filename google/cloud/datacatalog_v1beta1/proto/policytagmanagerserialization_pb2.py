@@ -260,7 +260,7 @@ _IMPORTTAXONOMIESREQUEST = _descriptor.Descriptor(
             containing_type=None,
             create_key=_descriptor._internal_create_key,
             fields=[],
-        )
+        ),
     ],
     serialized_start=620,
     serialized_end=789,
@@ -293,7 +293,7 @@ _INLINESOURCE = _descriptor.Descriptor(
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        )
+        ),
     ],
     extensions=[],
     nested_types=[],
@@ -334,7 +334,7 @@ _IMPORTTAXONOMIESRESPONSE = _descriptor.Descriptor(
             serialized_options=None,
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        )
+        ),
     ],
     extensions=[],
     nested_types=[],
@@ -430,7 +430,7 @@ _EXPORTTAXONOMIESREQUEST = _descriptor.Descriptor(
             containing_type=None,
             create_key=_descriptor._internal_create_key,
             fields=[],
-        )
+        ),
     ],
     serialized_start=979,
     serialized_end=1178,
@@ -463,7 +463,7 @@ _EXPORTTAXONOMIESRESPONSE = _descriptor.Descriptor(
             serialized_options=None,
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        )
+        ),
     ],
     extensions=[],
     nested_types=[],
