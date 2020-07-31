@@ -33,9 +33,7 @@ import grpc
 
 from google.cloud.datacatalog_v1beta1.gapic import enums
 from google.cloud.datacatalog_v1beta1.gapic import policy_tag_manager_client_config
-from google.cloud.datacatalog_v1beta1.gapic.transports import (
-    policy_tag_manager_grpc_transport,
-)
+from google.cloud.datacatalog_v1beta1.gapic.transports import policy_tag_manager_grpc_transport
 from google.cloud.datacatalog_v1beta1.proto import datacatalog_pb2
 from google.cloud.datacatalog_v1beta1.proto import datacatalog_pb2_grpc
 from google.cloud.datacatalog_v1beta1.proto import policytagmanager_pb2
@@ -48,8 +46,9 @@ from google.protobuf import empty_pb2
 from google.protobuf import field_mask_pb2
 
 
+
 _GAPIC_LIBRARY_VERSION = pkg_resources.get_distribution(
-    "google-cloud-datacatalog",
+    'google-cloud-datacatalog',
 ).version
 
 
@@ -59,12 +58,13 @@ class PolicyTagManagerClient(object):
     and policy tags.
     """
 
-    SERVICE_ADDRESS = "datacatalog.googleapis.com:443"
+    SERVICE_ADDRESS = 'datacatalog.googleapis.com:443'
     """The default address of the service."""
 
     # The name of the interface for this client. This is the key used to
     # find the method configuration in the client_config dictionary.
-    _INTERFACE_NAME = "google.cloud.datacatalog.v1beta1.PolicyTagManager"
+    _INTERFACE_NAME = 'google.cloud.datacatalog.v1beta1.PolicyTagManager'
+
 
     @classmethod
     def from_service_account_file(cls, filename, *args, **kwargs):
@@ -80,17 +80,19 @@ class PolicyTagManagerClient(object):
         Returns:
             PolicyTagManagerClient: The constructed client.
         """
-        credentials = service_account.Credentials.from_service_account_file(filename)
-        kwargs["credentials"] = credentials
+        credentials = service_account.Credentials.from_service_account_file(
+            filename)
+        kwargs['credentials'] = credentials
         return cls(*args, **kwargs)
 
     from_service_account_json = from_service_account_file
+
 
     @classmethod
     def location_path(cls, project, location):
         """Return a fully-qualified location string."""
         return google.api_core.path_template.expand(
-            "projects/{project}/locations/{location}",
+            'projects/{project}/locations/{location}',
             project=project,
             location=location,
         )
@@ -99,7 +101,7 @@ class PolicyTagManagerClient(object):
     def policy_tag_path(cls, project, location, taxonomy, policy_tag):
         """Return a fully-qualified policy_tag string."""
         return google.api_core.path_template.expand(
-            "projects/{project}/locations/{location}/taxonomies/{taxonomy}/policyTags/{policy_tag}",
+            'projects/{project}/locations/{location}/taxonomies/{taxonomy}/policyTags/{policy_tag}',
             project=project,
             location=location,
             taxonomy=taxonomy,
@@ -110,21 +112,14 @@ class PolicyTagManagerClient(object):
     def taxonomy_path(cls, project, location, taxonomy):
         """Return a fully-qualified taxonomy string."""
         return google.api_core.path_template.expand(
-            "projects/{project}/locations/{location}/taxonomies/{taxonomy}",
+            'projects/{project}/locations/{location}/taxonomies/{taxonomy}',
             project=project,
             location=location,
             taxonomy=taxonomy,
         )
 
-    def __init__(
-        self,
-        transport=None,
-        channel=None,
-        credentials=None,
-        client_config=None,
-        client_info=None,
-        client_options=None,
-    ):
+    def __init__(self, transport=None, channel=None, credentials=None,
+            client_config=None, client_info=None, client_options=None):
         """Constructor.
 
         Args:
@@ -160,27 +155,20 @@ class PolicyTagManagerClient(object):
         """
         # Raise deprecation warnings for things we want to go away.
         if client_config is not None:
-            warnings.warn(
-                "The `client_config` argument is deprecated.",
-                PendingDeprecationWarning,
-                stacklevel=2,
-            )
+            warnings.warn('The `client_config` argument is deprecated.',
+                          PendingDeprecationWarning, stacklevel=2)
         else:
             client_config = policy_tag_manager_client_config.config
 
         if channel:
-            warnings.warn(
-                "The `channel` argument is deprecated; use " "`transport` instead.",
-                PendingDeprecationWarning,
-                stacklevel=2,
-            )
+            warnings.warn('The `channel` argument is deprecated; use '
+                          '`transport` instead.',
+                          PendingDeprecationWarning, stacklevel=2)
 
         api_endpoint = self.SERVICE_ADDRESS
         if client_options:
             if type(client_options) == dict:
-                client_options = google.api_core.client_options.from_dict(
-                    client_options
-                )
+                client_options = google.api_core.client_options.from_dict(client_options)
             if client_options.api_endpoint:
                 api_endpoint = client_options.api_endpoint
 
@@ -197,13 +185,15 @@ class PolicyTagManagerClient(object):
             else:
                 if credentials:
                     raise ValueError(
-                        "Received both a transport instance and "
-                        "credentials; these are mutually exclusive."
+                        'Received both a transport instance and '
+                        'credentials; these are mutually exclusive.'
                     )
                 self.transport = transport
         else:
             self.transport = policy_tag_manager_grpc_transport.PolicyTagManagerGrpcTransport(
-                address=api_endpoint, channel=channel, credentials=credentials,
+                address=api_endpoint,
+                channel=channel,
+                credentials=credentials,
             )
 
         if client_info is None:
@@ -219,7 +209,7 @@ class PolicyTagManagerClient(object):
         # (Ordinarily, these are the defaults specified in the `*_config.py`
         # file next to this one.)
         self._method_configs = google.api_core.gapic_v1.config.parse_method_configs(
-            client_config["interfaces"][self._INTERFACE_NAME],
+            client_config['interfaces'][self._INTERFACE_NAME],
         )
 
         # Save a dictionary of cached API call functions.
@@ -230,13 +220,12 @@ class PolicyTagManagerClient(object):
 
     # Service calls
     def create_taxonomy(
-        self,
-        parent,
-        taxonomy=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            taxonomy=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Creates a taxonomy in the specified project.
 
@@ -275,43 +264,37 @@ class PolicyTagManagerClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "create_taxonomy" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "create_taxonomy"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'create_taxonomy' not in self._inner_api_calls:
+            self._inner_api_calls['create_taxonomy'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.create_taxonomy,
-                default_retry=self._method_configs["CreateTaxonomy"].retry,
-                default_timeout=self._method_configs["CreateTaxonomy"].timeout,
+                default_retry=self._method_configs['CreateTaxonomy'].retry,
+                default_timeout=self._method_configs['CreateTaxonomy'].timeout,
                 client_info=self._client_info,
             )
 
         request = policytagmanager_pb2.CreateTaxonomyRequest(
-            parent=parent, taxonomy=taxonomy,
+            parent=parent,
+            taxonomy=taxonomy,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["create_taxonomy"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['create_taxonomy'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def delete_taxonomy(
-        self,
-        name,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Deletes a taxonomy. This operation will also delete all
         policy tags in this taxonomy along with their associated policies.
@@ -345,42 +328,37 @@ class PolicyTagManagerClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "delete_taxonomy" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "delete_taxonomy"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'delete_taxonomy' not in self._inner_api_calls:
+            self._inner_api_calls['delete_taxonomy'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.delete_taxonomy,
-                default_retry=self._method_configs["DeleteTaxonomy"].retry,
-                default_timeout=self._method_configs["DeleteTaxonomy"].timeout,
+                default_retry=self._method_configs['DeleteTaxonomy'].retry,
+                default_timeout=self._method_configs['DeleteTaxonomy'].timeout,
                 client_info=self._client_info,
             )
 
-        request = policytagmanager_pb2.DeleteTaxonomyRequest(name=name,)
+        request = policytagmanager_pb2.DeleteTaxonomyRequest(
+            name=name,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        self._inner_api_calls["delete_taxonomy"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        self._inner_api_calls['delete_taxonomy'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def update_taxonomy(
-        self,
-        taxonomy=None,
-        update_mask=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            taxonomy=None,
+            update_mask=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Updates a taxonomy.
 
@@ -424,44 +402,38 @@ class PolicyTagManagerClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "update_taxonomy" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "update_taxonomy"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'update_taxonomy' not in self._inner_api_calls:
+            self._inner_api_calls['update_taxonomy'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.update_taxonomy,
-                default_retry=self._method_configs["UpdateTaxonomy"].retry,
-                default_timeout=self._method_configs["UpdateTaxonomy"].timeout,
+                default_retry=self._method_configs['UpdateTaxonomy'].retry,
+                default_timeout=self._method_configs['UpdateTaxonomy'].timeout,
                 client_info=self._client_info,
             )
 
         request = policytagmanager_pb2.UpdateTaxonomyRequest(
-            taxonomy=taxonomy, update_mask=update_mask,
+            taxonomy=taxonomy,
+            update_mask=update_mask,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("taxonomy.name", taxonomy.name)]
+            routing_header = [('taxonomy.name', taxonomy.name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["update_taxonomy"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['update_taxonomy'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def list_taxonomies(
-        self,
-        parent,
-        page_size=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            page_size=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Lists all taxonomies in a project in a particular location that the caller
         has permission to view.
@@ -517,54 +489,45 @@ class PolicyTagManagerClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "list_taxonomies" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "list_taxonomies"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'list_taxonomies' not in self._inner_api_calls:
+            self._inner_api_calls['list_taxonomies'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.list_taxonomies,
-                default_retry=self._method_configs["ListTaxonomies"].retry,
-                default_timeout=self._method_configs["ListTaxonomies"].timeout,
+                default_retry=self._method_configs['ListTaxonomies'].retry,
+                default_timeout=self._method_configs['ListTaxonomies'].timeout,
                 client_info=self._client_info,
             )
 
         request = policytagmanager_pb2.ListTaxonomiesRequest(
-            parent=parent, page_size=page_size,
+            parent=parent,
+            page_size=page_size,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
         iterator = google.api_core.page_iterator.GRPCIterator(
             client=None,
-            method=functools.partial(
-                self._inner_api_calls["list_taxonomies"],
-                retry=retry,
-                timeout=timeout,
-                metadata=metadata,
-            ),
+            method=functools.partial(self._inner_api_calls['list_taxonomies'], retry=retry, timeout=timeout, metadata=metadata),
             request=request,
-            items_field="taxonomies",
-            request_token_field="page_token",
-            response_token_field="next_page_token",
+            items_field='taxonomies',
+            request_token_field='page_token',
+            response_token_field='next_page_token',
         )
         return iterator
 
     def get_taxonomy(
-        self,
-        name,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Gets a taxonomy.
 
@@ -599,42 +562,37 @@ class PolicyTagManagerClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "get_taxonomy" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "get_taxonomy"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'get_taxonomy' not in self._inner_api_calls:
+            self._inner_api_calls['get_taxonomy'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.get_taxonomy,
-                default_retry=self._method_configs["GetTaxonomy"].retry,
-                default_timeout=self._method_configs["GetTaxonomy"].timeout,
+                default_retry=self._method_configs['GetTaxonomy'].retry,
+                default_timeout=self._method_configs['GetTaxonomy'].timeout,
                 client_info=self._client_info,
             )
 
-        request = policytagmanager_pb2.GetTaxonomyRequest(name=name,)
+        request = policytagmanager_pb2.GetTaxonomyRequest(
+            name=name,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["get_taxonomy"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['get_taxonomy'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def create_policy_tag(
-        self,
-        parent,
-        policy_tag=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            policy_tag=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Creates a policy tag in the specified taxonomy.
 
@@ -673,43 +631,37 @@ class PolicyTagManagerClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "create_policy_tag" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "create_policy_tag"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'create_policy_tag' not in self._inner_api_calls:
+            self._inner_api_calls['create_policy_tag'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.create_policy_tag,
-                default_retry=self._method_configs["CreatePolicyTag"].retry,
-                default_timeout=self._method_configs["CreatePolicyTag"].timeout,
+                default_retry=self._method_configs['CreatePolicyTag'].retry,
+                default_timeout=self._method_configs['CreatePolicyTag'].timeout,
                 client_info=self._client_info,
             )
 
         request = policytagmanager_pb2.CreatePolicyTagRequest(
-            parent=parent, policy_tag=policy_tag,
+            parent=parent,
+            policy_tag=policy_tag,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["create_policy_tag"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['create_policy_tag'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def delete_policy_tag(
-        self,
-        name,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Deletes a policy tag. Also deletes all of its descendant policy tags.
 
@@ -742,42 +694,37 @@ class PolicyTagManagerClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "delete_policy_tag" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "delete_policy_tag"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'delete_policy_tag' not in self._inner_api_calls:
+            self._inner_api_calls['delete_policy_tag'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.delete_policy_tag,
-                default_retry=self._method_configs["DeletePolicyTag"].retry,
-                default_timeout=self._method_configs["DeletePolicyTag"].timeout,
+                default_retry=self._method_configs['DeletePolicyTag'].retry,
+                default_timeout=self._method_configs['DeletePolicyTag'].timeout,
                 client_info=self._client_info,
             )
 
-        request = policytagmanager_pb2.DeletePolicyTagRequest(name=name,)
+        request = policytagmanager_pb2.DeletePolicyTagRequest(
+            name=name,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        self._inner_api_calls["delete_policy_tag"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        self._inner_api_calls['delete_policy_tag'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def update_policy_tag(
-        self,
-        policy_tag=None,
-        update_mask=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            policy_tag=None,
+            update_mask=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Updates a policy tag.
 
@@ -824,44 +771,38 @@ class PolicyTagManagerClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "update_policy_tag" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "update_policy_tag"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'update_policy_tag' not in self._inner_api_calls:
+            self._inner_api_calls['update_policy_tag'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.update_policy_tag,
-                default_retry=self._method_configs["UpdatePolicyTag"].retry,
-                default_timeout=self._method_configs["UpdatePolicyTag"].timeout,
+                default_retry=self._method_configs['UpdatePolicyTag'].retry,
+                default_timeout=self._method_configs['UpdatePolicyTag'].timeout,
                 client_info=self._client_info,
             )
 
         request = policytagmanager_pb2.UpdatePolicyTagRequest(
-            policy_tag=policy_tag, update_mask=update_mask,
+            policy_tag=policy_tag,
+            update_mask=update_mask,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("policy_tag.name", policy_tag.name)]
+            routing_header = [('policy_tag.name', policy_tag.name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["update_policy_tag"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['update_policy_tag'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def list_policy_tags(
-        self,
-        parent,
-        page_size=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            page_size=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Lists all policy tags in a taxonomy.
 
@@ -916,54 +857,45 @@ class PolicyTagManagerClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "list_policy_tags" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "list_policy_tags"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'list_policy_tags' not in self._inner_api_calls:
+            self._inner_api_calls['list_policy_tags'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.list_policy_tags,
-                default_retry=self._method_configs["ListPolicyTags"].retry,
-                default_timeout=self._method_configs["ListPolicyTags"].timeout,
+                default_retry=self._method_configs['ListPolicyTags'].retry,
+                default_timeout=self._method_configs['ListPolicyTags'].timeout,
                 client_info=self._client_info,
             )
 
         request = policytagmanager_pb2.ListPolicyTagsRequest(
-            parent=parent, page_size=page_size,
+            parent=parent,
+            page_size=page_size,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
         iterator = google.api_core.page_iterator.GRPCIterator(
             client=None,
-            method=functools.partial(
-                self._inner_api_calls["list_policy_tags"],
-                retry=retry,
-                timeout=timeout,
-                metadata=metadata,
-            ),
+            method=functools.partial(self._inner_api_calls['list_policy_tags'], retry=retry, timeout=timeout, metadata=metadata),
             request=request,
-            items_field="policy_tags",
-            request_token_field="page_token",
-            response_token_field="next_page_token",
+            items_field='policy_tags',
+            request_token_field='page_token',
+            response_token_field='next_page_token',
         )
         return iterator
 
     def get_policy_tag(
-        self,
-        name,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Gets a policy tag.
 
@@ -998,42 +930,37 @@ class PolicyTagManagerClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "get_policy_tag" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "get_policy_tag"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'get_policy_tag' not in self._inner_api_calls:
+            self._inner_api_calls['get_policy_tag'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.get_policy_tag,
-                default_retry=self._method_configs["GetPolicyTag"].retry,
-                default_timeout=self._method_configs["GetPolicyTag"].timeout,
+                default_retry=self._method_configs['GetPolicyTag'].retry,
+                default_timeout=self._method_configs['GetPolicyTag'].timeout,
                 client_info=self._client_info,
             )
 
-        request = policytagmanager_pb2.GetPolicyTagRequest(name=name,)
+        request = policytagmanager_pb2.GetPolicyTagRequest(
+            name=name,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["get_policy_tag"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['get_policy_tag'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def get_iam_policy(
-        self,
-        resource,
-        options_=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            resource,
+            options_=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Gets the IAM policy for a taxonomy or a policy tag.
 
@@ -1075,44 +1002,38 @@ class PolicyTagManagerClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "get_iam_policy" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "get_iam_policy"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'get_iam_policy' not in self._inner_api_calls:
+            self._inner_api_calls['get_iam_policy'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.get_iam_policy,
-                default_retry=self._method_configs["GetIamPolicy"].retry,
-                default_timeout=self._method_configs["GetIamPolicy"].timeout,
+                default_retry=self._method_configs['GetIamPolicy'].retry,
+                default_timeout=self._method_configs['GetIamPolicy'].timeout,
                 client_info=self._client_info,
             )
 
         request = iam_policy_pb2.GetIamPolicyRequest(
-            resource=resource, options=options_,
+            resource=resource,
+            options=options_,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("resource", resource)]
+            routing_header = [('resource', resource)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["get_iam_policy"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['get_iam_policy'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def set_iam_policy(
-        self,
-        resource,
-        policy,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            resource,
+            policy,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Sets the IAM policy for a taxonomy or a policy tag.
 
@@ -1159,42 +1080,38 @@ class PolicyTagManagerClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "set_iam_policy" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "set_iam_policy"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'set_iam_policy' not in self._inner_api_calls:
+            self._inner_api_calls['set_iam_policy'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.set_iam_policy,
-                default_retry=self._method_configs["SetIamPolicy"].retry,
-                default_timeout=self._method_configs["SetIamPolicy"].timeout,
+                default_retry=self._method_configs['SetIamPolicy'].retry,
+                default_timeout=self._method_configs['SetIamPolicy'].timeout,
                 client_info=self._client_info,
             )
 
-        request = iam_policy_pb2.SetIamPolicyRequest(resource=resource, policy=policy,)
+        request = iam_policy_pb2.SetIamPolicyRequest(
+            resource=resource,
+            policy=policy,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("resource", resource)]
+            routing_header = [('resource', resource)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["set_iam_policy"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['set_iam_policy'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def test_iam_permissions(
-        self,
-        resource,
-        permissions,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            resource,
+            permissions,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Returns the permissions that a caller has on the specified taxonomy or
         policy tag.
@@ -1239,32 +1156,27 @@ class PolicyTagManagerClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "test_iam_permissions" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "test_iam_permissions"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'test_iam_permissions' not in self._inner_api_calls:
+            self._inner_api_calls['test_iam_permissions'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.test_iam_permissions,
-                default_retry=self._method_configs["TestIamPermissions"].retry,
-                default_timeout=self._method_configs["TestIamPermissions"].timeout,
+                default_retry=self._method_configs['TestIamPermissions'].retry,
+                default_timeout=self._method_configs['TestIamPermissions'].timeout,
                 client_info=self._client_info,
             )
 
         request = iam_policy_pb2.TestIamPermissionsRequest(
-            resource=resource, permissions=permissions,
+            resource=resource,
+            permissions=permissions,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("resource", resource)]
+            routing_header = [('resource', resource)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["test_iam_permissions"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['test_iam_permissions'](request, retry=retry, timeout=timeout, metadata=metadata)

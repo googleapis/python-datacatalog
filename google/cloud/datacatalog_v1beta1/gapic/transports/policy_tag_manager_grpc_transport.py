@@ -28,14 +28,14 @@ class PolicyTagManagerGrpcTransport(object):
     which can be used to take advantage of advanced
     features of gRPC.
     """
-
     # The scopes needed to make gRPC calls to all of the methods defined
     # in this service.
-    _OAUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
+    _OAUTH_SCOPES = (
+        'https://www.googleapis.com/auth/cloud-platform',
+    )
 
-    def __init__(
-        self, channel=None, credentials=None, address="datacatalog.googleapis.com:443"
-    ):
+    def __init__(self, channel=None, credentials=None,
+                 address='datacatalog.googleapis.com:443'):
         """Instantiate the transport class.
 
         Args:
@@ -53,7 +53,8 @@ class PolicyTagManagerGrpcTransport(object):
         # exception (channels come with credentials baked in already).
         if channel is not None and credentials is not None:
             raise ValueError(
-                "The `channel` and `credentials` arguments are mutually " "exclusive.",
+                'The `channel` and `credentials` arguments are mutually '
+                'exclusive.',
             )
 
         # Create the channel.
@@ -62,8 +63,8 @@ class PolicyTagManagerGrpcTransport(object):
                 address=address,
                 credentials=credentials,
                 options={
-                    "grpc.max_send_message_length": -1,
-                    "grpc.max_receive_message_length": -1,
+                    'grpc.max_send_message_length': -1,
+                    'grpc.max_receive_message_length': -1,
                 }.items(),
             )
 
@@ -72,15 +73,16 @@ class PolicyTagManagerGrpcTransport(object):
         # gRPC uses objects called "stubs" that are bound to the
         # channel and provide a basic method for each RPC.
         self._stubs = {
-            "policy_tag_manager_stub": policytagmanager_pb2_grpc.PolicyTagManagerStub(
-                channel
-            ),
+            'policy_tag_manager_stub': policytagmanager_pb2_grpc.PolicyTagManagerStub(channel),
         }
+
 
     @classmethod
     def create_channel(
-        cls, address="datacatalog.googleapis.com:443", credentials=None, **kwargs
-    ):
+                cls,
+                address='datacatalog.googleapis.com:443',
+                credentials=None,
+                **kwargs):
         """Create and return a gRPC channel object.
 
         Args:
@@ -97,7 +99,10 @@ class PolicyTagManagerGrpcTransport(object):
             grpc.Channel: A gRPC channel object.
         """
         return google.api_core.grpc_helpers.create_channel(
-            address, credentials=credentials, scopes=cls._OAUTH_SCOPES, **kwargs
+            address,
+            credentials=credentials,
+            scopes=cls._OAUTH_SCOPES,
+            **kwargs
         )
 
     @property
@@ -120,7 +125,7 @@ class PolicyTagManagerGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs["policy_tag_manager_stub"].CreateTaxonomy
+        return self._stubs['policy_tag_manager_stub'].CreateTaxonomy
 
     @property
     def delete_taxonomy(self):
@@ -134,7 +139,7 @@ class PolicyTagManagerGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs["policy_tag_manager_stub"].DeleteTaxonomy
+        return self._stubs['policy_tag_manager_stub'].DeleteTaxonomy
 
     @property
     def update_taxonomy(self):
@@ -147,7 +152,7 @@ class PolicyTagManagerGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs["policy_tag_manager_stub"].UpdateTaxonomy
+        return self._stubs['policy_tag_manager_stub'].UpdateTaxonomy
 
     @property
     def list_taxonomies(self):
@@ -161,7 +166,7 @@ class PolicyTagManagerGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs["policy_tag_manager_stub"].ListTaxonomies
+        return self._stubs['policy_tag_manager_stub'].ListTaxonomies
 
     @property
     def get_taxonomy(self):
@@ -174,7 +179,7 @@ class PolicyTagManagerGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs["policy_tag_manager_stub"].GetTaxonomy
+        return self._stubs['policy_tag_manager_stub'].GetTaxonomy
 
     @property
     def create_policy_tag(self):
@@ -187,7 +192,7 @@ class PolicyTagManagerGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs["policy_tag_manager_stub"].CreatePolicyTag
+        return self._stubs['policy_tag_manager_stub'].CreatePolicyTag
 
     @property
     def delete_policy_tag(self):
@@ -200,7 +205,7 @@ class PolicyTagManagerGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs["policy_tag_manager_stub"].DeletePolicyTag
+        return self._stubs['policy_tag_manager_stub'].DeletePolicyTag
 
     @property
     def update_policy_tag(self):
@@ -213,7 +218,7 @@ class PolicyTagManagerGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs["policy_tag_manager_stub"].UpdatePolicyTag
+        return self._stubs['policy_tag_manager_stub'].UpdatePolicyTag
 
     @property
     def list_policy_tags(self):
@@ -226,7 +231,7 @@ class PolicyTagManagerGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs["policy_tag_manager_stub"].ListPolicyTags
+        return self._stubs['policy_tag_manager_stub'].ListPolicyTags
 
     @property
     def get_policy_tag(self):
@@ -239,7 +244,7 @@ class PolicyTagManagerGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs["policy_tag_manager_stub"].GetPolicyTag
+        return self._stubs['policy_tag_manager_stub'].GetPolicyTag
 
     @property
     def get_iam_policy(self):
@@ -252,7 +257,7 @@ class PolicyTagManagerGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs["policy_tag_manager_stub"].GetIamPolicy
+        return self._stubs['policy_tag_manager_stub'].GetIamPolicy
 
     @property
     def set_iam_policy(self):
@@ -265,7 +270,7 @@ class PolicyTagManagerGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs["policy_tag_manager_stub"].SetIamPolicy
+        return self._stubs['policy_tag_manager_stub'].SetIamPolicy
 
     @property
     def test_iam_permissions(self):
@@ -279,4 +284,4 @@ class PolicyTagManagerGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs["policy_tag_manager_stub"].TestIamPermissions
+        return self._stubs['policy_tag_manager_stub'].TestIamPermissions

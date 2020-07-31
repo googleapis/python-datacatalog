@@ -45,8 +45,9 @@ from google.protobuf import empty_pb2
 from google.protobuf import field_mask_pb2
 
 
+
 _GAPIC_LIBRARY_VERSION = pkg_resources.get_distribution(
-    "google-cloud-datacatalog",
+    'google-cloud-datacatalog',
 ).version
 
 
@@ -56,12 +57,13 @@ class DataCatalogClient(object):
     their data.
     """
 
-    SERVICE_ADDRESS = "datacatalog.googleapis.com:443"
+    SERVICE_ADDRESS = 'datacatalog.googleapis.com:443'
     """The default address of the service."""
 
     # The name of the interface for this client. This is the key used to
     # find the method configuration in the client_config dictionary.
-    _INTERFACE_NAME = "google.cloud.datacatalog.v1.DataCatalog"
+    _INTERFACE_NAME = 'google.cloud.datacatalog.v1.DataCatalog'
+
 
     @classmethod
     def from_service_account_file(cls, filename, *args, **kwargs):
@@ -77,17 +79,19 @@ class DataCatalogClient(object):
         Returns:
             DataCatalogClient: The constructed client.
         """
-        credentials = service_account.Credentials.from_service_account_file(filename)
-        kwargs["credentials"] = credentials
+        credentials = service_account.Credentials.from_service_account_file(
+            filename)
+        kwargs['credentials'] = credentials
         return cls(*args, **kwargs)
 
     from_service_account_json = from_service_account_file
+
 
     @classmethod
     def entry_path(cls, project, location, entry_group, entry):
         """Return a fully-qualified entry string."""
         return google.api_core.path_template.expand(
-            "projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{entry}",
+            'projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{entry}',
             project=project,
             location=location,
             entry_group=entry_group,
@@ -98,7 +102,7 @@ class DataCatalogClient(object):
     def entry_group_path(cls, project, location, entry_group):
         """Return a fully-qualified entry_group string."""
         return google.api_core.path_template.expand(
-            "projects/{project}/locations/{location}/entryGroups/{entry_group}",
+            'projects/{project}/locations/{location}/entryGroups/{entry_group}',
             project=project,
             location=location,
             entry_group=entry_group,
@@ -108,7 +112,7 @@ class DataCatalogClient(object):
     def location_path(cls, project, location):
         """Return a fully-qualified location string."""
         return google.api_core.path_template.expand(
-            "projects/{project}/locations/{location}",
+            'projects/{project}/locations/{location}',
             project=project,
             location=location,
         )
@@ -117,7 +121,7 @@ class DataCatalogClient(object):
     def tag_path(cls, project, location, entry_group, entry, tag):
         """Return a fully-qualified tag string."""
         return google.api_core.path_template.expand(
-            "projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{entry}/tags/{tag}",
+            'projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{entry}/tags/{tag}',
             project=project,
             location=location,
             entry_group=entry_group,
@@ -129,7 +133,7 @@ class DataCatalogClient(object):
     def tag_template_path(cls, project, location, tag_template):
         """Return a fully-qualified tag_template string."""
         return google.api_core.path_template.expand(
-            "projects/{project}/locations/{location}/tagTemplates/{tag_template}",
+            'projects/{project}/locations/{location}/tagTemplates/{tag_template}',
             project=project,
             location=location,
             tag_template=tag_template,
@@ -139,22 +143,15 @@ class DataCatalogClient(object):
     def tag_template_field_path(cls, project, location, tag_template, field):
         """Return a fully-qualified tag_template_field string."""
         return google.api_core.path_template.expand(
-            "projects/{project}/locations/{location}/tagTemplates/{tag_template}/fields/{field}",
+            'projects/{project}/locations/{location}/tagTemplates/{tag_template}/fields/{field}',
             project=project,
             location=location,
             tag_template=tag_template,
             field=field,
         )
 
-    def __init__(
-        self,
-        transport=None,
-        channel=None,
-        credentials=None,
-        client_config=None,
-        client_info=None,
-        client_options=None,
-    ):
+    def __init__(self, transport=None, channel=None, credentials=None,
+            client_config=None, client_info=None, client_options=None):
         """Constructor.
 
         Args:
@@ -190,27 +187,20 @@ class DataCatalogClient(object):
         """
         # Raise deprecation warnings for things we want to go away.
         if client_config is not None:
-            warnings.warn(
-                "The `client_config` argument is deprecated.",
-                PendingDeprecationWarning,
-                stacklevel=2,
-            )
+            warnings.warn('The `client_config` argument is deprecated.',
+                          PendingDeprecationWarning, stacklevel=2)
         else:
             client_config = data_catalog_client_config.config
 
         if channel:
-            warnings.warn(
-                "The `channel` argument is deprecated; use " "`transport` instead.",
-                PendingDeprecationWarning,
-                stacklevel=2,
-            )
+            warnings.warn('The `channel` argument is deprecated; use '
+                          '`transport` instead.',
+                          PendingDeprecationWarning, stacklevel=2)
 
         api_endpoint = self.SERVICE_ADDRESS
         if client_options:
             if type(client_options) == dict:
-                client_options = google.api_core.client_options.from_dict(
-                    client_options
-                )
+                client_options = google.api_core.client_options.from_dict(client_options)
             if client_options.api_endpoint:
                 api_endpoint = client_options.api_endpoint
 
@@ -227,13 +217,15 @@ class DataCatalogClient(object):
             else:
                 if credentials:
                     raise ValueError(
-                        "Received both a transport instance and "
-                        "credentials; these are mutually exclusive."
+                        'Received both a transport instance and '
+                        'credentials; these are mutually exclusive.'
                     )
                 self.transport = transport
         else:
             self.transport = data_catalog_grpc_transport.DataCatalogGrpcTransport(
-                address=api_endpoint, channel=channel, credentials=credentials,
+                address=api_endpoint,
+                channel=channel,
+                credentials=credentials,
             )
 
         if client_info is None:
@@ -249,7 +241,7 @@ class DataCatalogClient(object):
         # (Ordinarily, these are the defaults specified in the `*_config.py`
         # file next to this one.)
         self._method_configs = google.api_core.gapic_v1.config.parse_method_configs(
-            client_config["interfaces"][self._INTERFACE_NAME],
+            client_config['interfaces'][self._INTERFACE_NAME],
         )
 
         # Save a dictionary of cached API call functions.
@@ -260,15 +252,14 @@ class DataCatalogClient(object):
 
     # Service calls
     def search_catalog(
-        self,
-        scope,
-        query,
-        page_size=None,
-        order_by=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            scope,
+            query,
+            page_size=None,
+            order_by=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Searches Data Catalog for multiple resources like entries, tags that
         match a query.
@@ -369,43 +360,38 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "search_catalog" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "search_catalog"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'search_catalog' not in self._inner_api_calls:
+            self._inner_api_calls['search_catalog'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.search_catalog,
-                default_retry=self._method_configs["SearchCatalog"].retry,
-                default_timeout=self._method_configs["SearchCatalog"].timeout,
+                default_retry=self._method_configs['SearchCatalog'].retry,
+                default_timeout=self._method_configs['SearchCatalog'].timeout,
                 client_info=self._client_info,
             )
 
         request = datacatalog_pb2.SearchCatalogRequest(
-            scope=scope, query=query, page_size=page_size, order_by=order_by,
+            scope=scope,
+            query=query,
+            page_size=page_size,
+            order_by=order_by,
         )
         iterator = google.api_core.page_iterator.GRPCIterator(
             client=None,
-            method=functools.partial(
-                self._inner_api_calls["search_catalog"],
-                retry=retry,
-                timeout=timeout,
-                metadata=metadata,
-            ),
+            method=functools.partial(self._inner_api_calls['search_catalog'], retry=retry, timeout=timeout, metadata=metadata),
             request=request,
-            items_field="results",
-            request_token_field="page_token",
-            response_token_field="next_page_token",
+            items_field='results',
+            request_token_field='page_token',
+            response_token_field='next_page_token',
         )
         return iterator
 
     def create_entry_group(
-        self,
-        parent,
-        entry_group_id,
-        entry_group=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            entry_group_id,
+            entry_group=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Creates an EntryGroup.
 
@@ -473,44 +459,39 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "create_entry_group" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "create_entry_group"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'create_entry_group' not in self._inner_api_calls:
+            self._inner_api_calls['create_entry_group'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.create_entry_group,
-                default_retry=self._method_configs["CreateEntryGroup"].retry,
-                default_timeout=self._method_configs["CreateEntryGroup"].timeout,
+                default_retry=self._method_configs['CreateEntryGroup'].retry,
+                default_timeout=self._method_configs['CreateEntryGroup'].timeout,
                 client_info=self._client_info,
             )
 
         request = datacatalog_pb2.CreateEntryGroupRequest(
-            parent=parent, entry_group_id=entry_group_id, entry_group=entry_group,
+            parent=parent,
+            entry_group_id=entry_group_id,
+            entry_group=entry_group,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["create_entry_group"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['create_entry_group'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def get_entry_group(
-        self,
-        name,
-        read_mask=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            read_mask=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Gets an EntryGroup.
 
@@ -550,42 +531,38 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "get_entry_group" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "get_entry_group"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'get_entry_group' not in self._inner_api_calls:
+            self._inner_api_calls['get_entry_group'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.get_entry_group,
-                default_retry=self._method_configs["GetEntryGroup"].retry,
-                default_timeout=self._method_configs["GetEntryGroup"].timeout,
+                default_retry=self._method_configs['GetEntryGroup'].retry,
+                default_timeout=self._method_configs['GetEntryGroup'].timeout,
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.GetEntryGroupRequest(name=name, read_mask=read_mask,)
+        request = datacatalog_pb2.GetEntryGroupRequest(
+            name=name,
+            read_mask=read_mask,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["get_entry_group"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['get_entry_group'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def update_entry_group(
-        self,
-        entry_group,
-        update_mask=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            entry_group,
+            update_mask=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Updates an EntryGroup. The user should enable the Data Catalog API
         in the project identified by the ``entry_group.name`` parameter (see
@@ -633,44 +610,38 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "update_entry_group" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "update_entry_group"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'update_entry_group' not in self._inner_api_calls:
+            self._inner_api_calls['update_entry_group'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.update_entry_group,
-                default_retry=self._method_configs["UpdateEntryGroup"].retry,
-                default_timeout=self._method_configs["UpdateEntryGroup"].timeout,
+                default_retry=self._method_configs['UpdateEntryGroup'].retry,
+                default_timeout=self._method_configs['UpdateEntryGroup'].timeout,
                 client_info=self._client_info,
             )
 
         request = datacatalog_pb2.UpdateEntryGroupRequest(
-            entry_group=entry_group, update_mask=update_mask,
+            entry_group=entry_group,
+            update_mask=update_mask,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("entry_group.name", entry_group.name)]
+            routing_header = [('entry_group.name', entry_group.name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["update_entry_group"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['update_entry_group'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def delete_entry_group(
-        self,
-        name,
-        force=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            force=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Deletes an EntryGroup. Only entry groups that do not contain entries
         can be deleted. Users should enable the Data Catalog API in the project
@@ -709,42 +680,38 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "delete_entry_group" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "delete_entry_group"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'delete_entry_group' not in self._inner_api_calls:
+            self._inner_api_calls['delete_entry_group'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.delete_entry_group,
-                default_retry=self._method_configs["DeleteEntryGroup"].retry,
-                default_timeout=self._method_configs["DeleteEntryGroup"].timeout,
+                default_retry=self._method_configs['DeleteEntryGroup'].retry,
+                default_timeout=self._method_configs['DeleteEntryGroup'].timeout,
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.DeleteEntryGroupRequest(name=name, force=force,)
+        request = datacatalog_pb2.DeleteEntryGroupRequest(
+            name=name,
+            force=force,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        self._inner_api_calls["delete_entry_group"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        self._inner_api_calls['delete_entry_group'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def list_entry_groups(
-        self,
-        parent,
-        page_size=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            page_size=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Lists entry groups.
 
@@ -802,56 +769,47 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "list_entry_groups" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "list_entry_groups"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'list_entry_groups' not in self._inner_api_calls:
+            self._inner_api_calls['list_entry_groups'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.list_entry_groups,
-                default_retry=self._method_configs["ListEntryGroups"].retry,
-                default_timeout=self._method_configs["ListEntryGroups"].timeout,
+                default_retry=self._method_configs['ListEntryGroups'].retry,
+                default_timeout=self._method_configs['ListEntryGroups'].timeout,
                 client_info=self._client_info,
             )
 
         request = datacatalog_pb2.ListEntryGroupsRequest(
-            parent=parent, page_size=page_size,
+            parent=parent,
+            page_size=page_size,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
         iterator = google.api_core.page_iterator.GRPCIterator(
             client=None,
-            method=functools.partial(
-                self._inner_api_calls["list_entry_groups"],
-                retry=retry,
-                timeout=timeout,
-                metadata=metadata,
-            ),
+            method=functools.partial(self._inner_api_calls['list_entry_groups'], retry=retry, timeout=timeout, metadata=metadata),
             request=request,
-            items_field="entry_groups",
-            request_token_field="page_token",
-            response_token_field="next_page_token",
+            items_field='entry_groups',
+            request_token_field='page_token',
+            response_token_field='next_page_token',
         )
         return iterator
 
     def create_entry(
-        self,
-        parent,
-        entry_id,
-        entry,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            entry_id,
+            entry,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Creates an entry. Only entries of 'FILESET' type or user-specified
         type can be created.
@@ -910,44 +868,39 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "create_entry" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "create_entry"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'create_entry' not in self._inner_api_calls:
+            self._inner_api_calls['create_entry'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.create_entry,
-                default_retry=self._method_configs["CreateEntry"].retry,
-                default_timeout=self._method_configs["CreateEntry"].timeout,
+                default_retry=self._method_configs['CreateEntry'].retry,
+                default_timeout=self._method_configs['CreateEntry'].timeout,
                 client_info=self._client_info,
             )
 
         request = datacatalog_pb2.CreateEntryRequest(
-            parent=parent, entry_id=entry_id, entry=entry,
+            parent=parent,
+            entry_id=entry_id,
+            entry=entry,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["create_entry"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['create_entry'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def update_entry(
-        self,
-        entry,
-        update_mask=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            entry,
+            update_mask=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Updates an existing entry. Users should enable the Data Catalog API
         in the project identified by the ``entry.name`` parameter (see [Data
@@ -1019,43 +972,37 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "update_entry" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "update_entry"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'update_entry' not in self._inner_api_calls:
+            self._inner_api_calls['update_entry'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.update_entry,
-                default_retry=self._method_configs["UpdateEntry"].retry,
-                default_timeout=self._method_configs["UpdateEntry"].timeout,
+                default_retry=self._method_configs['UpdateEntry'].retry,
+                default_timeout=self._method_configs['UpdateEntry'].timeout,
                 client_info=self._client_info,
             )
 
         request = datacatalog_pb2.UpdateEntryRequest(
-            entry=entry, update_mask=update_mask,
+            entry=entry,
+            update_mask=update_mask,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("entry.name", entry.name)]
+            routing_header = [('entry.name', entry.name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["update_entry"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['update_entry'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def delete_entry(
-        self,
-        name,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Deletes an existing entry. Only entries created through
         ``CreateEntry`` method can be deleted. Users should enable the Data
@@ -1094,41 +1041,36 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "delete_entry" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "delete_entry"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'delete_entry' not in self._inner_api_calls:
+            self._inner_api_calls['delete_entry'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.delete_entry,
-                default_retry=self._method_configs["DeleteEntry"].retry,
-                default_timeout=self._method_configs["DeleteEntry"].timeout,
+                default_retry=self._method_configs['DeleteEntry'].retry,
+                default_timeout=self._method_configs['DeleteEntry'].timeout,
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.DeleteEntryRequest(name=name,)
+        request = datacatalog_pb2.DeleteEntryRequest(
+            name=name,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        self._inner_api_calls["delete_entry"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        self._inner_api_calls['delete_entry'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def get_entry(
-        self,
-        name,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Gets an entry.
 
@@ -1165,42 +1107,37 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "get_entry" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "get_entry"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'get_entry' not in self._inner_api_calls:
+            self._inner_api_calls['get_entry'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.get_entry,
-                default_retry=self._method_configs["GetEntry"].retry,
-                default_timeout=self._method_configs["GetEntry"].timeout,
+                default_retry=self._method_configs['GetEntry'].retry,
+                default_timeout=self._method_configs['GetEntry'].timeout,
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.GetEntryRequest(name=name,)
+        request = datacatalog_pb2.GetEntryRequest(
+            name=name,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["get_entry"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['get_entry'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def lookup_entry(
-        self,
-        linked_resource=None,
-        sql_resource=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            linked_resource=None,
+            sql_resource=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Get an entry by target resource name. This method allows clients to use
         the resource name from the source Google Cloud Platform service to get the
@@ -1255,38 +1192,35 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "lookup_entry" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "lookup_entry"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'lookup_entry' not in self._inner_api_calls:
+            self._inner_api_calls['lookup_entry'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.lookup_entry,
-                default_retry=self._method_configs["LookupEntry"].retry,
-                default_timeout=self._method_configs["LookupEntry"].timeout,
+                default_retry=self._method_configs['LookupEntry'].retry,
+                default_timeout=self._method_configs['LookupEntry'].timeout,
                 client_info=self._client_info,
             )
 
         # Sanity check: We have some fields which are mutually exclusive;
         # raise ValueError if more than one is sent.
         google.api_core.protobuf_helpers.check_oneof(
-            linked_resource=linked_resource, sql_resource=sql_resource,
+            linked_resource=linked_resource,
+            sql_resource=sql_resource,
         )
 
         request = datacatalog_pb2.LookupEntryRequest(
-            linked_resource=linked_resource, sql_resource=sql_resource,
+            linked_resource=linked_resource,
+            sql_resource=sql_resource,
         )
-        return self._inner_api_calls["lookup_entry"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['lookup_entry'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def list_entries(
-        self,
-        parent,
-        page_size=None,
-        read_mask=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            page_size=None,
+            read_mask=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Lists entries.
 
@@ -1351,56 +1285,48 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "list_entries" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "list_entries"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'list_entries' not in self._inner_api_calls:
+            self._inner_api_calls['list_entries'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.list_entries,
-                default_retry=self._method_configs["ListEntries"].retry,
-                default_timeout=self._method_configs["ListEntries"].timeout,
+                default_retry=self._method_configs['ListEntries'].retry,
+                default_timeout=self._method_configs['ListEntries'].timeout,
                 client_info=self._client_info,
             )
 
         request = datacatalog_pb2.ListEntriesRequest(
-            parent=parent, page_size=page_size, read_mask=read_mask,
+            parent=parent,
+            page_size=page_size,
+            read_mask=read_mask,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
         iterator = google.api_core.page_iterator.GRPCIterator(
             client=None,
-            method=functools.partial(
-                self._inner_api_calls["list_entries"],
-                retry=retry,
-                timeout=timeout,
-                metadata=metadata,
-            ),
+            method=functools.partial(self._inner_api_calls['list_entries'], retry=retry, timeout=timeout, metadata=metadata),
             request=request,
-            items_field="entries",
-            request_token_field="page_token",
-            response_token_field="next_page_token",
+            items_field='entries',
+            request_token_field='page_token',
+            response_token_field='next_page_token',
         )
         return iterator
 
     def create_tag_template(
-        self,
-        parent,
-        tag_template_id,
-        tag_template,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            tag_template_id,
+            tag_template,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Creates a tag template. The user should enable the Data Catalog API
         in the project identified by the ``parent`` parameter (see `Data Catalog
@@ -1455,43 +1381,38 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "create_tag_template" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "create_tag_template"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'create_tag_template' not in self._inner_api_calls:
+            self._inner_api_calls['create_tag_template'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.create_tag_template,
-                default_retry=self._method_configs["CreateTagTemplate"].retry,
-                default_timeout=self._method_configs["CreateTagTemplate"].timeout,
+                default_retry=self._method_configs['CreateTagTemplate'].retry,
+                default_timeout=self._method_configs['CreateTagTemplate'].timeout,
                 client_info=self._client_info,
             )
 
         request = datacatalog_pb2.CreateTagTemplateRequest(
-            parent=parent, tag_template_id=tag_template_id, tag_template=tag_template,
+            parent=parent,
+            tag_template_id=tag_template_id,
+            tag_template=tag_template,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["create_tag_template"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['create_tag_template'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def get_tag_template(
-        self,
-        name,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Gets a tag template.
 
@@ -1528,42 +1449,37 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "get_tag_template" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "get_tag_template"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'get_tag_template' not in self._inner_api_calls:
+            self._inner_api_calls['get_tag_template'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.get_tag_template,
-                default_retry=self._method_configs["GetTagTemplate"].retry,
-                default_timeout=self._method_configs["GetTagTemplate"].timeout,
+                default_retry=self._method_configs['GetTagTemplate'].retry,
+                default_timeout=self._method_configs['GetTagTemplate'].timeout,
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.GetTagTemplateRequest(name=name,)
+        request = datacatalog_pb2.GetTagTemplateRequest(
+            name=name,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["get_tag_template"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['get_tag_template'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def update_tag_template(
-        self,
-        tag_template,
-        update_mask=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            tag_template,
+            update_mask=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Updates a tag template. This method cannot be used to update the
         fields of a template. The tag template fields are represented as
@@ -1619,44 +1535,38 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "update_tag_template" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "update_tag_template"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'update_tag_template' not in self._inner_api_calls:
+            self._inner_api_calls['update_tag_template'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.update_tag_template,
-                default_retry=self._method_configs["UpdateTagTemplate"].retry,
-                default_timeout=self._method_configs["UpdateTagTemplate"].timeout,
+                default_retry=self._method_configs['UpdateTagTemplate'].retry,
+                default_timeout=self._method_configs['UpdateTagTemplate'].timeout,
                 client_info=self._client_info,
             )
 
         request = datacatalog_pb2.UpdateTagTemplateRequest(
-            tag_template=tag_template, update_mask=update_mask,
+            tag_template=tag_template,
+            update_mask=update_mask,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("tag_template.name", tag_template.name)]
+            routing_header = [('tag_template.name', tag_template.name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["update_tag_template"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['update_tag_template'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def delete_tag_template(
-        self,
-        name,
-        force,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            force,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Deletes a tag template and all tags using the template. Users should
         enable the Data Catalog API in the project identified by the ``name``
@@ -1700,43 +1610,39 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "delete_tag_template" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "delete_tag_template"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'delete_tag_template' not in self._inner_api_calls:
+            self._inner_api_calls['delete_tag_template'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.delete_tag_template,
-                default_retry=self._method_configs["DeleteTagTemplate"].retry,
-                default_timeout=self._method_configs["DeleteTagTemplate"].timeout,
+                default_retry=self._method_configs['DeleteTagTemplate'].retry,
+                default_timeout=self._method_configs['DeleteTagTemplate'].timeout,
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.DeleteTagTemplateRequest(name=name, force=force,)
+        request = datacatalog_pb2.DeleteTagTemplateRequest(
+            name=name,
+            force=force,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        self._inner_api_calls["delete_tag_template"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        self._inner_api_calls['delete_tag_template'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def create_tag_template_field(
-        self,
-        parent,
-        tag_template_field_id,
-        tag_template_field,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            tag_template_field_id,
+            tag_template_field,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Creates a field in a tag template. The user should enable the Data
         Catalog API in the project identified by the ``parent`` parameter (see
@@ -1795,13 +1701,11 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "create_tag_template_field" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "create_tag_template_field"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'create_tag_template_field' not in self._inner_api_calls:
+            self._inner_api_calls['create_tag_template_field'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.create_tag_template_field,
-                default_retry=self._method_configs["CreateTagTemplateField"].retry,
-                default_timeout=self._method_configs["CreateTagTemplateField"].timeout,
+                default_retry=self._method_configs['CreateTagTemplateField'].retry,
+                default_timeout=self._method_configs['CreateTagTemplateField'].timeout,
                 client_info=self._client_info,
             )
 
@@ -1814,28 +1718,23 @@ class DataCatalogClient(object):
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["create_tag_template_field"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['create_tag_template_field'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def update_tag_template_field(
-        self,
-        name,
-        tag_template_field,
-        update_mask=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            tag_template_field,
+            update_mask=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Updates a field in a tag template. This method cannot be used to
         update the field type. Users should enable the Data Catalog API in the
@@ -1901,44 +1800,39 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "update_tag_template_field" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "update_tag_template_field"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'update_tag_template_field' not in self._inner_api_calls:
+            self._inner_api_calls['update_tag_template_field'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.update_tag_template_field,
-                default_retry=self._method_configs["UpdateTagTemplateField"].retry,
-                default_timeout=self._method_configs["UpdateTagTemplateField"].timeout,
+                default_retry=self._method_configs['UpdateTagTemplateField'].retry,
+                default_timeout=self._method_configs['UpdateTagTemplateField'].timeout,
                 client_info=self._client_info,
             )
 
         request = datacatalog_pb2.UpdateTagTemplateFieldRequest(
-            name=name, tag_template_field=tag_template_field, update_mask=update_mask,
+            name=name,
+            tag_template_field=tag_template_field,
+            update_mask=update_mask,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["update_tag_template_field"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['update_tag_template_field'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def rename_tag_template_field(
-        self,
-        name,
-        new_tag_template_field_id,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            new_tag_template_field_id,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Renames a field in a tag template. The user should enable the Data
         Catalog API in the project identified by the ``name`` parameter (see
@@ -1984,44 +1878,38 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "rename_tag_template_field" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "rename_tag_template_field"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'rename_tag_template_field' not in self._inner_api_calls:
+            self._inner_api_calls['rename_tag_template_field'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.rename_tag_template_field,
-                default_retry=self._method_configs["RenameTagTemplateField"].retry,
-                default_timeout=self._method_configs["RenameTagTemplateField"].timeout,
+                default_retry=self._method_configs['RenameTagTemplateField'].retry,
+                default_timeout=self._method_configs['RenameTagTemplateField'].timeout,
                 client_info=self._client_info,
             )
 
         request = datacatalog_pb2.RenameTagTemplateFieldRequest(
-            name=name, new_tag_template_field_id=new_tag_template_field_id,
+            name=name,
+            new_tag_template_field_id=new_tag_template_field_id,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["rename_tag_template_field"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['rename_tag_template_field'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def delete_tag_template_field(
-        self,
-        name,
-        force,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            force,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Deletes a field in a tag template and all uses of that field. Users
         should enable the Data Catalog API in the project identified by the
@@ -2065,42 +1953,38 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "delete_tag_template_field" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "delete_tag_template_field"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'delete_tag_template_field' not in self._inner_api_calls:
+            self._inner_api_calls['delete_tag_template_field'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.delete_tag_template_field,
-                default_retry=self._method_configs["DeleteTagTemplateField"].retry,
-                default_timeout=self._method_configs["DeleteTagTemplateField"].timeout,
+                default_retry=self._method_configs['DeleteTagTemplateField'].retry,
+                default_timeout=self._method_configs['DeleteTagTemplateField'].timeout,
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.DeleteTagTemplateFieldRequest(name=name, force=force,)
+        request = datacatalog_pb2.DeleteTagTemplateFieldRequest(
+            name=name,
+            force=force,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        self._inner_api_calls["delete_tag_template_field"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        self._inner_api_calls['delete_tag_template_field'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def create_tag(
-        self,
-        parent,
-        tag,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            tag,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Creates a tag on an ``Entry``. Note: The project identified by the
         ``parent`` parameter for the
@@ -2153,42 +2037,38 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "create_tag" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "create_tag"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'create_tag' not in self._inner_api_calls:
+            self._inner_api_calls['create_tag'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.create_tag,
-                default_retry=self._method_configs["CreateTag"].retry,
-                default_timeout=self._method_configs["CreateTag"].timeout,
+                default_retry=self._method_configs['CreateTag'].retry,
+                default_timeout=self._method_configs['CreateTag'].timeout,
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.CreateTagRequest(parent=parent, tag=tag,)
+        request = datacatalog_pb2.CreateTagRequest(
+            parent=parent,
+            tag=tag,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["create_tag"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['create_tag'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def update_tag(
-        self,
-        tag,
-        update_mask=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            tag,
+            update_mask=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Updates an existing tag.
 
@@ -2233,41 +2113,37 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "update_tag" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "update_tag"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'update_tag' not in self._inner_api_calls:
+            self._inner_api_calls['update_tag'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.update_tag,
-                default_retry=self._method_configs["UpdateTag"].retry,
-                default_timeout=self._method_configs["UpdateTag"].timeout,
+                default_retry=self._method_configs['UpdateTag'].retry,
+                default_timeout=self._method_configs['UpdateTag'].timeout,
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.UpdateTagRequest(tag=tag, update_mask=update_mask,)
+        request = datacatalog_pb2.UpdateTagRequest(
+            tag=tag,
+            update_mask=update_mask,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("tag.name", tag.name)]
+            routing_header = [('tag.name', tag.name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["update_tag"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['update_tag'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def delete_tag(
-        self,
-        name,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            name,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Deletes a tag.
 
@@ -2301,42 +2177,37 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "delete_tag" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "delete_tag"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'delete_tag' not in self._inner_api_calls:
+            self._inner_api_calls['delete_tag'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.delete_tag,
-                default_retry=self._method_configs["DeleteTag"].retry,
-                default_timeout=self._method_configs["DeleteTag"].timeout,
+                default_retry=self._method_configs['DeleteTag'].retry,
+                default_timeout=self._method_configs['DeleteTag'].timeout,
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.DeleteTagRequest(name=name,)
+        request = datacatalog_pb2.DeleteTagRequest(
+            name=name,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("name", name)]
+            routing_header = [('name', name)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        self._inner_api_calls["delete_tag"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        self._inner_api_calls['delete_tag'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def list_tags(
-        self,
-        parent,
-        page_size=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            page_size=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Lists the tags on an ``Entry``.
 
@@ -2397,53 +2268,46 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "list_tags" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "list_tags"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'list_tags' not in self._inner_api_calls:
+            self._inner_api_calls['list_tags'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.list_tags,
-                default_retry=self._method_configs["ListTags"].retry,
-                default_timeout=self._method_configs["ListTags"].timeout,
+                default_retry=self._method_configs['ListTags'].retry,
+                default_timeout=self._method_configs['ListTags'].timeout,
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.ListTagsRequest(parent=parent, page_size=page_size,)
+        request = datacatalog_pb2.ListTagsRequest(
+            parent=parent,
+            page_size=page_size,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
         iterator = google.api_core.page_iterator.GRPCIterator(
             client=None,
-            method=functools.partial(
-                self._inner_api_calls["list_tags"],
-                retry=retry,
-                timeout=timeout,
-                metadata=metadata,
-            ),
+            method=functools.partial(self._inner_api_calls['list_tags'], retry=retry, timeout=timeout, metadata=metadata),
             request=request,
-            items_field="tags",
-            request_token_field="page_token",
-            response_token_field="next_page_token",
+            items_field='tags',
+            request_token_field='page_token',
+            response_token_field='next_page_token',
         )
         return iterator
 
     def set_iam_policy(
-        self,
-        resource,
-        policy,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            resource,
+            policy,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Sets the access control policy for a resource. Replaces any existing
         policy. Supported resources are:
@@ -2505,42 +2369,38 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "set_iam_policy" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "set_iam_policy"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'set_iam_policy' not in self._inner_api_calls:
+            self._inner_api_calls['set_iam_policy'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.set_iam_policy,
-                default_retry=self._method_configs["SetIamPolicy"].retry,
-                default_timeout=self._method_configs["SetIamPolicy"].timeout,
+                default_retry=self._method_configs['SetIamPolicy'].retry,
+                default_timeout=self._method_configs['SetIamPolicy'].timeout,
                 client_info=self._client_info,
             )
 
-        request = iam_policy_pb2.SetIamPolicyRequest(resource=resource, policy=policy,)
+        request = iam_policy_pb2.SetIamPolicyRequest(
+            resource=resource,
+            policy=policy,
+        )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("resource", resource)]
+            routing_header = [('resource', resource)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["set_iam_policy"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['set_iam_policy'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def get_iam_policy(
-        self,
-        resource,
-        options_=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            resource,
+            options_=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Gets the access control policy for a resource. A ``NOT_FOUND`` error
         is returned if the resource does not exist. An empty policy is returned
@@ -2600,44 +2460,38 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "get_iam_policy" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "get_iam_policy"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'get_iam_policy' not in self._inner_api_calls:
+            self._inner_api_calls['get_iam_policy'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.get_iam_policy,
-                default_retry=self._method_configs["GetIamPolicy"].retry,
-                default_timeout=self._method_configs["GetIamPolicy"].timeout,
+                default_retry=self._method_configs['GetIamPolicy'].retry,
+                default_timeout=self._method_configs['GetIamPolicy'].timeout,
                 client_info=self._client_info,
             )
 
         request = iam_policy_pb2.GetIamPolicyRequest(
-            resource=resource, options=options_,
+            resource=resource,
+            options=options_,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("resource", resource)]
+            routing_header = [('resource', resource)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["get_iam_policy"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['get_iam_policy'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def test_iam_permissions(
-        self,
-        resource,
-        permissions,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            resource,
+            permissions,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Returns the caller's permissions on a resource. If the resource does
         not exist, an empty set of permissions is returned (We don't return a
@@ -2694,32 +2548,27 @@ class DataCatalogClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "test_iam_permissions" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "test_iam_permissions"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'test_iam_permissions' not in self._inner_api_calls:
+            self._inner_api_calls['test_iam_permissions'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.test_iam_permissions,
-                default_retry=self._method_configs["TestIamPermissions"].retry,
-                default_timeout=self._method_configs["TestIamPermissions"].timeout,
+                default_retry=self._method_configs['TestIamPermissions'].retry,
+                default_timeout=self._method_configs['TestIamPermissions'].timeout,
                 client_info=self._client_info,
             )
 
         request = iam_policy_pb2.TestIamPermissionsRequest(
-            resource=resource, permissions=permissions,
+            resource=resource,
+            permissions=permissions,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("resource", resource)]
+            routing_header = [('resource', resource)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["test_iam_permissions"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['test_iam_permissions'](request, retry=retry, timeout=timeout, metadata=metadata)

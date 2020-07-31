@@ -31,20 +31,14 @@ import google.api_core.protobuf_helpers
 import grpc
 
 from google.cloud.datacatalog_v1beta1.gapic import enums
-from google.cloud.datacatalog_v1beta1.gapic import (
-    policy_tag_manager_serialization_client_config,
-)
-from google.cloud.datacatalog_v1beta1.gapic.transports import (
-    policy_tag_manager_serialization_grpc_transport,
-)
+from google.cloud.datacatalog_v1beta1.gapic import policy_tag_manager_serialization_client_config
+from google.cloud.datacatalog_v1beta1.gapic.transports import policy_tag_manager_serialization_grpc_transport
 from google.cloud.datacatalog_v1beta1.proto import datacatalog_pb2
 from google.cloud.datacatalog_v1beta1.proto import datacatalog_pb2_grpc
 from google.cloud.datacatalog_v1beta1.proto import policytagmanager_pb2
 from google.cloud.datacatalog_v1beta1.proto import policytagmanager_pb2_grpc
 from google.cloud.datacatalog_v1beta1.proto import policytagmanagerserialization_pb2
-from google.cloud.datacatalog_v1beta1.proto import (
-    policytagmanagerserialization_pb2_grpc,
-)
+from google.cloud.datacatalog_v1beta1.proto import policytagmanagerserialization_pb2_grpc
 from google.cloud.datacatalog_v1beta1.proto import tags_pb2
 from google.iam.v1 import iam_policy_pb2
 from google.iam.v1 import options_pb2
@@ -53,8 +47,9 @@ from google.protobuf import empty_pb2
 from google.protobuf import field_mask_pb2
 
 
+
 _GAPIC_LIBRARY_VERSION = pkg_resources.get_distribution(
-    "google-cloud-datacatalog",
+    'google-cloud-datacatalog',
 ).version
 
 
@@ -64,12 +59,13 @@ class PolicyTagManagerSerializationClient(object):
     their taxonomies and policy tags data with serialized format.
     """
 
-    SERVICE_ADDRESS = "datacatalog.googleapis.com:443"
+    SERVICE_ADDRESS = 'datacatalog.googleapis.com:443'
     """The default address of the service."""
 
     # The name of the interface for this client. This is the key used to
     # find the method configuration in the client_config dictionary.
-    _INTERFACE_NAME = "google.cloud.datacatalog.v1beta1.PolicyTagManagerSerialization"
+    _INTERFACE_NAME = 'google.cloud.datacatalog.v1beta1.PolicyTagManagerSerialization'
+
 
     @classmethod
     def from_service_account_file(cls, filename, *args, **kwargs):
@@ -85,17 +81,19 @@ class PolicyTagManagerSerializationClient(object):
         Returns:
             PolicyTagManagerSerializationClient: The constructed client.
         """
-        credentials = service_account.Credentials.from_service_account_file(filename)
-        kwargs["credentials"] = credentials
+        credentials = service_account.Credentials.from_service_account_file(
+            filename)
+        kwargs['credentials'] = credentials
         return cls(*args, **kwargs)
 
     from_service_account_json = from_service_account_file
+
 
     @classmethod
     def location_path(cls, project, location):
         """Return a fully-qualified location string."""
         return google.api_core.path_template.expand(
-            "projects/{project}/locations/{location}",
+            'projects/{project}/locations/{location}',
             project=project,
             location=location,
         )
@@ -104,21 +102,14 @@ class PolicyTagManagerSerializationClient(object):
     def taxonomy_path(cls, project, location, taxonomy):
         """Return a fully-qualified taxonomy string."""
         return google.api_core.path_template.expand(
-            "projects/{project}/locations/{location}/taxonomies/{taxonomy}",
+            'projects/{project}/locations/{location}/taxonomies/{taxonomy}',
             project=project,
             location=location,
             taxonomy=taxonomy,
         )
 
-    def __init__(
-        self,
-        transport=None,
-        channel=None,
-        credentials=None,
-        client_config=None,
-        client_info=None,
-        client_options=None,
-    ):
+    def __init__(self, transport=None, channel=None, credentials=None,
+            client_config=None, client_info=None, client_options=None):
         """Constructor.
 
         Args:
@@ -154,27 +145,20 @@ class PolicyTagManagerSerializationClient(object):
         """
         # Raise deprecation warnings for things we want to go away.
         if client_config is not None:
-            warnings.warn(
-                "The `client_config` argument is deprecated.",
-                PendingDeprecationWarning,
-                stacklevel=2,
-            )
+            warnings.warn('The `client_config` argument is deprecated.',
+                          PendingDeprecationWarning, stacklevel=2)
         else:
             client_config = policy_tag_manager_serialization_client_config.config
 
         if channel:
-            warnings.warn(
-                "The `channel` argument is deprecated; use " "`transport` instead.",
-                PendingDeprecationWarning,
-                stacklevel=2,
-            )
+            warnings.warn('The `channel` argument is deprecated; use '
+                          '`transport` instead.',
+                          PendingDeprecationWarning, stacklevel=2)
 
         api_endpoint = self.SERVICE_ADDRESS
         if client_options:
             if type(client_options) == dict:
-                client_options = google.api_core.client_options.from_dict(
-                    client_options
-                )
+                client_options = google.api_core.client_options.from_dict(client_options)
             if client_options.api_endpoint:
                 api_endpoint = client_options.api_endpoint
 
@@ -191,13 +175,15 @@ class PolicyTagManagerSerializationClient(object):
             else:
                 if credentials:
                     raise ValueError(
-                        "Received both a transport instance and "
-                        "credentials; these are mutually exclusive."
+                        'Received both a transport instance and '
+                        'credentials; these are mutually exclusive.'
                     )
                 self.transport = transport
         else:
             self.transport = policy_tag_manager_serialization_grpc_transport.PolicyTagManagerSerializationGrpcTransport(
-                address=api_endpoint, channel=channel, credentials=credentials,
+                address=api_endpoint,
+                channel=channel,
+                credentials=credentials,
             )
 
         if client_info is None:
@@ -213,7 +199,7 @@ class PolicyTagManagerSerializationClient(object):
         # (Ordinarily, these are the defaults specified in the `*_config.py`
         # file next to this one.)
         self._method_configs = google.api_core.gapic_v1.config.parse_method_configs(
-            client_config["interfaces"][self._INTERFACE_NAME],
+            client_config['interfaces'][self._INTERFACE_NAME],
         )
 
         # Save a dictionary of cached API call functions.
@@ -224,13 +210,12 @@ class PolicyTagManagerSerializationClient(object):
 
     # Service calls
     def import_taxonomies(
-        self,
-        parent,
-        inline_source=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            inline_source=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Imports all taxonomies and their policy tags to a project as new
         taxonomies.
@@ -274,49 +259,45 @@ class PolicyTagManagerSerializationClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "import_taxonomies" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "import_taxonomies"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'import_taxonomies' not in self._inner_api_calls:
+            self._inner_api_calls['import_taxonomies'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.import_taxonomies,
-                default_retry=self._method_configs["ImportTaxonomies"].retry,
-                default_timeout=self._method_configs["ImportTaxonomies"].timeout,
+                default_retry=self._method_configs['ImportTaxonomies'].retry,
+                default_timeout=self._method_configs['ImportTaxonomies'].timeout,
                 client_info=self._client_info,
             )
 
         # Sanity check: We have some fields which are mutually exclusive;
         # raise ValueError if more than one is sent.
-        google.api_core.protobuf_helpers.check_oneof(inline_source=inline_source,)
+        google.api_core.protobuf_helpers.check_oneof(
+            inline_source=inline_source,
+        )
 
         request = policytagmanagerserialization_pb2.ImportTaxonomiesRequest(
-            parent=parent, inline_source=inline_source,
+            parent=parent,
+            inline_source=inline_source,
         )
         if metadata is None:
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["import_taxonomies"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['import_taxonomies'](request, retry=retry, timeout=timeout, metadata=metadata)
 
     def export_taxonomies(
-        self,
-        parent,
-        taxonomies,
-        serialized_taxonomies=None,
-        retry=google.api_core.gapic_v1.method.DEFAULT,
-        timeout=google.api_core.gapic_v1.method.DEFAULT,
-        metadata=None,
-    ):
+            self,
+            parent,
+            taxonomies,
+            serialized_taxonomies=None,
+            retry=google.api_core.gapic_v1.method.DEFAULT,
+            timeout=google.api_core.gapic_v1.method.DEFAULT,
+            metadata=None):
         """
         Exports all taxonomies and their policy tags in a project.
 
@@ -360,13 +341,11 @@ class PolicyTagManagerSerializationClient(object):
             ValueError: If the parameters are invalid.
         """
         # Wrap the transport method to add retry and timeout logic.
-        if "export_taxonomies" not in self._inner_api_calls:
-            self._inner_api_calls[
-                "export_taxonomies"
-            ] = google.api_core.gapic_v1.method.wrap_method(
+        if 'export_taxonomies' not in self._inner_api_calls:
+            self._inner_api_calls['export_taxonomies'] = google.api_core.gapic_v1.method.wrap_method(
                 self.transport.export_taxonomies,
-                default_retry=self._method_configs["ExportTaxonomies"].retry,
-                default_timeout=self._method_configs["ExportTaxonomies"].timeout,
+                default_retry=self._method_configs['ExportTaxonomies'].retry,
+                default_timeout=self._method_configs['ExportTaxonomies'].timeout,
                 client_info=self._client_info,
             )
 
@@ -385,15 +364,11 @@ class PolicyTagManagerSerializationClient(object):
             metadata = []
         metadata = list(metadata)
         try:
-            routing_header = [("parent", parent)]
+            routing_header = [('parent', parent)]
         except AttributeError:
             pass
         else:
-            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(
-                routing_header
-            )
+            routing_metadata = google.api_core.gapic_v1.routing_header.to_grpc_metadata(routing_header)
             metadata.append(routing_metadata)
 
-        return self._inner_api_calls["export_taxonomies"](
-            request, retry=retry, timeout=timeout, metadata=metadata
-        )
+        return self._inner_api_calls['export_taxonomies'](request, retry=retry, timeout=timeout, metadata=metadata)

@@ -36,7 +36,6 @@ class EntryType(enum.IntEnum):
       FILESET (int): An entry type which is a set of files or objects. Example:
       Cloud Storage fileset.
     """
-
     ENTRY_TYPE_UNSPECIFIED = 0
     TABLE = 2
     MODEL = 5
@@ -54,7 +53,6 @@ class IntegratedSystem(enum.IntEnum):
       BIGQUERY (int): BigQuery.
       CLOUD_PUBSUB (int): Cloud Pub/Sub.
     """
-
     INTEGRATED_SYSTEM_UNSPECIFIED = 0
     BIGQUERY = 1
     CLOUD_PUBSUB = 2
@@ -70,7 +68,6 @@ class SearchResultType(enum.IntEnum):
       TAG_TEMPLATE (int): A ``TagTemplate``.
       ENTRY_GROUP (int): An ``EntryGroup``.
     """
-
     SEARCH_RESULT_TYPE_UNSPECIFIED = 0
     ENTRY = 1
     TAG_TEMPLATE = 2
@@ -86,7 +83,6 @@ class TableSourceType(enum.IntEnum):
       BIGQUERY_VIEW (int): Table view.
       BIGQUERY_TABLE (int): BigQuery native table.
     """
-
     TABLE_SOURCE_TYPE_UNSPECIFIED = 0
     BIGQUERY_VIEW = 2
     BIGQUERY_TABLE = 5
@@ -102,7 +98,6 @@ class FieldType(object):
           BOOL (int): A boolean value.
           TIMESTAMP (int): A timestamp.
         """
-
         PRIMITIVE_TYPE_UNSPECIFIED = 0
         DOUBLE = 1
         STRING = 2
@@ -120,6 +115,6 @@ class Taxonomy(object):
           FINE_GRAINED_ACCESS_CONTROL (int): Fine grained access control policy, which enables access control on
           tagged resources.
         """
-
         POLICY_TYPE_UNSPECIFIED = 0
         FINE_GRAINED_ACCESS_CONTROL = 1
+    
