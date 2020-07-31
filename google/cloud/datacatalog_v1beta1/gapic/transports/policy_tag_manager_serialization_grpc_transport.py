@@ -17,7 +17,9 @@
 
 import google.api_core.grpc_helpers
 
-from google.cloud.datacatalog_v1beta1.proto import policytagmanagerserialization_pb2_grpc
+from google.cloud.datacatalog_v1beta1.proto import (
+    policytagmanagerserialization_pb2_grpc,
+)
 
 
 class PolicyTagManagerSerializationGrpcTransport(object):
@@ -28,14 +30,14 @@ class PolicyTagManagerSerializationGrpcTransport(object):
     which can be used to take advantage of advanced
     features of gRPC.
     """
+
     # The scopes needed to make gRPC calls to all of the methods defined
     # in this service.
-    _OAUTH_SCOPES = (
-        'https://www.googleapis.com/auth/cloud-platform',
-    )
+    _OAUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
 
-    def __init__(self, channel=None, credentials=None,
-                 address='datacatalog.googleapis.com:443'):
+    def __init__(
+        self, channel=None, credentials=None, address="datacatalog.googleapis.com:443"
+    ):
         """Instantiate the transport class.
 
         Args:
@@ -53,8 +55,7 @@ class PolicyTagManagerSerializationGrpcTransport(object):
         # exception (channels come with credentials baked in already).
         if channel is not None and credentials is not None:
             raise ValueError(
-                'The `channel` and `credentials` arguments are mutually '
-                'exclusive.',
+                "The `channel` and `credentials` arguments are mutually " "exclusive.",
             )
 
         # Create the channel.
@@ -63,8 +64,8 @@ class PolicyTagManagerSerializationGrpcTransport(object):
                 address=address,
                 credentials=credentials,
                 options={
-                    'grpc.max_send_message_length': -1,
-                    'grpc.max_receive_message_length': -1,
+                    "grpc.max_send_message_length": -1,
+                    "grpc.max_receive_message_length": -1,
                 }.items(),
             )
 
@@ -73,16 +74,15 @@ class PolicyTagManagerSerializationGrpcTransport(object):
         # gRPC uses objects called "stubs" that are bound to the
         # channel and provide a basic method for each RPC.
         self._stubs = {
-            'policy_tag_manager_serialization_stub': policytagmanagerserialization_pb2_grpc.PolicyTagManagerSerializationStub(channel),
+            "policy_tag_manager_serialization_stub": policytagmanagerserialization_pb2_grpc.PolicyTagManagerSerializationStub(
+                channel
+            ),
         }
-
 
     @classmethod
     def create_channel(
-                cls,
-                address='datacatalog.googleapis.com:443',
-                credentials=None,
-                **kwargs):
+        cls, address="datacatalog.googleapis.com:443", credentials=None, **kwargs
+    ):
         """Create and return a gRPC channel object.
 
         Args:
@@ -99,10 +99,7 @@ class PolicyTagManagerSerializationGrpcTransport(object):
             grpc.Channel: A gRPC channel object.
         """
         return google.api_core.grpc_helpers.create_channel(
-            address,
-            credentials=credentials,
-            scopes=cls._OAUTH_SCOPES,
-            **kwargs
+            address, credentials=credentials, scopes=cls._OAUTH_SCOPES, **kwargs
         )
 
     @property
@@ -129,7 +126,7 @@ class PolicyTagManagerSerializationGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['policy_tag_manager_serialization_stub'].ImportTaxonomies
+        return self._stubs["policy_tag_manager_serialization_stub"].ImportTaxonomies
 
     @property
     def export_taxonomies(self):
@@ -145,4 +142,4 @@ class PolicyTagManagerSerializationGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['policy_tag_manager_serialization_stub'].ExportTaxonomies
+        return self._stubs["policy_tag_manager_serialization_stub"].ExportTaxonomies

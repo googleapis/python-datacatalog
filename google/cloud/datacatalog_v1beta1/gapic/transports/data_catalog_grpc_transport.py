@@ -28,14 +28,14 @@ class DataCatalogGrpcTransport(object):
     which can be used to take advantage of advanced
     features of gRPC.
     """
+
     # The scopes needed to make gRPC calls to all of the methods defined
     # in this service.
-    _OAUTH_SCOPES = (
-        'https://www.googleapis.com/auth/cloud-platform',
-    )
+    _OAUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
 
-    def __init__(self, channel=None, credentials=None,
-                 address='datacatalog.googleapis.com:443'):
+    def __init__(
+        self, channel=None, credentials=None, address="datacatalog.googleapis.com:443"
+    ):
         """Instantiate the transport class.
 
         Args:
@@ -53,8 +53,7 @@ class DataCatalogGrpcTransport(object):
         # exception (channels come with credentials baked in already).
         if channel is not None and credentials is not None:
             raise ValueError(
-                'The `channel` and `credentials` arguments are mutually '
-                'exclusive.',
+                "The `channel` and `credentials` arguments are mutually " "exclusive.",
             )
 
         # Create the channel.
@@ -63,8 +62,8 @@ class DataCatalogGrpcTransport(object):
                 address=address,
                 credentials=credentials,
                 options={
-                    'grpc.max_send_message_length': -1,
-                    'grpc.max_receive_message_length': -1,
+                    "grpc.max_send_message_length": -1,
+                    "grpc.max_receive_message_length": -1,
                 }.items(),
             )
 
@@ -73,16 +72,13 @@ class DataCatalogGrpcTransport(object):
         # gRPC uses objects called "stubs" that are bound to the
         # channel and provide a basic method for each RPC.
         self._stubs = {
-            'data_catalog_stub': datacatalog_pb2_grpc.DataCatalogStub(channel),
+            "data_catalog_stub": datacatalog_pb2_grpc.DataCatalogStub(channel),
         }
-
 
     @classmethod
     def create_channel(
-                cls,
-                address='datacatalog.googleapis.com:443',
-                credentials=None,
-                **kwargs):
+        cls, address="datacatalog.googleapis.com:443", credentials=None, **kwargs
+    ):
         """Create and return a gRPC channel object.
 
         Args:
@@ -99,10 +95,7 @@ class DataCatalogGrpcTransport(object):
             grpc.Channel: A gRPC channel object.
         """
         return google.api_core.grpc_helpers.create_channel(
-            address,
-            credentials=credentials,
-            scopes=cls._OAUTH_SCOPES,
-            **kwargs
+            address, credentials=credentials, scopes=cls._OAUTH_SCOPES, **kwargs
         )
 
     @property
@@ -140,7 +133,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].SearchCatalog
+        return self._stubs["data_catalog_stub"].SearchCatalog
 
     @property
     def delete_entry_group(self):
@@ -158,7 +151,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].DeleteEntryGroup
+        return self._stubs["data_catalog_stub"].DeleteEntryGroup
 
     @property
     def delete_entry(self):
@@ -176,7 +169,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].DeleteEntry
+        return self._stubs["data_catalog_stub"].DeleteEntry
 
     @property
     def get_entry(self):
@@ -189,7 +182,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].GetEntry
+        return self._stubs["data_catalog_stub"].GetEntry
 
     @property
     def lookup_entry(self):
@@ -204,7 +197,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].LookupEntry
+        return self._stubs["data_catalog_stub"].LookupEntry
 
     @property
     def delete_tag_template(self):
@@ -221,7 +214,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].DeleteTagTemplate
+        return self._stubs["data_catalog_stub"].DeleteTagTemplate
 
     @property
     def delete_tag_template_field(self):
@@ -238,7 +231,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].DeleteTagTemplateField
+        return self._stubs["data_catalog_stub"].DeleteTagTemplateField
 
     @property
     def delete_tag(self):
@@ -251,7 +244,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].DeleteTag
+        return self._stubs["data_catalog_stub"].DeleteTag
 
     @property
     def get_iam_policy(self):
@@ -282,7 +275,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].GetIamPolicy
+        return self._stubs["data_catalog_stub"].GetIamPolicy
 
     @property
     def create_entry_group(self):
@@ -301,7 +294,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].CreateEntryGroup
+        return self._stubs["data_catalog_stub"].CreateEntryGroup
 
     @property
     def update_entry_group(self):
@@ -318,7 +311,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].UpdateEntryGroup
+        return self._stubs["data_catalog_stub"].UpdateEntryGroup
 
     @property
     def get_entry_group(self):
@@ -331,7 +324,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].GetEntryGroup
+        return self._stubs["data_catalog_stub"].GetEntryGroup
 
     @property
     def list_entry_groups(self):
@@ -344,7 +337,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].ListEntryGroups
+        return self._stubs["data_catalog_stub"].ListEntryGroups
 
     @property
     def create_entry(self):
@@ -365,7 +358,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].CreateEntry
+        return self._stubs["data_catalog_stub"].CreateEntry
 
     @property
     def update_entry(self):
@@ -382,7 +375,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].UpdateEntry
+        return self._stubs["data_catalog_stub"].UpdateEntry
 
     @property
     def list_entries(self):
@@ -395,7 +388,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].ListEntries
+        return self._stubs["data_catalog_stub"].ListEntries
 
     @property
     def create_tag_template(self):
@@ -412,7 +405,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].CreateTagTemplate
+        return self._stubs["data_catalog_stub"].CreateTagTemplate
 
     @property
     def get_tag_template(self):
@@ -425,7 +418,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].GetTagTemplate
+        return self._stubs["data_catalog_stub"].GetTagTemplate
 
     @property
     def update_tag_template(self):
@@ -445,7 +438,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].UpdateTagTemplate
+        return self._stubs["data_catalog_stub"].UpdateTagTemplate
 
     @property
     def create_tag_template_field(self):
@@ -462,7 +455,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].CreateTagTemplateField
+        return self._stubs["data_catalog_stub"].CreateTagTemplateField
 
     @property
     def update_tag_template_field(self):
@@ -480,7 +473,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].UpdateTagTemplateField
+        return self._stubs["data_catalog_stub"].UpdateTagTemplateField
 
     @property
     def rename_tag_template_field(self):
@@ -497,7 +490,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].RenameTagTemplateField
+        return self._stubs["data_catalog_stub"].RenameTagTemplateField
 
     @property
     def create_tag(self):
@@ -515,7 +508,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].CreateTag
+        return self._stubs["data_catalog_stub"].CreateTag
 
     @property
     def update_tag(self):
@@ -528,7 +521,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].UpdateTag
+        return self._stubs["data_catalog_stub"].UpdateTag
 
     @property
     def list_tags(self):
@@ -541,7 +534,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].ListTags
+        return self._stubs["data_catalog_stub"].ListTags
 
     @property
     def set_iam_policy(self):
@@ -569,7 +562,7 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].SetIamPolicy
+        return self._stubs["data_catalog_stub"].SetIamPolicy
 
     @property
     def test_iam_permissions(self):
@@ -595,4 +588,4 @@ class DataCatalogGrpcTransport(object):
                 deserialized request object and returns a
                 deserialized response object.
         """
-        return self._stubs['data_catalog_stub'].TestIamPermissions
+        return self._stubs["data_catalog_stub"].TestIamPermissions

@@ -23,34 +23,43 @@ from google.cloud.datacatalog_v1beta1 import types
 from google.cloud.datacatalog_v1beta1.gapic import data_catalog_client
 from google.cloud.datacatalog_v1beta1.gapic import enums
 from google.cloud.datacatalog_v1beta1.gapic import policy_tag_manager_client
-from google.cloud.datacatalog_v1beta1.gapic import policy_tag_manager_serialization_client
+from google.cloud.datacatalog_v1beta1.gapic import (
+    policy_tag_manager_serialization_client,
+)
 
 
 if sys.version_info[:2] == (2, 7):
     message = (
-        'A future version of this library will drop support for Python 2.7. '
-        'More details about Python 2 support for Google Cloud Client Libraries '
-        'can be found at https://cloud.google.com/python/docs/python2-sunset/'
+        "A future version of this library will drop support for Python 2.7. "
+        "More details about Python 2 support for Google Cloud Client Libraries "
+        "can be found at https://cloud.google.com/python/docs/python2-sunset/"
     )
     warnings.warn(message, DeprecationWarning)
+
 
 class DataCatalogClient(data_catalog_client.DataCatalogClient):
     __doc__ = data_catalog_client.DataCatalogClient.__doc__
     enums = enums
 
+
 class PolicyTagManagerClient(policy_tag_manager_client.PolicyTagManagerClient):
     __doc__ = policy_tag_manager_client.PolicyTagManagerClient.__doc__
     enums = enums
 
-class PolicyTagManagerSerializationClient(policy_tag_manager_serialization_client.PolicyTagManagerSerializationClient):
-    __doc__ = policy_tag_manager_serialization_client.PolicyTagManagerSerializationClient.__doc__
+
+class PolicyTagManagerSerializationClient(
+    policy_tag_manager_serialization_client.PolicyTagManagerSerializationClient
+):
+    __doc__ = (
+        policy_tag_manager_serialization_client.PolicyTagManagerSerializationClient.__doc__
+    )
     enums = enums
 
 
 __all__ = (
-    'enums',
-    'types',
-    'DataCatalogClient',
-    'PolicyTagManagerClient',
-    'PolicyTagManagerSerializationClient',
+    "enums",
+    "types",
+    "DataCatalogClient",
+    "PolicyTagManagerClient",
+    "PolicyTagManagerSerializationClient",
 )

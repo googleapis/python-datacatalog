@@ -25,9 +25,9 @@ from google.cloud.datacatalog_v1beta1 import types
 
 
 __all__ = (
-    'enums',
-    'types',
-    'DataCatalogClient',
-    'PolicyTagManagerClient',
-    'PolicyTagManagerSerializationClient',
+    "enums",
+    "types",
+    "DataCatalogClient",
+    "PolicyTagManagerClient",
+    "PolicyTagManagerSerializationClient",
 )
