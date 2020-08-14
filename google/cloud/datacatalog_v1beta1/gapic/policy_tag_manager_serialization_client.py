@@ -54,7 +54,7 @@ from google.protobuf import field_mask_pb2
 
 
 _GAPIC_LIBRARY_VERSION = pkg_resources.get_distribution(
-    "google-cloud-datacatalog"
+    "google-cloud-datacatalog",
 ).version
 
 
@@ -197,12 +197,12 @@ class PolicyTagManagerSerializationClient(object):
                 self.transport = transport
         else:
             self.transport = policy_tag_manager_serialization_grpc_transport.PolicyTagManagerSerializationGrpcTransport(
-                address=api_endpoint, channel=channel, credentials=credentials
+                address=api_endpoint, channel=channel, credentials=credentials,
             )
 
         if client_info is None:
             client_info = google.api_core.gapic_v1.client_info.ClientInfo(
-                gapic_version=_GAPIC_LIBRARY_VERSION
+                gapic_version=_GAPIC_LIBRARY_VERSION,
             )
         else:
             client_info.gapic_version = _GAPIC_LIBRARY_VERSION
@@ -213,7 +213,7 @@ class PolicyTagManagerSerializationClient(object):
         # (Ordinarily, these are the defaults specified in the `*_config.py`
         # file next to this one.)
         self._method_configs = google.api_core.gapic_v1.config.parse_method_configs(
-            client_config["interfaces"][self._INTERFACE_NAME]
+            client_config["interfaces"][self._INTERFACE_NAME],
         )
 
         # Save a dictionary of cached API call functions.
@@ -286,10 +286,10 @@ class PolicyTagManagerSerializationClient(object):
 
         # Sanity check: We have some fields which are mutually exclusive;
         # raise ValueError if more than one is sent.
-        google.api_core.protobuf_helpers.check_oneof(inline_source=inline_source)
+        google.api_core.protobuf_helpers.check_oneof(inline_source=inline_source,)
 
         request = policytagmanagerserialization_pb2.ImportTaxonomiesRequest(
-            parent=parent, inline_source=inline_source
+            parent=parent, inline_source=inline_source,
         )
         if metadata is None:
             metadata = []
@@ -373,7 +373,7 @@ class PolicyTagManagerSerializationClient(object):
         # Sanity check: We have some fields which are mutually exclusive;
         # raise ValueError if more than one is sent.
         google.api_core.protobuf_helpers.check_oneof(
-            serialized_taxonomies=serialized_taxonomies
+            serialized_taxonomies=serialized_taxonomies,
         )
 
         request = policytagmanagerserialization_pb2.ExportTaxonomiesRequest(

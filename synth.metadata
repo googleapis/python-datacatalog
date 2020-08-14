@@ -3,8 +3,8 @@
     {
       "git": {
         "name": ".",
-        "remote": "git@github.com:googleapis/python-datacatalog.git",
-        "sha": "bc14411984259665f14119443f6d5e6901a7e3d4"
+        "remote": "https://github.com/googleapis/python-datacatalog.git",
+        "sha": "4efd7b7214e7540bc517632cd8a0cca5c80f011c"
       }
     },
     {

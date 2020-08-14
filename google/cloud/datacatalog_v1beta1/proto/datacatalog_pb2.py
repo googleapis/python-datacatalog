@@ -316,7 +316,7 @@ _SEARCHCATALOGREQUEST = _descriptor.Descriptor(
         ),
     ],
     extensions=[],
-    nested_types=[_SEARCHCATALOGREQUEST_SCOPE],
+    nested_types=[_SEARCHCATALOGREQUEST_SCOPE,],
     enum_types=[],
     serialized_options=None,
     is_extendable=False,
@@ -951,7 +951,7 @@ _DELETEENTRYREQUEST = _descriptor.Descriptor(
             serialized_options=b'\340A\002\372A"\n datacatalog.googleapis.com/Entry',
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        )
+        ),
     ],
     extensions=[],
     nested_types=[],
@@ -992,7 +992,7 @@ _GETENTRYREQUEST = _descriptor.Descriptor(
             serialized_options=b'\340A\002\372A"\n datacatalog.googleapis.com/Entry',
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        )
+        ),
     ],
     extensions=[],
     nested_types=[],
@@ -1069,7 +1069,7 @@ _LOOKUPENTRYREQUEST = _descriptor.Descriptor(
             containing_type=None,
             create_key=_descriptor._internal_create_key,
             fields=[],
-        )
+        ),
     ],
     serialized_start=2422,
     serialized_end=2508,
@@ -1573,7 +1573,7 @@ _GETTAGTEMPLATEREQUEST = _descriptor.Descriptor(
             serialized_options=b"\340A\002\372A(\n&datacatalog.googleapis.com/TagTemplate",
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        )
+        ),
     ],
     extensions=[],
     nested_types=[],
@@ -1854,7 +1854,7 @@ _DELETETAGREQUEST = _descriptor.Descriptor(
             serialized_options=b"\340A\002\372A \022\036datacatalog.googleapis.com/Tag",
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        )
+        ),
     ],
     extensions=[],
     nested_types=[],
