@@ -226,7 +226,7 @@ _SEARCHCATALOGRESULT = _descriptor.Descriptor(
             containing_type=None,
             create_key=_descriptor._internal_create_key,
             fields=[],
-        )
+        ),
     ],
     serialized_start=194,
     serialized_end=502,
