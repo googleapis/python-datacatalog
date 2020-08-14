@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
     serialized_options=b"\n\037com.google.cloud.datacatalog.v1P\001ZFgoogle.golang.org/genproto/googleapis/cloud/datacatalog/v1;datacatalog\370\001\001\252\002\033Google.Cloud.DataCatalog.V1\312\002\033Google\\Cloud\\DataCatalog\\V1\352\002\036Google::Cloud::DataCatalog::V1",
     create_key=_descriptor._internal_create_key,
     serialized_pb=b'\n.google/cloud/datacatalog_v1/proto/schema.proto\x12\x1bgoogle.cloud.datacatalog.v1\x1a\x1fgoogle/api/field_behavior.proto"I\n\x06Schema\x12?\n\x07\x63olumns\x18\x02 \x03(\x0b\x32).google.cloud.datacatalog.v1.ColumnSchemaB\x03\xe0\x41\x02"\xa7\x01\n\x0c\x43olumnSchema\x12\x13\n\x06\x63olumn\x18\x06 \x01(\tB\x03\xe0\x41\x02\x12\x11\n\x04type\x18\x01 \x01(\tB\x03\xe0\x41\x02\x12\x18\n\x0b\x64\x65scription\x18\x02 \x01(\tB\x03\xe0\x41\x01\x12\x11\n\x04mode\x18\x03 \x01(\tB\x03\xe0\x41\x01\x12\x42\n\nsubcolumns\x18\x07 \x03(\x0b\x32).google.cloud.datacatalog.v1.ColumnSchemaB\x03\xe0\x41\x01\x42\xcb\x01\n\x1f\x63om.google.cloud.datacatalog.v1P\x01ZFgoogle.golang.org/genproto/googleapis/cloud/datacatalog/v1;datacatalog\xf8\x01\x01\xaa\x02\x1bGoogle.Cloud.DataCatalog.V1\xca\x02\x1bGoogle\\Cloud\\DataCatalog\\V1\xea\x02\x1eGoogle::Cloud::DataCatalog::V1b\x06proto3',
-    dependencies=[google_dot_api_dot_field__behavior__pb2.DESCRIPTOR,],
+    dependencies=[google_dot_api_dot_field__behavior__pb2.DESCRIPTOR],
 )
 
 
@@ -52,7 +52,7 @@ _SCHEMA = _descriptor.Descriptor(
             serialized_options=b"\340A\002",
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        ),
+        )
     ],
     extensions=[],
     nested_types=[],

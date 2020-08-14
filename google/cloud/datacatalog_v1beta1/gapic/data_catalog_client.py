@@ -48,7 +48,7 @@ from google.protobuf import field_mask_pb2
 
 
 _GAPIC_LIBRARY_VERSION = pkg_resources.get_distribution(
-    "google-cloud-datacatalog",
+    "google-cloud-datacatalog"
 ).version
 
 
@@ -235,12 +235,12 @@ class DataCatalogClient(object):
                 self.transport = transport
         else:
             self.transport = data_catalog_grpc_transport.DataCatalogGrpcTransport(
-                address=api_endpoint, channel=channel, credentials=credentials,
+                address=api_endpoint, channel=channel, credentials=credentials
             )
 
         if client_info is None:
             client_info = google.api_core.gapic_v1.client_info.ClientInfo(
-                gapic_version=_GAPIC_LIBRARY_VERSION,
+                gapic_version=_GAPIC_LIBRARY_VERSION
             )
         else:
             client_info.gapic_version = _GAPIC_LIBRARY_VERSION
@@ -251,7 +251,7 @@ class DataCatalogClient(object):
         # (Ordinarily, these are the defaults specified in the `*_config.py`
         # file next to this one.)
         self._method_configs = google.api_core.gapic_v1.config.parse_method_configs(
-            client_config["interfaces"][self._INTERFACE_NAME],
+            client_config["interfaces"][self._INTERFACE_NAME]
         )
 
         # Save a dictionary of cached API call functions.
@@ -382,7 +382,7 @@ class DataCatalogClient(object):
             )
 
         request = datacatalog_pb2.SearchCatalogRequest(
-            scope=scope, query=query, page_size=page_size, order_by=order_by,
+            scope=scope, query=query, page_size=page_size, order_by=order_by
         )
         iterator = google.api_core.page_iterator.GRPCIterator(
             client=None,
@@ -452,7 +452,7 @@ class DataCatalogClient(object):
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.GetEntryRequest(name=name,)
+        request = datacatalog_pb2.GetEntryRequest(name=name)
         if metadata is None:
             metadata = []
         metadata = list(metadata)
@@ -545,11 +545,11 @@ class DataCatalogClient(object):
         # Sanity check: We have some fields which are mutually exclusive;
         # raise ValueError if more than one is sent.
         google.api_core.protobuf_helpers.check_oneof(
-            linked_resource=linked_resource, sql_resource=sql_resource,
+            linked_resource=linked_resource, sql_resource=sql_resource
         )
 
         request = datacatalog_pb2.LookupEntryRequest(
-            linked_resource=linked_resource, sql_resource=sql_resource,
+            linked_resource=linked_resource, sql_resource=sql_resource
         )
         return self._inner_api_calls["lookup_entry"](
             request, retry=retry, timeout=timeout, metadata=metadata
@@ -630,7 +630,7 @@ class DataCatalogClient(object):
             )
 
         request = datacatalog_pb2.CreateEntryGroupRequest(
-            parent=parent, entry_group_id=entry_group_id, entry_group=entry_group,
+            parent=parent, entry_group_id=entry_group_id, entry_group=entry_group
         )
         if metadata is None:
             metadata = []
@@ -715,7 +715,7 @@ class DataCatalogClient(object):
             )
 
         request = datacatalog_pb2.UpdateEntryGroupRequest(
-            entry_group=entry_group, update_mask=update_mask,
+            entry_group=entry_group, update_mask=update_mask
         )
         if metadata is None:
             metadata = []
@@ -791,7 +791,7 @@ class DataCatalogClient(object):
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.GetEntryGroupRequest(name=name, read_mask=read_mask,)
+        request = datacatalog_pb2.GetEntryGroupRequest(name=name, read_mask=read_mask)
         if metadata is None:
             metadata = []
         metadata = list(metadata)
@@ -865,7 +865,7 @@ class DataCatalogClient(object):
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.DeleteEntryGroupRequest(name=name, force=force,)
+        request = datacatalog_pb2.DeleteEntryGroupRequest(name=name, force=force)
         if metadata is None:
             metadata = []
         metadata = list(metadata)
@@ -959,7 +959,7 @@ class DataCatalogClient(object):
             )
 
         request = datacatalog_pb2.ListEntryGroupsRequest(
-            parent=parent, page_size=page_size,
+            parent=parent, page_size=page_size
         )
         if metadata is None:
             metadata = []
@@ -1067,7 +1067,7 @@ class DataCatalogClient(object):
             )
 
         request = datacatalog_pb2.CreateEntryRequest(
-            parent=parent, entry_id=entry_id, entry=entry,
+            parent=parent, entry_id=entry_id, entry=entry
         )
         if metadata is None:
             metadata = []
@@ -1176,7 +1176,7 @@ class DataCatalogClient(object):
             )
 
         request = datacatalog_pb2.UpdateEntryRequest(
-            entry=entry, update_mask=update_mask,
+            entry=entry, update_mask=update_mask
         )
         if metadata is None:
             metadata = []
@@ -1250,7 +1250,7 @@ class DataCatalogClient(object):
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.DeleteEntryRequest(name=name,)
+        request = datacatalog_pb2.DeleteEntryRequest(name=name)
         if metadata is None:
             metadata = []
         metadata = list(metadata)
@@ -1352,7 +1352,7 @@ class DataCatalogClient(object):
             )
 
         request = datacatalog_pb2.ListEntriesRequest(
-            parent=parent, page_size=page_size, read_mask=read_mask,
+            parent=parent, page_size=page_size, read_mask=read_mask
         )
         if metadata is None:
             metadata = []
@@ -1456,7 +1456,7 @@ class DataCatalogClient(object):
             )
 
         request = datacatalog_pb2.CreateTagTemplateRequest(
-            parent=parent, tag_template_id=tag_template_id, tag_template=tag_template,
+            parent=parent, tag_template_id=tag_template_id, tag_template=tag_template
         )
         if metadata is None:
             metadata = []
@@ -1528,7 +1528,7 @@ class DataCatalogClient(object):
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.GetTagTemplateRequest(name=name,)
+        request = datacatalog_pb2.GetTagTemplateRequest(name=name)
         if metadata is None:
             metadata = []
         metadata = list(metadata)
@@ -1620,7 +1620,7 @@ class DataCatalogClient(object):
             )
 
         request = datacatalog_pb2.UpdateTagTemplateRequest(
-            tag_template=tag_template, update_mask=update_mask,
+            tag_template=tag_template, update_mask=update_mask
         )
         if metadata is None:
             metadata = []
@@ -1700,7 +1700,7 @@ class DataCatalogClient(object):
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.DeleteTagTemplateRequest(name=name, force=force,)
+        request = datacatalog_pb2.DeleteTagTemplateRequest(name=name, force=force)
         if metadata is None:
             metadata = []
         metadata = list(metadata)
@@ -1902,7 +1902,7 @@ class DataCatalogClient(object):
             )
 
         request = datacatalog_pb2.UpdateTagTemplateFieldRequest(
-            name=name, tag_template_field=tag_template_field, update_mask=update_mask,
+            name=name, tag_template_field=tag_template_field, update_mask=update_mask
         )
         if metadata is None:
             metadata = []
@@ -1985,7 +1985,7 @@ class DataCatalogClient(object):
             )
 
         request = datacatalog_pb2.RenameTagTemplateFieldRequest(
-            name=name, new_tag_template_field_id=new_tag_template_field_id,
+            name=name, new_tag_template_field_id=new_tag_template_field_id
         )
         if metadata is None:
             metadata = []
@@ -2065,7 +2065,7 @@ class DataCatalogClient(object):
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.DeleteTagTemplateFieldRequest(name=name, force=force,)
+        request = datacatalog_pb2.DeleteTagTemplateFieldRequest(name=name, force=force)
         if metadata is None:
             metadata = []
         metadata = list(metadata)
@@ -2153,7 +2153,7 @@ class DataCatalogClient(object):
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.CreateTagRequest(parent=parent, tag=tag,)
+        request = datacatalog_pb2.CreateTagRequest(parent=parent, tag=tag)
         if metadata is None:
             metadata = []
         metadata = list(metadata)
@@ -2233,7 +2233,7 @@ class DataCatalogClient(object):
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.UpdateTagRequest(tag=tag, update_mask=update_mask,)
+        request = datacatalog_pb2.UpdateTagRequest(tag=tag, update_mask=update_mask)
         if metadata is None:
             metadata = []
         metadata = list(metadata)
@@ -2301,7 +2301,7 @@ class DataCatalogClient(object):
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.DeleteTagRequest(name=name,)
+        request = datacatalog_pb2.DeleteTagRequest(name=name)
         if metadata is None:
             metadata = []
         metadata = list(metadata)
@@ -2397,7 +2397,7 @@ class DataCatalogClient(object):
                 client_info=self._client_info,
             )
 
-        request = datacatalog_pb2.ListTagsRequest(parent=parent, page_size=page_size,)
+        request = datacatalog_pb2.ListTagsRequest(parent=parent, page_size=page_size)
         if metadata is None:
             metadata = []
         metadata = list(metadata)
@@ -2505,7 +2505,7 @@ class DataCatalogClient(object):
                 client_info=self._client_info,
             )
 
-        request = iam_policy_pb2.SetIamPolicyRequest(resource=resource, policy=policy,)
+        request = iam_policy_pb2.SetIamPolicyRequest(resource=resource, policy=policy)
         if metadata is None:
             metadata = []
         metadata = list(metadata)
@@ -2601,7 +2601,7 @@ class DataCatalogClient(object):
             )
 
         request = iam_policy_pb2.GetIamPolicyRequest(
-            resource=resource, options=options_,
+            resource=resource, options=options_
         )
         if metadata is None:
             metadata = []
@@ -2695,7 +2695,7 @@ class DataCatalogClient(object):
             )
 
         request = iam_policy_pb2.TestIamPermissionsRequest(
-            resource=resource, permissions=permissions,
+            resource=resource, permissions=permissions
         )
         if metadata is None:
             metadata = []

@@ -156,7 +156,7 @@ _BIGQUERYTABLESPEC = _descriptor.Descriptor(
             containing_type=None,
             create_key=_descriptor._internal_create_key,
             fields=[],
-        ),
+        )
     ],
     serialized_start=154,
     serialized_end=401,
@@ -189,7 +189,7 @@ _VIEWSPEC = _descriptor.Descriptor(
             serialized_options=b"\340A\003",
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        ),
+        )
     ],
     extensions=[],
     nested_types=[],
@@ -230,7 +230,7 @@ _TABLESPEC = _descriptor.Descriptor(
             serialized_options=b'\340A\003\372A"\n datacatalog.googleapis.com/Entry',
             file=DESCRIPTOR,
             create_key=_descriptor._internal_create_key,
-        ),
+        )
     ],
     extensions=[],
     nested_types=[],
