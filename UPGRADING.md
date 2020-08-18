@@ -128,15 +128,15 @@ The submodules `enums` and `types` have been removed.
 ```py
 from google.cloud import datacatalog_v1
 entry = datacatalog_v1beta1.types.Entry()
-entry_group_obj = datacatalog_v1.types.EntryGroup()
+entry.type = datacatalog_v1beta1.EntryType.FILESET
 ```
 
 
 **After:**
 ```py
 from google.cloud import datacatalog_v1
-entry = datacatalog_v1beta1.types.Entry()
-entry_group_obj = datacatalog_v1.types.EntryGroup()
+entry = datacatalog_v1beta1.Entry()
+entry.type = datacatalog_v1beta1.EntryType.FILESET
 ```
 
 ## Project Path Helper Methods
