@@ -40,7 +40,7 @@ def create_entry_group(client, project_id, entry_group_id):
     )
 
     # Construct a full EntryGroup object to send to the API.
-    entry_group = datacatalog_v1beta1.types.EntryGroup()
+    entry_group = datacatalog_v1beta1.EntryGroup()
     entry_group.display_name = "My Entry Group"
     entry_group.description = "This Entry Group consists of ..."
 

@@ -43,7 +43,7 @@ def sample_lookup_entry(sql_name):
     client = datacatalog_v1beta1.DataCatalogClient()
 
     # sql_name = '[SQL Resource Name]'
-    response = client.lookup_entry(request = {'linked_resource': sql_name})
+    response = client.lookup_entry(request = {'sql_resource': sql_name})
     entry = response
     print(u"Entry name: {}".format(entry.name))
     print(u"Entry type: {}".format(datacatalog_v1beta1.EntryType(entry.type).name))
