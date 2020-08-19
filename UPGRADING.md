@@ -128,7 +128,7 @@ The submodules `enums` and `types` have been removed.
 ```py
 from google.cloud import datacatalog_v1
 entry = datacatalog_v1beta1.types.Entry()
-entry.type = datacatalog_v1beta1.EntryType.FILESET
+entry.type = datacatalog_v1beta1.enums.EntryType.FILESET
 ```
 
 
