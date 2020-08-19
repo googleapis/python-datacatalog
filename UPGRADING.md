@@ -103,7 +103,7 @@ response = client.create_entry_group(
     )  # Make an API request.
 ```
 
-This call is invalid because it mixes `request` with a keyword argument `asset_types`. Executing this code
+This call is invalid because it mixes `request` with a keyword argument `entry_group`. Executing this code
 will result in an error.
 
 ```py
