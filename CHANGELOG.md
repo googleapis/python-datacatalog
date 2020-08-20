@@ -7,9 +7,13 @@
 ## [2.0.0](https://www.github.com/googleapis/python-datacatalog/compare/v1.0.0...v2.0.0) (2020-08-20)
 
 
+### ⚠ BREAKING CHANGES
+
+* This release has breaking changes. See the [2.0.0 Migration Guide](https://github.com/googleapis/python-datacatalog/blob/master/UPGRADING.md) for details.
+
 ### Features
 
-* Migrate API client to Microgenerator ([#54](https://www.github.com/googleapis/python-datacatalog/issues/54)) ([14fbdb8](https://www.github.com/googleapis/python-datacatalog/commit/14fbdb811688296e3978b4dfe7d4c240b5b1da5d)), closes [#2148](https://www.github.com/googleapis/python-datacatalog/issues/2148) [#2169](https://www.github.com/googleapis/python-datacatalog/issues/2169) [#2436](https://www.github.com/googleapis/python-datacatalog/issues/2436) [#2005](https://www.github.com/googleapis/python-datacatalog/issues/2005) [#3069](https://www.github.com/googleapis/python-datacatalog/issues/3069)
+* Migrate API client to Microgenerator ([#54](https://www.github.com/googleapis/python-datacatalog/issues/54)) ([14fbdb8](https://www.github.com/googleapis/python-datacatalog/commit/14fbdb811688296e3978b4dfe7d4c240b5b1da5d))
 
 
 ### Bug Fixes
