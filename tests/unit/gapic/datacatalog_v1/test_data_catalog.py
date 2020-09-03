@@ -167,6 +167,7 @@ def test_data_catalog_client_client_options(
             api_mtls_endpoint="squid.clam.whelk",
             client_cert_source=None,
             quota_project_id=None,
+            client_info=transports.base.DEFAULT_CLIENT_INFO,
         )
 
     # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS is
@@ -183,6 +184,7 @@ def test_data_catalog_client_client_options(
                 api_mtls_endpoint=client.DEFAULT_ENDPOINT,
                 client_cert_source=None,
                 quota_project_id=None,
+                client_info=transports.base.DEFAULT_CLIENT_INFO,
             )
 
     # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS is
@@ -199,6 +201,7 @@ def test_data_catalog_client_client_options(
                 api_mtls_endpoint=client.DEFAULT_MTLS_ENDPOINT,
                 client_cert_source=None,
                 quota_project_id=None,
+                client_info=transports.base.DEFAULT_CLIENT_INFO,
             )
 
     # Check the case api_endpoint is not provided, GOOGLE_API_USE_MTLS is
@@ -218,6 +221,7 @@ def test_data_catalog_client_client_options(
                 api_mtls_endpoint=client.DEFAULT_MTLS_ENDPOINT,
                 client_cert_source=client_cert_source_callback,
                 quota_project_id=None,
+                client_info=transports.base.DEFAULT_CLIENT_INFO,
             )
 
     # Check the case api_endpoint is not provided, GOOGLE_API_USE_MTLS is
@@ -238,6 +242,7 @@ def test_data_catalog_client_client_options(
                     api_mtls_endpoint=client.DEFAULT_MTLS_ENDPOINT,
                     client_cert_source=None,
                     quota_project_id=None,
+                    client_info=transports.base.DEFAULT_CLIENT_INFO,
                 )
 
     # Check the case api_endpoint is not provided, GOOGLE_API_USE_MTLS is
@@ -258,6 +263,7 @@ def test_data_catalog_client_client_options(
                     api_mtls_endpoint=client.DEFAULT_ENDPOINT,
                     client_cert_source=None,
                     quota_project_id=None,
+                    client_info=transports.base.DEFAULT_CLIENT_INFO,
                 )
 
     # Check the case api_endpoint is not provided and GOOGLE_API_USE_MTLS has
@@ -279,6 +285,7 @@ def test_data_catalog_client_client_options(
             api_mtls_endpoint=client.DEFAULT_ENDPOINT,
             client_cert_source=None,
             quota_project_id="octopus",
+            client_info=transports.base.DEFAULT_CLIENT_INFO,
         )
 
 
@@ -309,6 +316,7 @@ def test_data_catalog_client_client_options_scopes(
             api_mtls_endpoint=client.DEFAULT_ENDPOINT,
             client_cert_source=None,
             quota_project_id=None,
+            client_info=transports.base.DEFAULT_CLIENT_INFO,
         )
 
 
@@ -339,6 +347,7 @@ def test_data_catalog_client_client_options_credentials_file(
             api_mtls_endpoint=client.DEFAULT_ENDPOINT,
             client_cert_source=None,
             quota_project_id=None,
+            client_info=transports.base.DEFAULT_CLIENT_INFO,
         )
 
 
@@ -356,6 +365,7 @@ def test_data_catalog_client_client_options_from_dict():
             api_mtls_endpoint="squid.clam.whelk",
             client_cert_source=None,
             quota_project_id=None,
+            client_info=transports.base.DEFAULT_CLIENT_INFO,
         )
 
 
@@ -590,8 +600,8 @@ def test_search_catalog_pages():
             RuntimeError,
         )
         pages = list(client.search_catalog(request={}).pages)
-        for page, token in zip(pages, ["abc", "def", "ghi", ""]):
-            assert page.raw_page.next_page_token == token
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
 
 
 @pytest.mark.asyncio
@@ -663,10 +673,10 @@ async def test_search_catalog_async_pages():
             RuntimeError,
         )
         pages = []
-        async for page in (await client.search_catalog(request={})).pages:
-            pages.append(page)
-        for page, token in zip(pages, ["abc", "def", "ghi", ""]):
-            assert page.raw_page.next_page_token == token
+        async for page_ in (await client.search_catalog(request={})).pages:
+            pages.append(page_)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
 
 
 def test_create_entry_group(
@@ -1803,8 +1813,8 @@ def test_list_entry_groups_pages():
             RuntimeError,
         )
         pages = list(client.list_entry_groups(request={}).pages)
-        for page, token in zip(pages, ["abc", "def", "ghi", ""]):
-            assert page.raw_page.next_page_token == token
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
 
 
 @pytest.mark.asyncio
@@ -1880,10 +1890,10 @@ async def test_list_entry_groups_async_pages():
             RuntimeError,
         )
         pages = []
-        async for page in (await client.list_entry_groups(request={})).pages:
-            pages.append(page)
-        for page, token in zip(pages, ["abc", "def", "ghi", ""]):
-            assert page.raw_page.next_page_token == token
+        async for page_ in (await client.list_entry_groups(request={})).pages:
+            pages.append(page_)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
 
 
 def test_create_entry(
@@ -3083,8 +3093,8 @@ def test_list_entries_pages():
             RuntimeError,
         )
         pages = list(client.list_entries(request={}).pages)
-        for page, token in zip(pages, ["abc", "def", "ghi", ""]):
-            assert page.raw_page.next_page_token == token
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
 
 
 @pytest.mark.asyncio
@@ -3156,10 +3166,10 @@ async def test_list_entries_async_pages():
             RuntimeError,
         )
         pages = []
-        async for page in (await client.list_entries(request={})).pages:
-            pages.append(page)
-        for page, token in zip(pages, ["abc", "def", "ghi", ""]):
-            assert page.raw_page.next_page_token == token
+        async for page_ in (await client.list_entries(request={})).pages:
+            pages.append(page_)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
 
 
 def test_create_tag_template(
@@ -5725,8 +5735,8 @@ def test_list_tags_pages():
             RuntimeError,
         )
         pages = list(client.list_tags(request={}).pages)
-        for page, token in zip(pages, ["abc", "def", "ghi", ""]):
-            assert page.raw_page.next_page_token == token
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
 
 
 @pytest.mark.asyncio
@@ -5780,10 +5790,10 @@ async def test_list_tags_async_pages():
             RuntimeError,
         )
         pages = []
-        async for page in (await client.list_tags(request={})).pages:
-            pages.append(page)
-        for page, token in zip(pages, ["abc", "def", "ghi", ""]):
-            assert page.raw_page.next_page_token == token
+        async for page_ in (await client.list_tags(request={})).pages:
+            pages.append(page_)
+        for page_, token in zip(pages, ["abc", "def", "ghi", ""]):
+            assert page_.raw_page.next_page_token == token
 
 
 def test_set_iam_policy(
@@ -6697,87 +6707,6 @@ def test_data_catalog_grpc_asyncio_transport_channel_mtls_with_adc(
         assert transport.grpc_channel == mock_grpc_channel
 
 
-def test_tag_template_field_path():
-    project = "squid"
-    location = "clam"
-    tag_template = "whelk"
-    field = "octopus"
-
-    expected = "projects/{project}/locations/{location}/tagTemplates/{tag_template}/fields/{field}".format(
-        project=project, location=location, tag_template=tag_template, field=field,
-    )
-    actual = DataCatalogClient.tag_template_field_path(
-        project, location, tag_template, field
-    )
-    assert expected == actual
-
-
-def test_parse_tag_template_field_path():
-    expected = {
-        "project": "oyster",
-        "location": "nudibranch",
-        "tag_template": "cuttlefish",
-        "field": "mussel",
-    }
-    path = DataCatalogClient.tag_template_field_path(**expected)
-
-    # Check that the path construction is reversible.
-    actual = DataCatalogClient.parse_tag_template_field_path(path)
-    assert expected == actual
-
-
-def test_tag_template_path():
-    project = "squid"
-    location = "clam"
-    tag_template = "whelk"
-
-    expected = "projects/{project}/locations/{location}/tagTemplates/{tag_template}".format(
-        project=project, location=location, tag_template=tag_template,
-    )
-    actual = DataCatalogClient.tag_template_path(project, location, tag_template)
-    assert expected == actual
-
-
-def test_parse_tag_template_path():
-    expected = {
-        "project": "octopus",
-        "location": "oyster",
-        "tag_template": "nudibranch",
-    }
-    path = DataCatalogClient.tag_template_path(**expected)
-
-    # Check that the path construction is reversible.
-    actual = DataCatalogClient.parse_tag_template_path(path)
-    assert expected == actual
-
-
-def test_entry_path():
-    project = "squid"
-    location = "clam"
-    entry_group = "whelk"
-    entry = "octopus"
-
-    expected = "projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{entry}".format(
-        project=project, location=location, entry_group=entry_group, entry=entry,
-    )
-    actual = DataCatalogClient.entry_path(project, location, entry_group, entry)
-    assert expected == actual
-
-
-def test_parse_entry_path():
-    expected = {
-        "project": "oyster",
-        "location": "nudibranch",
-        "entry_group": "cuttlefish",
-        "entry": "mussel",
-    }
-    path = DataCatalogClient.entry_path(**expected)
-
-    # Check that the path construction is reversible.
-    actual = DataCatalogClient.parse_entry_path(path)
-    assert expected == actual
-
-
 def test_tag_path():
     project = "squid"
     location = "clam"
@@ -6811,6 +6740,33 @@ def test_parse_tag_path():
     assert expected == actual
 
 
+def test_entry_path():
+    project = "squid"
+    location = "clam"
+    entry_group = "whelk"
+    entry = "octopus"
+
+    expected = "projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{entry}".format(
+        project=project, location=location, entry_group=entry_group, entry=entry,
+    )
+    actual = DataCatalogClient.entry_path(project, location, entry_group, entry)
+    assert expected == actual
+
+
+def test_parse_entry_path():
+    expected = {
+        "project": "oyster",
+        "location": "nudibranch",
+        "entry_group": "cuttlefish",
+        "entry": "mussel",
+    }
+    path = DataCatalogClient.entry_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = DataCatalogClient.parse_entry_path(path)
+    assert expected == actual
+
+
 def test_entry_group_path():
     project = "squid"
     location = "clam"
@@ -6834,3 +6790,78 @@ def test_parse_entry_group_path():
     # Check that the path construction is reversible.
     actual = DataCatalogClient.parse_entry_group_path(path)
     assert expected == actual
+
+
+def test_tag_template_path():
+    project = "squid"
+    location = "clam"
+    tag_template = "whelk"
+
+    expected = "projects/{project}/locations/{location}/tagTemplates/{tag_template}".format(
+        project=project, location=location, tag_template=tag_template,
+    )
+    actual = DataCatalogClient.tag_template_path(project, location, tag_template)
+    assert expected == actual
+
+
+def test_parse_tag_template_path():
+    expected = {
+        "project": "octopus",
+        "location": "oyster",
+        "tag_template": "nudibranch",
+    }
+    path = DataCatalogClient.tag_template_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = DataCatalogClient.parse_tag_template_path(path)
+    assert expected == actual
+
+
+def test_tag_template_field_path():
+    project = "squid"
+    location = "clam"
+    tag_template = "whelk"
+    field = "octopus"
+
+    expected = "projects/{project}/locations/{location}/tagTemplates/{tag_template}/fields/{field}".format(
+        project=project, location=location, tag_template=tag_template, field=field,
+    )
+    actual = DataCatalogClient.tag_template_field_path(
+        project, location, tag_template, field
+    )
+    assert expected == actual
+
+
+def test_parse_tag_template_field_path():
+    expected = {
+        "project": "oyster",
+        "location": "nudibranch",
+        "tag_template": "cuttlefish",
+        "field": "mussel",
+    }
+    path = DataCatalogClient.tag_template_field_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = DataCatalogClient.parse_tag_template_field_path(path)
+    assert expected == actual
+
+
+def test_client_withDEFAULT_CLIENT_INFO():
+    client_info = gapic_v1.client_info.ClientInfo()
+
+    with mock.patch.object(
+        transports.DataCatalogTransport, "_prep_wrapped_messages"
+    ) as prep:
+        client = DataCatalogClient(
+            credentials=credentials.AnonymousCredentials(), client_info=client_info,
+        )
+        prep.assert_called_once_with(client_info)
+
+    with mock.patch.object(
+        transports.DataCatalogTransport, "_prep_wrapped_messages"
+    ) as prep:
+        transport_class = DataCatalogClient.get_transport_class()
+        transport = transport_class(
+            credentials=credentials.AnonymousCredentials(), client_info=client_info,
+        )
+        prep.assert_called_once_with(client_info)

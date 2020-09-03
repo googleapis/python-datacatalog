@@ -33,7 +33,7 @@ from google.cloud.datacatalog_v1beta1.types import policytagmanager
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
 from google.iam.v1 import policy_pb2 as policy  # type: ignore
 
-from .transports.base import PolicyTagManagerTransport
+from .transports.base import PolicyTagManagerTransport, DEFAULT_CLIENT_INFO
 from .transports.grpc_asyncio import PolicyTagManagerGrpcAsyncIOTransport
 from .client import PolicyTagManagerClient
 
@@ -48,9 +48,9 @@ class PolicyTagManagerAsyncClient:
     DEFAULT_ENDPOINT = PolicyTagManagerClient.DEFAULT_ENDPOINT
     DEFAULT_MTLS_ENDPOINT = PolicyTagManagerClient.DEFAULT_MTLS_ENDPOINT
 
-    taxonomy_path = staticmethod(PolicyTagManagerClient.taxonomy_path)
-
     policy_tag_path = staticmethod(PolicyTagManagerClient.policy_tag_path)
+
+    taxonomy_path = staticmethod(PolicyTagManagerClient.taxonomy_path)
 
     from_service_account_file = PolicyTagManagerClient.from_service_account_file
     from_service_account_json = from_service_account_file
@@ -65,6 +65,7 @@ class PolicyTagManagerAsyncClient:
         credentials: credentials.Credentials = None,
         transport: Union[str, PolicyTagManagerTransport] = "grpc_asyncio",
         client_options: ClientOptions = None,
+        client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
     ) -> None:
         """Instantiate the policy tag manager client.
 
@@ -97,7 +98,10 @@ class PolicyTagManagerAsyncClient:
         """
 
         self._client = PolicyTagManagerClient(
-            credentials=credentials, transport=transport, client_options=client_options,
+            credentials=credentials,
+            transport=transport,
+            client_options=client_options,
+            client_info=client_info,
         )
 
     async def create_taxonomy(
@@ -170,7 +174,7 @@ class PolicyTagManagerAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.create_taxonomy,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -238,7 +242,7 @@ class PolicyTagManagerAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.delete_taxonomy,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -313,7 +317,7 @@ class PolicyTagManagerAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.update_taxonomy,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -390,7 +394,7 @@ class PolicyTagManagerAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.list_taxonomies,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -472,7 +476,7 @@ class PolicyTagManagerAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.get_taxonomy,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -558,7 +562,7 @@ class PolicyTagManagerAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.create_policy_tag,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -625,7 +629,7 @@ class PolicyTagManagerAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.delete_policy_tag,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -702,7 +706,7 @@ class PolicyTagManagerAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.update_policy_tag,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -778,7 +782,7 @@ class PolicyTagManagerAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.list_policy_tags,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -861,7 +865,7 @@ class PolicyTagManagerAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.get_policy_tag,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -978,7 +982,7 @@ class PolicyTagManagerAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.get_iam_policy,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1095,7 +1099,7 @@ class PolicyTagManagerAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.set_iam_policy,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1148,7 +1152,7 @@ class PolicyTagManagerAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.test_iam_permissions,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1165,13 +1169,13 @@ class PolicyTagManagerAsyncClient:
 
 
 try:
-    _client_info = gapic_v1.client_info.ClientInfo(
+    DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
             "google-cloud-datacatalog",
         ).version,
     )
 except pkg_resources.DistributionNotFound:
-    _client_info = gapic_v1.client_info.ClientInfo()
+    DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo()
 
 
 __all__ = ("PolicyTagManagerAsyncClient",)

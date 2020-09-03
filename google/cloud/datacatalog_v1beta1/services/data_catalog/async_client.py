@@ -41,7 +41,7 @@ from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
 from google.iam.v1 import policy_pb2 as policy  # type: ignore
 from google.protobuf import field_mask_pb2 as field_mask  # type: ignore
 
-from .transports.base import DataCatalogTransport
+from .transports.base import DataCatalogTransport, DEFAULT_CLIENT_INFO
 from .transports.grpc_asyncio import DataCatalogGrpcAsyncIOTransport
 from .client import DataCatalogClient
 
@@ -56,15 +56,15 @@ class DataCatalogAsyncClient:
     DEFAULT_ENDPOINT = DataCatalogClient.DEFAULT_ENDPOINT
     DEFAULT_MTLS_ENDPOINT = DataCatalogClient.DEFAULT_MTLS_ENDPOINT
 
-    tag_template_path = staticmethod(DataCatalogClient.tag_template_path)
+    tag_path = staticmethod(DataCatalogClient.tag_path)
 
     entry_path = staticmethod(DataCatalogClient.entry_path)
 
-    entry_group_path = staticmethod(DataCatalogClient.entry_group_path)
-
     tag_template_field_path = staticmethod(DataCatalogClient.tag_template_field_path)
 
-    tag_path = staticmethod(DataCatalogClient.tag_path)
+    entry_group_path = staticmethod(DataCatalogClient.entry_group_path)
+
+    tag_template_path = staticmethod(DataCatalogClient.tag_template_path)
 
     from_service_account_file = DataCatalogClient.from_service_account_file
     from_service_account_json = from_service_account_file
@@ -79,6 +79,7 @@ class DataCatalogAsyncClient:
         credentials: credentials.Credentials = None,
         transport: Union[str, DataCatalogTransport] = "grpc_asyncio",
         client_options: ClientOptions = None,
+        client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
     ) -> None:
         """Instantiate the data catalog client.
 
@@ -111,7 +112,10 @@ class DataCatalogAsyncClient:
         """
 
         self._client = DataCatalogClient(
-            credentials=credentials, transport=transport, client_options=client_options,
+            credentials=credentials,
+            transport=transport,
+            client_options=client_options,
+            client_info=client_info,
         )
 
     async def search_catalog(
@@ -213,7 +217,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.search_catalog,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Send the request.
@@ -320,7 +324,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.create_entry_group,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -407,7 +411,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.update_entry_group,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -495,11 +499,11 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    exceptions.ServiceUnavailable, exceptions.DeadlineExceeded,
                 ),
             ),
             default_timeout=60.0,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -573,11 +577,11 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    exceptions.ServiceUnavailable, exceptions.DeadlineExceeded,
                 ),
             ),
             default_timeout=60.0,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -653,7 +657,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.list_entry_groups,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -770,7 +774,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.create_entry,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -887,7 +891,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.update_entry,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -965,11 +969,11 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    exceptions.ServiceUnavailable, exceptions.DeadlineExceeded,
                 ),
             ),
             default_timeout=60.0,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1053,11 +1057,11 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    exceptions.ServiceUnavailable, exceptions.DeadlineExceeded,
                 ),
             ),
             default_timeout=60.0,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1124,11 +1128,11 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    exceptions.ServiceUnavailable, exceptions.DeadlineExceeded,
                 ),
             ),
             default_timeout=60.0,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Send the request.
@@ -1198,7 +1202,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.list_entries,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1308,7 +1312,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.create_tag_template,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1391,11 +1395,11 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    exceptions.ServiceUnavailable, exceptions.DeadlineExceeded,
                 ),
             ),
             default_timeout=60.0,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1497,7 +1501,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.update_tag_template,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1585,11 +1589,11 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    exceptions.ServiceUnavailable, exceptions.DeadlineExceeded,
                 ),
             ),
             default_timeout=60.0,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1692,7 +1696,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.create_tag_template_field,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1799,7 +1803,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.update_tag_template_field,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1884,7 +1888,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.rename_tag_template_field,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -1971,11 +1975,11 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    exceptions.ServiceUnavailable, exceptions.DeadlineExceeded,
                 ),
             ),
             default_timeout=60.0,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -2070,7 +2074,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.create_tag,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -2157,7 +2161,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.update_tag,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -2227,11 +2231,11 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    exceptions.ServiceUnavailable, exceptions.DeadlineExceeded,
                 ),
             ),
             default_timeout=60.0,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -2316,11 +2320,11 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    exceptions.ServiceUnavailable, exceptions.DeadlineExceeded,
                 ),
             ),
             default_timeout=60.0,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -2484,7 +2488,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.set_iam_policy,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -2646,7 +2650,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.get_iam_policy,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -2711,7 +2715,7 @@ class DataCatalogAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.test_iam_permissions,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -2728,13 +2732,13 @@ class DataCatalogAsyncClient:
 
 
 try:
-    _client_info = gapic_v1.client_info.ClientInfo(
+    DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
             "google-cloud-datacatalog",
         ).version,
     )
 except pkg_resources.DistributionNotFound:
-    _client_info = gapic_v1.client_info.ClientInfo()
+    DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo()
 
 
 __all__ = ("DataCatalogAsyncClient",)

@@ -31,7 +31,7 @@ from google.oauth2 import service_account  # type: ignore
 from google.cloud.datacatalog_v1beta1.types import policytagmanager
 from google.cloud.datacatalog_v1beta1.types import policytagmanagerserialization
 
-from .transports.base import PolicyTagManagerSerializationTransport
+from .transports.base import PolicyTagManagerSerializationTransport, DEFAULT_CLIENT_INFO
 from .transports.grpc_asyncio import PolicyTagManagerSerializationGrpcAsyncIOTransport
 from .client import PolicyTagManagerSerializationClient
 
@@ -63,6 +63,7 @@ class PolicyTagManagerSerializationAsyncClient:
         credentials: credentials.Credentials = None,
         transport: Union[str, PolicyTagManagerSerializationTransport] = "grpc_asyncio",
         client_options: ClientOptions = None,
+        client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
     ) -> None:
         """Instantiate the policy tag manager serialization client.
 
@@ -95,7 +96,10 @@ class PolicyTagManagerSerializationAsyncClient:
         """
 
         self._client = PolicyTagManagerSerializationClient(
-            credentials=credentials, transport=transport, client_options=client_options,
+            credentials=credentials,
+            transport=transport,
+            client_options=client_options,
+            client_info=client_info,
         )
 
     async def import_taxonomies(
@@ -138,7 +142,7 @@ class PolicyTagManagerSerializationAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.import_taxonomies,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -193,7 +197,7 @@ class PolicyTagManagerSerializationAsyncClient:
         rpc = gapic_v1.method_async.wrap_method(
             self._client._transport.export_taxonomies,
             default_timeout=None,
-            client_info=_client_info,
+            client_info=DEFAULT_CLIENT_INFO,
         )
 
         # Certain fields should be provided within the metadata header;
@@ -210,13 +214,13 @@ class PolicyTagManagerSerializationAsyncClient:
 
 
 try:
-    _client_info = gapic_v1.client_info.ClientInfo(
+    DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
         gapic_version=pkg_resources.get_distribution(
             "google-cloud-datacatalog",
         ).version,
     )
 except pkg_resources.DistributionNotFound:
-    _client_info = gapic_v1.client_info.ClientInfo()
+    DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo()
 
 
 __all__ = ("PolicyTagManagerSerializationAsyncClient",)
