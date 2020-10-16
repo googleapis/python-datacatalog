@@ -87,9 +87,7 @@ def entry_group_name(client, project_id):
     )
     entry_group = client.create_entry_group(
         request={
-            "parent": datacatalog_v1beta1.DataCatalogClient.location_path(
-                project_id, "us-central1"
-            ),
+            "parent": f"projects/{project_id}/locations/us-central-1",
             "entry_group_id": entry_group_id,
             "entry_group": {},
         }
