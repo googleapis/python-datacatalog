@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# DO NOT EDIT! This is a generated sample ("RequestPagedAll",  "datacatalog_search")
-
 # To install the latest published package dependency, execute the following:
 #   pip install google-cloud-datacatalog
 
@@ -29,15 +27,17 @@ from google.cloud import datacatalog_v1beta1
 from google.cloud.datacatalog_v1beta1 import enums
 
 
-def sample_search_catalog(include_project_id, include_gcp_public_datasets, query):
+def sample_search_catalog(
+    include_project_id: str, include_gcp_public_datasets: bool, query: str
+):
     """
     Search Catalog
 
     Args:
-      include_project_id Your Google Cloud project ID.
-      include_gcp_public_datasets If true, include Google Cloud Platform (GCP) public
+      include_project_id (str): Your Google Cloud project ID.
+      include_gcp_public_datasets (bool): If true, include Google Cloud Platform (GCP) public
       datasets in the search results.
-      query Your query string.
+      query (str): Your query string.
       See: https://cloud.google.com/data-catalog/docs/how-to/search-reference
       Example: system=bigquery type=dataset
     """
@@ -54,17 +54,15 @@ def sample_search_catalog(include_project_id, include_gcp_public_datasets, query
     }
 
     # Iterate over all results
-    for response_item in client.search_catalog(request = {'scope': scope, 'query': query}):
+    for response_item in client.search_catalog(
+        request={"scope": scope, "query": query}
+    ):
         print(
-            u"Result type: {}".format(
-                enums.SearchResultType(response_item.search_result_type).name
-            )
+            f"Result type: {enums.SearchResultType(response_item.search_result_type).name}"
         )
-        print(u"Result subtype: {}".format(response_item.search_result_subtype))
-        print(
-            u"Relative resource name: {}".format(response_item.relative_resource_name)
-        )
-        print(u"Linked resource: {}\n".format(response_item.linked_resource))
+        print(f"Result subtype: {response_item.search_result_subtype}")
+        print(f"Relative resource name: {response_item.relative_resource_name}")
+        print(f"Linked resource: {response_item.linked_resource}\n")
 
 
 # [END data_catalog_search]

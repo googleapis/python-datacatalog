@@ -48,9 +48,14 @@ def create_fileset_entry_quickstart(client, project_id, entry_group_id, entry_id
     # Raises google.api_core.exceptions.AlreadyExists if the Entry Group
     # already exists within the project.
     entry_group = client.create_entry_group(
-        request = {'parent': datacatalog_v1beta1.DataCatalogClient.location_path(
-            project_id, location_id
-        ), 'entry_group_id': entry_group_id, 'entry_group': entry_group_obj})
+        request={
+            "parent": datacatalog_v1beta1.DataCatalogClient.location_path(
+                project_id, location_id
+            ),
+            "entry_group_id": entry_group_id,
+            "entry_group": entry_group_obj,
+        }
+    )
     print("Created entry group {}".format(entry_group.name))
 
     # Create a Fileset Entry.
@@ -107,6 +112,8 @@ def create_fileset_entry_quickstart(client, project_id, entry_group_id, entry_id
     # Send the entry to the API for creation.
     # Raises google.api_core.exceptions.AlreadyExists if the Entry already
     # exists within the project.
-    entry = client.create_entry(request = {'parent': entry_group.name, 'entry_id': entry_id, 'entry': entry})
+    entry = client.create_entry(
+        request={"parent": entry_group.name, "entry_id": entry_id, "entry": entry}
+    )
     print("Created entry {}".format(entry.name))
     # [END data_catalog_create_fileset_quickstart_tag]

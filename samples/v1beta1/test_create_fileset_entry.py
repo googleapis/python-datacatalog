@@ -15,7 +15,7 @@
 
 import re
 
-from ..v1beta1 import create_fileset_entry
+import create_fileset_entry
 
 
 def test_create_fileset_entry(capsys, client, random_entry_name):
