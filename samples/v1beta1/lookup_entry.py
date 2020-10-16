@@ -19,46 +19,45 @@
 
 # sample-metadata
 #   title:
-#   description: Lookup Entry using SQL resource
-#   usage: python3 samples/v1beta1/datacatalog_lookup_entry_sql_resource.py [--sql_name "[SQL Resource Name]"]
+#   description: Lookup Entry
+#   usage: python3 samples/v1beta1/datacatalog_lookup_entry.py [--resource_name "[Full Resource Name]"]
 
-# [START data_catalog_lookup_entry_sql_resource]
+# [START data_catalog_lookup_entry]
 from google.cloud import datacatalog_v1beta1
 
 
-def sample_lookup_entry(sql_name: str):
+def sample_lookup_entry(resource_name: str):
     """
-    Lookup Entry using SQL resource
+    Lookup Entry
 
     Args:
-      sql_name (str): The SQL name of the Google Cloud Platform resource the Data Catalog
-      entry represents.
+      resource_name (str): The full name of the Google Cloud Platform resource the Data
+      Catalog entry represents.
+      See: https://cloud.google.com/apis/design/resource_names#full_resource_name
       Examples:
-      bigquery.table.`bigquery-public-data`.new_york_taxi_trips.taxi_zone_geom
-      pubsub.topic.`pubsub-public-data`.`taxirides-realtime`
+      //bigquery.googleapis.com/projects/bigquery-public-data/datasets/new_york_taxi_trips/tables/taxi_zone_geom
+      //pubsub.googleapis.com/projects/pubsub-public-data/topics/taxirides-realtime
     """
 
     client = datacatalog_v1beta1.DataCatalogClient()
 
-    # sql_name = '[SQL Resource Name]'
-    response = client.lookup_entry(request={"sql_resource": sql_name})
-    entry = response
+    # resource_name = '[Full Resource Name]'
+    entry = client.lookup_entry(request={"linked_resource": resource_name})
     print(f"Entry name: {entry.name}")
     print(f"Entry type: {datacatalog_v1beta1.EntryType(entry.type).name}")
     print(f"Linked resource: {entry.linked_resource}")
-
-
-# [END data_catalog_lookup_entry_sql_resource]
+# [END data_catalog_lookup_entry]
+    return entry
 
 
 def main():
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--sql_name", type=str, default="[SQL Resource Name]")
+    parser.add_argument("--resource_name", type=str, default="[Full Resource Name]")
     args = parser.parse_args()
 
-    sample_lookup_entry(args.sql_name)
+    sample_lookup_entry(args.resource_name)
 
 
 if __name__ == "__main__":

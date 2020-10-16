@@ -78,6 +78,25 @@ def random_entry_name(client, entry_group_name):
     yield random_entry_name
     client.delete_entry(request={"name": random_entry_name})
 
+@pytest.fixture
+def entry(client, entry_group_name):
+    now = datetime.datetime.now()
+    random_entry_id = "example_entry_{}_{}".format(
+        now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
+    )
+    entry = client.create_entry(
+        request={"parent": entry_group_name, "entry_id": random_entry_id, "entry": {}}
+    )
+    yield entry.name
+    client.delete_entry(request={"name": entry.name})
+
+@pytest.fixture
+def sql_entry(client, entry):
+    # covnert entry name to sql resource style
+    name = client.parse_entry_name(entry)
+    sql_name = f"datacatalog.entry.{name["project"]}.{name["location"]}.{name["entry_group"]}.{name["entry"]}"
+    yield sql_name, entry.name
+
 
 @pytest.fixture
 def entry_group_name(client, project_id):
