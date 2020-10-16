@@ -16,6 +16,6 @@
 import lookup_entry
 
 
-def test_lookup_entry(client, random_entry_name):
-    entry = lookup_entry.sample_lookup_entry(random_entry_name.name)
-    assert entry.name == random_entry_name
+def test_lookup_entry(client, entry):
+    lookup_entry = lookup_entry.sample_lookup_entry(entry.name)
+    assert lookup_entry.name == entry.name

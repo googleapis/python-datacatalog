@@ -16,10 +16,10 @@
 import get_entry
 
 
-def test_get_entry(client, random_entry_name):
+def test_get_entry(client, entry):
     # break entry name into parts
-    name = client.parse_entry_path(random_entry_name)
-    entry = get_entry.sample_get_entry(
+    name = client.parse_entry_path(entry.name)
+    retrieved_entry = get_entry.sample_get_entry(
         name["project"], name["location"], name["entry_group"], name["entry"]
     )
-    assert entry.name == name
+    assert retrieved_entry.name == entry.name

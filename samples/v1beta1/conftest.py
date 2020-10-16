@@ -110,7 +110,7 @@ def entry_group_name(client, project_id):
         request={
             "parent": f"projects/{project_id}/locations/us-central-1",
             "entry_group_id": entry_group_id,
-            "entry_group": {},
+            "entry_group": datacatalog_v1beta1.EntryGroup(),
         }
     )
     yield entry_group.name

@@ -16,7 +16,7 @@
 import lookup_entry_sql_resource
 
 
-def test_lookup_entry(client, names):
-    sql_name, entry_name = names
+def test_lookup_entry(client, sql_entry):
+    sql_name, entry_name = sql_entry
     entry = lookup_entry_sql_resource.sample_lookup_entry(sql_name)
     assert entry.name == entry_name
