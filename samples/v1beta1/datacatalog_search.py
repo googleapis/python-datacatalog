@@ -67,7 +67,7 @@ def sample_search_catalog(include_project_id, include_gcp_public_datasets, query
         print(u"Linked resource: {}\n".format(response_item.linked_resource))
 
 
-# [END datacatalog_search]
+# [END data_catalog_search]
 
 
 def main():

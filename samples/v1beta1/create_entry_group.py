@@ -50,4 +50,4 @@ def create_entry_group(client, project_id, entry_group_id):
     entry_group = client.create_entry_group(
         request = {'parent': parent, 'entry_group_id': entry_group_id, 'entry_group': entry_group})  # Make an API request.
     print("Created entry group {}".format(entry_group.name))
-    # [END datacatalog_create_entry_group_tag]
+    # [END data_catalog_create_entry_group_tag]

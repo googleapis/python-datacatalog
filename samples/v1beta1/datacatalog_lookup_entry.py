@@ -51,7 +51,7 @@ def sample_lookup_entry(resource_name):
     print(u"Linked resource: {}".format(entry.linked_resource))
 
 
-# [END datacatalog_lookup_entry]
+# [END data_catalog_lookup_entry]
 
 
 def main():

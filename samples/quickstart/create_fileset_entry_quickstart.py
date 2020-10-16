@@ -109,4 +109,4 @@ def create_fileset_entry_quickstart(client, project_id, entry_group_id, entry_id
     # exists within the project.
     entry = client.create_entry(request = {'parent': entry_group.name, 'entry_id': entry_id, 'entry': entry})
     print("Created entry {}".format(entry.name))
-    # [END datacatalog_create_fileset_quickstart_tag]
+    # [END data_catalog_create_fileset_quickstart_tag]

@@ -50,7 +50,7 @@ def sample_lookup_entry(sql_name):
     print(u"Linked resource: {}".format(entry.linked_resource))
 
 
-# [END datacatalog_lookup_entry_sql_resource]
+# [END data_catalog_lookup_entry_sql_resource]
 
 
 def main():

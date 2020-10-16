@@ -35,7 +35,7 @@ def lookup_bigquery_dataset(project_id, dataset_id):
         .format(project_id, dataset_id)
 
     return datacatalog.lookup_entry(request={'linked_resource': resource_name})
-    # [END datacatalog_lookup_dataset]
+    # [END data_catalog_lookup_dataset]
 
 
 def lookup_bigquery_dataset_sql_resource(project_id, dataset_id):
