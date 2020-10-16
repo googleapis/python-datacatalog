@@ -14,7 +14,7 @@
 
 from google.cloud import datacatalog_v1beta1
 
-from quickstart import create_fileset_entry_quickstart
+import create_fileset_entry_quickstart
 
 
 def test_create_fileset_entry_quickstart(

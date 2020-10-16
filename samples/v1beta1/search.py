@@ -54,9 +54,7 @@ def sample_search_catalog(
     }
 
     # Iterate over all results
-    results = client.search_catalog(
-        request={"scope": scope, "query": query}
-    )
+    results = client.search_catalog(request={"scope": scope, "query": query})
     for response_item in results:
         print(
             f"Result type: {enums.SearchResultType(response_item.search_result_type).name}"
@@ -64,7 +62,7 @@ def sample_search_catalog(
         print(f"Result subtype: {response_item.search_result_subtype}")
         print(f"Relative resource name: {response_item.relative_resource_name}")
         print(f"Linked resource: {response_item.linked_resource}\n")
-# [END data_catalog_search]
+    # [END data_catalog_search]
     return results
 
 

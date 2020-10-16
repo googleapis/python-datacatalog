@@ -45,7 +45,7 @@ def sample_lookup_entry(sql_name: str):
     print(f"Entry name: {entry.name}")
     print(f"Entry type: {datacatalog_v1beta1.EntryType(entry.type).name}")
     print(f"Linked resource: {entry.linked_resource}")
-# [END data_catalog_lookup_entry_sql_resource]
+    # [END data_catalog_lookup_entry_sql_resource]
     return entry
 
 

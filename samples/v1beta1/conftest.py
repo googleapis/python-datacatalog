@@ -78,6 +78,7 @@ def random_entry_name(client, entry_group_name):
     yield random_entry_name
     client.delete_entry(request={"name": random_entry_name})
 
+
 @pytest.fixture
 def entry(client, entry_group_name):
     now = datetime.datetime.now()
@@ -90,11 +91,12 @@ def entry(client, entry_group_name):
     yield entry.name
     client.delete_entry(request={"name": entry.name})
 
+
 @pytest.fixture
 def sql_entry(client, entry):
     # covnert entry name to sql resource style
     name = client.parse_entry_name(entry)
-    sql_name = f"datacatalog.entry.{name["project"]}.{name["location"]}.{name["entry_group"]}.{name["entry"]}"
+    sql_name = f"datacatalog.entry.{name['project']}.{name['location']}.{name['entry_group']}.{name['entry']}"
     yield sql_name, entry.name
 
 
