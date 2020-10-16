@@ -24,7 +24,7 @@
 #   description: Lookup Entry
 #   usage: python3 samples/v1beta1/datacatalog_lookup_entry.py [--resource_name "[Full Resource Name]"]
 
-# [START datacatalog_lookup_entry]
+# [START data_catalog_lookup_entry]
 from google.cloud import datacatalog_v1beta1
 
 

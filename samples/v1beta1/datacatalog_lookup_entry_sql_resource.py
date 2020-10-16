@@ -24,7 +24,7 @@
 #   description: Lookup Entry using SQL resource
 #   usage: python3 samples/v1beta1/datacatalog_lookup_entry_sql_resource.py [--sql_name "[SQL Resource Name]"]
 
-# [START datacatalog_lookup_entry_sql_resource]
+# [START data_catalog_lookup_entry_sql_resource]
 from google.cloud import datacatalog_v1beta1
 
 

@@ -15,7 +15,7 @@
 
 def create_fileset_entry_quickstart(client, project_id, entry_group_id, entry_id):
 
-    # [START datacatalog_create_fileset_quickstart_tag]
+    # [START data_catalog_create_fileset_quickstart_tag]
     # Import required modules.
     from google.cloud import datacatalog_v1beta1
 

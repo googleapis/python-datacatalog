@@ -24,7 +24,7 @@
 #   description: Get Entry
 #   usage: python3 samples/v1beta1/datacatalog_get_entry.py [--project_id "[Google Cloud Project ID]"] [--location_id "[Google Cloud Location ID]"] [--entry_group_id "[Entry Group ID]"] [--entry_id "[Entry ID]"]
 
-# [START datacatalog_get_entry]
+# [START data_catalog_get_entry]
 from google.cloud import datacatalog_v1beta1
 
 def sample_get_entry(project_id, location_id, entry_group_id, entry_id):

@@ -24,7 +24,7 @@
 #   description: Search Catalog
 #   usage: python3 samples/v1beta1/datacatalog_search.py [--include_project_id "[Google Cloud Project ID]"] [--include_gcp_public_datasets false] [--query "[String in search query syntax]"]
 
-# [START datacatalog_search]
+# [START data_catalog_search]
 from google.cloud import datacatalog_v1beta1
 from google.cloud.datacatalog_v1beta1 import enums
 

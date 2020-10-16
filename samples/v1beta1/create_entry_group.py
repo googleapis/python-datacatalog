@@ -15,7 +15,7 @@
 
 def create_entry_group(client, project_id, entry_group_id):
 
-    # [START datacatalog_create_entry_group_tag]
+    # [START data_catalog_create_entry_group_tag]
     from google.cloud import datacatalog_v1beta1
 
     # TODO(developer): Construct a Data Catalog client object.
