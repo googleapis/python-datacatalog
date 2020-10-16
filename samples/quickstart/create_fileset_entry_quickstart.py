@@ -49,9 +49,7 @@ def create_fileset_entry_quickstart(client, project_id, entry_group_id, entry_id
     # already exists within the project.
     entry_group = client.create_entry_group(
         request={
-            "parent": datacatalog_v1beta1.DataCatalogClient.location_path(
-                project_id, location_id
-            ),
+            "parent": f"projects/{project_id}/locations/{location_id}",
             "entry_group_id": entry_group_id,
             "entry_group": entry_group_obj,
         }

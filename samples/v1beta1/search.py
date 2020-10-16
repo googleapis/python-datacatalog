@@ -24,7 +24,6 @@
 
 # [START data_catalog_search]
 from google.cloud import datacatalog_v1beta1
-from google.cloud.datacatalog_v1beta1 import enums
 
 
 def sample_search_catalog(
@@ -57,7 +56,7 @@ def sample_search_catalog(
     results = client.search_catalog(request={"scope": scope, "query": query})
     for response_item in results:
         print(
-            f"Result type: {enums.SearchResultType(response_item.search_result_type).name}"
+            f"Result type: {datacatalog_v1beta1.SearchResultType(response_item.search_result_type).name}"
         )
         print(f"Result subtype: {response_item.search_result_subtype}")
         print(f"Relative resource name: {response_item.relative_resource_name}")
