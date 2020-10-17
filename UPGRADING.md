@@ -139,12 +139,15 @@ entry = datacatalog_v1beta1.Entry()
 entry.type = datacatalog_v1beta1.EntryType.FILESET
 ```
 
-## Project Path Helper Methods
+## Project and Location Path Helper Methods
 
-The project path helper method `project_path` has been removed. Please construct
-this path manually.
+The project and location path helper methods, `project_path` and `location_path`, have been
+removed. Please construct these paths manually.
 
 ```py
 project = 'my-project'
 project_path = f'projects/{project}'
+
+location = 'my-location'
+location_path = f'{project_path}/locations/{location}'
 ```
