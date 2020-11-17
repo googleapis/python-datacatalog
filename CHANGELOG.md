@@ -9,13 +9,13 @@
 
 ### ⚠ BREAKING CHANGES
 
-* add common resource paths; expose client transport; rename ``type`` attributes to ``type_`` to avoid name collisions.
+* add common resource paths; expose client transport; rename ``type`` attributes to ``type_`` to avoid name collisions. (#64)
 
   Renamed attributes:
     * `TagTemplateField.type` -> `TagTemplatedField.type_`
     * `ColumnSchema.type` -> `ColumnSchema.type_`
     * `Entry.type` -> `Entry.type_`
-(#64)
+
 
 ### Features
 
