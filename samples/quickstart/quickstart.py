@@ -13,41 +13,43 @@
 # limitations under the License.
 
 
-def quickstart(project_id, dataset_id, table_id):
+def quickstart(override_values):
     """Creates a tag template and attach a tag to a BigQuery table."""
     # [START data_catalog_quickstart]
-    # -------------------------------
     # Import required modules.
-    # -------------------------------
     from google.cloud import datacatalog_v1
-    from google.api_core.exceptions import NotFound, PermissionDenied
 
-    # -------------------------------
     # TODO: Set these values before running the sample.
-    # -------------------------------
-    # project_id = "my_project"
-    # # Set dataset_id to the ID of existing dataset.
-    # dataset_id = "demo_dataset"
-    # # Set table_id to the ID of existing table.
-    # table_id = "trips"
+    # Google Cloud Platform project.
+    project_id = "my_project"
+    # Set dataset_id to the ID of existing dataset.
+    dataset_id = "demo_dataset"
+    # Set table_id to the ID of existing table.
+    table_id = "trips"
+    # Tag template to create.
+    tag_template_id = "example_tag_template"
 
-    # -------------------------------
-    # Currently, Data Catalog stores metadata in the
-    # us-central1 region.
-    # -------------------------------
+    # [END data_catalog_quickstart]
+
+    # To facilitate testing, we replace values with alternatives
+    # provided by the testing harness.
+    project_id = override_values.get("project_id", project_id)
+    dataset_id = override_values.get("dataset_id", dataset_id)
+    table_id = override_values.get("table_id", table_id)
+    tag_template_id = override_values.get("tag_template_id", tag_template_id)
+
+    # [START data_catalog_quickstart]
+    # For all regions available, see:
+    # https://cloud.google.com/data-catalog/docs/concepts/regions
     location = "us-central1"
 
-    # -------------------------------
     # Use Application Default Credentials to create a new
     # Data Catalog client. GOOGLE_APPLICATION_CREDENTIALS
     # environment variable must be set with the location
     # of a service account key file.
-    # -------------------------------
     datacatalog_client = datacatalog_v1.DataCatalogClient()
 
-    # -------------------------------
     # Create a Tag Template.
-    # -------------------------------
     tag_template = datacatalog_v1.types.TagTemplate()
 
     tag_template.display_name = "Demo Tag Template"
@@ -56,19 +58,19 @@ def quickstart(project_id, dataset_id, table_id):
     tag_template.fields["source"].display_name = "Source of data asset"
     tag_template.fields[
         "source"
-    ].type_.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.STRING
+    ].type.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.STRING
 
     tag_template.fields["num_rows"] = datacatalog_v1.types.TagTemplateField()
     tag_template.fields["num_rows"].display_name = "Number of rows in data asset"
     tag_template.fields[
         "num_rows"
-    ].type_.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.DOUBLE
+    ].type.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.DOUBLE
 
     tag_template.fields["has_pii"] = datacatalog_v1.types.TagTemplateField()
     tag_template.fields["has_pii"].display_name = "Has PII"
     tag_template.fields[
         "has_pii"
-    ].type_.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.BOOL
+    ].type.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.BOOL
 
     tag_template.fields["pii_type"] = datacatalog_v1.types.TagTemplateField()
     tag_template.fields["pii_type"].display_name = "PII type"
@@ -77,51 +79,40 @@ def quickstart(project_id, dataset_id, table_id):
         enum_value = datacatalog_v1.types.FieldType.EnumType.EnumValue(
             display_name=display_name
         )
-        tag_template.fields["pii_type"].type_.enum_type.allowed_values.append(
+        tag_template.fields["pii_type"].type.enum_type.allowed_values.append(
             enum_value
         )
 
     expected_template_name = datacatalog_v1.DataCatalogClient.tag_template_path(
-        project_id, location, "example_tag_template"
+        project_id, location, tag_template_id
     )
-
-    # Delete any pre-existing Template with the same name.
-    try:
-        datacatalog_client.delete_tag_template(name=expected_template_name, force=True)
-        print("Deleted template: {}".format(expected_template_name))
-    except (NotFound, PermissionDenied):
-        print("Cannot delete template: {}".format(expected_template_name))
 
     # Create the Tag Template.
     try:
         tag_template = datacatalog_client.create_tag_template(
-            parent="projects/{}/locations/us-central1".format(project_id),
-            tag_template_id="example_tag_template",
+            parent=f"projects/{project_id}/locations/us-central1",
+            tag_template_id=tag_template_id,
             tag_template=tag_template,
         )
-        print("Created template: {}".format(tag_template.name))
+        print(f"Created template: {tag_template.name}")
     except OSError as e:
-        print("Cannot create template: {}".format(expected_template_name))
-        print("{}".format(e))
+        print(f"Cannot create template: {expected_template_name}")
+        print(f"{e}")
 
-    # -------------------------------
     # Lookup Data Catalog's Entry referring to the table.
-    # -------------------------------
     resource_name = (
-        "//bigquery.googleapis.com/projects/{}"
-        "/datasets/{}/tables/{}".format(project_id, dataset_id, table_id)
+        f"//bigquery.googleapis.com/projects/{project_id}"
+        f"/datasets/{dataset_id}/tables/{table_id}"
     )
     table_entry = datacatalog_client.lookup_entry(
         request={"linked_resource": resource_name}
     )
 
-    # -------------------------------
     # Attach a Tag to the table.
-    # -------------------------------
     tag = datacatalog_v1.types.Tag()
 
     tag.template = tag_template.name
-    tag.name = "my_tag"
+    tag.name = "my_super_cool_tag"
 
     tag.fields["source"] = datacatalog_v1.types.TagField()
     tag.fields["source"].string_value = "Copied from tlc_yellow_trips_2018"
@@ -136,5 +127,5 @@ def quickstart(project_id, dataset_id, table_id):
     tag.fields["pii_type"].enum_value.display_name = "NONE"
 
     tag = datacatalog_client.create_tag(parent=table_entry.name, tag=tag)
-    print("Created tag: {}".format(tag.name))
+    print(f"Created tag: {tag.name}")
     # [END data_catalog_quickstart]

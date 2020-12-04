@@ -1,4 +1,4 @@
-# Copyright 2020 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,11 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import search_assets
+
+import create_entry_group
 
 
-def test_search_assets(capsys, project_id):
-    override_values = {"project_id": project_id}
-    search_assets.search_assets(override_values)
+def test_create_entry_group(capsys, client, project_id, random_entry_group_id):
+
+    create_entry_group.create_entry_group(project_id, random_entry_group_id)
     out, err = capsys.readouterr()
-    assert "Datasets in project:" in out
+    assert (
+        "Created entry group"
+        " projects/{}/locations/{}/entryGroups/{}".format(
+            project_id, "us-central1", random_entry_group_id
+        )
+        in out
+    )

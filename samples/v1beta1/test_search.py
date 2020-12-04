@@ -1,4 +1,4 @@
-# Copyright 2019 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,17 +13,9 @@
 # limitations under the License.
 
 
-from ..v1beta1 import create_entry_group
+import search
 
 
-def test_create_entry_group(capsys, client, project_id, random_entry_group_id):
-
-    create_entry_group.create_entry_group(request = {'parent': client, 'entry_group_id': project_id, 'entry_group': random_entry_group_id})
-    out, err = capsys.readouterr()
-    assert (
-        "Created entry group"
-        " projects/{}/locations/{}/entryGroups/{}".format(
-            project_id, "us-central1", random_entry_group_id
-        )
-        in out
-    )
+def test_search_catalog(client, project_id):
+    results = search.sample_search_catalog(project_id, True, "system=bigquery")
+    assert next(results) is not None

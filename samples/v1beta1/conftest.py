@@ -52,7 +52,7 @@ def random_entry_id(client, project_id, random_entry_group_id):
     entry_name = datacatalog_v1beta1.DataCatalogClient.entry_path(
         project_id, "us-central1", random_entry_group_id, random_entry_id
     )
-    client.delete_entry(request = {'name': entry_name})
+    client.delete_entry(request={"name": entry_name})
 
 
 @pytest.fixture
@@ -65,7 +65,7 @@ def random_entry_group_id(client, project_id):
     entry_group_name = datacatalog_v1beta1.DataCatalogClient.entry_group_path(
         project_id, "us-central1", random_entry_group_id
     )
-    client.delete_entry_group(request = {'name': entry_group_name})
+    client.delete_entry_group(request={"name": entry_group_name})
 
 
 @pytest.fixture
@@ -76,7 +76,28 @@ def random_entry_name(client, entry_group_name):
     )
     random_entry_name = "{}/entries/{}".format(entry_group_name, random_entry_id)
     yield random_entry_name
-    client.delete_entry(request = {'name': random_entry_name})
+    client.delete_entry(request={"name": random_entry_name})
+
+
+@pytest.fixture
+def entry(client, entry_group_name):
+    now = datetime.datetime.now()
+    random_entry_id = "example_entry_{}_{}".format(
+        now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
+    )
+    entry = client.create_entry(
+        request={"parent": entry_group_name, "entry_id": random_entry_id, "entry": {}}
+    )
+    yield entry.name
+    client.delete_entry(request={"name": entry.name})
+
+
+@pytest.fixture
+def sql_entry(client, entry):
+    # covnert entry name to sql resource style
+    name = client.parse_entry_name(entry)
+    sql_name = f"datacatalog.entry.{name['project']}.{name['location']}.{name['entry_group']}.{name['entry']}"
+    yield sql_name, entry.name
 
 
 @pytest.fixture
@@ -86,6 +107,11 @@ def entry_group_name(client, project_id):
         now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
     )
     entry_group = client.create_entry_group(
-        request = {'parent': datacatalog_v1beta1.DataCatalogClient.location_path(project_id, "us-central1"), 'entry_group_id': entry_group_id, 'entry_group': {}})
+        request={
+            "parent": f"projects/{project_id}/locations/us-central-1",
+            "entry_group_id": entry_group_id,
+            "entry_group": datacatalog_v1beta1.EntryGroup(),
+        }
+    )
     yield entry_group.name
-    client.delete_entry_group(request = {'name': entry_group.name})
+    client.delete_entry_group(request={"name": entry_group.name})

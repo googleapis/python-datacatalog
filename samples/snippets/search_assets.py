@@ -13,18 +13,23 @@
 # limitations under the License.
 
 
-def search_assets(project_id):
+def search_assets(override_values):
     """Searches Data Catalog entries for a given project."""
     # [START data_catalog_search_assets]
     from google.cloud import datacatalog_v1
 
     datacatalog = datacatalog_v1.DataCatalogClient()
 
-    # -------------------------------
     # TODO: Set these values before running the sample.
-    # -------------------------------
-    # project_id = "project_id"
+    project_id = "project_id"
 
+    # [END data_catalog_search_assets]
+
+    # To facilitate testing, we replace values with alternatives
+    # provided by the testing harness.
+    project_id = override_values.get("project_id", project_id)
+
+    # [START data_catalog_search_assets]
     # Set custom query.
     search_string = "type=dataset"
 

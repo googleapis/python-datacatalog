@@ -12,11 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import search_assets
+
+import get_entry
 
 
-def test_search_assets(capsys, project_id):
-    override_values = {"project_id": project_id}
-    search_assets.search_assets(override_values)
-    out, err = capsys.readouterr()
-    assert "Datasets in project:" in out
+def test_get_entry(client, entry):
+    # break entry name into parts
+    name = client.parse_entry_path(entry.name)
+    retrieved_entry = get_entry.sample_get_entry(
+        name["project"], name["location"], name["entry_group"], name["entry"]
+    )
+    assert retrieved_entry.name == entry.name

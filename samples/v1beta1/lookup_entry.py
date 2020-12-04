@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# DO NOT EDIT! This is a generated sample ("Request",  "datacatalog_lookup_entry")
-
 # To install the latest published package dependency, execute the following:
 #   pip install google-cloud-datacatalog
 
@@ -24,16 +22,16 @@
 #   description: Lookup Entry
 #   usage: python3 samples/v1beta1/datacatalog_lookup_entry.py [--resource_name "[Full Resource Name]"]
 
-# [START datacatalog_lookup_entry]
+# [START data_catalog_lookup_entry]
 from google.cloud import datacatalog_v1beta1
 
 
-def sample_lookup_entry(resource_name):
+def sample_lookup_entry(resource_name: str):
     """
     Lookup Entry
 
     Args:
-      resource_name The full name of the Google Cloud Platform resource the Data
+      resource_name (str): The full name of the Google Cloud Platform resource the Data
       Catalog entry represents.
       See: https://cloud.google.com/apis/design/resource_names#full_resource_name
       Examples:
@@ -44,14 +42,12 @@ def sample_lookup_entry(resource_name):
     client = datacatalog_v1beta1.DataCatalogClient()
 
     # resource_name = '[Full Resource Name]'
-    response = client.lookup_entry(request = {'linked_resource': resource_name})
-    entry = response
-    print(u"Entry name: {}".format(entry.name))
-    print(u"Entry type: {}".format(datacatalog_v1beta1.EntryType(entry.type).name))
-    print(u"Linked resource: {}".format(entry.linked_resource))
-
-
-# [END datacatalog_lookup_entry]
+    entry = client.lookup_entry(request={"linked_resource": resource_name})
+    print(f"Entry name: {entry.name}")
+    print(f"Entry type: {datacatalog_v1beta1.EntryType(entry.type).name}")
+    print(f"Linked resource: {entry.linked_resource}")
+    # [END data_catalog_lookup_entry]
+    return entry
 
 
 def main():

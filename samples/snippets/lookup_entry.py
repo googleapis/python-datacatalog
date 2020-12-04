@@ -14,157 +14,81 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""This application demonstrates how to perform basic operations on entries
-with the Cloud Data Catalog API.
 
-For more information, see the README.md under /datacatalog and the
-documentation at https://cloud.google.com/data-catalog/docs.
-"""
-
-import argparse
-
-
-def lookup_bigquery_dataset(project_id, dataset_id):
-    # [START datacatalog_lookup_dataset]
-    """Retrieves Data Catalog entry for the given BigQuery Dataset."""
+def lookup_entry(override_values):
+    """Retrieves Data Catalog entry for the given Google Cloud Platform resource."""
+    # [START data_catalog_lookup_entry]
     from google.cloud import datacatalog_v1
 
     datacatalog = datacatalog_v1.DataCatalogClient()
 
-    resource_name = "//bigquery.googleapis.com/projects/{}/datasets/{}".format(
-        project_id, dataset_id
+    bigquery_project_id = "my_bigquery_project"
+    dataset_id = "my_dataset"
+    table_id = "my_table"
+    pubsub_project_id = "my_pubsub_project"
+    topic_id = "my_topic"
+
+    # [END data_catalog_lookup_entry]
+
+    # To facilitate testing, we replace values with alternatives
+    # provided by the testing harness.
+    bigquery_project_id = override_values.get(
+        "bigquery_project_id", bigquery_project_id
+    )
+    dataset_id = override_values.get("dataset_id", dataset_id)
+    table_id = override_values.get("table_id", table_id)
+    pubsub_project_id = override_values.get("pubsub_project_id", pubsub_project_id)
+    topic_id = override_values.get("topic_id", topic_id)
+
+    # [START data_catalog_lookup_entry]
+    # BigQuery Dataset via linked_resource
+    resource_name = f"//bigquery.googleapis.com/projects/{bigquery_project_id}/datasets/{dataset_id}"
+
+    entry = datacatalog.lookup_entry(request={"linked_resource": resource_name})
+    print(
+        f"Retrieved entry {entry.name} for BigQuery Dataset resource {entry.linked_resource}"
     )
 
-    return datacatalog.lookup_entry(request={"linked_resource": resource_name})
-    # [END datacatalog_lookup_dataset]
+    # BigQuery Dataset via sql_resource
+    sql_resource = f"bigquery.dataset.`{bigquery_project_id}`.`{dataset_id}`"
 
+    entry = datacatalog.lookup_entry(request={"sql_resource": sql_resource})
+    print(
+        f"Retrieved entry {entry.name} for BigQuery Dataset resource {entry.linked_resource}"
+    )
 
-def lookup_bigquery_dataset_sql_resource(project_id, dataset_id):
-    """Retrieves Data Catalog entry for the given BigQuery Dataset by
-    sql_resource.
-    """
-    from google.cloud import datacatalog_v1
-
-    datacatalog = datacatalog_v1.DataCatalogClient()
-
-    sql_resource = "bigquery.dataset.`{}`.`{}`".format(project_id, dataset_id)
-
-    return datacatalog.lookup_entry(request={"sql_resource": sql_resource})
-
-
-def lookup_bigquery_table(project_id, dataset_id, table_id):
-    """Retrieves Data Catalog entry for the given BigQuery Table."""
-    from google.cloud import datacatalog_v1
-
-    datacatalog = datacatalog_v1.DataCatalogClient()
-
+    # BigQuery Table via linked_resource
     resource_name = (
-        "//bigquery.googleapis.com/projects/{}/datasets/{}"
-        "/tables/{}".format(project_id, dataset_id, table_id)
+        f"//bigquery.googleapis.com/projects/{bigquery_project_id}/datasets/{dataset_id}"
+        f"/tables/{table_id}"
     )
 
-    return datacatalog.lookup_entry(request={"linked_resource": resource_name})
+    entry = datacatalog.lookup_entry(request={"linked_resource": resource_name})
+    print(f"Retrieved entry {entry.name} for BigQuery Table {entry.linked_resource}")
 
+    # BigQuery Table via sql_resource
+    sql_resource = f"bigquery.table.`{bigquery_project_id}`.`{dataset_id}`.`{table_id}`"
 
-def lookup_bigquery_table_sql_resource(project_id, dataset_id, table_id):
-    """Retrieves Data Catalog entry for the given BigQuery Table by
-    sql_resource.
-    """
-    from google.cloud import datacatalog_v1
-
-    datacatalog = datacatalog_v1.DataCatalogClient()
-
-    sql_resource = "bigquery.table.`{}`.`{}`.`{}`".format(
-        project_id, dataset_id, table_id
+    entry = datacatalog.lookup_entry(request={"sql_resource": sql_resource})
+    print(
+        f"Retrieved entry {entry.name} for BigQuery Table resource {entry.linked_resource}"
     )
 
-    return datacatalog.lookup_entry(request={"sql_resource": sql_resource})
-
-
-def lookup_pubsub_topic(project_id, topic_id):
-    """Retrieves Data Catalog entry for the given Pub/Sub Topic."""
-    from google.cloud import datacatalog_v1
-
-    datacatalog = datacatalog_v1.DataCatalogClient()
-
-    resource_name = "//pubsub.googleapis.com/projects/{}/topics/{}".format(
-        project_id, topic_id
+    # Pub/Sub Topic via linked_resource
+    resource_name = (
+        f"//pubsub.googleapis.com/projects/{pubsub_project_id}/topics/{topic_id}"
     )
 
-    return datacatalog.lookup_entry(request={"linked_resource": resource_name})
-
-
-def lookup_pubsub_topic_sql_resource(project_id, topic_id):
-    """Retrieves Data Catalog entry for the given Pub/Sub Topic by
-    sql_resource.
-    """
-    from google.cloud import datacatalog_v1
-
-    datacatalog = datacatalog_v1.DataCatalogClient()
-
-    sql_resource = "pubsub.topic.`{}`.`{}`".format(project_id, topic_id)
-
-    return datacatalog.lookup_entry(request={"sql_resource": sql_resource})
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    entry = datacatalog.lookup_entry(request={"linked_resource": resource_name})
+    print(
+        f"Retrieved entry {entry.name} for Pub/Sub Topic resource {entry.linked_resource}"
     )
 
-    parser.add_argument("project_id", help="Your Google Cloud project ID")
+    # Pub/Sub Topic via sql_resource
+    sql_resource = f"pubsub.topic.`{pubsub_project_id}`.`{topic_id}`"
 
-    subparsers = parser.add_subparsers(dest="command")
-
-    bigquery_dataset_parser = subparsers.add_parser(
-        "bigquery-dataset", help=lookup_bigquery_dataset.__doc__
+    entry = datacatalog.lookup_entry(request={"sql_resource": sql_resource})
+    print(
+        f"Retrieved entry {entry.name} for Pub/Sub Topic resource {entry.linked_resource}"
     )
-    bigquery_dataset_parser.add_argument("dataset_id")
-    bigquery_dataset_parser.add_argument(
-        "--sql-resource", action="store_true", help="Perform lookup by SQL Resource"
-    )
-
-    bigquery_table_parser = subparsers.add_parser(
-        "bigquery-table", help=lookup_bigquery_table.__doc__
-    )
-    bigquery_table_parser.add_argument("dataset_id")
-    bigquery_table_parser.add_argument("table_id")
-    bigquery_table_parser.add_argument(
-        "--sql-resource", action="store_true", help="Perform lookup by SQL Resource"
-    )
-
-    pubsub_topic_parser = subparsers.add_parser(
-        "pubsub-topic", help=lookup_pubsub_topic.__doc__
-    )
-    pubsub_topic_parser.add_argument("topic_id")
-    pubsub_topic_parser.add_argument(
-        "--sql-resource", action="store_true", help="Perform lookup by SQL Resource"
-    )
-
-    args = parser.parse_args()
-
-    entry = None
-
-    if args.command == "bigquery-dataset":
-        lookup_method = (
-            lookup_bigquery_dataset_sql_resource
-            if args.sql_resource
-            else lookup_bigquery_dataset
-        )
-        entry = lookup_method(args.project_id, args.dataset_id)
-    elif args.command == "bigquery-table":
-        lookup_method = (
-            lookup_bigquery_table_sql_resource
-            if args.sql_resource
-            else lookup_bigquery_table
-        )
-        entry = lookup_method(args.project_id, args.dataset_id, args.table_id)
-    elif args.command == "pubsub-topic":
-        lookup_method = (
-            lookup_pubsub_topic_sql_resource
-            if args.sql_resource
-            else lookup_pubsub_topic
-        )
-        entry = lookup_method(args.project_id, args.topic_id)
-
-    print(entry.name)
+    # [END data_catalog_lookup_entry]

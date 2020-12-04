@@ -13,76 +13,45 @@
 # limitations under the License.
 
 
-def create_custom_entry(project_id, entry_group_id, entry_id, tag_template_id):
+def create_custom_entry(override_values):
     """Creates a custom entry within an entry group."""
     # [START data_catalog_create_custom_entry]
-    # -------------------------------
     # Import required modules.
-    # -------------------------------
-    from google.api_core.exceptions import NotFound, PermissionDenied
     from google.cloud import datacatalog_v1
 
-    # -------------------------------
-    # TODO: Set these values before running the sample.
-    # -------------------------------
-    # project_id = 'my-project'
-    # entry_group_id = 'onprem_entry_group'
-    # entry_id = 'onprem_entry_id'
-    # tag_template_id = 'onprem_tag_template'
+    # Google Cloud Platform project.
+    project_id = "my-project"
+    # Entry group to be created.
+    entry_group_id = "my_entry_group"
+    # Entry to be created.
+    entry_id = "my_entry_id"
+    # Tag Template to be created.
+    tag_template_id = "my_tag_template"
+    # Tag to be created.
+    tag_name = "my_cool_tag"
 
-    # -------------------------------
-    # Currently, Data Catalog stores metadata in the
-    # us-central1 region.
-    # -------------------------------
+    # [END data_catalog_create_custom_entry]
+
+    # To facilitate testing, we replace values with alternatives
+    # provided by the testing harness.
+    project_id = override_values.get("project_id", project_id)
+    entry_group_id = override_values.get("entry_group_id", entry_group_id)
+    entry_id = override_values.get("entry_id", entry_id)
+    tag_template_id = override_values.get("tag_template_id", tag_template_id)
+    tag_name = override_values.get("tag_name", tag_name)
+
+    # [START data_catalog_create_custom_entry]
+    # For all regions available, see:
+    # https://cloud.google.com/data-catalog/docs/concepts/regions
     location = "us-central1"
 
-    # -------------------------------
     # Use Application Default Credentials to create a new
     # Data Catalog client. GOOGLE_APPLICATION_CREDENTIALS
     # environment variable must be set with the location
     # of a service account key file.
-    # -------------------------------
     datacatalog = datacatalog_v1.DataCatalogClient()
 
-    # -------------------------------
-    # 1. Environment cleanup: delete pre-existing data.
-    # -------------------------------
-    # Delete any pre-existing Entry with the same name
-    # that will be used in step 3.
-    expected_entry_name = datacatalog_v1.DataCatalogClient.entry_path(
-        project_id, location, entry_group_id, entry_id
-    )
-
-    try:
-        datacatalog.delete_entry(name=expected_entry_name)
-    except (NotFound, PermissionDenied):
-        pass
-
-    # Delete any pre-existing Entry Group with the same name
-    # that will be used in step 2.
-    expected_entry_group_name = datacatalog_v1.DataCatalogClient.entry_group_path(
-        project_id, location, entry_group_id
-    )
-
-    try:
-        datacatalog.delete_entry_group(name=expected_entry_group_name)
-    except (NotFound, PermissionDenied):
-        pass
-
-    # Delete any pre-existing Template with the same name
-    # that will be used in step 4.
-    expected_template_name = datacatalog_v1.DataCatalogClient.tag_template_path(
-        project_id, location, tag_template_id
-    )
-
-    try:
-        datacatalog.delete_tag_template(name=expected_template_name, force=True)
-    except (NotFound, PermissionDenied):
-        pass
-
-    # -------------------------------
-    # 2. Create an Entry Group.
-    # -------------------------------
+    # Create an Entry Group.
     entry_group_obj = datacatalog_v1.types.EntryGroup()
     entry_group_obj.display_name = "My awesome Entry Group"
     entry_group_obj.description = "This Entry Group represents an external system"
@@ -96,9 +65,7 @@ def create_custom_entry(project_id, entry_group_id, entry_id, tag_template_id):
     )
     print("Created entry group: {}".format(entry_group.name))
 
-    # -------------------------------
-    # 3. Create an Entry.
-    # -------------------------------
+    # Create an Entry.
     entry = datacatalog_v1.types.Entry()
     entry.user_specified_system = "onprem_data_system"
     entry.user_specified_type = "onprem_data_asset"
@@ -106,9 +73,8 @@ def create_custom_entry(project_id, entry_group_id, entry_id, tag_template_id):
     entry.description = "This data asset is managed by an external system."
     entry.linked_resource = "//my-onprem-server.com/dataAssets/my-awesome-data-asset"
 
-    # Create the Schema, this is optional.x
-    columns = []
-    columns.append(
+    # Create the Schema, this is optional.
+    entry.schema.columns.append(
         datacatalog_v1.types.ColumnSchema(
             column="first_column",
             type_="STRING",
@@ -117,7 +83,7 @@ def create_custom_entry(project_id, entry_group_id, entry_id, tag_template_id):
         )
     )
 
-    columns.append(
+    entry.schema.columns.append(
         datacatalog_v1.types.ColumnSchema(
             column="second_column",
             type_="DOUBLE",
@@ -126,19 +92,12 @@ def create_custom_entry(project_id, entry_group_id, entry_id, tag_template_id):
         )
     )
 
-    entry.schema.columns.extend(columns)
-
     entry = datacatalog.create_entry(
         parent=entry_group.name, entry_id=entry_id, entry=entry
     )
     print("Created entry: {}".format(entry.name))
 
-    # -------------------------------
-    # 4. Create a Tag Template.
-    # For more field types, including ENUM, please refer to
-    # https://cloud.google.com/data-catalog/docs/quickstarts/quickstart-search-tag#data-catalog
-    # -quickstart-python.
-    # -------------------------------
+    # Create a Tag Template.
     tag_template = datacatalog_v1.types.TagTemplate()
     tag_template.display_name = "On-premises Tag Template"
     tag_template.fields["source"] = datacatalog_v1.types.TagTemplateField()
@@ -156,13 +115,11 @@ def create_custom_entry(project_id, entry_group_id, entry_id, tag_template_id):
     )
     print("Created template: {}".format(tag_template.name))
 
-    # -------------------------------
-    # 5. Attach a Tag to the custom Entry.
-    # -------------------------------
+    # Attach a Tag to the custom Entry.
     tag = datacatalog_v1.types.Tag()
     tag.template = tag_template.name
     tag.fields["source"] = datacatalog_v1.types.TagField()
-    tag.fields["source"].string_value = "On-premises system name"
+    tag.fields["source"].string_value = tag_name
 
     tag = datacatalog.create_tag(parent=entry.name, tag=tag)
     print("Created tag: {}".format(tag.name))

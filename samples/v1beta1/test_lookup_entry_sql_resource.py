@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import search_assets
+
+import lookup_entry_sql_resource
 
 
-def test_search_assets(capsys, project_id):
-    override_values = {"project_id": project_id}
-    search_assets.search_assets(override_values)
-    out, err = capsys.readouterr()
-    assert "Datasets in project:" in out
+def test_lookup_entry(client, sql_entry):
+    sql_name, entry_name = sql_entry
+    entry = lookup_entry_sql_resource.sample_lookup_entry(sql_name)
+    assert entry.name == entry_name

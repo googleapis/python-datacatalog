@@ -16,13 +16,16 @@
 import datetime
 import uuid
 
+from google.api_core.exceptions import NotFound, PermissionDenied
 import google.auth
-from google.cloud import bigquery
 from google.cloud import datacatalog_v1
 
 import pytest
 
-bigquery_client = bigquery.Client()
+
+def temp_suffix():
+    now = datetime.datetime.now()
+    return "{}_{}".format(now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8])
 
 
 @pytest.fixture(scope="session")
@@ -32,7 +35,9 @@ def client(credentials):
 
 @pytest.fixture(scope="session")
 def default_credentials():
-    return google.auth.default()
+    return google.auth.default(
+        scopes=["https://www.googleapis.com/auth/cloud-platform"]
+    )
 
 
 @pytest.fixture(scope="session")
@@ -46,93 +51,53 @@ def project_id(default_credentials):
 
 
 @pytest.fixture
-def dataset_id():
-    now = datetime.datetime.now()
-    dataset_id = "python_dataset_sample_{}_{}".format(
-        now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
-    )
-    dataset = bigquery_client.create_dataset(dataset_id)
-    yield dataset.dataset_id
-    bigquery_client.delete_dataset(dataset, delete_contents=True, not_found_ok=True)
+def resources_to_delete(client, project_id):
+    doomed = {
+        "entries": [],
+        "entry_groups": [],
+        "templates": [],
+    }
+    yield doomed
+
+    for entry_name in doomed["entries"]:
+        try:
+            client.delete_entry(name=entry_name)
+        except (NotFound, PermissionDenied):
+            pass
+    for group_name in doomed["entry_groups"]:
+        try:
+            client.delete_entry_group(name=group_name)
+        except (NotFound, PermissionDenied):
+            pass
+    for template_name in doomed["templates"]:
+        try:
+            client.delete_tag_template(name=template_name, force=True)
+        except (NotFound, PermissionDenied):
+            pass
 
 
 @pytest.fixture
-def table_id(project_id, dataset_id):
-    now = datetime.datetime.now()
-    table_id = "python_table_sample_{}_{}".format(
-        now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
-    )
-    table = bigquery.Table("{}.{}.{}".format(project_id, dataset_id, table_id))
-    table = bigquery_client.create_table(table)
-    yield table.table_id
-    bigquery_client.delete_table(table, not_found_ok=True)
-
-
-@pytest.fixture
-def random_entry_id(client, project_id, random_entry_group_id):
-    location = "us-central1"
-    now = datetime.datetime.now()
-    random_entry_id = "example_entry_{}_{}".format(
-        now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
-    )
+def random_entry_id():
+    random_entry_id = f"python_sample_entry_{temp_suffix()}"
     yield random_entry_id
-    entry_name = datacatalog_v1.DataCatalogClient.entry_path(
-        project_id, location, random_entry_group_id, random_entry_id
-    )
-    client.delete_entry(request={"name": entry_name})
 
 
 @pytest.fixture
-def random_entry_group_id(client, project_id):
-    location = "us-central1"
-    now = datetime.datetime.now()
-    random_entry_group_id = "example_entry_group_{}_{}".format(
-        now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
-    )
+def random_entry_group_id():
+    random_entry_group_id = f"python_sample_group_{temp_suffix()}"
     yield random_entry_group_id
-    entry_group_name = datacatalog_v1.DataCatalogClient.entry_group_path(
-        project_id, location, random_entry_group_id
-    )
-    client.delete_entry_group(request={"name": entry_group_name})
 
 
 @pytest.fixture
-def random_entry_name(client, entry_group_name):
-    now = datetime.datetime.now()
-    random_entry_id = "example_entry_{}_{}".format(
-        now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
-    )
-    random_entry_name = "{}/entries/{}".format(entry_group_name, random_entry_id)
-    yield random_entry_name
-    client.delete_entry(request={"name": random_entry_name})
+def random_tag_template_id():
+    random_tag_template_id = f"python_sample_{temp_suffix()}"
+    yield random_tag_template_id
 
 
 @pytest.fixture
-def entry_group_name(client, project_id):
-    now = datetime.datetime.now()
-    entry_group_id = "python_entry_group_sample_{}_{}".format(
-        now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
-    )
-    entry_group = client.create_entry_group(
-        request={
-            "parent": datacatalog_v1.DataCatalogClient.location_path(
-                project_id, "us-central1"
-            ),
-            "entry_group_id": entry_group_id,
-            "entry_group": {},
-        }
-    )
-    yield entry_group.name
-    client.delete_entry_group(request={"name": entry_group.name})
-
-
-@pytest.fixture
-def random_tag_template_id(client, project_id):
+def random_existing_tag_template_id(client, project_id, resources_to_delete):
     location = "us-central1"
-    now = datetime.datetime.now()
-    random_tag_template_id = "python_tag_template_sample_{}_{}".format(
-        now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
-    )
+    random_tag_template_id = f"python_sample_{temp_suffix()}"
     random_tag_template = datacatalog_v1.types.TagTemplate()
     random_tag_template.fields["source"] = datacatalog_v1.types.TagTemplateField()
     random_tag_template.fields[
@@ -146,7 +111,4 @@ def random_tag_template_id(client, project_id):
         tag_template=random_tag_template,
     )
     yield random_tag_template_id
-    random_tag_template_name = client.tag_template_path(
-        project_id, location, random_tag_template_id
-    )
-    client.delete_tag_template(name=random_tag_template_name, force=True)
+    resources_to_delete["templates"].append(random_tag_template.name)
