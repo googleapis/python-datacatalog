@@ -12,29 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from google.cloud import datacatalog_v1beta1
-
-import create_fileset_entry_quickstart
+import quickstart
 
 
-def test_create_fileset_entry_quickstart(
-    capsys, client, project_id, random_entry_group_id, random_entry_id
-):
-
-    create_fileset_entry_quickstart.create_fileset_entry_quickstart(
-        client, project_id, random_entry_group_id, random_entry_id
+def test_quickstart(capsys, client, project_id, dataset_id, table_id, random_tag_template_id):
+    location = "us-central1"
+    override_values = {
+        "project_id": project_id,
+        "dataset_id": dataset_id,
+        "table_id": table_id,
+        "tag_template_id": random_tag_template_id
+    }
+    tag_template_name = client.tag_template_path(
+        project_id, location, random_tag_template_id
     )
+    quickstart.quickstart(override_values)
     out, err = capsys.readouterr()
-    assert (
-        "Created entry group"
-        " projects/{}/locations/{}/entryGroups/{}".format(
-            project_id, "us-central1", random_entry_group_id
-        )
-        in out
-    )
-
-    expected_entry_name = datacatalog_v1beta1.DataCatalogClient.entry_path(
-        project_id, "us-central1", random_entry_group_id, random_entry_id
-    )
-
-    assert "Created entry {}".format(expected_entry_name) in out
+    assert "Created template: {}".format(tag_template_name) in out
+    assert "Created tag:" in out
+    client.delete_tag_template(name=tag_template_name, force=True)

@@ -13,105 +13,119 @@
 # limitations under the License.
 
 
-def create_fileset_entry_quickstart(client, project_id, entry_group_id, entry_id):
-
-    # [START data_catalog_create_fileset_quickstart_tag]
+def quickstart(override_values):
+    """Creates a tag template and attach a tag to a BigQuery table."""
+    # [START data_catalog_quickstart]
     # Import required modules.
-    from google.cloud import datacatalog_v1beta1
+    from google.cloud import datacatalog_v1
 
-    # TODO(developer): Construct a Data Catalog client object.
-    # client = datacatalog_v1beta1.DataCatalogClient()
+    # TODO: Set these values before running the sample.
+    # Google Cloud Platform project.
+    project_id = "my_project"
+    # Set dataset_id to the ID of existing dataset.
+    dataset_id = "demo_dataset"
+    # Set table_id to the ID of existing table.
+    table_id = "trips"
+    # Tag template to create.
+    tag_template_id = "example_tag_template"
 
-    # TODO(developer): Set project_id to your
-    #  Google Cloud Platform project ID the entry will belong.
-    # project_id = "your-project-id"
+    # [END data_catalog_quickstart]
 
-    # TODO(developer): Specify the geographic location where the
-    #  entry should reside.
-    # Currently, Data Catalog stores metadata in the us-central1 region.
-    location_id = "us-central1"
+    # To facilitate testing, we replace values with alternatives
+    # provided by the testing harness.
+    project_id = override_values.get("project_id", project_id)
+    dataset_id = override_values.get("dataset_id", dataset_id)
+    table_id = override_values.get("table_id", table_id)
+    tag_template_id = override_values.get("tag_template_id", tag_template_id)
 
-    # TODO(developer): Set entry_group_id to the ID of the entry group
-    #  the entry will belong.
-    # entry_group_id = "your_entry_group_id"
+    # [START data_catalog_quickstart]
+    # For all regions available, see:
+    # https://cloud.google.com/data-catalog/docs/concepts/regions
+    location = "us-central1"
 
-    # TODO(developer): Set entry_id to the ID of the entry to create.
-    # entry_id = "your_entry_id"
+    # Use Application Default Credentials to create a new
+    # Data Catalog client. GOOGLE_APPLICATION_CREDENTIALS
+    # environment variable must be set with the location
+    # of a service account key file.
+    datacatalog_client = datacatalog_v1.DataCatalogClient()
 
-    # Create an Entry Group.
-    # Construct a full Entry Group object to send to the API.
-    entry_group_obj = datacatalog_v1beta1.EntryGroup()
-    entry_group_obj.display_name = "My Fileset Entry Group"
-    entry_group_obj.description = "This Entry Group consists of ...."
+    # Create a Tag Template.
+    tag_template = datacatalog_v1.types.TagTemplate()
 
-    # Send the Entry Group to the API for creation.
-    # Raises google.api_core.exceptions.AlreadyExists if the Entry Group
-    # already exists within the project.
-    entry_group = client.create_entry_group(
-        request={
-            "parent": f"projects/{project_id}/locations/{location_id}",
-            "entry_group_id": entry_group_id,
-            "entry_group": entry_group_obj,
-        }
-    )
-    print("Created entry group {}".format(entry_group.name))
+    tag_template.display_name = "Demo Tag Template"
 
-    # Create a Fileset Entry.
-    # Construct a full Entry object to send to the API.
-    entry = datacatalog_v1beta1.Entry()
-    entry.display_name = "My Fileset"
-    entry.description = "This Fileset consists of ..."
-    entry.gcs_fileset_spec.file_patterns.append("gs://cloud-samples-data/*")
-    entry.type = datacatalog_v1beta1.EntryType.FILESET
+    tag_template.fields["source"] = datacatalog_v1.types.TagTemplateField()
+    tag_template.fields["source"].display_name = "Source of data asset"
+    tag_template.fields[
+        "source"
+    ].type.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.STRING
 
-    # Create the Schema, for example when you have a csv file.
-    columns = []
-    columns.append(
-        datacatalog_v1beta1.ColumnSchema(
-            column="first_name",
-            description="First name",
-            mode="REQUIRED",
-            type="STRING",
+    tag_template.fields["num_rows"] = datacatalog_v1.types.TagTemplateField()
+    tag_template.fields["num_rows"].display_name = "Number of rows in data asset"
+    tag_template.fields[
+        "num_rows"
+    ].type.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.DOUBLE
+
+    tag_template.fields["has_pii"] = datacatalog_v1.types.TagTemplateField()
+    tag_template.fields["has_pii"].display_name = "Has PII"
+    tag_template.fields[
+        "has_pii"
+    ].type.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.BOOL
+
+    tag_template.fields["pii_type"] = datacatalog_v1.types.TagTemplateField()
+    tag_template.fields["pii_type"].display_name = "PII type"
+
+    for display_name in ["EMAIL", "SOCIAL SECURITY NUMBER", "NONE"]:
+        enum_value = datacatalog_v1.types.FieldType.EnumType.EnumValue(
+            display_name=display_name
         )
-    )
-
-    columns.append(
-        datacatalog_v1beta1.ColumnSchema(
-            column="last_name", description="Last name", mode="REQUIRED", type="STRING"
+        tag_template.fields["pii_type"].type.enum_type.allowed_values.append(
+            enum_value
         )
+
+    expected_template_name = datacatalog_v1.DataCatalogClient.tag_template_path(
+        project_id, location, tag_template_id
     )
 
-    # Create sub columns for the addresses parent column
-    subcolumns = []
-    subcolumns.append(
-        datacatalog_v1beta1.ColumnSchema(
-            column="city", description="City", mode="NULLABLE", type="STRING"
+    # Create the Tag Template.
+    try:
+        tag_template = datacatalog_client.create_tag_template(
+            parent=f"projects/{project_id}/locations/us-central1",
+            tag_template_id=tag_template_id,
+            tag_template=tag_template,
         )
+        print(f"Created template: {tag_template.name}")
+    except OSError as e:
+        print(f"Cannot create template: {expected_template_name}")
+        print(f"{e}")
+
+    # Lookup Data Catalog's Entry referring to the table.
+    resource_name = (
+        f"//bigquery.googleapis.com/projects/{project_id}"
+        f"/datasets/{dataset_id}/tables/{table_id}"
+    )
+    table_entry = datacatalog_client.lookup_entry(
+        request={"linked_resource": resource_name}
     )
 
-    subcolumns.append(
-        datacatalog_v1beta1.ColumnSchema(
-            column="state", description="State", mode="NULLABLE", type="STRING"
-        )
-    )
+    # Attach a Tag to the table.
+    tag = datacatalog_v1.types.Tag()
 
-    columns.append(
-        datacatalog_v1beta1.ColumnSchema(
-            column="addresses",
-            description="Addresses",
-            mode="REPEATED",
-            subcolumns=subcolumns,
-            type="RECORD",
-        )
-    )
+    tag.template = tag_template.name
+    tag.name = "my_super_cool_tag"
 
-    entry.schema.columns.extend(columns)
+    tag.fields["source"] = datacatalog_v1.types.TagField()
+    tag.fields["source"].string_value = "Copied from tlc_yellow_trips_2018"
 
-    # Send the entry to the API for creation.
-    # Raises google.api_core.exceptions.AlreadyExists if the Entry already
-    # exists within the project.
-    entry = client.create_entry(
-        request={"parent": entry_group.name, "entry_id": entry_id, "entry": entry}
-    )
-    print("Created entry {}".format(entry.name))
-    # [END data_catalog_create_fileset_quickstart_tag]
+    tag.fields["num_rows"] = datacatalog_v1.types.TagField()
+    tag.fields["num_rows"].double_value = 113496874
+
+    tag.fields["has_pii"] = datacatalog_v1.types.TagField()
+    tag.fields["has_pii"].bool_value = False
+
+    tag.fields["pii_type"] = datacatalog_v1.types.TagField()
+    tag.fields["pii_type"].enum_value.display_name = "NONE"
+
+    tag = datacatalog_client.create_tag(parent=table_entry.name, tag=tag)
+    print(f"Created tag: {tag.name}")
+    # [END data_catalog_quickstart]
