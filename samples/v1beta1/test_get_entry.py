@@ -18,8 +18,8 @@ import get_entry
 
 def test_get_entry(client, entry):
     # break entry name into parts
-    name = client.parse_entry_path(entry.name)
+    name = client.parse_entry_path(entry)
     retrieved_entry = get_entry.sample_get_entry(
         name["project"], name["location"], name["entry_group"], name["entry"]
     )
-    assert retrieved_entry.name == entry.name
+    assert retrieved_entry.name == entry

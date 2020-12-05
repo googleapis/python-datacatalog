@@ -15,7 +15,7 @@
 
 def create_fileset_entry(client, entry_group_name, entry_id):
 
-    # [START data_catalog_create_fileset_tag]
+    # [START data_catalog_create_fileset_v1beta1]
     from google.cloud import datacatalog_v1beta1
 
     # TODO(developer): Construct a Data Catalog client object.
@@ -33,7 +33,7 @@ def create_fileset_entry(client, entry_group_name, entry_id):
     entry.display_name = "My Fileset"
     entry.description = "This Fileset consists of ..."
     entry.gcs_fileset_spec.file_patterns.append("gs://my_bucket/*")
-    entry.type = datacatalog_v1beta1.enums.EntryType.FILESET
+    entry.type = datacatalog_v1beta1.EntryType.FILESET
 
     # Create the Schema, for example when you have a csv file.
     columns = []
@@ -85,4 +85,4 @@ def create_fileset_entry(client, entry_group_name, entry_id):
         request={"parent": entry_group_name, "entry_id": entry_id, "entry": entry}
     )
     print("Created entry {}".format(entry.name))
-    # [END data_catalog_create_fileset_tag]
+    # [END data_catalog_create_fileset_v1beta1]

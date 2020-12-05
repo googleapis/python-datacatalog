@@ -17,5 +17,5 @@ import search
 
 
 def test_search_catalog(client, project_id):
-    results = search.sample_search_catalog(project_id, True, "system=bigquery")
-    assert next(results) is not None
+    results = search.sample_search_catalog(project_id, False, "type=dataset")
+    assert results is not None

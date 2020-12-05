@@ -16,10 +16,10 @@
 import datetime
 import uuid
 
-import pytest
-
 import google.auth
 from google.cloud import datacatalog_v1beta1
+
+import pytest
 
 
 @pytest.fixture(scope="session")
@@ -85,19 +85,12 @@ def entry(client, entry_group_name):
     random_entry_id = "example_entry_{}_{}".format(
         now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
     )
+    entry = datacatalog_v1beta1.CreateEntryRequest
     entry = client.create_entry(
-        request={"parent": entry_group_name, "entry_id": random_entry_id, "entry": {}}
+        request={"parent": entry_group_name, "entry_id": random_entry_id, "entry": {"type": "DATA_STREAM", "name": "samples_test_entry"}}
     )
     yield entry.name
     client.delete_entry(request={"name": entry.name})
-
-
-@pytest.fixture
-def sql_entry(client, entry):
-    # covnert entry name to sql resource style
-    name = client.parse_entry_name(entry)
-    sql_name = f"datacatalog.entry.{name['project']}.{name['location']}.{name['entry_group']}.{name['entry']}"
-    yield sql_name, entry.name
 
 
 @pytest.fixture
@@ -108,7 +101,7 @@ def entry_group_name(client, project_id):
     )
     entry_group = client.create_entry_group(
         request={
-            "parent": f"projects/{project_id}/locations/us-central-1",
+            "parent": f"projects/{project_id}/locations/us-central1",
             "entry_group_id": entry_group_id,
             "entry_group": datacatalog_v1beta1.EntryGroup(),
         }

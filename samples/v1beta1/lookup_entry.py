@@ -22,7 +22,7 @@
 #   description: Lookup Entry
 #   usage: python3 samples/v1beta1/datacatalog_lookup_entry.py [--resource_name "[Full Resource Name]"]
 
-# [START data_catalog_lookup_entry]
+# [START data_catalog_lookup_entry_v1beta1]
 from google.cloud import datacatalog_v1beta1
 
 
@@ -40,13 +40,11 @@ def sample_lookup_entry(resource_name: str):
     """
 
     client = datacatalog_v1beta1.DataCatalogClient()
-
-    # resource_name = '[Full Resource Name]'
     entry = client.lookup_entry(request={"linked_resource": resource_name})
     print(f"Entry name: {entry.name}")
     print(f"Entry type: {datacatalog_v1beta1.EntryType(entry.type).name}")
     print(f"Linked resource: {entry.linked_resource}")
-    # [END data_catalog_lookup_entry]
+    # [END data_catalog_lookup_entry_v1beta1]
     return entry
 
 
