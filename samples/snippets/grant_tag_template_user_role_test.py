@@ -17,14 +17,13 @@ import grant_tag_template_user_role
 
 
 def test_grant_tag_template_user_role(
-    capsys, project_id, random_existing_tag_template_id
+    capsys, project_id, random_existing_tag_template_id, valid_member_id
 ):
-    member_id = "user:super-cool.test-user@gmail.com"
     override_values = {
         "project_id": project_id,
         "tag_template_id": random_existing_tag_template_id,
-        "member_id": member_id,
+        "member_id": valid_member_id,
     }
     grant_tag_template_user_role.grant_tag_template_user_role(override_values)
     out, err = capsys.readouterr()
-    assert f"Member: {member_id}, Role: roles/datacatalog.tagTemplateUser" in out
+    assert f"Member: {valid_member_id}, Role: roles/datacatalog.tagTemplateUser" in out

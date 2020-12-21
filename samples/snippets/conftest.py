@@ -22,6 +22,11 @@ from google.cloud import datacatalog_v1
 
 import pytest
 
+datacatalog = datacatalog_v1.DataCatalogClient()
+
+
+LOCATION = "us-central1"
+
 
 def temp_suffix():
     now = datetime.datetime.now()
@@ -48,6 +53,17 @@ def credentials(default_credentials):
 @pytest.fixture(scope="session")
 def project_id(default_credentials):
     return default_credentials[1]
+
+
+@pytest.fixture
+def valid_member_id(client, project_id, random_existing_tag_template_id):
+    template_name = datacatalog_v1.DataCatalogClient.tag_template_path(
+        project_id, LOCATION, random_existing_tag_template_id
+    )
+
+    # Retrieve Template's current IAM Policy.
+    policy = datacatalog.get_iam_policy(resource=template_name)
+    yield policy.bindings[0].members[0]
 
 
 @pytest.fixture
@@ -96,7 +112,6 @@ def random_tag_template_id():
 
 @pytest.fixture
 def random_existing_tag_template_id(client, project_id, resources_to_delete):
-    location = "us-central1"
     random_tag_template_id = f"python_sample_{temp_suffix()}"
     random_tag_template = datacatalog_v1.types.TagTemplate()
     random_tag_template.fields["source"] = datacatalog_v1.types.TagTemplateField()
@@ -105,7 +120,7 @@ def random_existing_tag_template_id(client, project_id, resources_to_delete):
     ].type_.primitive_type = datacatalog_v1.FieldType.PrimitiveType.STRING.value
     random_tag_template = client.create_tag_template(
         parent=datacatalog_v1.DataCatalogClient.common_location_path(
-            project_id, location
+            project_id, LOCATION
         ),
         tag_template_id=random_tag_template_id,
         tag_template=random_tag_template,

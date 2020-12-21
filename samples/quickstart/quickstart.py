@@ -90,7 +90,7 @@ def quickstart(override_values):
     # Create the Tag Template.
     try:
         tag_template = datacatalog_client.create_tag_template(
-            parent=f"projects/{project_id}/locations/us-central1",
+            parent=f"projects/{project_id}/locations/{location}",
             tag_template_id=tag_template_id,
             tag_template=tag_template,
         )
