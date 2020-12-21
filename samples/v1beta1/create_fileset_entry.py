@@ -33,7 +33,7 @@ def create_fileset_entry(client, entry_group_name, entry_id):
     entry.display_name = "My Fileset"
     entry.description = "This Fileset consists of ..."
     entry.gcs_fileset_spec.file_patterns.append("gs://my_bucket/*")
-    entry.type = datacatalog_v1beta1.EntryType.FILESET
+    entry.type_ = datacatalog_v1beta1.EntryType.FILESET
 
     # Create the Schema, for example when you have a csv file.
     columns = []
@@ -42,13 +42,13 @@ def create_fileset_entry(client, entry_group_name, entry_id):
             column="first_name",
             description="First name",
             mode="REQUIRED",
-            type="STRING",
+            type_="STRING",
         )
     )
 
     columns.append(
         datacatalog_v1beta1.types.ColumnSchema(
-            column="last_name", description="Last name", mode="REQUIRED", type="STRING"
+            column="last_name", description="Last name", mode="REQUIRED", type_="STRING"
         )
     )
 
@@ -56,13 +56,13 @@ def create_fileset_entry(client, entry_group_name, entry_id):
     subcolumns = []
     subcolumns.append(
         datacatalog_v1beta1.types.ColumnSchema(
-            column="city", description="City", mode="NULLABLE", type="STRING"
+            column="city", description="City", mode="NULLABLE", type_="STRING"
         )
     )
 
     subcolumns.append(
         datacatalog_v1beta1.types.ColumnSchema(
-            column="state", description="State", mode="NULLABLE", type="STRING"
+            column="state", description="State", mode="NULLABLE", type_="STRING"
         )
     )
 
@@ -72,7 +72,7 @@ def create_fileset_entry(client, entry_group_name, entry_id):
             description="Addresses",
             mode="REPEATED",
             subcolumns=subcolumns,
-            type="RECORD",
+            type_="RECORD",
         )
     )
 

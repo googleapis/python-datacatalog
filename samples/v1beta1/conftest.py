@@ -87,7 +87,7 @@ def entry(client, entry_group_name):
     )
     entry = datacatalog_v1beta1.CreateEntryRequest
     entry = client.create_entry(
-        request={"parent": entry_group_name, "entry_id": random_entry_id, "entry": {"type": "DATA_STREAM", "name": "samples_test_entry"}}
+        request={"parent": entry_group_name, "entry_id": random_entry_id, "entry": {"type_": "DATA_STREAM", "name": "samples_test_entry"}}
     )
     yield entry.name
     client.delete_entry(request={"name": entry.name})

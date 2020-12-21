@@ -58,19 +58,19 @@ def quickstart(override_values):
     tag_template.fields["source"].display_name = "Source of data asset"
     tag_template.fields[
         "source"
-    ].type.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.STRING
+    ].type_.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.STRING
 
     tag_template.fields["num_rows"] = datacatalog_v1.types.TagTemplateField()
     tag_template.fields["num_rows"].display_name = "Number of rows in data asset"
     tag_template.fields[
         "num_rows"
-    ].type.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.DOUBLE
+    ].type_.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.DOUBLE
 
     tag_template.fields["has_pii"] = datacatalog_v1.types.TagTemplateField()
     tag_template.fields["has_pii"].display_name = "Has PII"
     tag_template.fields[
         "has_pii"
-    ].type.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.BOOL
+    ].type_.primitive_type = datacatalog_v1.types.FieldType.PrimitiveType.BOOL
 
     tag_template.fields["pii_type"] = datacatalog_v1.types.TagTemplateField()
     tag_template.fields["pii_type"].display_name = "PII type"
@@ -79,7 +79,7 @@ def quickstart(override_values):
         enum_value = datacatalog_v1.types.FieldType.EnumType.EnumValue(
             display_name=display_name
         )
-        tag_template.fields["pii_type"].type.enum_type.allowed_values.append(
+        tag_template.fields["pii_type"].type_.enum_type.allowed_values.append(
             enum_value
         )
 

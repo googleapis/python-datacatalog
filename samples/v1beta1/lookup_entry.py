@@ -42,7 +42,7 @@ def sample_lookup_entry(resource_name: str):
     client = datacatalog_v1beta1.DataCatalogClient()
     entry = client.lookup_entry(request={"linked_resource": resource_name})
     print(f"Entry name: {entry.name}")
-    print(f"Entry type: {datacatalog_v1beta1.EntryType(entry.type).name}")
+    print(f"Entry type: {datacatalog_v1beta1.EntryType(entry.type_).name}")
     print(f"Linked resource: {entry.linked_resource}")
     # [END data_catalog_lookup_entry_v1beta1]
     return entry
@@ -52,7 +52,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--resource_name", type=str, default="[Full Resource Name]")
+    parser.add_argument("--resource_name", type_=str, default="[Full Resource Name]")
     args = parser.parse_args()
 
     sample_lookup_entry(args.resource_name)
