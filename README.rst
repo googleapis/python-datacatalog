@@ -35,6 +35,17 @@ In order to use this library, you first need to go through the following steps:
 .. _Enable the Google Cloud Data Catalog API.:  https://cloud.google.com/data-catalog
 .. _Setup Authentication.: https://googleapis.dev/python/google-api-core/latest/auth.html
 
+
+Supported Python Versions
+^^^^^^^^^^^^^^^^^^^^^^^^^
+Python >= 3.6
+
+Deprecated Python Versions
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+Python == 2.7.
+
+The last version of this library compatible with Python 2.7 is google-cloud-datacatalog==1.0.0.
+
 Installation
 ~~~~~~~~~~~~
 
@@ -77,8 +88,8 @@ Next Steps
    API to see other available methods on the client.
 -  Read the `Google Cloud Data Catalog API Product documentation`_ to learn
    more about the product and see How-to Guides.
--  View this `repository’s main README`_ to see the full list of Cloud
+-  View this `README`_ to see the full list of Cloud
    APIs that we cover.
 
 .. _Google Cloud Data Catalog API Product documentation:  https://cloud.google.com/data-catalog
-.. _repository’s main README: https://github.com/googleapis/google-cloud-python/blob/master/README.rst
+.. _README: https://github.com/googleapis/google-cloud-python/blob/master/README.rst
