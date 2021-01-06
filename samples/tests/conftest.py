@@ -19,12 +19,12 @@ import uuid
 import pytest
 
 import google.auth
-from google.cloud import datacatalog_v1
+from google.cloud import datacatalog_v1beta1
 
 
 @pytest.fixture(scope="session")
 def client(credentials):
-    return datacatalog_v1.DataCatalogClient(credentials=credentials)
+    return datacatalog_v1beta1.DataCatalogClient(credentials=credentials)
 
 
 @pytest.fixture(scope="session")
@@ -49,7 +49,7 @@ def random_entry_id(client, project_id, random_entry_group_id):
         now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
     )
     yield random_entry_id
-    entry_name = datacatalog_v1.DataCatalogClient.entry_path(
+    entry_name = datacatalog_v1beta1.DataCatalogClient.entry_path(
         project_id, "us-central1", random_entry_group_id, random_entry_id
     )
     client.delete_entry(request = {'name': entry_name})
@@ -62,7 +62,7 @@ def random_entry_group_id(client, project_id):
         now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
     )
     yield random_entry_group_id
-    entry_group_name = datacatalog_v1.DataCatalogClient.entry_group_path(
+    entry_group_name = datacatalog_v1beta1.DataCatalogClient.entry_group_path(
         project_id, "us-central1", random_entry_group_id
     )
     client.delete_entry_group(request = {'name': entry_group_name})
@@ -86,9 +86,6 @@ def entry_group_name(client, project_id):
         now.strftime("%Y%m%d%H%M%S"), uuid.uuid4().hex[:8]
     )
     entry_group = client.create_entry_group(
-        datacatalog_v1.DataCatalogClient.common_location_path(project_id, "us-central1"),
-        entry_group_id,
-        {},
-    )
+        request = {'parent': datacatalog_v1beta1.DataCatalogClient.location_path(project_id, "us-central1"), 'entry_group_id': entry_group_id, 'entry_group': {}})
     yield entry_group.name
-    client.delete_entry_group(request={'name': entry_group.name})
+    client.delete_entry_group(request = {'name': entry_group.name})
