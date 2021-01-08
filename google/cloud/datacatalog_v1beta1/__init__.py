@@ -166,6 +166,4 @@ __all__ = (
     "UpdateTagTemplateRequest",
     "UpdateTaxonomyRequest",
     "ViewSpec",
-    "PolicyTagManagerClient",
-    "PolicyTagManagerSerializationClient",
 )
