@@ -23,16 +23,17 @@ def search_assets(override_values):
     # TODO: Set these values before running the sample.
     project_id = "project_id"
 
+    # Set custom query.
+    search_string = "type=dataset"
     # [END data_catalog_search_assets]
 
     # To facilitate testing, we replace values with alternatives
     # provided by the testing harness.
     project_id = override_values.get("project_id", project_id)
+    tag_template_id = override_values.get("tag_template_id", search_string)
+    search_string = f"name:{tag_template_id}"
 
     # [START data_catalog_search_assets]
-    # Set custom query.
-    search_string = "type=dataset"
-
     scope = datacatalog_v1.types.SearchCatalogRequest.Scope()
     scope.include_project_ids.append(project_id)
 
@@ -41,7 +42,7 @@ def search_assets(override_values):
 
     search_results = datacatalog.search_catalog(scope=scope, query=search_string)
 
-    print("Datasets in project:")
+    print("Results in project:")
     for result in search_results:
         print(result)
     # [END data_catalog_search_assets]

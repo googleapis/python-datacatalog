@@ -134,7 +134,7 @@ FLAKE8_COMMON_ARGS = [
 
 @nox.session
 def lint(session: nox.sessions.Session) -> None:
-    if not TEST_CONFIG['enforce_type_hints']:
+    if not TEST_CONFIG["enforce_type_hints"]:
         session.install("flake8", "flake8-import-order")
     else:
         session.install("flake8", "flake8-import-order", "flake8-annotations")
@@ -169,7 +169,9 @@ def blacken(session: nox.sessions.Session) -> None:
 PYTEST_COMMON_ARGS = ["--junitxml=sponge_log.xml"]
 
 
-def _session_tests(session: nox.sessions.Session, post_install: Callable = None) -> None:
+def _session_tests(
+    session: nox.sessions.Session, post_install: Callable = None
+) -> None:
     """Runs py.test for a particular project."""
     if os.path.exists("requirements.txt"):
         session.install("-r", "requirements.txt")
