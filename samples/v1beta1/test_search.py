@@ -16,6 +16,6 @@
 import search
 
 
-def test_search_catalog(client, project_id):
-    results = search.sample_search_catalog(project_id, False, "type=dataset")
+def test_search_catalog(client, project_id, entry_group_name):
+    results = search.sample_search_catalog(project_id, False, f"name:{entry_group_name}")
     assert results is not None
