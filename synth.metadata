@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/python-datacatalog.git",
-        "sha": "00a5f47c852550de644960a258fcff29121cda91"
+        "sha": "2dd95220a49eee886c2da27248a2a5941474943a"
       }
     },
     {
