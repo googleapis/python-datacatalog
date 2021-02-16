@@ -139,7 +139,7 @@ entry.type = datacatalog_v1.enums.EntryType.FILESET
 ```py
 from google.cloud import datacatalog_v1
 entry = datacatalog_v1.Entry()
-entry.type = datacatalog_v1.EntryType.FILESET
+entry.type_ = datacatalog_v1.EntryType.FILESET
 ```
 
 ## Common Resource Path Helper Methods
