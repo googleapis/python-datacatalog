@@ -165,9 +165,9 @@ The renamed attributes are:
 
 | Applicable previous versions |
 |:-----------------------------|
-| v2.0.0 or lower              |
+| v1.0.0 or lower              |
 
-The `location_path` method existing in `google-cloud-datacatalog<=1.0.0` was renamed to `common_location_path`.
+The `location_path` method existing in `google-cloud-datacatalog<=1.0.0` was renamed to `common_location_path` in v3.0.0.
 
 If you are upgrading from v1.0.0 or lower, modify your code to use new method name.
 
