@@ -25,7 +25,7 @@ common = gcp.CommonTemplates()
 # ----------------------------------------------------------------------------
 # Generate datacatalog GAPIC layer
 # ----------------------------------------------------------------------------
-versions = ['v1', 'v1beta1']
+versions = ['v1beta1', 'v1']  # the highest stable version should be last
 for version in versions:
     library = gapic.py_library(
         service='datacatalog',
@@ -46,14 +46,6 @@ for version in versions:
         ],
     )
 
-# Fix docstring issue for classes with no summary line
-s.replace(
-    "google/cloud/**/proto/*_pb2.py",
-    ''''__doc__': """Attributes:''',
-    '''"__doc__": """
-    Attributes:''',
-)
-
 # ----------------------------------------------------------------------------
 # Add templated files
 # ----------------------------------------------------------------------------
@@ -69,18 +61,5 @@ s.move(templated_files, excludes=[".coveragerc"]) # microgenerator has a good .c
 
 python.py_samples()
 
-# Temporarily disable warnings due to
-# https://github.com/googleapis/gapic-generator-python/issues/525
-s.replace("noxfile.py", '[\"\']-W[\"\']', '# "-W"')
-
-# ----------------------------------------------------------------------------
-# Samples templates
-# ----------------------------------------------------------------------------
-
-python.py_samples()
-
-# Temporarily disable warnings due to
-# https://github.com/googleapis/gapic-generator-python/issues/525
-s.replace("noxfile.py", '[\"\']-W[\"\']', '# "-W"')
 
 s.shell.run(["nox", "-s", "blacken"], hide_output=False)
