@@ -25,7 +25,7 @@ common = gcp.CommonTemplates()
 # ----------------------------------------------------------------------------
 # Generate datacatalog GAPIC layer
 # ----------------------------------------------------------------------------
-versions = ['v1beta1', 'v1']  # the highest stable version should be last
+versions = ['v1', 'v1beta1']
 for version in versions:
     library = gapic.py_library(
         service='datacatalog',
