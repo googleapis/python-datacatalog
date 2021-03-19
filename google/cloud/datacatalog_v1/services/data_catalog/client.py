@@ -2801,7 +2801,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
             request = iam_policy.SetIamPolicyRequest(**request)
 
         elif not request:
-            request = iam_policy.SetIamPolicyRequest(resource=resource,)
+            request = iam_policy.SetIamPolicyRequest()
 
             if resource is not None:
                 request.resource = resource
@@ -2948,7 +2948,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
             request = iam_policy.GetIamPolicyRequest(**request)
 
         elif not request:
-            request = iam_policy.GetIamPolicyRequest(resource=resource,)
+            request = iam_policy.GetIamPolicyRequest()
 
             if resource is not None:
                 request.resource = resource
