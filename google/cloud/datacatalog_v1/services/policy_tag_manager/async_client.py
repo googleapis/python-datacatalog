@@ -224,19 +224,23 @@ class PolicyTagManagerAsyncClient:
                 hierarchical policy tags that classify
                 data along a common axis. For instance a
                 "data sensitivity" taxonomy could
-                contain the following policy tags:
-                + PII
-                  + Account number
-                  + Age
-                  + SSN
-                  + Zipcode
-                + Financials
-                  + Revenue
+                contain the following policy tags::
+
+                    + PII
+                      + Account number
+                      + Age
+                      + SSN
+                      + Zipcode
+                    + Financials
+                      + Revenue
+
                 A "data origin" taxonomy could contain
-                the following policy tags: + User data
-                + Employee data
-                + Partner data
-                + Public data
+                the following policy tags::
+
+                    + User data
+                    + Employee data
+                    + Partner data
+                    + Public data
 
         """
         # Create or coerce a protobuf request object.
@@ -385,19 +389,23 @@ class PolicyTagManagerAsyncClient:
                 hierarchical policy tags that classify
                 data along a common axis. For instance a
                 "data sensitivity" taxonomy could
-                contain the following policy tags:
-                + PII
-                  + Account number
-                  + Age
-                  + SSN
-                  + Zipcode
-                + Financials
-                  + Revenue
+                contain the following policy tags::
+
+                    + PII
+                      + Account number
+                      + Age
+                      + SSN
+                      + Zipcode
+                    + Financials
+                      + Revenue
+
                 A "data origin" taxonomy could contain
-                the following policy tags: + User data
-                + Employee data
-                + Partner data
-                + Public data
+                the following policy tags::
+
+                    + User data
+                    + Employee data
+                    + Partner data
+                    + Public data
 
         """
         # Create or coerce a protobuf request object.
@@ -558,19 +566,23 @@ class PolicyTagManagerAsyncClient:
                 hierarchical policy tags that classify
                 data along a common axis. For instance a
                 "data sensitivity" taxonomy could
-                contain the following policy tags:
-                + PII
-                  + Account number
-                  + Age
-                  + SSN
-                  + Zipcode
-                + Financials
-                  + Revenue
+                contain the following policy tags::
+
+                    + PII
+                      + Account number
+                      + Age
+                      + SSN
+                      + Zipcode
+                    + Financials
+                      + Revenue
+
                 A "data origin" taxonomy could contain
-                the following policy tags: + User data
-                + Employee data
-                + Partner data
-                + Public data
+                the following policy tags::
+
+                    + User data
+                    + Employee data
+                    + Partner data
+                    + Public data
 
         """
         # Create or coerce a protobuf request object.
@@ -652,14 +664,10 @@ class PolicyTagManagerAsyncClient:
                 Denotes one policy tag in a taxonomy
                 (e.g. ssn). Policy tags can be defined
                 in a hierarchy. For example, consider
-                the following hierarchy: + Geolocation
-                  + LatLong
-                  + City
-                  + ZipCode
+                the following hierarchy: Geolocation LatLong City ZipCode
                 Policy tag "Geolocation" contains 3
                 child policy tags: "LatLong", "City",
                 and "ZipCode".
-
         """
         # Create or coerce a protobuf request object.
         # Sanity check: If we got a request object, we should *not* have
@@ -711,10 +719,12 @@ class PolicyTagManagerAsyncClient:
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
         r"""Deletes a policy tag. This method also deletes
-        - all of its descendant policy tags, if any,
-          - the policies associated with the policy tag and its
-        descendants, and   - references from BigQuery table
-        schema of the policy tag and its     descendants.
+
+            - all of its descendant policy tags, if any,
+            - the policies associated with the policy tag and its descendants,
+              and
+            - references from BigQuery table schema of the policy tag and its
+              descendants.
 
         Args:
             request (:class:`google.cloud.datacatalog_v1.types.DeletePolicyTagRequest`):
@@ -809,10 +819,13 @@ class PolicyTagManagerAsyncClient:
                 Denotes one policy tag in a taxonomy
                 (e.g. ssn). Policy tags can be defined
                 in a hierarchy. For example, consider
-                the following hierarchy: + Geolocation
-                  + LatLong
-                  + City
-                  + ZipCode
+                the following hierarchy::
+
+                    + Geolocation
+                     + LatLong
+                     + City
+                     + ZipCode
+
                 Policy tag "Geolocation" contains 3
                 child policy tags: "LatLong", "City",
                 and "ZipCode".
@@ -974,10 +987,13 @@ class PolicyTagManagerAsyncClient:
                 Denotes one policy tag in a taxonomy
                 (e.g. ssn). Policy tags can be defined
                 in a hierarchy. For example, consider
-                the following hierarchy: + Geolocation
+                the following hierarchy::
+
+                  + Geolocation
                   + LatLong
                   + City
                   + ZipCode
+
                 Policy tag "Geolocation" contains 3
                 child policy tags: "LatLong", "City",
                 and "ZipCode".
