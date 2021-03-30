@@ -227,6 +227,11 @@ class DataCatalogTransport(abc.ABC):
                 default_timeout=None,
                 client_info=client_info,
             ),
+            self.rename_tag_template_field_enum_value: gapic_v1.method.wrap_method(
+                self.rename_tag_template_field_enum_value,
+                default_timeout=None,
+                client_info=client_info,
+            ),
             self.delete_tag_template_field: gapic_v1.method.wrap_method(
                 self.delete_tag_template_field,
                 default_timeout=None,
@@ -451,6 +456,15 @@ class DataCatalogTransport(abc.ABC):
         self,
     ) -> typing.Callable[
         [datacatalog.RenameTagTemplateFieldRequest],
+        typing.Union[tags.TagTemplateField, typing.Awaitable[tags.TagTemplateField]],
+    ]:
+        raise NotImplementedError()
+
+    @property
+    def rename_tag_template_field_enum_value(
+        self,
+    ) -> typing.Callable[
+        [datacatalog.RenameTagTemplateFieldEnumValueRequest],
         typing.Union[tags.TagTemplateField, typing.Awaitable[tags.TagTemplateField]],
     ]:
         raise NotImplementedError()

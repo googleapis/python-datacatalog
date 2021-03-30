@@ -37,6 +37,7 @@ from google.cloud.datacatalog_v1.services.data_catalog import DataCatalogClient
 from google.cloud.datacatalog_v1.services.data_catalog import pagers
 from google.cloud.datacatalog_v1.services.data_catalog import transports
 from google.cloud.datacatalog_v1.types import common
+from google.cloud.datacatalog_v1.types import data_source
 from google.cloud.datacatalog_v1.types import datacatalog
 from google.cloud.datacatalog_v1.types import gcs_fileset_spec
 from google.cloud.datacatalog_v1.types import schema
@@ -2123,12 +2124,16 @@ def test_create_entry(
         call.return_value = datacatalog.Entry(
             name="name_value",
             linked_resource="linked_resource_value",
+            fully_qualified_name="fully_qualified_name_value",
             display_name="display_name_value",
             description="description_value",
             type_=datacatalog.EntryType.TABLE,
             integrated_system=common.IntegratedSystem.BIGQUERY,
             gcs_fileset_spec=gcs_fileset_spec.GcsFilesetSpec(
                 file_patterns=["file_patterns_value"]
+            ),
+            database_table_spec=datacatalog.DatabaseTableSpec(
+                type_=datacatalog.DatabaseTableSpec.TableType.NATIVE
             ),
         )
 
@@ -2147,6 +2152,8 @@ def test_create_entry(
     assert response.name == "name_value"
 
     assert response.linked_resource == "linked_resource_value"
+
+    assert response.fully_qualified_name == "fully_qualified_name_value"
 
     assert response.display_name == "display_name_value"
 
@@ -2192,6 +2199,7 @@ async def test_create_entry_async(
             datacatalog.Entry(
                 name="name_value",
                 linked_resource="linked_resource_value",
+                fully_qualified_name="fully_qualified_name_value",
                 display_name="display_name_value",
                 description="description_value",
             )
@@ -2211,6 +2219,8 @@ async def test_create_entry_async(
     assert response.name == "name_value"
 
     assert response.linked_resource == "linked_resource_value"
+
+    assert response.fully_qualified_name == "fully_qualified_name_value"
 
     assert response.display_name == "display_name_value"
 
@@ -2375,12 +2385,16 @@ def test_update_entry(
         call.return_value = datacatalog.Entry(
             name="name_value",
             linked_resource="linked_resource_value",
+            fully_qualified_name="fully_qualified_name_value",
             display_name="display_name_value",
             description="description_value",
             type_=datacatalog.EntryType.TABLE,
             integrated_system=common.IntegratedSystem.BIGQUERY,
             gcs_fileset_spec=gcs_fileset_spec.GcsFilesetSpec(
                 file_patterns=["file_patterns_value"]
+            ),
+            database_table_spec=datacatalog.DatabaseTableSpec(
+                type_=datacatalog.DatabaseTableSpec.TableType.NATIVE
             ),
         )
 
@@ -2399,6 +2413,8 @@ def test_update_entry(
     assert response.name == "name_value"
 
     assert response.linked_resource == "linked_resource_value"
+
+    assert response.fully_qualified_name == "fully_qualified_name_value"
 
     assert response.display_name == "display_name_value"
 
@@ -2444,6 +2460,7 @@ async def test_update_entry_async(
             datacatalog.Entry(
                 name="name_value",
                 linked_resource="linked_resource_value",
+                fully_qualified_name="fully_qualified_name_value",
                 display_name="display_name_value",
                 description="description_value",
             )
@@ -2463,6 +2480,8 @@ async def test_update_entry_async(
     assert response.name == "name_value"
 
     assert response.linked_resource == "linked_resource_value"
+
+    assert response.fully_qualified_name == "fully_qualified_name_value"
 
     assert response.display_name == "display_name_value"
 
@@ -2813,12 +2832,16 @@ def test_get_entry(transport: str = "grpc", request_type=datacatalog.GetEntryReq
         call.return_value = datacatalog.Entry(
             name="name_value",
             linked_resource="linked_resource_value",
+            fully_qualified_name="fully_qualified_name_value",
             display_name="display_name_value",
             description="description_value",
             type_=datacatalog.EntryType.TABLE,
             integrated_system=common.IntegratedSystem.BIGQUERY,
             gcs_fileset_spec=gcs_fileset_spec.GcsFilesetSpec(
                 file_patterns=["file_patterns_value"]
+            ),
+            database_table_spec=datacatalog.DatabaseTableSpec(
+                type_=datacatalog.DatabaseTableSpec.TableType.NATIVE
             ),
         )
 
@@ -2837,6 +2860,8 @@ def test_get_entry(transport: str = "grpc", request_type=datacatalog.GetEntryReq
     assert response.name == "name_value"
 
     assert response.linked_resource == "linked_resource_value"
+
+    assert response.fully_qualified_name == "fully_qualified_name_value"
 
     assert response.display_name == "display_name_value"
 
@@ -2882,6 +2907,7 @@ async def test_get_entry_async(
             datacatalog.Entry(
                 name="name_value",
                 linked_resource="linked_resource_value",
+                fully_qualified_name="fully_qualified_name_value",
                 display_name="display_name_value",
                 description="description_value",
             )
@@ -2901,6 +2927,8 @@ async def test_get_entry_async(
     assert response.name == "name_value"
 
     assert response.linked_resource == "linked_resource_value"
+
+    assert response.fully_qualified_name == "fully_qualified_name_value"
 
     assert response.display_name == "display_name_value"
 
@@ -3043,12 +3071,16 @@ def test_lookup_entry(
         call.return_value = datacatalog.Entry(
             name="name_value",
             linked_resource="linked_resource_value",
+            fully_qualified_name="fully_qualified_name_value",
             display_name="display_name_value",
             description="description_value",
             type_=datacatalog.EntryType.TABLE,
             integrated_system=common.IntegratedSystem.BIGQUERY,
             gcs_fileset_spec=gcs_fileset_spec.GcsFilesetSpec(
                 file_patterns=["file_patterns_value"]
+            ),
+            database_table_spec=datacatalog.DatabaseTableSpec(
+                type_=datacatalog.DatabaseTableSpec.TableType.NATIVE
             ),
         )
 
@@ -3067,6 +3099,8 @@ def test_lookup_entry(
     assert response.name == "name_value"
 
     assert response.linked_resource == "linked_resource_value"
+
+    assert response.fully_qualified_name == "fully_qualified_name_value"
 
     assert response.display_name == "display_name_value"
 
@@ -3112,6 +3146,7 @@ async def test_lookup_entry_async(
             datacatalog.Entry(
                 name="name_value",
                 linked_resource="linked_resource_value",
+                fully_qualified_name="fully_qualified_name_value",
                 display_name="display_name_value",
                 description="description_value",
             )
@@ -3131,6 +3166,8 @@ async def test_lookup_entry_async(
     assert response.name == "name_value"
 
     assert response.linked_resource == "linked_resource_value"
+
+    assert response.fully_qualified_name == "fully_qualified_name_value"
 
     assert response.display_name == "display_name_value"
 
@@ -4422,6 +4459,7 @@ def test_create_tag_template_field(
             name="name_value",
             display_name="display_name_value",
             is_required=True,
+            description="description_value",
             order=540,
         )
 
@@ -4442,6 +4480,8 @@ def test_create_tag_template_field(
     assert response.display_name == "display_name_value"
 
     assert response.is_required is True
+
+    assert response.description == "description_value"
 
     assert response.order == 540
 
@@ -4491,6 +4531,7 @@ async def test_create_tag_template_field_async(
                 name="name_value",
                 display_name="display_name_value",
                 is_required=True,
+                description="description_value",
                 order=540,
             )
         )
@@ -4511,6 +4552,8 @@ async def test_create_tag_template_field_async(
     assert response.display_name == "display_name_value"
 
     assert response.is_required is True
+
+    assert response.description == "description_value"
 
     assert response.order == 540
 
@@ -4688,6 +4731,7 @@ def test_update_tag_template_field(
             name="name_value",
             display_name="display_name_value",
             is_required=True,
+            description="description_value",
             order=540,
         )
 
@@ -4708,6 +4752,8 @@ def test_update_tag_template_field(
     assert response.display_name == "display_name_value"
 
     assert response.is_required is True
+
+    assert response.description == "description_value"
 
     assert response.order == 540
 
@@ -4757,6 +4803,7 @@ async def test_update_tag_template_field_async(
                 name="name_value",
                 display_name="display_name_value",
                 is_required=True,
+                description="description_value",
                 order=540,
             )
         )
@@ -4777,6 +4824,8 @@ async def test_update_tag_template_field_async(
     assert response.display_name == "display_name_value"
 
     assert response.is_required is True
+
+    assert response.description == "description_value"
 
     assert response.order == 540
 
@@ -4954,6 +5003,7 @@ def test_rename_tag_template_field(
             name="name_value",
             display_name="display_name_value",
             is_required=True,
+            description="description_value",
             order=540,
         )
 
@@ -4974,6 +5024,8 @@ def test_rename_tag_template_field(
     assert response.display_name == "display_name_value"
 
     assert response.is_required is True
+
+    assert response.description == "description_value"
 
     assert response.order == 540
 
@@ -5023,6 +5075,7 @@ async def test_rename_tag_template_field_async(
                 name="name_value",
                 display_name="display_name_value",
                 is_required=True,
+                description="description_value",
                 order=540,
             )
         )
@@ -5043,6 +5096,8 @@ async def test_rename_tag_template_field_async(
     assert response.display_name == "display_name_value"
 
     assert response.is_required is True
+
+    assert response.description == "description_value"
 
     assert response.order == 540
 
@@ -5189,6 +5244,275 @@ async def test_rename_tag_template_field_flattened_error_async():
             datacatalog.RenameTagTemplateFieldRequest(),
             name="name_value",
             new_tag_template_field_id="new_tag_template_field_id_value",
+        )
+
+
+def test_rename_tag_template_field_enum_value(
+    transport: str = "grpc",
+    request_type=datacatalog.RenameTagTemplateFieldEnumValueRequest,
+):
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(), transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type()
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.rename_tag_template_field_enum_value), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = tags.TagTemplateField(
+            name="name_value",
+            display_name="display_name_value",
+            is_required=True,
+            description="description_value",
+            order=540,
+        )
+
+        response = client.rename_tag_template_field_enum_value(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+
+        assert args[0] == datacatalog.RenameTagTemplateFieldEnumValueRequest()
+
+    # Establish that the response is the type that we expect.
+
+    assert isinstance(response, tags.TagTemplateField)
+
+    assert response.name == "name_value"
+
+    assert response.display_name == "display_name_value"
+
+    assert response.is_required is True
+
+    assert response.description == "description_value"
+
+    assert response.order == 540
+
+
+def test_rename_tag_template_field_enum_value_from_dict():
+    test_rename_tag_template_field_enum_value(request_type=dict)
+
+
+def test_rename_tag_template_field_enum_value_empty_call():
+    # This test is a coverage failsafe to make sure that totally empty calls,
+    # i.e. request == None and no flattened fields passed, work.
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(), transport="grpc",
+    )
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.rename_tag_template_field_enum_value), "__call__"
+    ) as call:
+        client.rename_tag_template_field_enum_value()
+        call.assert_called()
+        _, args, _ = call.mock_calls[0]
+
+        assert args[0] == datacatalog.RenameTagTemplateFieldEnumValueRequest()
+
+
+@pytest.mark.asyncio
+async def test_rename_tag_template_field_enum_value_async(
+    transport: str = "grpc_asyncio",
+    request_type=datacatalog.RenameTagTemplateFieldEnumValueRequest,
+):
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(), transport=transport,
+    )
+
+    # Everything is optional in proto3 as far as the runtime is concerned,
+    # and we are mocking out the actual API, so just send an empty request.
+    request = request_type()
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.rename_tag_template_field_enum_value), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            tags.TagTemplateField(
+                name="name_value",
+                display_name="display_name_value",
+                is_required=True,
+                description="description_value",
+                order=540,
+            )
+        )
+
+        response = await client.rename_tag_template_field_enum_value(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+
+        assert args[0] == datacatalog.RenameTagTemplateFieldEnumValueRequest()
+
+    # Establish that the response is the type that we expect.
+    assert isinstance(response, tags.TagTemplateField)
+
+    assert response.name == "name_value"
+
+    assert response.display_name == "display_name_value"
+
+    assert response.is_required is True
+
+    assert response.description == "description_value"
+
+    assert response.order == 540
+
+
+@pytest.mark.asyncio
+async def test_rename_tag_template_field_enum_value_async_from_dict():
+    await test_rename_tag_template_field_enum_value_async(request_type=dict)
+
+
+def test_rename_tag_template_field_enum_value_field_headers():
+    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = datacatalog.RenameTagTemplateFieldEnumValueRequest()
+    request.name = "name/value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.rename_tag_template_field_enum_value), "__call__"
+    ) as call:
+        call.return_value = tags.TagTemplateField()
+
+        client.rename_tag_template_field_enum_value(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+
+
+@pytest.mark.asyncio
+async def test_rename_tag_template_field_enum_value_field_headers_async():
+    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+
+    # Any value that is part of the HTTP/1.1 URI should be sent as
+    # a field header. Set these to a non-empty value.
+    request = datacatalog.RenameTagTemplateFieldEnumValueRequest()
+    request.name = "name/value"
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.rename_tag_template_field_enum_value), "__call__"
+    ) as call:
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            tags.TagTemplateField()
+        )
+
+        await client.rename_tag_template_field_enum_value(request)
+
+        # Establish that the underlying gRPC stub method was called.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+        assert args[0] == request
+
+    # Establish that the field header was sent.
+    _, _, kw = call.mock_calls[0]
+    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+
+
+def test_rename_tag_template_field_enum_value_flattened():
+    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.rename_tag_template_field_enum_value), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = tags.TagTemplateField()
+
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        client.rename_tag_template_field_enum_value(
+            name="name_value",
+            new_enum_value_display_name="new_enum_value_display_name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls) == 1
+        _, args, _ = call.mock_calls[0]
+
+        assert args[0].name == "name_value"
+
+        assert (
+            args[0].new_enum_value_display_name == "new_enum_value_display_name_value"
+        )
+
+
+def test_rename_tag_template_field_enum_value_flattened_error():
+    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        client.rename_tag_template_field_enum_value(
+            datacatalog.RenameTagTemplateFieldEnumValueRequest(),
+            name="name_value",
+            new_enum_value_display_name="new_enum_value_display_name_value",
+        )
+
+
+@pytest.mark.asyncio
+async def test_rename_tag_template_field_enum_value_flattened_async():
+    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+
+    # Mock the actual call within the gRPC stub, and fake the request.
+    with mock.patch.object(
+        type(client.transport.rename_tag_template_field_enum_value), "__call__"
+    ) as call:
+        # Designate an appropriate return value for the call.
+        call.return_value = tags.TagTemplateField()
+
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
+            tags.TagTemplateField()
+        )
+        # Call the method with a truthy value for each flattened field,
+        # using the keyword arguments to the method.
+        response = await client.rename_tag_template_field_enum_value(
+            name="name_value",
+            new_enum_value_display_name="new_enum_value_display_name_value",
+        )
+
+        # Establish that the underlying call was made with the expected
+        # request object values.
+        assert len(call.mock_calls)
+        _, args, _ = call.mock_calls[0]
+
+        assert args[0].name == "name_value"
+
+        assert (
+            args[0].new_enum_value_display_name == "new_enum_value_display_name_value"
+        )
+
+
+@pytest.mark.asyncio
+async def test_rename_tag_template_field_enum_value_flattened_error_async():
+    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+
+    # Attempting to call a method with both a request object and flattened
+    # fields is an error.
+    with pytest.raises(ValueError):
+        await client.rename_tag_template_field_enum_value(
+            datacatalog.RenameTagTemplateFieldEnumValueRequest(),
+            name="name_value",
+            new_enum_value_display_name="new_enum_value_display_name_value",
         )
 
 
@@ -7105,6 +7429,7 @@ def test_data_catalog_base_transport():
         "create_tag_template_field",
         "update_tag_template_field",
         "rename_tag_template_field",
+        "rename_tag_template_field_enum_value",
         "delete_tag_template_field",
         "create_tag",
         "update_tag",
@@ -7491,8 +7816,43 @@ def test_parse_tag_template_field_path():
     assert expected == actual
 
 
+def test_tag_template_field_enum_value_path():
+    project = "whelk"
+    location = "octopus"
+    tag_template = "oyster"
+    tag_template_field_id = "nudibranch"
+    enum_value_display_name = "cuttlefish"
+
+    expected = "projects/{project}/locations/{location}/tagTemplates/{tag_template}/fields/{tag_template_field_id}/enumValues/{enum_value_display_name}".format(
+        project=project,
+        location=location,
+        tag_template=tag_template,
+        tag_template_field_id=tag_template_field_id,
+        enum_value_display_name=enum_value_display_name,
+    )
+    actual = DataCatalogClient.tag_template_field_enum_value_path(
+        project, location, tag_template, tag_template_field_id, enum_value_display_name
+    )
+    assert expected == actual
+
+
+def test_parse_tag_template_field_enum_value_path():
+    expected = {
+        "project": "mussel",
+        "location": "winkle",
+        "tag_template": "nautilus",
+        "tag_template_field_id": "scallop",
+        "enum_value_display_name": "abalone",
+    }
+    path = DataCatalogClient.tag_template_field_enum_value_path(**expected)
+
+    # Check that the path construction is reversible.
+    actual = DataCatalogClient.parse_tag_template_field_enum_value_path(path)
+    assert expected == actual
+
+
 def test_common_billing_account_path():
-    billing_account = "whelk"
+    billing_account = "squid"
 
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
@@ -7503,7 +7863,7 @@ def test_common_billing_account_path():
 
 def test_parse_common_billing_account_path():
     expected = {
-        "billing_account": "octopus",
+        "billing_account": "clam",
     }
     path = DataCatalogClient.common_billing_account_path(**expected)
 
@@ -7513,7 +7873,7 @@ def test_parse_common_billing_account_path():
 
 
 def test_common_folder_path():
-    folder = "oyster"
+    folder = "whelk"
 
     expected = "folders/{folder}".format(folder=folder,)
     actual = DataCatalogClient.common_folder_path(folder)
@@ -7522,7 +7882,7 @@ def test_common_folder_path():
 
 def test_parse_common_folder_path():
     expected = {
-        "folder": "nudibranch",
+        "folder": "octopus",
     }
     path = DataCatalogClient.common_folder_path(**expected)
 
@@ -7532,7 +7892,7 @@ def test_parse_common_folder_path():
 
 
 def test_common_organization_path():
-    organization = "cuttlefish"
+    organization = "oyster"
 
     expected = "organizations/{organization}".format(organization=organization,)
     actual = DataCatalogClient.common_organization_path(organization)
@@ -7541,7 +7901,7 @@ def test_common_organization_path():
 
 def test_parse_common_organization_path():
     expected = {
-        "organization": "mussel",
+        "organization": "nudibranch",
     }
     path = DataCatalogClient.common_organization_path(**expected)
 
@@ -7551,7 +7911,7 @@ def test_parse_common_organization_path():
 
 
 def test_common_project_path():
-    project = "winkle"
+    project = "cuttlefish"
 
     expected = "projects/{project}".format(project=project,)
     actual = DataCatalogClient.common_project_path(project)
@@ -7560,7 +7920,7 @@ def test_common_project_path():
 
 def test_parse_common_project_path():
     expected = {
-        "project": "nautilus",
+        "project": "mussel",
     }
     path = DataCatalogClient.common_project_path(**expected)
 
@@ -7570,8 +7930,8 @@ def test_parse_common_project_path():
 
 
 def test_common_location_path():
-    project = "scallop"
-    location = "abalone"
+    project = "winkle"
+    location = "nautilus"
 
     expected = "projects/{project}/locations/{location}".format(
         project=project, location=location,
@@ -7582,8 +7942,8 @@ def test_common_location_path():
 
 def test_parse_common_location_path():
     expected = {
-        "project": "squid",
-        "location": "clam",
+        "project": "scallop",
+        "location": "abalone",
     }
     path = DataCatalogClient.common_location_path(**expected)
 
