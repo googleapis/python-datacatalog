@@ -44,21 +44,28 @@ __protobuf__ = proto.module(
 
 
 class Taxonomy(proto.Message):
-    r"""A taxonomy is a collection of hierarchical policy tags that
-    classify data along a common axis. For instance a "data
-    sensitivity" taxonomy could contain the following policy tags:
-    + PII
-      + Account number
-      + Age
-      + SSN
-      + Zipcode
-    + Financials
-      + Revenue
-    A "data origin" taxonomy could contain the following policy
-    tags: + User data
-    + Employee data
-    + Partner data
-    + Public data
+    r"""A taxonomy is a collection of hierarchical policy tags that classify
+    data along a common axis. For instance a "data sensitivity" taxonomy
+    could contain the following policy tags:
+
+    ::
+
+       + PII
+         + Account number
+         + Age
+         + SSN
+         + Zipcode
+       + Financials
+         + Revenue
+
+    A "data origin" taxonomy could contain the following policy tags:
+
+    ::
+
+       + User data
+       + Employee data
+       + Partner data
+       + Public data
 
     Attributes:
         name (str):
@@ -112,14 +119,19 @@ class Taxonomy(proto.Message):
 
 
 class PolicyTag(proto.Message):
-    r"""Denotes one policy tag in a taxonomy (e.g. ssn). Policy tags
-    can be defined in a hierarchy. For example, consider the
-    following hierarchy: + Geolocation
-      + LatLong
-      + City
-      + ZipCode
-    Policy tag "Geolocation" contains 3 child policy tags:
-    "LatLong", "City", and "ZipCode".
+    r"""Denotes one policy tag in a taxonomy (e.g. ssn). Policy tags can be
+    defined in a hierarchy. For example, consider the following
+    hierarchy:
+
+    ::
+
+       + Geolocation
+         + LatLong
+         + City
+         + ZipCode
+
+    Policy tag "Geolocation" contains 3 child policy tags: "LatLong",
+    "City", and "ZipCode".
 
     Attributes:
         name (str):
