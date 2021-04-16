@@ -147,7 +147,7 @@ __all__ = (
     "ListTaxonomiesResponse",
     "LookupEntryRequest",
     "PolicyTag",
-    "PolicyTagManagerSerializationClient",
+    "PolicyTagManagerClient",
     "RenameTagTemplateFieldEnumValueRequest",
     "RenameTagTemplateFieldRequest",
     "Schema",
@@ -173,5 +173,5 @@ __all__ = (
     "UpdateTagTemplateRequest",
     "UpdateTaxonomyRequest",
     "ViewSpec",
-    "PolicyTagManagerClient",
+    "PolicyTagManagerSerializationClient",
 )
