@@ -32,7 +32,7 @@ from google.cloud.datacatalog_v1.services.policy_tag_manager import pagers
 from google.cloud.datacatalog_v1.types import policytagmanager
 from google.cloud.datacatalog_v1.types import timestamps
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
+from google.iam.v1 import policy_pb2 as gi_policy  # type: ignore
 
 from .transports.base import PolicyTagManagerTransport, DEFAULT_CLIENT_INFO
 from .transports.grpc_asyncio import PolicyTagManagerGrpcAsyncIOTransport
@@ -1028,7 +1028,7 @@ class PolicyTagManagerAsyncClient:
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> gi_policy.Policy:
         r"""Gets the IAM policy for a policy tag or a taxonomy.
 
         Args:
@@ -1135,7 +1135,7 @@ class PolicyTagManagerAsyncClient:
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> gi_policy.Policy:
         r"""Sets the IAM policy for a policy tag or a taxonomy.
 
         Args:
