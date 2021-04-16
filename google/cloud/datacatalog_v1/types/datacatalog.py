@@ -19,6 +19,7 @@ import proto  # type: ignore
 
 
 from google.cloud.datacatalog_v1.types import common
+from google.cloud.datacatalog_v1.types import data_source as gcd_data_source
 from google.cloud.datacatalog_v1.types import gcs_fileset_spec as gcd_gcs_fileset_spec
 from google.cloud.datacatalog_v1.types import schema as gcd_schema
 from google.cloud.datacatalog_v1.types import search
@@ -46,6 +47,7 @@ __protobuf__ = proto.module(
         "GetEntryRequest",
         "LookupEntryRequest",
         "Entry",
+        "DatabaseTableSpec",
         "EntryGroup",
         "CreateTagTemplateRequest",
         "GetTagTemplateRequest",
@@ -57,6 +59,7 @@ __protobuf__ = proto.module(
         "CreateTagTemplateFieldRequest",
         "UpdateTagTemplateFieldRequest",
         "RenameTagTemplateFieldRequest",
+        "RenameTagTemplateFieldEnumValueRequest",
         "DeleteTagTemplateFieldRequest",
         "ListTagsRequest",
         "ListTagsResponse",
@@ -76,6 +79,8 @@ class EntryType(proto.Enum):
     MODEL = 5
     DATA_STREAM = 3
     FILESET = 4
+    DATABASE = 7
+    SERVICE = 14
 
 
 class SearchCatalogRequest(proto.Message):
@@ -89,8 +94,9 @@ class SearchCatalogRequest(proto.Message):
             false ``include_gcp_public_datasets`` is considered invalid.
             Data Catalog will return an error in such a case.
         query (str):
-            Required. The query string in search query syntax. The query
-            must be non-empty.
+            Optional. The query string in search query syntax. An empty
+            query string will result in all data assets (in the
+            specified scope) that the user has access to.
 
             Query strings can be simple as "x" or more qualified as:
 
@@ -150,41 +156,15 @@ class SearchCatalogRequest(proto.Message):
                 Optional. The list of locations to search within.
 
                 1. If empty, search will be performed in all locations;
-                2. If any of the locations are NOT in the valid locations
-                   list, error will be returned;
+                2. If any of the locations are NOT `supported
+                   regions <https://cloud.google.com/data-catalog/docs/concepts/regions#supported_regions>`__,
+                   error will be returned;
                 3. Otherwise, search only the given locations for matching
                    results. Typical usage is to leave this field empty. When
                    a location is unreachable as returned in the
                    ``SearchCatalogResponse.unreachable`` field, users can
                    repeat the search request with this parameter set to get
                    additional information on the error.
-
-                Valid locations:
-
-                -  asia-east1
-                -  asia-east2
-                -  asia-northeast1
-                -  asia-northeast2
-                -  asia-northeast3
-                -  asia-south1
-                -  asia-southeast1
-                -  australia-southeast1
-                -  eu
-                -  europe-north1
-                -  europe-west1
-                -  europe-west2
-                -  europe-west3
-                -  europe-west4
-                -  europe-west6
-                -  global
-                -  northamerica-northeast1
-                -  southamerica-east1
-                -  us
-                -  us-central1
-                -  us-east1
-                -  us-east4
-                -  us-west1
-                -  us-west2
         """
 
         include_org_ids = proto.RepeatedField(proto.STRING, number=2)
@@ -221,7 +201,7 @@ class SearchCatalogResponse(proto.Message):
             from those locations. Users can get additional information
             on the error by repeating the search request with a more
             restrictive parameter -- setting the value for
-            ``SearchDataCatalogRequest.scope.include_locations``.
+            ``SearchDataCatalogRequest.scope.restricted_locations``.
     """
 
     @property
@@ -243,19 +223,19 @@ class CreateEntryGroupRequest(proto.Message):
 
     Attributes:
         parent (str):
-            Required. The name of the project this entry group is in.
-            Example:
+            Required. The name of the project this entry group belongs
+            to. Example:
 
-            -  projects/{project_id}/locations/{location}
+            ``projects/{project_id}/locations/{location}``
 
-            Note that this EntryGroup and its child resources may not
-            actually be stored in the location in this name.
+            Note: The entry group itself and its child resources might
+            not be stored in the location specified in its name.
         entry_group_id (str):
-            Required. The id of the entry group to
-            create. The id must begin with a letter or
-            underscore, contain only English letters,
-            numbers and underscores, and be at most 64
-            characters.
+            Required. The ID of the entry group to create.
+
+            The ID must contain only letters (a-z, A-Z), numbers (0-9),
+            underscores (_), and must start with a letter or underscore.
+            The maximum size is 64 bytes when encoded in UTF-8.
         entry_group (google.cloud.datacatalog_v1.types.EntryGroup):
             The entry group to create. Defaults to an
             empty entry group.
@@ -277,9 +257,12 @@ class UpdateEntryGroupRequest(proto.Message):
             Required. The updated entry group. "name"
             field must be set.
         update_mask (google.protobuf.field_mask_pb2.FieldMask):
-            The fields to update on the entry group. If
-            absent or empty, all modifiable fields are
-            updated.
+            Names of fields whose values to overwrite on
+            an entry group.
+            If this parameter is absent or empty, all
+            modifiable fields are overwritten. If such
+            fields are non-required and omitted in the
+            request body, their values are emptied.
     """
 
     entry_group = proto.Field(proto.MESSAGE, number=1, message="EntryGroup",)
@@ -377,15 +360,19 @@ class CreateEntryRequest(proto.Message):
 
     Attributes:
         parent (str):
-            Required. The name of the entry group this entry is in.
+            Required. The name of the entry group this entry belongs to.
             Example:
 
-            -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}
+            ``projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}``
 
-            Note that this Entry and its child resources may not
-            actually be stored in the location in this name.
+            Note: The entry itself and its child resources might not be
+            stored in the location specified in its name.
         entry_id (str):
-            Required. The id of the entry to create.
+            Required. The ID of the entry to create.
+
+            The ID must contain only letters (a-z, A-Z), numbers (0-9),
+            and underscores (_). The maximum size is 64 bytes when
+            encoded in UTF-8.
         entry (google.cloud.datacatalog_v1.types.Entry):
             Required. The entry to create.
     """
@@ -406,8 +393,11 @@ class UpdateEntryRequest(proto.Message):
             Required. The updated entry. The "name" field
             must be set.
         update_mask (google.protobuf.field_mask_pb2.FieldMask):
-            The fields to update on the entry. If absent or empty, all
-            modifiable fields are updated.
+            Names of fields whose values to overwrite on an entry.
+
+            If this parameter is absent or empty, all modifiable fields
+            are overwritten. If such fields are non-required and omitted
+            in the request body, their values are emptied.
 
             The following fields are modifiable:
 
@@ -415,7 +405,7 @@ class UpdateEntryRequest(proto.Message):
 
                -  ``schema``
 
-            -  For entries with type ``FILESET``
+            -  For entries with type ``FILESET``:
 
                -  ``schema``
                -  ``display_name``
@@ -423,15 +413,15 @@ class UpdateEntryRequest(proto.Message):
                -  ``gcs_fileset_spec``
                -  ``gcs_fileset_spec.file_patterns``
 
-            -  For entries with ``user_specified_type``
+            -  For entries with ``user_specified_type``:
 
                -  ``schema``
                -  ``display_name``
                -  ``description``
-               -  user_specified_type
-               -  user_specified_system
-               -  linked_resource
-               -  source_system_timestamps
+               -  ``user_specified_type``
+               -  ``user_specified_system``
+               -  ``linked_resource``
+               -  ``source_system_timestamps``
     """
 
     entry = proto.Field(proto.MESSAGE, number=1, message="Entry",)
@@ -493,14 +483,32 @@ class LookupEntryRequest(proto.Message):
             -  ``bigquery.dataset.project_id.dataset_id``
             -  ``datacatalog.entry.project_id.location_id.entry_group_id.entry_id``
 
-            ``*_id``\ s shoud satisfy the standard SQL rules for
+            ``*_id``\ s should satisfy the standard SQL rules for
             identifiers.
             https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.
+        fully_qualified_name (str):
+            Fully qualified name (FQN) of the resource.
+
+            FQNs take two forms:
+
+            -  For non-regionalized resources:
+
+               ``{SYSTEM}:{PROJECT}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOTS}``
+
+            -  For regionalized resources:
+
+               ``{SYSTEM}:{PROJECT}.{LOCATION_ID}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOTS}``
+
+            Example for a DPMS table:
+
+            ``dataproc_metastore:project_id.location_id.instance_id.database_id.table_id``
     """
 
     linked_resource = proto.Field(proto.STRING, number=1, oneof="target_name")
 
     sql_resource = proto.Field(proto.STRING, number=3, oneof="target_name")
+
+    fully_qualified_name = proto.Field(proto.STRING, number=5, oneof="target_name")
 
 
 class Entry(proto.Message):
@@ -516,13 +524,13 @@ class Entry(proto.Message):
 
     Attributes:
         name (str):
-            The Data Catalog resource name of the entry in URL format.
+            Output only. The resource name of an entry in URL format.
             Example:
 
-            -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}
+            ``projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}``
 
-            Note that this Entry and its child resources may not
-            actually be stored in the location in this name.
+            Note: The entry itself and its child resources might not be
+            stored in the location specified in its name.
         linked_resource (str):
             The resource this metadata entry refers to.
 
@@ -532,11 +540,38 @@ class Entry(proto.Message):
             For example, the ``linked_resource`` for a table resource
             from BigQuery is:
 
-            -  //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId
+            ``//bigquery.googleapis.com/projects/{projectId}/datasets/{datasetId}/tables/{tableId}``
 
-            Output only when Entry is of type in the EntryType enum. For
-            entries with user_specified_type, this field is optional and
-            defaults to an empty string.
+            Output only when entry is one of the types in the
+            ``EntryType`` enum.
+
+            For entries with a ``user_specified_type``, this field is
+            optional and defaults to an empty string.
+
+            The resource string must contain only letters (a-z, A-Z),
+            numbers (0-9), underscores (_), periods (.), colons (:),
+            slashes (/), dashes (-), and hashes (#). The maximum size is
+            200 bytes when encoded in UTF-8.
+        fully_qualified_name (str):
+            Fully qualified name (FQN) of the resource. Set
+            automatically for entries representing resources from synced
+            systems. Settable only during creation and read-only
+            afterwards. Can be used for search and lookup of the
+            entries.
+
+            FQNs take two forms:
+
+            -  For non-regionalized resources:
+
+               ``{SYSTEM}:{PROJECT}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOTS}``
+
+            -  For regionalized resources:
+
+               ``{SYSTEM}:{PROJECT}.{LOCATION_ID}.{PATH_TO_RESOURCE_SEPARATED_WITH_DOTS}``
+
+            Example for a DPMS table:
+
+            ``dataproc_metastore:project_id.location_id.instance_id.database_id.table_id``
         type_ (google.cloud.datacatalog_v1.types.EntryType):
             The type of the entry.
             Only used for Entries with types in the
@@ -577,16 +612,26 @@ class Entry(proto.Message):
             Specification for a group of BigQuery tables with name
             pattern ``[prefix]YYYYMMDD``. Context:
             https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding.
+        database_table_spec (google.cloud.datacatalog_v1.types.DatabaseTableSpec):
+            Specification that applies to a table resource. Only valid
+            for entries of ``TABLE`` type.
         display_name (str):
-            Display information such as title and
-            description. A short name to identify the entry,
-            for example, "Analytics Data - Jan 2011".
-            Default value is an empty string.
+            Display name of an entry.
+
+            The name must contain only Unicode letters, numbers (0-9),
+            underscores (_), dashes (-), spaces ( ), and can't start or
+            end with spaces. The maximum size is 200 bytes when encoded
+            in UTF-8. Default value is an empty string.
         description (str):
-            Entry description, which can consist of
-            several sentences or paragraphs that describe
-            entry contents. Default value is an empty
-            string.
+            Entry description that can consist of several
+            sentences or paragraphs that describe entry
+            contents.
+            The description must not contain Unicode non-
+            characters as well as C0 and C1 control codes
+            except tabs (HT), new lines (LF), carriage
+            returns (CR), and page breaks (FF).
+            The maximum size is 2000 bytes when encoded in
+            UTF-8. Default value is an empty string.
         schema (google.cloud.datacatalog_v1.types.Schema):
             Schema of the entry. An entry might not have
             any schema attached to it.
@@ -595,11 +640,15 @@ class Entry(proto.Message):
             Data Catalog entry. Output only when Entry is of type in the
             EntryType enum. For entries with user_specified_type, this
             field is optional and defaults to an empty timestamp.
+        data_source (google.cloud.datacatalog_v1.types.DataSource):
+            Output only. Physical location of the entry.
     """
 
     name = proto.Field(proto.STRING, number=1)
 
     linked_resource = proto.Field(proto.STRING, number=9)
+
+    fully_qualified_name = proto.Field(proto.STRING, number=29)
 
     type_ = proto.Field(proto.ENUM, number=2, oneof="entry_type", enum="EntryType",)
 
@@ -632,6 +681,10 @@ class Entry(proto.Message):
         message=table_spec.BigQueryDateShardedSpec,
     )
 
+    database_table_spec = proto.Field(
+        proto.MESSAGE, number=24, oneof="spec", message="DatabaseTableSpec",
+    )
+
     display_name = proto.Field(proto.STRING, number=3)
 
     description = proto.Field(proto.STRING, number=4)
@@ -641,6 +694,28 @@ class Entry(proto.Message):
     source_system_timestamps = proto.Field(
         proto.MESSAGE, number=7, message=timestamps.SystemTimestamps,
     )
+
+    data_source = proto.Field(
+        proto.MESSAGE, number=20, message=gcd_data_source.DataSource,
+    )
+
+
+class DatabaseTableSpec(proto.Message):
+    r"""Specification that applies to a table resource. Only valid for
+    entries of ``TABLE`` type.
+
+    Attributes:
+        type_ (google.cloud.datacatalog_v1.types.DatabaseTableSpec.TableType):
+            Type of this table.
+    """
+
+    class TableType(proto.Enum):
+        r"""Type of the table."""
+        TABLE_TYPE_UNSPECIFIED = 0
+        NATIVE = 1
+        EXTERNAL = 2
+
+    type_ = proto.Field(proto.ENUM, number=1, enum=TableType,)
 
 
 class EntryGroup(proto.Message):
@@ -652,10 +727,10 @@ class EntryGroup(proto.Message):
         name (str):
             The resource name of the entry group in URL format. Example:
 
-            -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}
+            ``projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}``
 
-            Note that this EntryGroup and its child resources may not
-            actually be stored in the location in this name.
+            Note: The entry group itself and its child resources might
+            not be stored in the location specified in its name.
         display_name (str):
             A short name to identify the entry group, for
             example, "analytics data - jan 2011". Default
@@ -694,8 +769,12 @@ class CreateTagTemplateRequest(proto.Message):
 
             -  projects/{project_id}/locations/us-central1
         tag_template_id (str):
-            Required. The id of the tag template to
-            create.
+            Required. The ID of the tag template to create.
+
+            The ID must contain only lowercase letters (a-z), numbers
+            (0-9), or underscores (_), and must start with a letter or
+            underscore. The maximum size is 64 bytes when encoded in
+            UTF-8.
         tag_template (google.cloud.datacatalog_v1.types.TagTemplate):
             Required. The tag template to create.
     """
@@ -730,15 +809,13 @@ class UpdateTagTemplateRequest(proto.Message):
             Required. The template to update. The "name"
             field must be set.
         update_mask (google.protobuf.field_mask_pb2.FieldMask):
-            The field mask specifies the parts of the template to
-            overwrite.
+            Names of fields whose values to overwrite on a tag template.
+            Currently, only ``display_name`` can be overwritten.
 
-            Allowed fields:
-
-            -  ``display_name``
-
-            If absent or empty, all of the allowed fields above will be
-            updated.
+            In general, if this parameter is absent or empty, all
+            modifiable fields are overwritten. If such fields are
+            non-required and omitted in the request body, their values
+            are emptied.
     """
 
     tag_template = proto.Field(proto.MESSAGE, number=1, message=gcd_tags.TagTemplate,)
@@ -774,12 +851,13 @@ class CreateTagRequest(proto.Message):
     Attributes:
         parent (str):
             Required. The name of the resource to attach this tag to.
-            Tags can be attached to Entries. Example:
+            Tags can be attached to entries. An entry can have up to
+            1000 attached tags. Example:
 
-            -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}
+            ``projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}``
 
-            Note that this Tag and its child resources may not actually
-            be stored in the location in this name.
+            Note: The tag and its child resources might not be stored in
+            the location specified in its name.
         tag (google.cloud.datacatalog_v1.types.Tag):
             Required. The tag to create.
     """
@@ -798,9 +876,14 @@ class UpdateTagRequest(proto.Message):
             Required. The updated tag. The "name" field
             must be set.
         update_mask (google.protobuf.field_mask_pb2.FieldMask):
-            The fields to update on the Tag. If absent or empty, all
-            modifiable fields are updated. Currently the only modifiable
-            field is the field ``fields``.
+            Names of fields whose values to overwrite on a tag.
+            Currently, a tag has the only modifiable field with the name
+            ``fields``.
+
+            In general, if this parameter is absent or empty, all
+            modifiable fields are overwritten. If such fields are
+            non-required and omitted in the request body, their values
+            are emptied.
     """
 
     tag = proto.Field(proto.MESSAGE, number=1, message=gcd_tags.Tag,)
@@ -835,11 +918,16 @@ class CreateTagTemplateFieldRequest(proto.Message):
 
             -  projects/{project_id}/locations/us-central1/tagTemplates/{tag_template_id}
         tag_template_field_id (str):
-            Required. The ID of the tag template field to create. Field
-            ids can contain letters (both uppercase and lowercase),
-            numbers (0-9), underscores (_) and dashes (-). Field IDs
-            must be at least 1 character long and at most 128 characters
-            long. Field IDs must also be unique within their template.
+            Required. The ID of the tag template field to create.
+
+            Note: Adding a required field to an existing template is
+            *not* allowed.
+
+            Field IDs can contain letters (both uppercase and
+            lowercase), numbers (0-9), underscores (_) and dashes (-).
+            Field IDs must be at least 1 character long and at most 128
+            characters long. Field IDs must also be unique within their
+            template.
         tag_template_field (google.cloud.datacatalog_v1.types.TagTemplateField):
             Required. The tag template field to create.
     """
@@ -865,21 +953,24 @@ class UpdateTagTemplateFieldRequest(proto.Message):
         tag_template_field (google.cloud.datacatalog_v1.types.TagTemplateField):
             Required. The template to update.
         update_mask (google.protobuf.field_mask_pb2.FieldMask):
-            Optional. The field mask specifies the parts of the template
-            to be updated. Allowed fields:
+            Optional. Names of fields whose values to overwrite on an
+            individual field of a tag template. The following fields are
+            modifiable:
 
             -  ``display_name``
             -  ``type.enum_type``
             -  ``is_required``
 
-            If ``update_mask`` is not set or empty, all of the allowed
-            fields above will be updated.
+            If this parameter is absent or empty, all modifiable fields
+            are overwritten. If such fields are non-required and omitted
+            in the request body, their values are emptied with one
+            exception: when updating an enum type, the provided values
+            are merged with the existing values. Therefore, enum values
+            can only be added, existing enum values cannot be deleted or
+            renamed.
 
-            When updating an enum type, the provided values will be
-            merged with the existing values. Therefore, enum values can
-            only be added, existing enum values cannot be deleted nor
-            renamed. Updating a template field from optional to required
-            is NOT allowed.
+            Additionally, updating a template field from optional to
+            required is *not* allowed.
     """
 
     name = proto.Field(proto.STRING, number=1)
@@ -908,6 +999,25 @@ class RenameTagTemplateFieldRequest(proto.Message):
     name = proto.Field(proto.STRING, number=1)
 
     new_tag_template_field_id = proto.Field(proto.STRING, number=2)
+
+
+class RenameTagTemplateFieldEnumValueRequest(proto.Message):
+    r"""Request message for
+    [RenameTagTemplateFieldEnumValue][google.cloud.datacatalog.v1.DataCatalog.RenameTagTemplateFieldEnumValue].
+
+    Attributes:
+        name (str):
+            Required. The name of the enum field value. Example:
+
+            -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}/enumValues/{enum_value_display_name}
+        new_enum_value_display_name (str):
+            Required. The new display name of the enum value. For
+            example, ``my_new_enum_value``.
+    """
+
+    name = proto.Field(proto.STRING, number=1)
+
+    new_enum_value_display_name = proto.Field(proto.STRING, number=2)
 
 
 class DeleteTagTemplateFieldRequest(proto.Message):

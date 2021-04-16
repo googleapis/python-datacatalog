@@ -16,12 +16,18 @@
 #
 
 from .services.data_catalog import DataCatalogClient
+from .services.policy_tag_manager import PolicyTagManagerClient
+from .services.policy_tag_manager_serialization import (
+    PolicyTagManagerSerializationClient,
+)
 from .types.common import IntegratedSystem
+from .types.data_source import DataSource
 from .types.datacatalog import CreateEntryGroupRequest
 from .types.datacatalog import CreateEntryRequest
 from .types.datacatalog import CreateTagRequest
 from .types.datacatalog import CreateTagTemplateFieldRequest
 from .types.datacatalog import CreateTagTemplateRequest
+from .types.datacatalog import DatabaseTableSpec
 from .types.datacatalog import DeleteEntryGroupRequest
 from .types.datacatalog import DeleteEntryRequest
 from .types.datacatalog import DeleteTagRequest
@@ -40,6 +46,7 @@ from .types.datacatalog import ListEntryGroupsResponse
 from .types.datacatalog import ListTagsRequest
 from .types.datacatalog import ListTagsResponse
 from .types.datacatalog import LookupEntryRequest
+from .types.datacatalog import RenameTagTemplateFieldEnumValueRequest
 from .types.datacatalog import RenameTagTemplateFieldRequest
 from .types.datacatalog import SearchCatalogRequest
 from .types.datacatalog import SearchCatalogResponse
@@ -50,6 +57,28 @@ from .types.datacatalog import UpdateTagTemplateFieldRequest
 from .types.datacatalog import UpdateTagTemplateRequest
 from .types.gcs_fileset_spec import GcsFileSpec
 from .types.gcs_fileset_spec import GcsFilesetSpec
+from .types.policytagmanager import CreatePolicyTagRequest
+from .types.policytagmanager import CreateTaxonomyRequest
+from .types.policytagmanager import DeletePolicyTagRequest
+from .types.policytagmanager import DeleteTaxonomyRequest
+from .types.policytagmanager import GetPolicyTagRequest
+from .types.policytagmanager import GetTaxonomyRequest
+from .types.policytagmanager import ListPolicyTagsRequest
+from .types.policytagmanager import ListPolicyTagsResponse
+from .types.policytagmanager import ListTaxonomiesRequest
+from .types.policytagmanager import ListTaxonomiesResponse
+from .types.policytagmanager import PolicyTag
+from .types.policytagmanager import Taxonomy
+from .types.policytagmanager import UpdatePolicyTagRequest
+from .types.policytagmanager import UpdateTaxonomyRequest
+from .types.policytagmanagerserialization import CrossRegionalSource
+from .types.policytagmanagerserialization import ExportTaxonomiesRequest
+from .types.policytagmanagerserialization import ExportTaxonomiesResponse
+from .types.policytagmanagerserialization import ImportTaxonomiesRequest
+from .types.policytagmanagerserialization import ImportTaxonomiesResponse
+from .types.policytagmanagerserialization import InlineSource
+from .types.policytagmanagerserialization import SerializedPolicyTag
+from .types.policytagmanagerserialization import SerializedTaxonomy
 from .types.schema import ColumnSchema
 from .types.schema import Schema
 from .types.search import SearchCatalogResult
@@ -73,37 +102,61 @@ __all__ = (
     "ColumnSchema",
     "CreateEntryGroupRequest",
     "CreateEntryRequest",
+    "CreatePolicyTagRequest",
     "CreateTagRequest",
     "CreateTagTemplateFieldRequest",
     "CreateTagTemplateRequest",
+    "CreateTaxonomyRequest",
+    "CrossRegionalSource",
+    "DataCatalogClient",
+    "DataSource",
+    "DatabaseTableSpec",
     "DeleteEntryGroupRequest",
     "DeleteEntryRequest",
+    "DeletePolicyTagRequest",
     "DeleteTagRequest",
     "DeleteTagTemplateFieldRequest",
     "DeleteTagTemplateRequest",
+    "DeleteTaxonomyRequest",
     "Entry",
     "EntryGroup",
     "EntryType",
+    "ExportTaxonomiesRequest",
+    "ExportTaxonomiesResponse",
     "FieldType",
     "GcsFileSpec",
     "GcsFilesetSpec",
     "GetEntryGroupRequest",
     "GetEntryRequest",
+    "GetPolicyTagRequest",
     "GetTagTemplateRequest",
+    "GetTaxonomyRequest",
+    "ImportTaxonomiesRequest",
+    "ImportTaxonomiesResponse",
+    "InlineSource",
     "IntegratedSystem",
     "ListEntriesRequest",
     "ListEntriesResponse",
     "ListEntryGroupsRequest",
     "ListEntryGroupsResponse",
+    "ListPolicyTagsRequest",
+    "ListPolicyTagsResponse",
     "ListTagsRequest",
     "ListTagsResponse",
+    "ListTaxonomiesRequest",
+    "ListTaxonomiesResponse",
     "LookupEntryRequest",
+    "PolicyTag",
+    "PolicyTagManagerClient",
+    "RenameTagTemplateFieldEnumValueRequest",
     "RenameTagTemplateFieldRequest",
     "Schema",
     "SearchCatalogRequest",
     "SearchCatalogResponse",
     "SearchCatalogResult",
     "SearchResultType",
+    "SerializedPolicyTag",
+    "SerializedTaxonomy",
     "SystemTimestamps",
     "TableSourceType",
     "TableSpec",
@@ -111,11 +164,14 @@ __all__ = (
     "TagField",
     "TagTemplate",
     "TagTemplateField",
+    "Taxonomy",
     "UpdateEntryGroupRequest",
     "UpdateEntryRequest",
+    "UpdatePolicyTagRequest",
     "UpdateTagRequest",
     "UpdateTagTemplateFieldRequest",
     "UpdateTagTemplateRequest",
+    "UpdateTaxonomyRequest",
     "ViewSpec",
-    "DataCatalogClient",
+    "PolicyTagManagerSerializationClient",
 )
