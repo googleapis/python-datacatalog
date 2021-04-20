@@ -25,10 +25,10 @@ common = gcp.CommonTemplates()
 # ----------------------------------------------------------------------------
 # Generate datacatalog GAPIC layer
 # ----------------------------------------------------------------------------
-versions = ['v1', 'v1beta1']
+versions = ["v1", "v1beta1"]
 for version in versions:
     library = gapic.py_library(
-        service='datacatalog',
+        service="datacatalog",
         version=version,
         bazel_target=f"//google/cloud/datacatalog/{version}:datacatalog-{version}-py",
         include_protos=True,
@@ -37,23 +37,30 @@ for version in versions:
     s.move(
         library,
         excludes=[
-            'docs/conf.py',
-            'docs/index.rst',
-            'README.rst',
-            'nox*.py',
-            'setup.py',
-            'setup.cfg',
+            "docs/conf.py",
+            "docs/index.rst",
+            "README.rst",
+            "nox*.py",
+            "setup.py",
+            "setup.cfg",
         ],
     )
+
+# Rename `policy_` to `policy` to avoid breaking change in a GA library
+# Only replace if a non-alphanumeric (\W) character follows `policy_`
+s.replace(
+    ["google/**/*.py", "scripts/fixup*.py", "tests/unit/**/*.py"],
+    "policy_(\W)",
+    "policy\g<1>",
+)
 
 # ----------------------------------------------------------------------------
 # Add templated files
 # ----------------------------------------------------------------------------
-templated_files = common.py_library(
-    samples=True,
-    microgenerator=True,
-)
-s.move(templated_files, excludes=[".coveragerc"]) # microgenerator has a good .coveragerc file
+templated_files = common.py_library(samples=True, microgenerator=True,)
+s.move(
+    templated_files, excludes=[".coveragerc"]
+)  # microgenerator has a good .coveragerc file
 
 # ----------------------------------------------------------------------------
 # Samples templates

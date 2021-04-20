@@ -3461,7 +3461,7 @@ def test_set_iam_policy_from_dict_foreign():
         response = client.set_iam_policy(
             request={
                 "resource": "resource_value",
-                "policy_": giv_policy.Policy(version=774),
+                "policy": giv_policy.Policy(version=774),
             }
         )
         call.assert_called()

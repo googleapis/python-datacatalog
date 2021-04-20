@@ -6852,7 +6852,7 @@ def test_set_iam_policy_from_dict_foreign():
         response = client.set_iam_policy(
             request={
                 "resource": "resource_value",
-                "policy_": gi_policy.Policy(version=774),
+                "policy": gi_policy.Policy(version=774),
             }
         )
         call.assert_called()
