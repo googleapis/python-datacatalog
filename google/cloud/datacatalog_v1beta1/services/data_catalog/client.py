@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 from collections import OrderedDict
 from distutils import util
 import os
@@ -42,9 +40,8 @@ from google.cloud.datacatalog_v1beta1.types import table_spec
 from google.cloud.datacatalog_v1beta1.types import tags
 from google.cloud.datacatalog_v1beta1.types import timestamps
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
+from google.iam.v1 import policy_pb2 as giv_policy  # type: ignore
 from google.protobuf import field_mask_pb2 as field_mask  # type: ignore
-
 from .transports.base import DataCatalogTransport, DEFAULT_CLIENT_INFO
 from .transports.grpc import DataCatalogGrpcTransport
 from .transports.grpc_asyncio import DataCatalogGrpcAsyncIOTransport
@@ -486,7 +483,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``query`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -518,10 +514,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.SearchCatalogRequest):
             request = datacatalog.SearchCatalogRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if scope is not None:
                 request.scope = scope
             if query is not None:
@@ -597,7 +591,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``entry_group`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -629,10 +622,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.CreateEntryGroupRequest):
             request = datacatalog.CreateEntryGroupRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if parent is not None:
                 request.parent = parent
             if entry_group_id is not None:
@@ -691,7 +682,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -723,10 +713,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.UpdateEntryGroupRequest):
             request = datacatalog.UpdateEntryGroupRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if entry_group is not None:
                 request.entry_group = entry_group
             if update_mask is not None:
@@ -780,7 +768,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``read_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -812,10 +799,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.GetEntryGroupRequest):
             request = datacatalog.GetEntryGroupRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if name is not None:
                 request.name = name
             if read_mask is not None:
@@ -864,7 +849,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -887,10 +871,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.DeleteEntryGroupRequest):
             request = datacatalog.DeleteEntryGroupRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if name is not None:
                 request.name = name
 
@@ -934,7 +916,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -966,10 +947,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.ListEntryGroupsRequest):
             request = datacatalog.ListEntryGroupsRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if parent is not None:
                 request.parent = parent
 
@@ -1045,7 +1024,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``entry`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1084,10 +1062,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.CreateEntryRequest):
             request = datacatalog.CreateEntryRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if parent is not None:
                 request.parent = parent
             if entry_id is not None:
@@ -1169,7 +1145,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1208,10 +1183,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.UpdateEntryRequest):
             request = datacatalog.UpdateEntryRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if entry is not None:
                 request.entry = entry
             if update_mask is not None:
@@ -1264,7 +1237,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1287,10 +1259,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.DeleteEntryRequest):
             request = datacatalog.DeleteEntryRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if name is not None:
                 request.name = name
 
@@ -1332,7 +1302,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1371,10 +1340,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.GetEntryRequest):
             request = datacatalog.GetEntryRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if name is not None:
                 request.name = name
 
@@ -1411,7 +1378,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
             request (google.cloud.datacatalog_v1beta1.types.LookupEntryRequest):
                 The request object. Request message for
                 [LookupEntry][google.cloud.datacatalog.v1beta1.DataCatalog.LookupEntry].
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1435,7 +1401,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-
         # Minor optimization to avoid making a copy if the user passes
         # in a datacatalog.LookupEntryRequest.
         # There's no risk of modifying the input as we've already verified
@@ -1477,7 +1442,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1509,10 +1473,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.ListEntriesRequest):
             request = datacatalog.ListEntriesRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if parent is not None:
                 request.parent = parent
 
@@ -1583,7 +1545,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``tag_template`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1619,10 +1580,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.CreateTagTemplateRequest):
             request = datacatalog.CreateTagTemplateRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if parent is not None:
                 request.parent = parent
             if tag_template_id is not None:
@@ -1669,7 +1628,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1705,10 +1663,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.GetTagTemplateRequest):
             request = datacatalog.GetTagTemplateRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if name is not None:
                 request.name = name
 
@@ -1773,7 +1729,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1809,10 +1764,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.UpdateTagTemplateRequest):
             request = datacatalog.UpdateTagTemplateRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if tag_template is not None:
                 request.tag_template = tag_template
             if update_mask is not None:
@@ -1874,7 +1827,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``force`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1897,10 +1849,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.DeleteTagTemplateRequest):
             request = datacatalog.DeleteTagTemplateRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if name is not None:
                 request.name = name
             if force is not None:
@@ -1972,7 +1922,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``tag_template_field`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2001,10 +1950,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.CreateTagTemplateFieldRequest):
             request = datacatalog.CreateTagTemplateFieldRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if parent is not None:
                 request.parent = parent
             if tag_template_field_id is not None:
@@ -2085,7 +2032,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2114,10 +2060,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.UpdateTagTemplateFieldRequest):
             request = datacatalog.UpdateTagTemplateFieldRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if name is not None:
                 request.name = name
             if tag_template_field is not None:
@@ -2178,7 +2122,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``new_tag_template_field_id`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2207,10 +2150,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.RenameTagTemplateFieldRequest):
             request = datacatalog.RenameTagTemplateFieldRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if name is not None:
                 request.name = name
             if new_tag_template_field_id is not None:
@@ -2273,7 +2214,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``force`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2296,10 +2236,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.DeleteTagTemplateFieldRequest):
             request = datacatalog.DeleteTagTemplateFieldRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if name is not None:
                 request.name = name
             if force is not None:
@@ -2361,7 +2299,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``tag`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2396,10 +2333,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.CreateTagRequest):
             request = datacatalog.CreateTagRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if parent is not None:
                 request.parent = parent
             if tag is not None:
@@ -2452,7 +2387,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2487,10 +2421,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.UpdateTagRequest):
             request = datacatalog.UpdateTagRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if tag is not None:
                 request.tag = tag
             if update_mask is not None:
@@ -2535,7 +2467,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2558,10 +2489,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.DeleteTagRequest):
             request = datacatalog.DeleteTagRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if name is not None:
                 request.name = name
 
@@ -2610,7 +2539,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2642,10 +2570,8 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         # there are no flattened fields.
         if not isinstance(request, datacatalog.ListTagsRequest):
             request = datacatalog.ListTagsRequest(request)
-
             # If we have keyword arguments corresponding to fields on the
             # request, apply these.
-
             if parent is not None:
                 request.parent = parent
 
@@ -2679,7 +2605,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> giv_policy.Policy:
         r"""Sets the access control policy for a resource. Replaces any
         existing policy. Supported resources are:
 
@@ -2711,7 +2637,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``resource`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2794,7 +2719,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         elif not request:
             # Null request, just make one.
             request = iam_policy.SetIamPolicyRequest()
-
             if resource is not None:
                 request.resource = resource
 
@@ -2822,7 +2746,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> giv_policy.Policy:
         r"""Gets the access control policy for a resource. A ``NOT_FOUND``
         error is returned if the resource does not exist. An empty
         policy is returned if the resource exists but does not have a
@@ -2858,7 +2782,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 This corresponds to the ``resource`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2941,7 +2864,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         elif not request:
             # Null request, just make one.
             request = iam_policy.GetIamPolicyRequest()
-
             if resource is not None:
                 request.resource = resource
 
@@ -2988,7 +2910,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
             request (google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest):
                 The request object. Request message for
                 `TestIamPermissions` method.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -3000,7 +2921,6 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 Response message for TestIamPermissions method.
         """
         # Create or coerce a protobuf request object.
-
         if isinstance(request, dict):
             # The request isn't a proto-plus wrapped type,
             # so it must be constructed via keyword expansion.

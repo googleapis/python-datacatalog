@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 from collections import OrderedDict
 import functools
 import re
@@ -38,9 +36,8 @@ from google.cloud.datacatalog_v1beta1.types import table_spec
 from google.cloud.datacatalog_v1beta1.types import tags
 from google.cloud.datacatalog_v1beta1.types import timestamps
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
+from google.iam.v1 import policy_pb2 as giv_policy  # type: ignore
 from google.protobuf import field_mask_pb2 as field_mask  # type: ignore
-
 from .transports.base import DataCatalogTransport, DEFAULT_CLIENT_INFO
 from .transports.grpc_asyncio import DataCatalogGrpcAsyncIOTransport
 from .client import DataCatalogClient
@@ -68,27 +65,22 @@ class DataCatalogAsyncClient:
     parse_tag_template_field_path = staticmethod(
         DataCatalogClient.parse_tag_template_field_path
     )
-
     common_billing_account_path = staticmethod(
         DataCatalogClient.common_billing_account_path
     )
     parse_common_billing_account_path = staticmethod(
         DataCatalogClient.parse_common_billing_account_path
     )
-
     common_folder_path = staticmethod(DataCatalogClient.common_folder_path)
     parse_common_folder_path = staticmethod(DataCatalogClient.parse_common_folder_path)
-
     common_organization_path = staticmethod(DataCatalogClient.common_organization_path)
     parse_common_organization_path = staticmethod(
         DataCatalogClient.parse_common_organization_path
     )
-
     common_project_path = staticmethod(DataCatalogClient.common_project_path)
     parse_common_project_path = staticmethod(
         DataCatalogClient.parse_common_project_path
     )
-
     common_location_path = staticmethod(DataCatalogClient.common_location_path)
     parse_common_location_path = staticmethod(
         DataCatalogClient.parse_common_location_path
@@ -179,7 +171,6 @@ class DataCatalogAsyncClient:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
                 creation failed for any reason.
         """
-
         self._client = DataCatalogClient(
             credentials=credentials,
             transport=transport,
@@ -248,7 +239,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``query`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -278,7 +268,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if scope is not None:
             request.scope = scope
         if query is not None:
@@ -358,7 +347,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``entry_group`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -388,7 +376,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if entry_group_id is not None:
@@ -451,7 +438,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -481,7 +467,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if entry_group is not None:
             request.entry_group = entry_group
         if update_mask is not None:
@@ -539,7 +524,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``read_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -569,7 +553,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if read_mask is not None:
@@ -631,7 +614,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -652,7 +634,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -709,7 +690,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -739,7 +719,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
 
@@ -819,7 +798,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``entry`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -856,7 +834,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if entry_id is not None:
@@ -942,7 +919,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -979,7 +955,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if entry is not None:
             request.entry = entry
         if update_mask is not None:
@@ -1036,7 +1011,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1057,7 +1031,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -1112,7 +1085,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1149,7 +1121,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -1199,7 +1170,6 @@ class DataCatalogAsyncClient:
             request (:class:`google.cloud.datacatalog_v1beta1.types.LookupEntryRequest`):
                 The request object. Request message for
                 [LookupEntry][google.cloud.datacatalog.v1beta1.DataCatalog.LookupEntry].
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1223,7 +1193,6 @@ class DataCatalogAsyncClient:
 
         """
         # Create or coerce a protobuf request object.
-
         request = datacatalog.LookupEntryRequest(request)
 
         # Wrap the RPC method; this adds retry and timeout information,
@@ -1273,7 +1242,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1303,7 +1271,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
 
@@ -1378,7 +1345,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``tag_template`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1412,7 +1378,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if tag_template_id is not None:
@@ -1463,7 +1428,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1497,7 +1461,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -1575,7 +1538,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1609,7 +1571,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if tag_template is not None:
             request.tag_template = tag_template
         if update_mask is not None:
@@ -1675,7 +1636,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``force`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1696,7 +1656,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if force is not None:
@@ -1781,7 +1740,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``tag_template_field`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1808,7 +1766,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if tag_template_field_id is not None:
@@ -1891,7 +1848,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1918,7 +1874,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if tag_template_field is not None:
@@ -1981,7 +1936,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``new_tag_template_field_id`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2008,7 +1962,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if new_tag_template_field_id is not None:
@@ -2073,7 +2026,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``force`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2094,7 +2046,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if force is not None:
@@ -2167,7 +2118,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``tag`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2200,7 +2150,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if tag is not None:
@@ -2257,7 +2206,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2290,7 +2238,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if tag is not None:
             request.tag = tag
         if update_mask is not None:
@@ -2339,7 +2286,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2360,7 +2306,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -2422,7 +2367,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2452,7 +2396,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
 
@@ -2499,7 +2442,7 @@ class DataCatalogAsyncClient:
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> giv_policy.Policy:
         r"""Sets the access control policy for a resource. Replaces any
         existing policy. Supported resources are:
 
@@ -2531,7 +2474,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``resource`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2611,7 +2553,6 @@ class DataCatalogAsyncClient:
         # so it must be constructed via keyword expansion.
         if isinstance(request, dict):
             request = iam_policy.SetIamPolicyRequest(**request)
-
         elif not request:
             request = iam_policy.SetIamPolicyRequest(resource=resource,)
 
@@ -2643,7 +2584,7 @@ class DataCatalogAsyncClient:
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> giv_policy.Policy:
         r"""Gets the access control policy for a resource. A ``NOT_FOUND``
         error is returned if the resource does not exist. An empty
         policy is returned if the resource exists but does not have a
@@ -2679,7 +2620,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``resource`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2759,7 +2699,6 @@ class DataCatalogAsyncClient:
         # so it must be constructed via keyword expansion.
         if isinstance(request, dict):
             request = iam_policy.GetIamPolicyRequest(**request)
-
         elif not request:
             request = iam_policy.GetIamPolicyRequest(resource=resource,)
 
@@ -2810,7 +2749,6 @@ class DataCatalogAsyncClient:
             request (:class:`google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest`):
                 The request object. Request message for
                 `TestIamPermissions` method.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2822,7 +2760,6 @@ class DataCatalogAsyncClient:
                 Response message for TestIamPermissions method.
         """
         # Create or coerce a protobuf request object.
-
         # The request isn't a proto-plus wrapped type,
         # so it must be constructed via keyword expansion.
         if isinstance(request, dict):

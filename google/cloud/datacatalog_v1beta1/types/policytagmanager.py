@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,9 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 import proto  # type: ignore
-
 
 from google.protobuf import field_mask_pb2 as field_mask  # type: ignore
 
@@ -78,12 +75,9 @@ class Taxonomy(proto.Message):
         POLICY_TYPE_UNSPECIFIED = 0
         FINE_GRAINED_ACCESS_CONTROL = 1
 
-    name = proto.Field(proto.STRING, number=1)
-
-    display_name = proto.Field(proto.STRING, number=2)
-
-    description = proto.Field(proto.STRING, number=3)
-
+    name = proto.Field(proto.STRING, number=1,)
+    display_name = proto.Field(proto.STRING, number=2,)
+    description = proto.Field(proto.STRING, number=3,)
     activated_policy_types = proto.RepeatedField(proto.ENUM, number=6, enum=PolicyType,)
 
 
@@ -127,15 +121,11 @@ class PolicyTag(proto.Message):
             tags of this policy tag.
     """
 
-    name = proto.Field(proto.STRING, number=1)
-
-    display_name = proto.Field(proto.STRING, number=2)
-
-    description = proto.Field(proto.STRING, number=3)
-
-    parent_policy_tag = proto.Field(proto.STRING, number=4)
-
-    child_policy_tags = proto.RepeatedField(proto.STRING, number=5)
+    name = proto.Field(proto.STRING, number=1,)
+    display_name = proto.Field(proto.STRING, number=2,)
+    description = proto.Field(proto.STRING, number=3,)
+    parent_policy_tag = proto.Field(proto.STRING, number=4,)
+    child_policy_tags = proto.RepeatedField(proto.STRING, number=5,)
 
 
 class CreateTaxonomyRequest(proto.Message):
@@ -150,8 +140,7 @@ class CreateTaxonomyRequest(proto.Message):
             The taxonomy to be created.
     """
 
-    parent = proto.Field(proto.STRING, number=1)
-
+    parent = proto.Field(proto.STRING, number=1,)
     taxonomy = proto.Field(proto.MESSAGE, number=2, message="Taxonomy",)
 
 
@@ -166,7 +155,7 @@ class DeleteTaxonomyRequest(proto.Message):
             also be deleted.
     """
 
-    name = proto.Field(proto.STRING, number=1)
+    name = proto.Field(proto.STRING, number=1,)
 
 
 class UpdateTaxonomyRequest(proto.Message):
@@ -186,7 +175,6 @@ class UpdateTaxonomyRequest(proto.Message):
     """
 
     taxonomy = proto.Field(proto.MESSAGE, number=1, message="Taxonomy",)
-
     update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask,)
 
 
@@ -207,11 +195,9 @@ class ListTaxonomiesRequest(proto.Message):
             request, if any. If not set, defaults to an empty string.
     """
 
-    parent = proto.Field(proto.STRING, number=1)
-
-    page_size = proto.Field(proto.INT32, number=2)
-
-    page_token = proto.Field(proto.STRING, number=3)
+    parent = proto.Field(proto.STRING, number=1,)
+    page_size = proto.Field(proto.INT32, number=2,)
+    page_token = proto.Field(proto.STRING, number=3,)
 
 
 class ListTaxonomiesResponse(proto.Message):
@@ -232,8 +218,7 @@ class ListTaxonomiesResponse(proto.Message):
         return self
 
     taxonomies = proto.RepeatedField(proto.MESSAGE, number=1, message="Taxonomy",)
-
-    next_page_token = proto.Field(proto.STRING, number=2)
+    next_page_token = proto.Field(proto.STRING, number=2,)
 
 
 class GetTaxonomyRequest(proto.Message):
@@ -246,7 +231,7 @@ class GetTaxonomyRequest(proto.Message):
             taxonomy.
     """
 
-    name = proto.Field(proto.STRING, number=1)
+    name = proto.Field(proto.STRING, number=1,)
 
 
 class CreatePolicyTagRequest(proto.Message):
@@ -261,8 +246,7 @@ class CreatePolicyTagRequest(proto.Message):
             The policy tag to be created.
     """
 
-    parent = proto.Field(proto.STRING, number=1)
-
+    parent = proto.Field(proto.STRING, number=1,)
     policy_tag = proto.Field(proto.MESSAGE, number=2, message="PolicyTag",)
 
 
@@ -277,7 +261,7 @@ class DeletePolicyTagRequest(proto.Message):
             will also be deleted.
     """
 
-    name = proto.Field(proto.STRING, number=1)
+    name = proto.Field(proto.STRING, number=1,)
 
 
 class UpdatePolicyTagRequest(proto.Message):
@@ -301,7 +285,6 @@ class UpdatePolicyTagRequest(proto.Message):
     """
 
     policy_tag = proto.Field(proto.MESSAGE, number=1, message="PolicyTag",)
-
     update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask,)
 
 
@@ -322,11 +305,9 @@ class ListPolicyTagsRequest(proto.Message):
             request, if any. If not set, defaults to an empty string.
     """
 
-    parent = proto.Field(proto.STRING, number=1)
-
-    page_size = proto.Field(proto.INT32, number=2)
-
-    page_token = proto.Field(proto.STRING, number=3)
+    parent = proto.Field(proto.STRING, number=1,)
+    page_size = proto.Field(proto.INT32, number=2,)
+    page_token = proto.Field(proto.STRING, number=3,)
 
 
 class ListPolicyTagsResponse(proto.Message):
@@ -348,8 +329,7 @@ class ListPolicyTagsResponse(proto.Message):
         return self
 
     policy_tags = proto.RepeatedField(proto.MESSAGE, number=1, message="PolicyTag",)
-
-    next_page_token = proto.Field(proto.STRING, number=2)
+    next_page_token = proto.Field(proto.STRING, number=2,)
 
 
 class GetPolicyTagRequest(proto.Message):
@@ -362,7 +342,7 @@ class GetPolicyTagRequest(proto.Message):
             policy tag.
     """
 
-    name = proto.Field(proto.STRING, number=1)
+    name = proto.Field(proto.STRING, number=1,)
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))

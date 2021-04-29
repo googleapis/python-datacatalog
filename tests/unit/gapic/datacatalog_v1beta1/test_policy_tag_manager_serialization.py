@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,15 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 import os
 import mock
+import packaging.version
 
 import grpc
 from grpc.experimental import aio
 import math
 import pytest
 from proto.marshal.rules.dates import DurationRule, TimestampRule
+
 
 from google import auth
 from google.api_core import client_options
@@ -41,9 +41,38 @@ from google.cloud.datacatalog_v1beta1.services.policy_tag_manager_serialization 
 from google.cloud.datacatalog_v1beta1.services.policy_tag_manager_serialization import (
     transports,
 )
+from google.cloud.datacatalog_v1beta1.services.policy_tag_manager_serialization.transports.base import (
+    _API_CORE_VERSION,
+)
+from google.cloud.datacatalog_v1beta1.services.policy_tag_manager_serialization.transports.base import (
+    _GOOGLE_AUTH_VERSION,
+)
 from google.cloud.datacatalog_v1beta1.types import policytagmanager
 from google.cloud.datacatalog_v1beta1.types import policytagmanagerserialization
 from google.oauth2 import service_account
+
+
+# TODO(busunkim): Once google-api-core >= 1.26.0 is required:
+# - Delete all the api-core and auth "less than" test cases
+# - Delete these pytest markers (Make the "greater than or equal to" tests the default).
+requires_google_auth_lt_1_25_0 = pytest.mark.skipif(
+    packaging.version.parse(_GOOGLE_AUTH_VERSION) >= packaging.version.parse("1.25.0"),
+    reason="This test requires google-auth < 1.25.0",
+)
+requires_google_auth_gte_1_25_0 = pytest.mark.skipif(
+    packaging.version.parse(_GOOGLE_AUTH_VERSION) < packaging.version.parse("1.25.0"),
+    reason="This test requires google-auth >= 1.25.0",
+)
+
+requires_api_core_lt_1_26_0 = pytest.mark.skipif(
+    packaging.version.parse(_API_CORE_VERSION) >= packaging.version.parse("1.26.0"),
+    reason="This test requires google-api-core < 1.26.0",
+)
+
+requires_api_core_gte_1_26_0 = pytest.mark.skipif(
+    packaging.version.parse(_API_CORE_VERSION) < packaging.version.parse("1.26.0"),
+    reason="This test requires google-api-core >= 1.26.0",
+)
 
 
 def client_cert_source_callback():
@@ -503,17 +532,14 @@ def test_import_taxonomies(
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = policytagmanagerserialization.ImportTaxonomiesResponse()
-
         response = client.import_taxonomies(request)
 
         # Establish that the underlying gRPC stub method was called.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
-
         assert args[0] == policytagmanagerserialization.ImportTaxonomiesRequest()
 
     # Establish that the response is the type that we expect.
-
     assert isinstance(response, policytagmanagerserialization.ImportTaxonomiesResponse)
 
 
@@ -535,7 +561,6 @@ def test_import_taxonomies_empty_call():
         client.import_taxonomies()
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-
         assert args[0] == policytagmanagerserialization.ImportTaxonomiesRequest()
 
 
@@ -560,13 +585,11 @@ async def test_import_taxonomies_async(
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             policytagmanagerserialization.ImportTaxonomiesResponse()
         )
-
         response = await client.import_taxonomies(request)
 
         # Establish that the underlying gRPC stub method was called.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
-
         assert args[0] == policytagmanagerserialization.ImportTaxonomiesRequest()
 
     # Establish that the response is the type that we expect.
@@ -586,6 +609,7 @@ def test_import_taxonomies_field_headers():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = policytagmanagerserialization.ImportTaxonomiesRequest()
+
     request.parent = "parent/value"
 
     # Mock the actual call within the gRPC stub, and fake the request.
@@ -593,7 +617,6 @@ def test_import_taxonomies_field_headers():
         type(client.transport.import_taxonomies), "__call__"
     ) as call:
         call.return_value = policytagmanagerserialization.ImportTaxonomiesResponse()
-
         client.import_taxonomies(request)
 
         # Establish that the underlying gRPC stub method was called.
@@ -615,6 +638,7 @@ async def test_import_taxonomies_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = policytagmanagerserialization.ImportTaxonomiesRequest()
+
     request.parent = "parent/value"
 
     # Mock the actual call within the gRPC stub, and fake the request.
@@ -624,7 +648,6 @@ async def test_import_taxonomies_field_headers_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             policytagmanagerserialization.ImportTaxonomiesResponse()
         )
-
         await client.import_taxonomies(request)
 
         # Establish that the underlying gRPC stub method was called.
@@ -655,17 +678,14 @@ def test_export_taxonomies(
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = policytagmanagerserialization.ExportTaxonomiesResponse()
-
         response = client.export_taxonomies(request)
 
         # Establish that the underlying gRPC stub method was called.
         assert len(call.mock_calls) == 1
         _, args, _ = call.mock_calls[0]
-
         assert args[0] == policytagmanagerserialization.ExportTaxonomiesRequest()
 
     # Establish that the response is the type that we expect.
-
     assert isinstance(response, policytagmanagerserialization.ExportTaxonomiesResponse)
 
 
@@ -687,7 +707,6 @@ def test_export_taxonomies_empty_call():
         client.export_taxonomies()
         call.assert_called()
         _, args, _ = call.mock_calls[0]
-
         assert args[0] == policytagmanagerserialization.ExportTaxonomiesRequest()
 
 
@@ -712,13 +731,11 @@ async def test_export_taxonomies_async(
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             policytagmanagerserialization.ExportTaxonomiesResponse()
         )
-
         response = await client.export_taxonomies(request)
 
         # Establish that the underlying gRPC stub method was called.
         assert len(call.mock_calls)
         _, args, _ = call.mock_calls[0]
-
         assert args[0] == policytagmanagerserialization.ExportTaxonomiesRequest()
 
     # Establish that the response is the type that we expect.
@@ -738,6 +755,7 @@ def test_export_taxonomies_field_headers():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = policytagmanagerserialization.ExportTaxonomiesRequest()
+
     request.parent = "parent/value"
 
     # Mock the actual call within the gRPC stub, and fake the request.
@@ -745,7 +763,6 @@ def test_export_taxonomies_field_headers():
         type(client.transport.export_taxonomies), "__call__"
     ) as call:
         call.return_value = policytagmanagerserialization.ExportTaxonomiesResponse()
-
         client.export_taxonomies(request)
 
         # Establish that the underlying gRPC stub method was called.
@@ -767,6 +784,7 @@ async def test_export_taxonomies_field_headers_async():
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
     request = policytagmanagerserialization.ExportTaxonomiesRequest()
+
     request.parent = "parent/value"
 
     # Mock the actual call within the gRPC stub, and fake the request.
@@ -776,7 +794,6 @@ async def test_export_taxonomies_field_headers_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
             policytagmanagerserialization.ExportTaxonomiesResponse()
         )
-
         await client.export_taxonomies(request)
 
         # Establish that the underlying gRPC stub method was called.
@@ -898,10 +915,32 @@ def test_policy_tag_manager_serialization_base_transport():
             getattr(transport, method)(request=object())
 
 
+@requires_google_auth_gte_1_25_0
 def test_policy_tag_manager_serialization_base_transport_with_credentials_file():
     # Instantiate the base transport with a credentials file
     with mock.patch.object(
-        auth, "load_credentials_from_file"
+        auth, "load_credentials_from_file", autospec=True
+    ) as load_creds, mock.patch(
+        "google.cloud.datacatalog_v1beta1.services.policy_tag_manager_serialization.transports.PolicyTagManagerSerializationTransport._prep_wrapped_messages"
+    ) as Transport:
+        Transport.return_value = None
+        load_creds.return_value = (credentials.AnonymousCredentials(), None)
+        transport = transports.PolicyTagManagerSerializationTransport(
+            credentials_file="credentials.json", quota_project_id="octopus",
+        )
+        load_creds.assert_called_once_with(
+            "credentials.json",
+            scopes=None,
+            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            quota_project_id="octopus",
+        )
+
+
+@requires_google_auth_lt_1_25_0
+def test_policy_tag_manager_serialization_base_transport_with_credentials_file_old_google_auth():
+    # Instantiate the base transport with a credentials file
+    with mock.patch.object(
+        auth, "load_credentials_from_file", autospec=True
     ) as load_creds, mock.patch(
         "google.cloud.datacatalog_v1beta1.services.policy_tag_manager_serialization.transports.PolicyTagManagerSerializationTransport._prep_wrapped_messages"
     ) as Transport:
@@ -919,7 +958,7 @@ def test_policy_tag_manager_serialization_base_transport_with_credentials_file()
 
 def test_policy_tag_manager_serialization_base_transport_with_adc():
     # Test the default credentials are used if credentials and credentials_file are None.
-    with mock.patch.object(auth, "default") as adc, mock.patch(
+    with mock.patch.object(auth, "default", autospec=True) as adc, mock.patch(
         "google.cloud.datacatalog_v1beta1.services.policy_tag_manager_serialization.transports.PolicyTagManagerSerializationTransport._prep_wrapped_messages"
     ) as Transport:
         Transport.return_value = None
@@ -928,9 +967,23 @@ def test_policy_tag_manager_serialization_base_transport_with_adc():
         adc.assert_called_once()
 
 
+@requires_google_auth_gte_1_25_0
 def test_policy_tag_manager_serialization_auth_adc():
     # If no credentials are provided, we should use ADC credentials.
-    with mock.patch.object(auth, "default") as adc:
+    with mock.patch.object(auth, "default", autospec=True) as adc:
+        adc.return_value = (credentials.AnonymousCredentials(), None)
+        PolicyTagManagerSerializationClient()
+        adc.assert_called_once_with(
+            scopes=None,
+            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            quota_project_id=None,
+        )
+
+
+@requires_google_auth_lt_1_25_0
+def test_policy_tag_manager_serialization_auth_adc_old_google_auth():
+    # If no credentials are provided, we should use ADC credentials.
+    with mock.patch.object(auth, "default", autospec=True) as adc:
         adc.return_value = (credentials.AnonymousCredentials(), None)
         PolicyTagManagerSerializationClient()
         adc.assert_called_once_with(
@@ -939,17 +992,160 @@ def test_policy_tag_manager_serialization_auth_adc():
         )
 
 
-def test_policy_tag_manager_serialization_transport_auth_adc():
+@pytest.mark.parametrize(
+    "transport_class",
+    [
+        transports.PolicyTagManagerSerializationGrpcTransport,
+        transports.PolicyTagManagerSerializationGrpcAsyncIOTransport,
+    ],
+)
+@requires_google_auth_gte_1_25_0
+def test_policy_tag_manager_serialization_transport_auth_adc(transport_class):
     # If credentials and host are not provided, the transport class should use
     # ADC credentials.
-    with mock.patch.object(auth, "default") as adc:
+    with mock.patch.object(auth, "default", autospec=True) as adc:
         adc.return_value = (credentials.AnonymousCredentials(), None)
-        transports.PolicyTagManagerSerializationGrpcTransport(
-            host="squid.clam.whelk", quota_project_id="octopus"
+        transport_class(quota_project_id="octopus", scopes=["1", "2"])
+        adc.assert_called_once_with(
+            scopes=["1", "2"],
+            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            quota_project_id="octopus",
         )
+
+
+@pytest.mark.parametrize(
+    "transport_class",
+    [
+        transports.PolicyTagManagerSerializationGrpcTransport,
+        transports.PolicyTagManagerSerializationGrpcAsyncIOTransport,
+    ],
+)
+@requires_google_auth_lt_1_25_0
+def test_policy_tag_manager_serialization_transport_auth_adc_old_google_auth(
+    transport_class,
+):
+    # If credentials and host are not provided, the transport class should use
+    # ADC credentials.
+    with mock.patch.object(auth, "default", autospec=True) as adc:
+        adc.return_value = (credentials.AnonymousCredentials(), None)
+        transport_class(quota_project_id="octopus")
         adc.assert_called_once_with(
             scopes=("https://www.googleapis.com/auth/cloud-platform",),
             quota_project_id="octopus",
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_class,grpc_helpers",
+    [
+        (transports.PolicyTagManagerSerializationGrpcTransport, grpc_helpers),
+        (
+            transports.PolicyTagManagerSerializationGrpcAsyncIOTransport,
+            grpc_helpers_async,
+        ),
+    ],
+)
+@requires_api_core_gte_1_26_0
+def test_policy_tag_manager_serialization_transport_create_channel(
+    transport_class, grpc_helpers
+):
+    # If credentials and host are not provided, the transport class should use
+    # ADC credentials.
+    with mock.patch.object(auth, "default", autospec=True) as adc, mock.patch.object(
+        grpc_helpers, "create_channel", autospec=True
+    ) as create_channel:
+        creds = credentials.AnonymousCredentials()
+        adc.return_value = (creds, None)
+        transport_class(quota_project_id="octopus", scopes=["1", "2"])
+
+        create_channel.assert_called_with(
+            "datacatalog.googleapis.com:443",
+            credentials=creds,
+            credentials_file=None,
+            quota_project_id="octopus",
+            default_scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            scopes=["1", "2"],
+            default_host="datacatalog.googleapis.com",
+            ssl_credentials=None,
+            options=[
+                ("grpc.max_send_message_length", -1),
+                ("grpc.max_receive_message_length", -1),
+            ],
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_class,grpc_helpers",
+    [
+        (transports.PolicyTagManagerSerializationGrpcTransport, grpc_helpers),
+        (
+            transports.PolicyTagManagerSerializationGrpcAsyncIOTransport,
+            grpc_helpers_async,
+        ),
+    ],
+)
+@requires_api_core_lt_1_26_0
+def test_policy_tag_manager_serialization_transport_create_channel_old_api_core(
+    transport_class, grpc_helpers
+):
+    # If credentials and host are not provided, the transport class should use
+    # ADC credentials.
+    with mock.patch.object(auth, "default", autospec=True) as adc, mock.patch.object(
+        grpc_helpers, "create_channel", autospec=True
+    ) as create_channel:
+        creds = credentials.AnonymousCredentials()
+        adc.return_value = (creds, None)
+        transport_class(quota_project_id="octopus")
+
+        create_channel.assert_called_with(
+            "datacatalog.googleapis.com",
+            credentials=creds,
+            credentials_file=None,
+            quota_project_id="octopus",
+            scopes=("https://www.googleapis.com/auth/cloud-platform",),
+            ssl_credentials=None,
+            options=[
+                ("grpc.max_send_message_length", -1),
+                ("grpc.max_receive_message_length", -1),
+            ],
+        )
+
+
+@pytest.mark.parametrize(
+    "transport_class,grpc_helpers",
+    [
+        (transports.PolicyTagManagerSerializationGrpcTransport, grpc_helpers),
+        (
+            transports.PolicyTagManagerSerializationGrpcAsyncIOTransport,
+            grpc_helpers_async,
+        ),
+    ],
+)
+@requires_api_core_lt_1_26_0
+def test_policy_tag_manager_serialization_transport_create_channel_user_scopes(
+    transport_class, grpc_helpers
+):
+    # If credentials and host are not provided, the transport class should use
+    # ADC credentials.
+    with mock.patch.object(auth, "default", autospec=True) as adc, mock.patch.object(
+        grpc_helpers, "create_channel", autospec=True
+    ) as create_channel:
+        creds = credentials.AnonymousCredentials()
+        adc.return_value = (creds, None)
+
+        transport_class(quota_project_id="octopus", scopes=["1", "2"])
+
+        create_channel.assert_called_with(
+            "datacatalog.googleapis.com",
+            credentials=creds,
+            credentials_file=None,
+            quota_project_id="octopus",
+            scopes=["1", "2"],
+            ssl_credentials=None,
+            options=[
+                ("grpc.max_send_message_length", -1),
+                ("grpc.max_receive_message_length", -1),
+            ],
         )
 
 
@@ -1150,7 +1346,6 @@ def test_taxonomy_path():
     project = "squid"
     location = "clam"
     taxonomy = "whelk"
-
     expected = "projects/{project}/locations/{location}/taxonomies/{taxonomy}".format(
         project=project, location=location, taxonomy=taxonomy,
     )
@@ -1175,7 +1370,6 @@ def test_parse_taxonomy_path():
 
 def test_common_billing_account_path():
     billing_account = "cuttlefish"
-
     expected = "billingAccounts/{billing_account}".format(
         billing_account=billing_account,
     )
@@ -1198,7 +1392,6 @@ def test_parse_common_billing_account_path():
 
 def test_common_folder_path():
     folder = "winkle"
-
     expected = "folders/{folder}".format(folder=folder,)
     actual = PolicyTagManagerSerializationClient.common_folder_path(folder)
     assert expected == actual
@@ -1217,7 +1410,6 @@ def test_parse_common_folder_path():
 
 def test_common_organization_path():
     organization = "scallop"
-
     expected = "organizations/{organization}".format(organization=organization,)
     actual = PolicyTagManagerSerializationClient.common_organization_path(organization)
     assert expected == actual
@@ -1236,7 +1428,6 @@ def test_parse_common_organization_path():
 
 def test_common_project_path():
     project = "squid"
-
     expected = "projects/{project}".format(project=project,)
     actual = PolicyTagManagerSerializationClient.common_project_path(project)
     assert expected == actual
@@ -1256,7 +1447,6 @@ def test_parse_common_project_path():
 def test_common_location_path():
     project = "whelk"
     location = "octopus"
-
     expected = "projects/{project}/locations/{location}".format(
         project=project, location=location,
     )
