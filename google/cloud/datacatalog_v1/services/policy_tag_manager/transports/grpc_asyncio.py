@@ -27,9 +27,9 @@ from google.auth.transport.grpc import SslCredentials  # type: ignore
 import grpc  # type: ignore
 from grpc.experimental import aio  # type: ignore
 
-from google.cloud.datacatalog_v1beta1.types import policytagmanager
+from google.cloud.datacatalog_v1.types import policytagmanager
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as giv_policy  # type: ignore
+from google.iam.v1 import policy_pb2 as gi_policy  # type: ignore
 from google.protobuf import empty_pb2 as empty  # type: ignore
 
 from .base import PolicyTagManagerTransport, DEFAULT_CLIENT_INFO
@@ -39,8 +39,12 @@ from .grpc import PolicyTagManagerGrpcTransport
 class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
     """gRPC AsyncIO backend transport for PolicyTagManager.
 
-    The policy tag manager API service allows clients to manage
-    their taxonomies and policy tags.
+    Policy Tag Manager API service allows clients to manage their
+    policy tags and taxonomies.
+
+    Policy tags are used to tag BigQuery columns and apply
+    additional access control policies. A taxonomy is a hierarchical
+    grouping of policy tags that classify data along a common axis.
 
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
@@ -237,7 +241,9 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
     ]:
         r"""Return a callable for the create taxonomy method over gRPC.
 
-        Creates a taxonomy in the specified project.
+        Creates a taxonomy in a specified project. The
+        taxonomy is initially empty, i.e., does not contain
+        policy tags.
 
         Returns:
             Callable[[~.CreateTaxonomyRequest],
@@ -251,7 +257,7 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
         # to pass in the functions for each.
         if "create_taxonomy" not in self._stubs:
             self._stubs["create_taxonomy"] = self.grpc_channel.unary_unary(
-                "/google.cloud.datacatalog.v1beta1.PolicyTagManager/CreateTaxonomy",
+                "/google.cloud.datacatalog.v1.PolicyTagManager/CreateTaxonomy",
                 request_serializer=policytagmanager.CreateTaxonomyRequest.serialize,
                 response_deserializer=policytagmanager.Taxonomy.deserialize,
             )
@@ -263,9 +269,9 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
     ) -> Callable[[policytagmanager.DeleteTaxonomyRequest], Awaitable[empty.Empty]]:
         r"""Return a callable for the delete taxonomy method over gRPC.
 
-        Deletes a taxonomy. This operation will also delete
-        all policy tags in this taxonomy along with their
-        associated policies.
+        Deletes a taxonomy. This method will also delete all
+        policy tags in this taxonomy, their associated policies,
+        and the policy tags references from BigQuery columns.
 
         Returns:
             Callable[[~.DeleteTaxonomyRequest],
@@ -279,7 +285,7 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
         # to pass in the functions for each.
         if "delete_taxonomy" not in self._stubs:
             self._stubs["delete_taxonomy"] = self.grpc_channel.unary_unary(
-                "/google.cloud.datacatalog.v1beta1.PolicyTagManager/DeleteTaxonomy",
+                "/google.cloud.datacatalog.v1.PolicyTagManager/DeleteTaxonomy",
                 request_serializer=policytagmanager.DeleteTaxonomyRequest.serialize,
                 response_deserializer=empty.Empty.FromString,
             )
@@ -293,7 +299,9 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
     ]:
         r"""Return a callable for the update taxonomy method over gRPC.
 
-        Updates a taxonomy.
+        Updates a taxonomy. This method can update the
+        taxonomy's display name, description, and activated
+        policy types.
 
         Returns:
             Callable[[~.UpdateTaxonomyRequest],
@@ -307,7 +315,7 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
         # to pass in the functions for each.
         if "update_taxonomy" not in self._stubs:
             self._stubs["update_taxonomy"] = self.grpc_channel.unary_unary(
-                "/google.cloud.datacatalog.v1beta1.PolicyTagManager/UpdateTaxonomy",
+                "/google.cloud.datacatalog.v1.PolicyTagManager/UpdateTaxonomy",
                 request_serializer=policytagmanager.UpdateTaxonomyRequest.serialize,
                 response_deserializer=policytagmanager.Taxonomy.deserialize,
             )
@@ -337,7 +345,7 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
         # to pass in the functions for each.
         if "list_taxonomies" not in self._stubs:
             self._stubs["list_taxonomies"] = self.grpc_channel.unary_unary(
-                "/google.cloud.datacatalog.v1beta1.PolicyTagManager/ListTaxonomies",
+                "/google.cloud.datacatalog.v1.PolicyTagManager/ListTaxonomies",
                 request_serializer=policytagmanager.ListTaxonomiesRequest.serialize,
                 response_deserializer=policytagmanager.ListTaxonomiesResponse.deserialize,
             )
@@ -365,7 +373,7 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
         # to pass in the functions for each.
         if "get_taxonomy" not in self._stubs:
             self._stubs["get_taxonomy"] = self.grpc_channel.unary_unary(
-                "/google.cloud.datacatalog.v1beta1.PolicyTagManager/GetTaxonomy",
+                "/google.cloud.datacatalog.v1.PolicyTagManager/GetTaxonomy",
                 request_serializer=policytagmanager.GetTaxonomyRequest.serialize,
                 response_deserializer=policytagmanager.Taxonomy.deserialize,
             )
@@ -379,7 +387,7 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
     ]:
         r"""Return a callable for the create policy tag method over gRPC.
 
-        Creates a policy tag in the specified taxonomy.
+        Creates a policy tag in a taxonomy.
 
         Returns:
             Callable[[~.CreatePolicyTagRequest],
@@ -393,7 +401,7 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
         # to pass in the functions for each.
         if "create_policy_tag" not in self._stubs:
             self._stubs["create_policy_tag"] = self.grpc_channel.unary_unary(
-                "/google.cloud.datacatalog.v1beta1.PolicyTagManager/CreatePolicyTag",
+                "/google.cloud.datacatalog.v1.PolicyTagManager/CreatePolicyTag",
                 request_serializer=policytagmanager.CreatePolicyTagRequest.serialize,
                 response_deserializer=policytagmanager.PolicyTag.deserialize,
             )
@@ -405,8 +413,13 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
     ) -> Callable[[policytagmanager.DeletePolicyTagRequest], Awaitable[empty.Empty]]:
         r"""Return a callable for the delete policy tag method over gRPC.
 
-        Deletes a policy tag. Also deletes all of its
-        descendant policy tags.
+        Deletes a policy tag. This method also deletes:
+
+        -  all of its descendant policy tags, if any
+        -  the policies associated with the policy tag and its
+           descendants
+        -  references from BigQuery table schema of the policy tag and
+           its descendants.
 
         Returns:
             Callable[[~.DeletePolicyTagRequest],
@@ -420,7 +433,7 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
         # to pass in the functions for each.
         if "delete_policy_tag" not in self._stubs:
             self._stubs["delete_policy_tag"] = self.grpc_channel.unary_unary(
-                "/google.cloud.datacatalog.v1beta1.PolicyTagManager/DeletePolicyTag",
+                "/google.cloud.datacatalog.v1.PolicyTagManager/DeletePolicyTag",
                 request_serializer=policytagmanager.DeletePolicyTagRequest.serialize,
                 response_deserializer=empty.Empty.FromString,
             )
@@ -434,7 +447,9 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
     ]:
         r"""Return a callable for the update policy tag method over gRPC.
 
-        Updates a policy tag.
+        Updates a policy tag. This method can update the
+        policy tag's display name, description, and parent
+        policy tag.
 
         Returns:
             Callable[[~.UpdatePolicyTagRequest],
@@ -448,7 +463,7 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
         # to pass in the functions for each.
         if "update_policy_tag" not in self._stubs:
             self._stubs["update_policy_tag"] = self.grpc_channel.unary_unary(
-                "/google.cloud.datacatalog.v1beta1.PolicyTagManager/UpdatePolicyTag",
+                "/google.cloud.datacatalog.v1.PolicyTagManager/UpdatePolicyTag",
                 request_serializer=policytagmanager.UpdatePolicyTagRequest.serialize,
                 response_deserializer=policytagmanager.PolicyTag.deserialize,
             )
@@ -477,7 +492,7 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
         # to pass in the functions for each.
         if "list_policy_tags" not in self._stubs:
             self._stubs["list_policy_tags"] = self.grpc_channel.unary_unary(
-                "/google.cloud.datacatalog.v1beta1.PolicyTagManager/ListPolicyTags",
+                "/google.cloud.datacatalog.v1.PolicyTagManager/ListPolicyTags",
                 request_serializer=policytagmanager.ListPolicyTagsRequest.serialize,
                 response_deserializer=policytagmanager.ListPolicyTagsResponse.deserialize,
             )
@@ -505,7 +520,7 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
         # to pass in the functions for each.
         if "get_policy_tag" not in self._stubs:
             self._stubs["get_policy_tag"] = self.grpc_channel.unary_unary(
-                "/google.cloud.datacatalog.v1beta1.PolicyTagManager/GetPolicyTag",
+                "/google.cloud.datacatalog.v1.PolicyTagManager/GetPolicyTag",
                 request_serializer=policytagmanager.GetPolicyTagRequest.serialize,
                 response_deserializer=policytagmanager.PolicyTag.deserialize,
             )
@@ -514,10 +529,10 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
     @property
     def get_iam_policy(
         self,
-    ) -> Callable[[iam_policy.GetIamPolicyRequest], Awaitable[giv_policy.Policy]]:
+    ) -> Callable[[iam_policy.GetIamPolicyRequest], Awaitable[gi_policy.Policy]]:
         r"""Return a callable for the get iam policy method over gRPC.
 
-        Gets the IAM policy for a taxonomy or a policy tag.
+        Gets the IAM policy for a policy tag or a taxonomy.
 
         Returns:
             Callable[[~.GetIamPolicyRequest],
@@ -531,19 +546,19 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
         # to pass in the functions for each.
         if "get_iam_policy" not in self._stubs:
             self._stubs["get_iam_policy"] = self.grpc_channel.unary_unary(
-                "/google.cloud.datacatalog.v1beta1.PolicyTagManager/GetIamPolicy",
+                "/google.cloud.datacatalog.v1.PolicyTagManager/GetIamPolicy",
                 request_serializer=iam_policy.GetIamPolicyRequest.SerializeToString,
-                response_deserializer=giv_policy.Policy.FromString,
+                response_deserializer=gi_policy.Policy.FromString,
             )
         return self._stubs["get_iam_policy"]
 
     @property
     def set_iam_policy(
         self,
-    ) -> Callable[[iam_policy.SetIamPolicyRequest], Awaitable[giv_policy.Policy]]:
+    ) -> Callable[[iam_policy.SetIamPolicyRequest], Awaitable[gi_policy.Policy]]:
         r"""Return a callable for the set iam policy method over gRPC.
 
-        Sets the IAM policy for a taxonomy or a policy tag.
+        Sets the IAM policy for a policy tag or a taxonomy.
 
         Returns:
             Callable[[~.SetIamPolicyRequest],
@@ -557,9 +572,9 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
         # to pass in the functions for each.
         if "set_iam_policy" not in self._stubs:
             self._stubs["set_iam_policy"] = self.grpc_channel.unary_unary(
-                "/google.cloud.datacatalog.v1beta1.PolicyTagManager/SetIamPolicy",
+                "/google.cloud.datacatalog.v1.PolicyTagManager/SetIamPolicy",
                 request_serializer=iam_policy.SetIamPolicyRequest.SerializeToString,
-                response_deserializer=giv_policy.Policy.FromString,
+                response_deserializer=gi_policy.Policy.FromString,
             )
         return self._stubs["set_iam_policy"]
 
@@ -572,8 +587,8 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
     ]:
         r"""Return a callable for the test iam permissions method over gRPC.
 
-        Returns the permissions that a caller has on the
-        specified taxonomy or policy tag.
+        Returns the permissions that a caller has on a
+        specified policy tag or taxonomy.
 
         Returns:
             Callable[[~.TestIamPermissionsRequest],
@@ -587,7 +602,7 @@ class PolicyTagManagerGrpcAsyncIOTransport(PolicyTagManagerTransport):
         # to pass in the functions for each.
         if "test_iam_permissions" not in self._stubs:
             self._stubs["test_iam_permissions"] = self.grpc_channel.unary_unary(
-                "/google.cloud.datacatalog.v1beta1.PolicyTagManager/TestIamPermissions",
+                "/google.cloud.datacatalog.v1.PolicyTagManager/TestIamPermissions",
                 request_serializer=iam_policy.TestIamPermissionsRequest.SerializeToString,
                 response_deserializer=iam_policy.TestIamPermissionsResponse.FromString,
             )

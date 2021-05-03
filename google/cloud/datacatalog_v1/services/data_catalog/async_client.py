@@ -30,6 +30,7 @@ from google.oauth2 import service_account  # type: ignore
 
 from google.cloud.datacatalog_v1.services.data_catalog import pagers
 from google.cloud.datacatalog_v1.types import common
+from google.cloud.datacatalog_v1.types import data_source
 from google.cloud.datacatalog_v1.types import datacatalog
 from google.cloud.datacatalog_v1.types import gcs_fileset_spec
 from google.cloud.datacatalog_v1.types import schema
@@ -38,7 +39,7 @@ from google.cloud.datacatalog_v1.types import table_spec
 from google.cloud.datacatalog_v1.types import tags
 from google.cloud.datacatalog_v1.types import timestamps
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
+from google.iam.v1 import policy_pb2 as gi_policy  # type: ignore
 from google.protobuf import field_mask_pb2 as field_mask  # type: ignore
 
 from .transports.base import DataCatalogTransport, DEFAULT_CLIENT_INFO
@@ -67,6 +68,12 @@ class DataCatalogAsyncClient:
     tag_template_field_path = staticmethod(DataCatalogClient.tag_template_field_path)
     parse_tag_template_field_path = staticmethod(
         DataCatalogClient.parse_tag_template_field_path
+    )
+    tag_template_field_enum_value_path = staticmethod(
+        DataCatalogClient.tag_template_field_enum_value_path
+    )
+    parse_tag_template_field_enum_value_path = staticmethod(
+        DataCatalogClient.parse_tag_template_field_enum_value_path
     )
 
     common_billing_account_path = staticmethod(
@@ -203,7 +210,7 @@ class DataCatalogAsyncClient:
         This is a custom method
         (https://cloud.google.com/apis/design/custom_methods) and does
         not return the complete resource, only the resource identifier
-        and high level fields. Clients can subsequentally call ``Get``
+        and high level fields. Clients can subsequently call ``Get``
         methods.
 
         Note that Data Catalog search queries do not guarantee full
@@ -230,8 +237,9 @@ class DataCatalogAsyncClient:
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             query (:class:`str`):
-                Required. The query string in search query syntax. The
-                query must be non-empty.
+                Optional. The query string in search query syntax. An
+                empty query string will result in all data assets (in
+                the specified scope) that the user has access to.
 
                 Query strings can be simple as "x" or more qualified as:
 
@@ -349,24 +357,25 @@ class DataCatalogAsyncClient:
                 The request object. Request message for
                 [CreateEntryGroup][google.cloud.datacatalog.v1.DataCatalog.CreateEntryGroup].
             parent (:class:`str`):
-                Required. The name of the project this entry group is
-                in. Example:
+                Required. The name of the project this entry group
+                belongs to. Example:
 
-                -  projects/{project_id}/locations/{location}
+                ``projects/{project_id}/locations/{location}``
 
-                Note that this EntryGroup and its child resources may
-                not actually be stored in the location in this name.
+                Note: The entry group itself and its child resources
+                might not be stored in the location specified in its
+                name.
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             entry_group_id (:class:`str`):
-                Required. The id of the entry group
-                to create. The id must begin with a
-                letter or underscore, contain only
-                English letters, numbers and
-                underscores, and be at most 64
-                characters.
+                Required. The ID of the entry group to create.
+
+                The ID must contain only letters (a-z, A-Z), numbers
+                (0-9), underscores (_), and must start with a letter or
+                underscore. The maximum size is 64 bytes when encoded in
+                UTF-8.
 
                 This corresponds to the ``entry_group_id`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -555,9 +564,13 @@ class DataCatalogAsyncClient:
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                The fields to update on the entry
-                group. If absent or empty, all
-                modifiable fields are updated.
+                Names of fields whose values to
+                overwrite on an entry group.
+                If this parameter is absent or empty,
+                all modifiable fields are overwritten.
+                If such fields are non-required and
+                omitted in the request body, their
+                values are emptied.
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -793,8 +806,8 @@ class DataCatalogAsyncClient:
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.Entry:
-        r"""Creates an entry. Only entries of 'FILESET' type or
-        user-specified type can be created.
+        r"""Creates an entry. Only entries of types 'FILESET', 'CLUSTER',
+        'DATA_STREAM' or with a user-specified type can be created.
 
         Users should enable the Data Catalog API in the project
         identified by the ``parent`` parameter (see [Data Catalog
@@ -809,20 +822,23 @@ class DataCatalogAsyncClient:
                 The request object. Request message for
                 [CreateEntry][google.cloud.datacatalog.v1.DataCatalog.CreateEntry].
             parent (:class:`str`):
-                Required. The name of the entry group this entry is in.
-                Example:
+                Required. The name of the entry group this entry belongs
+                to. Example:
 
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}
+                ``projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}``
 
-                Note that this Entry and its child resources may not
-                actually be stored in the location in this name.
+                Note: The entry itself and its child resources might not
+                be stored in the location specified in its name.
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             entry_id (:class:`str`):
-                Required. The id of the entry to
-                create.
+                Required. The ID of the entry to create.
+
+                The ID must contain only letters (a-z, A-Z), numbers
+                (0-9), and underscores (_). The maximum size is 64 bytes
+                when encoded in UTF-8.
 
                 This corresponds to the ``entry_id`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -925,8 +941,12 @@ class DataCatalogAsyncClient:
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                The fields to update on the entry. If absent or empty,
-                all modifiable fields are updated.
+                Names of fields whose values to overwrite on an entry.
+
+                If this parameter is absent or empty, all modifiable
+                fields are overwritten. If such fields are non-required
+                and omitted in the request body, their values are
+                emptied.
 
                 The following fields are modifiable:
 
@@ -934,7 +954,7 @@ class DataCatalogAsyncClient:
 
                    -  ``schema``
 
-                -  For entries with type ``FILESET``
+                -  For entries with type ``FILESET``:
 
                    -  ``schema``
                    -  ``display_name``
@@ -942,15 +962,15 @@ class DataCatalogAsyncClient:
                    -  ``gcs_fileset_spec``
                    -  ``gcs_fileset_spec.file_patterns``
 
-                -  For entries with ``user_specified_type``
+                -  For entries with ``user_specified_type``:
 
                    -  ``schema``
                    -  ``display_name``
                    -  ``description``
-                   -  user_specified_type
-                   -  user_specified_system
-                   -  linked_resource
-                   -  source_system_timestamps
+                   -  ``user_specified_type``
+                   -  ``user_specified_system``
+                   -  ``linked_resource``
+                   -  ``source_system_timestamps``
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1374,8 +1394,12 @@ class DataCatalogAsyncClient:
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             tag_template_id (:class:`str`):
-                Required. The id of the tag template
-                to create.
+                Required. The ID of the tag template to create.
+
+                The ID must contain only lowercase letters (a-z),
+                numbers (0-9), or underscores (_), and must start with a
+                letter or underscore. The maximum size is 64 bytes when
+                encoded in UTF-8.
 
                 This corresponds to the ``tag_template_id`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1560,15 +1584,14 @@ class DataCatalogAsyncClient:
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                The field mask specifies the parts of the template to
-                overwrite.
+                Names of fields whose values to overwrite on a tag
+                template. Currently, only ``display_name`` can be
+                overwritten.
 
-                Allowed fields:
-
-                -  ``display_name``
-
-                If absent or empty, all of the allowed fields above will
-                be updated.
+                In general, if this parameter is absent or empty, all
+                modifiable fields are overwritten. If such fields are
+                non-required and omitted in the request body, their
+                values are emptied.
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1754,7 +1777,11 @@ class DataCatalogAsyncClient:
                 should not be set.
             tag_template_field_id (:class:`str`):
                 Required. The ID of the tag template field to create.
-                Field ids can contain letters (both uppercase and
+
+                Note: Adding a required field to an existing template is
+                *not* allowed.
+
+                Field IDs can contain letters (both uppercase and
                 lowercase), numbers (0-9), underscores (_) and dashes
                 (-). Field IDs must be at least 1 character long and at
                 most 128 characters long. Field IDs must also be unique
@@ -1861,21 +1888,24 @@ class DataCatalogAsyncClient:
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                Optional. The field mask specifies the parts of the
-                template to be updated. Allowed fields:
+                Optional. Names of fields whose values to overwrite on
+                an individual field of a tag template. The following
+                fields are modifiable:
 
                 -  ``display_name``
                 -  ``type.enum_type``
                 -  ``is_required``
 
-                If ``update_mask`` is not set or empty, all of the
-                allowed fields above will be updated.
+                If this parameter is absent or empty, all modifiable
+                fields are overwritten. If such fields are non-required
+                and omitted in the request body, their values are
+                emptied with one exception: when updating an enum type,
+                the provided values are merged with the existing values.
+                Therefore, enum values can only be added, existing enum
+                values cannot be deleted or renamed.
 
-                When updating an enum type, the provided values will be
-                merged with the existing values. Therefore, enum values
-                can only be added, existing enum values cannot be
-                deleted nor renamed. Updating a template field from
-                optional to required is NOT allowed.
+                Additionally, updating a template field from optional to
+                required is *not* allowed.
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -2023,6 +2053,91 @@ class DataCatalogAsyncClient:
         # Done; return the response.
         return response
 
+    async def rename_tag_template_field_enum_value(
+        self,
+        request: datacatalog.RenameTagTemplateFieldEnumValueRequest = None,
+        *,
+        name: str = None,
+        new_enum_value_display_name: str = None,
+        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        timeout: float = None,
+        metadata: Sequence[Tuple[str, str]] = (),
+    ) -> tags.TagTemplateField:
+        r"""Renames an enum value in a tag template. The enum
+        values have to be unique within one enum field.
+
+        Args:
+            request (:class:`google.cloud.datacatalog_v1.types.RenameTagTemplateFieldEnumValueRequest`):
+                The request object. Request message for
+                [RenameTagTemplateFieldEnumValue][google.cloud.datacatalog.v1.DataCatalog.RenameTagTemplateFieldEnumValue].
+            name (:class:`str`):
+                Required. The name of the enum field value. Example:
+
+                -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}/enumValues/{enum_value_display_name}
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            new_enum_value_display_name (:class:`str`):
+                Required. The new display name of the enum value. For
+                example, ``my_new_enum_value``.
+
+                This corresponds to the ``new_enum_value_display_name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, str]]): Strings which should be
+                sent along with the request as metadata.
+
+        Returns:
+            google.cloud.datacatalog_v1.types.TagTemplateField:
+                The template for an individual field
+                within a tag template.
+
+        """
+        # Create or coerce a protobuf request object.
+        # Sanity check: If we got a request object, we should *not* have
+        # gotten any keyword arguments that map to the request.
+        has_flattened_params = any([name, new_enum_value_display_name])
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        request = datacatalog.RenameTagTemplateFieldEnumValueRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+
+        if name is not None:
+            request.name = name
+        if new_enum_value_display_name is not None:
+            request.new_enum_value_display_name = new_enum_value_display_name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.rename_tag_template_field_enum_value,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Send the request.
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+
+        # Done; return the response.
+        return response
+
     async def delete_tag_template_field(
         self,
         request: datacatalog.DeleteTagTemplateFieldRequest = None,
@@ -2131,12 +2246,13 @@ class DataCatalogAsyncClient:
                 [CreateTag][google.cloud.datacatalog.v1.DataCatalog.CreateTag].
             parent (:class:`str`):
                 Required. The name of the resource to attach this tag
-                to. Tags can be attached to Entries. Example:
+                to. Tags can be attached to entries. An entry can have
+                up to 1000 attached tags. Example:
 
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}
+                ``projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}``
 
-                Note that this Tag and its child resources may not
-                actually be stored in the location in this name.
+                Note: The tag and its child resources might not be
+                stored in the location specified in its name.
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -2229,9 +2345,14 @@ class DataCatalogAsyncClient:
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                The fields to update on the Tag. If absent or empty, all
-                modifiable fields are updated. Currently the only
-                modifiable field is the field ``fields``.
+                Names of fields whose values to overwrite on a tag.
+                Currently, a tag has the only modifiable field with the
+                name ``fields``.
+
+                In general, if this parameter is absent or empty, all
+                modifiable fields are overwritten. If such fields are
+                non-required and omitted in the request body, their
+                values are emptied.
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -2466,7 +2587,7 @@ class DataCatalogAsyncClient:
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> gi_policy.Policy:
         r"""Sets the access control policy for a resource. Replaces any
         existing policy. Supported resources are:
 
@@ -2610,7 +2731,7 @@ class DataCatalogAsyncClient:
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> gi_policy.Policy:
         r"""Gets the access control policy for a resource. A ``NOT_FOUND``
         error is returned if the resource does not exist. An empty
         policy is returned if the resource exists but does not have a

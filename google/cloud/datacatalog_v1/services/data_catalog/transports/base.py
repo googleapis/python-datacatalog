@@ -28,7 +28,7 @@ from google.auth import credentials  # type: ignore
 from google.cloud.datacatalog_v1.types import datacatalog
 from google.cloud.datacatalog_v1.types import tags
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
+from google.iam.v1 import policy_pb2 as gi_policy  # type: ignore
 from google.protobuf import empty_pb2 as empty  # type: ignore
 
 
@@ -224,6 +224,11 @@ class DataCatalogTransport(abc.ABC):
             ),
             self.rename_tag_template_field: gapic_v1.method.wrap_method(
                 self.rename_tag_template_field,
+                default_timeout=None,
+                client_info=client_info,
+            ),
+            self.rename_tag_template_field_enum_value: gapic_v1.method.wrap_method(
+                self.rename_tag_template_field_enum_value,
                 default_timeout=None,
                 client_info=client_info,
             ),
@@ -456,6 +461,15 @@ class DataCatalogTransport(abc.ABC):
         raise NotImplementedError()
 
     @property
+    def rename_tag_template_field_enum_value(
+        self,
+    ) -> typing.Callable[
+        [datacatalog.RenameTagTemplateFieldEnumValueRequest],
+        typing.Union[tags.TagTemplateField, typing.Awaitable[tags.TagTemplateField]],
+    ]:
+        raise NotImplementedError()
+
+    @property
     def delete_tag_template_field(
         self,
     ) -> typing.Callable[
@@ -507,7 +521,7 @@ class DataCatalogTransport(abc.ABC):
         self,
     ) -> typing.Callable[
         [iam_policy.SetIamPolicyRequest],
-        typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
+        typing.Union[gi_policy.Policy, typing.Awaitable[gi_policy.Policy]],
     ]:
         raise NotImplementedError()
 
@@ -516,7 +530,7 @@ class DataCatalogTransport(abc.ABC):
         self,
     ) -> typing.Callable[
         [iam_policy.GetIamPolicyRequest],
-        typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
+        typing.Union[gi_policy.Policy, typing.Awaitable[gi_policy.Policy]],
     ]:
         raise NotImplementedError()
 

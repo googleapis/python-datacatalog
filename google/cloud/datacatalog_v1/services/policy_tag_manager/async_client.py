@@ -16,102 +16,75 @@
 #
 
 from collections import OrderedDict
-from distutils import util
-import os
+import functools
 import re
-from typing import Callable, Dict, Optional, Sequence, Tuple, Type, Union
+from typing import Dict, Sequence, Tuple, Type, Union
 import pkg_resources
 
-from google.api_core import client_options as client_options_lib  # type: ignore
+import google.api_core.client_options as ClientOptions  # type: ignore
 from google.api_core import exceptions  # type: ignore
 from google.api_core import gapic_v1  # type: ignore
 from google.api_core import retry as retries  # type: ignore
 from google.auth import credentials  # type: ignore
-from google.auth.transport import mtls  # type: ignore
-from google.auth.transport.grpc import SslCredentials  # type: ignore
-from google.auth.exceptions import MutualTLSChannelError  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-from google.cloud.datacatalog_v1beta1.services.policy_tag_manager import pagers
-from google.cloud.datacatalog_v1beta1.types import policytagmanager
+from google.cloud.datacatalog_v1.services.policy_tag_manager import pagers
+from google.cloud.datacatalog_v1.types import policytagmanager
+from google.cloud.datacatalog_v1.types import timestamps
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as giv_policy  # type: ignore
+from google.iam.v1 import policy_pb2 as gi_policy  # type: ignore
 
 from .transports.base import PolicyTagManagerTransport, DEFAULT_CLIENT_INFO
-from .transports.grpc import PolicyTagManagerGrpcTransport
 from .transports.grpc_asyncio import PolicyTagManagerGrpcAsyncIOTransport
+from .client import PolicyTagManagerClient
 
 
-class PolicyTagManagerClientMeta(type):
-    """Metaclass for the PolicyTagManager client.
+class PolicyTagManagerAsyncClient:
+    """Policy Tag Manager API service allows clients to manage their
+    policy tags and taxonomies.
 
-    This provides class-level methods for building and retrieving
-    support objects (e.g. transport) without polluting the client instance
-    objects.
+    Policy tags are used to tag BigQuery columns and apply
+    additional access control policies. A taxonomy is a hierarchical
+    grouping of policy tags that classify data along a common axis.
     """
 
-    _transport_registry = (
-        OrderedDict()
-    )  # type: Dict[str, Type[PolicyTagManagerTransport]]
-    _transport_registry["grpc"] = PolicyTagManagerGrpcTransport
-    _transport_registry["grpc_asyncio"] = PolicyTagManagerGrpcAsyncIOTransport
+    _client: PolicyTagManagerClient
 
-    def get_transport_class(cls, label: str = None,) -> Type[PolicyTagManagerTransport]:
-        """Return an appropriate transport class.
+    DEFAULT_ENDPOINT = PolicyTagManagerClient.DEFAULT_ENDPOINT
+    DEFAULT_MTLS_ENDPOINT = PolicyTagManagerClient.DEFAULT_MTLS_ENDPOINT
 
-        Args:
-            label: The name of the desired transport. If none is
-                provided, then the first transport in the registry is used.
+    policy_tag_path = staticmethod(PolicyTagManagerClient.policy_tag_path)
+    parse_policy_tag_path = staticmethod(PolicyTagManagerClient.parse_policy_tag_path)
+    taxonomy_path = staticmethod(PolicyTagManagerClient.taxonomy_path)
+    parse_taxonomy_path = staticmethod(PolicyTagManagerClient.parse_taxonomy_path)
 
-        Returns:
-            The transport class to use.
-        """
-        # If a specific transport is requested, return that one.
-        if label:
-            return cls._transport_registry[label]
+    common_billing_account_path = staticmethod(
+        PolicyTagManagerClient.common_billing_account_path
+    )
+    parse_common_billing_account_path = staticmethod(
+        PolicyTagManagerClient.parse_common_billing_account_path
+    )
 
-        # No transport is requested; return the default (that is, the first one
-        # in the dictionary).
-        return next(iter(cls._transport_registry.values()))
+    common_folder_path = staticmethod(PolicyTagManagerClient.common_folder_path)
+    parse_common_folder_path = staticmethod(
+        PolicyTagManagerClient.parse_common_folder_path
+    )
 
+    common_organization_path = staticmethod(
+        PolicyTagManagerClient.common_organization_path
+    )
+    parse_common_organization_path = staticmethod(
+        PolicyTagManagerClient.parse_common_organization_path
+    )
 
-class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
-    """The policy tag manager API service allows clients to manage
-    their taxonomies and policy tags.
-    """
+    common_project_path = staticmethod(PolicyTagManagerClient.common_project_path)
+    parse_common_project_path = staticmethod(
+        PolicyTagManagerClient.parse_common_project_path
+    )
 
-    @staticmethod
-    def _get_default_mtls_endpoint(api_endpoint):
-        """Convert api endpoint to mTLS endpoint.
-        Convert "*.sandbox.googleapis.com" and "*.googleapis.com" to
-        "*.mtls.sandbox.googleapis.com" and "*.mtls.googleapis.com" respectively.
-        Args:
-            api_endpoint (Optional[str]): the api endpoint to convert.
-        Returns:
-            str: converted mTLS api endpoint.
-        """
-        if not api_endpoint:
-            return api_endpoint
-
-        mtls_endpoint_re = re.compile(
-            r"(?P<name>[^.]+)(?P<mtls>\.mtls)?(?P<sandbox>\.sandbox)?(?P<googledomain>\.googleapis\.com)?"
-        )
-
-        m = mtls_endpoint_re.match(api_endpoint)
-        name, mtls, sandbox, googledomain = m.groups()
-        if mtls or not googledomain:
-            return api_endpoint
-
-        if sandbox:
-            return api_endpoint.replace(
-                "sandbox.googleapis.com", "mtls.sandbox.googleapis.com"
-            )
-
-        return api_endpoint.replace(".googleapis.com", ".mtls.googleapis.com")
-
-    DEFAULT_ENDPOINT = "datacatalog.googleapis.com"
-    DEFAULT_MTLS_ENDPOINT = _get_default_mtls_endpoint.__func__(  # type: ignore
-        DEFAULT_ENDPOINT
+    common_location_path = staticmethod(PolicyTagManagerClient.common_location_path)
+    parse_common_location_path = staticmethod(
+        PolicyTagManagerClient.parse_common_location_path
     )
 
     @classmethod
@@ -124,11 +97,9 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
             kwargs: Additional arguments to pass to the constructor.
 
         Returns:
-            PolicyTagManagerClient: The constructed client.
+            PolicyTagManagerAsyncClient: The constructed client.
         """
-        credentials = service_account.Credentials.from_service_account_info(info)
-        kwargs["credentials"] = credentials
-        return cls(*args, **kwargs)
+        return PolicyTagManagerClient.from_service_account_info.__func__(PolicyTagManagerAsyncClient, info, *args, **kwargs)  # type: ignore
 
     @classmethod
     def from_service_account_file(cls, filename: str, *args, **kwargs):
@@ -142,11 +113,9 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
             kwargs: Additional arguments to pass to the constructor.
 
         Returns:
-            PolicyTagManagerClient: The constructed client.
+            PolicyTagManagerAsyncClient: The constructed client.
         """
-        credentials = service_account.Credentials.from_service_account_file(filename)
-        kwargs["credentials"] = credentials
-        return cls(*args, **kwargs)
+        return PolicyTagManagerClient.from_service_account_file.__func__(PolicyTagManagerAsyncClient, filename, *args, **kwargs)  # type: ignore
 
     from_service_account_json = from_service_account_file
 
@@ -157,110 +126,18 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         Returns:
             PolicyTagManagerTransport: The transport used by the client instance.
         """
-        return self._transport
+        return self._client.transport
 
-    @staticmethod
-    def policy_tag_path(
-        project: str, location: str, taxonomy: str, policy_tag: str,
-    ) -> str:
-        """Return a fully-qualified policy_tag string."""
-        return "projects/{project}/locations/{location}/taxonomies/{taxonomy}/policyTags/{policy_tag}".format(
-            project=project,
-            location=location,
-            taxonomy=taxonomy,
-            policy_tag=policy_tag,
-        )
-
-    @staticmethod
-    def parse_policy_tag_path(path: str) -> Dict[str, str]:
-        """Parse a policy_tag path into its component segments."""
-        m = re.match(
-            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/taxonomies/(?P<taxonomy>.+?)/policyTags/(?P<policy_tag>.+?)$",
-            path,
-        )
-        return m.groupdict() if m else {}
-
-    @staticmethod
-    def taxonomy_path(project: str, location: str, taxonomy: str,) -> str:
-        """Return a fully-qualified taxonomy string."""
-        return "projects/{project}/locations/{location}/taxonomies/{taxonomy}".format(
-            project=project, location=location, taxonomy=taxonomy,
-        )
-
-    @staticmethod
-    def parse_taxonomy_path(path: str) -> Dict[str, str]:
-        """Parse a taxonomy path into its component segments."""
-        m = re.match(
-            r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)/taxonomies/(?P<taxonomy>.+?)$",
-            path,
-        )
-        return m.groupdict() if m else {}
-
-    @staticmethod
-    def common_billing_account_path(billing_account: str,) -> str:
-        """Return a fully-qualified billing_account string."""
-        return "billingAccounts/{billing_account}".format(
-            billing_account=billing_account,
-        )
-
-    @staticmethod
-    def parse_common_billing_account_path(path: str) -> Dict[str, str]:
-        """Parse a billing_account path into its component segments."""
-        m = re.match(r"^billingAccounts/(?P<billing_account>.+?)$", path)
-        return m.groupdict() if m else {}
-
-    @staticmethod
-    def common_folder_path(folder: str,) -> str:
-        """Return a fully-qualified folder string."""
-        return "folders/{folder}".format(folder=folder,)
-
-    @staticmethod
-    def parse_common_folder_path(path: str) -> Dict[str, str]:
-        """Parse a folder path into its component segments."""
-        m = re.match(r"^folders/(?P<folder>.+?)$", path)
-        return m.groupdict() if m else {}
-
-    @staticmethod
-    def common_organization_path(organization: str,) -> str:
-        """Return a fully-qualified organization string."""
-        return "organizations/{organization}".format(organization=organization,)
-
-    @staticmethod
-    def parse_common_organization_path(path: str) -> Dict[str, str]:
-        """Parse a organization path into its component segments."""
-        m = re.match(r"^organizations/(?P<organization>.+?)$", path)
-        return m.groupdict() if m else {}
-
-    @staticmethod
-    def common_project_path(project: str,) -> str:
-        """Return a fully-qualified project string."""
-        return "projects/{project}".format(project=project,)
-
-    @staticmethod
-    def parse_common_project_path(path: str) -> Dict[str, str]:
-        """Parse a project path into its component segments."""
-        m = re.match(r"^projects/(?P<project>.+?)$", path)
-        return m.groupdict() if m else {}
-
-    @staticmethod
-    def common_location_path(project: str, location: str,) -> str:
-        """Return a fully-qualified location string."""
-        return "projects/{project}/locations/{location}".format(
-            project=project, location=location,
-        )
-
-    @staticmethod
-    def parse_common_location_path(path: str) -> Dict[str, str]:
-        """Parse a location path into its component segments."""
-        m = re.match(r"^projects/(?P<project>.+?)/locations/(?P<location>.+?)$", path)
-        return m.groupdict() if m else {}
+    get_transport_class = functools.partial(
+        type(PolicyTagManagerClient).get_transport_class, type(PolicyTagManagerClient)
+    )
 
     def __init__(
         self,
         *,
-        credentials: Optional[credentials.Credentials] = None,
-        transport: Union[str, PolicyTagManagerTransport, None] = None,
-        client_options: Optional[client_options_lib.ClientOptions] = None,
+        credentials: credentials.Credentials = None,
+        transport: Union[str, PolicyTagManagerTransport] = "grpc_asyncio",
+        client_options: ClientOptions = None,
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
     ) -> None:
         """Instantiate the policy tag manager client.
@@ -271,11 +148,11 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 credentials identify the application to the service; if none
                 are specified, the client will attempt to ascertain the
                 credentials from the environment.
-            transport (Union[str, PolicyTagManagerTransport]): The
+            transport (Union[str, ~.PolicyTagManagerTransport]): The
                 transport to use. If set to None, a transport is chosen
                 automatically.
-            client_options (google.api_core.client_options.ClientOptions): Custom options for the
-                client. It won't take effect if a ``transport`` instance is provided.
+            client_options (ClientOptions): Custom options for the client. It
+                won't take effect if a ``transport`` instance is provided.
                 (1) The ``api_endpoint`` property can be used to override the
                 default endpoint provided by the client. GOOGLE_API_USE_MTLS_ENDPOINT
                 environment variable can also be used to override the endpoint:
@@ -290,85 +167,20 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 not provided, the default SSL client certificate will be used if
                 present. If GOOGLE_API_USE_CLIENT_CERTIFICATE is "false" or not
                 set, no client certificate will be used.
-            client_info (google.api_core.gapic_v1.client_info.ClientInfo):
-                The client info used to send a user-agent string along with
-                API requests. If ``None``, then default info will be used.
-                Generally, you only need to set this if you're developing
-                your own client library.
 
         Raises:
-            google.auth.exceptions.MutualTLSChannelError: If mutual TLS transport
+            google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
                 creation failed for any reason.
         """
-        if isinstance(client_options, dict):
-            client_options = client_options_lib.from_dict(client_options)
-        if client_options is None:
-            client_options = client_options_lib.ClientOptions()
 
-        # Create SSL credentials for mutual TLS if needed.
-        use_client_cert = bool(
-            util.strtobool(os.getenv("GOOGLE_API_USE_CLIENT_CERTIFICATE", "false"))
+        self._client = PolicyTagManagerClient(
+            credentials=credentials,
+            transport=transport,
+            client_options=client_options,
+            client_info=client_info,
         )
 
-        client_cert_source_func = None
-        is_mtls = False
-        if use_client_cert:
-            if client_options.client_cert_source:
-                is_mtls = True
-                client_cert_source_func = client_options.client_cert_source
-            else:
-                is_mtls = mtls.has_default_client_cert_source()
-                client_cert_source_func = (
-                    mtls.default_client_cert_source() if is_mtls else None
-                )
-
-        # Figure out which api endpoint to use.
-        if client_options.api_endpoint is not None:
-            api_endpoint = client_options.api_endpoint
-        else:
-            use_mtls_env = os.getenv("GOOGLE_API_USE_MTLS_ENDPOINT", "auto")
-            if use_mtls_env == "never":
-                api_endpoint = self.DEFAULT_ENDPOINT
-            elif use_mtls_env == "always":
-                api_endpoint = self.DEFAULT_MTLS_ENDPOINT
-            elif use_mtls_env == "auto":
-                api_endpoint = (
-                    self.DEFAULT_MTLS_ENDPOINT if is_mtls else self.DEFAULT_ENDPOINT
-                )
-            else:
-                raise MutualTLSChannelError(
-                    "Unsupported GOOGLE_API_USE_MTLS_ENDPOINT value. Accepted values: never, auto, always"
-                )
-
-        # Save or instantiate the transport.
-        # Ordinarily, we provide the transport, but allowing a custom transport
-        # instance provides an extensibility point for unusual situations.
-        if isinstance(transport, PolicyTagManagerTransport):
-            # transport is a PolicyTagManagerTransport instance.
-            if credentials or client_options.credentials_file:
-                raise ValueError(
-                    "When providing a transport instance, "
-                    "provide its credentials directly."
-                )
-            if client_options.scopes:
-                raise ValueError(
-                    "When providing a transport instance, "
-                    "provide its scopes directly."
-                )
-            self._transport = transport
-        else:
-            Transport = type(self).get_transport_class(transport)
-            self._transport = Transport(
-                credentials=credentials,
-                credentials_file=client_options.credentials_file,
-                host=api_endpoint,
-                scopes=client_options.scopes,
-                client_cert_source_for_mtls=client_cert_source_func,
-                quota_project_id=client_options.quota_project_id,
-                client_info=client_info,
-            )
-
-    def create_taxonomy(
+    async def create_taxonomy(
         self,
         request: policytagmanager.CreateTaxonomyRequest = None,
         *,
@@ -378,13 +190,15 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> policytagmanager.Taxonomy:
-        r"""Creates a taxonomy in the specified project.
+        r"""Creates a taxonomy in a specified project. The
+        taxonomy is initially empty, i.e., does not contain
+        policy tags.
 
         Args:
-            request (google.cloud.datacatalog_v1beta1.types.CreateTaxonomyRequest):
+            request (:class:`google.cloud.datacatalog_v1.types.CreateTaxonomyRequest`):
                 The request object. Request message for
-                [CreateTaxonomy][google.cloud.datacatalog.v1beta1.PolicyTagManager.CreateTaxonomy].
-            parent (str):
+                [CreateTaxonomy][google.cloud.datacatalog.v1.PolicyTagManager.CreateTaxonomy].
+            parent (:class:`str`):
                 Required. Resource name of the
                 project that the taxonomy will belong
                 to.
@@ -392,7 +206,7 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-            taxonomy (google.cloud.datacatalog_v1beta1.types.Taxonomy):
+            taxonomy (:class:`google.cloud.datacatalog_v1.types.Taxonomy`):
                 The taxonomy to be created.
                 This corresponds to the ``taxonomy`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -405,13 +219,18 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 sent along with the request as metadata.
 
         Returns:
-            google.cloud.datacatalog_v1beta1.types.Taxonomy:
-                A taxonomy is a collection of policy tags that classify data along a common
-                   axis. For instance a data *sensitivity* taxonomy
-                   could contain policy tags denoting PII such as age,
-                   zipcode, and SSN. A data *origin* taxonomy could
-                   contain policy tags to distinguish user data,
-                   employee data, partner data, public data.
+            google.cloud.datacatalog_v1.types.Taxonomy:
+                A taxonomy is a collection of hierarchical policy tags that classify data
+                   along a common axis. For instance a "data
+                   sensitivity" taxonomy could contain the following
+                   policy tags:
+
+                   :literal:`\` + PII   + Account number   + Age   + SSN   + Zipcode + Financials   + Revenue`\ \`
+
+                   A "data origin" taxonomy could contain the following
+                   policy tags:
+
+                   :literal:`\` + User data + Employee data + Partner data + Public data`\ \`
 
         """
         # Create or coerce a protobuf request object.
@@ -424,24 +243,23 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 "the individual field arguments should be set."
             )
 
-        # Minor optimization to avoid making a copy if the user passes
-        # in a policytagmanager.CreateTaxonomyRequest.
-        # There's no risk of modifying the input as we've already verified
-        # there are no flattened fields.
-        if not isinstance(request, policytagmanager.CreateTaxonomyRequest):
-            request = policytagmanager.CreateTaxonomyRequest(request)
+        request = policytagmanager.CreateTaxonomyRequest(request)
 
-            # If we have keyword arguments corresponding to fields on the
-            # request, apply these.
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
 
-            if parent is not None:
-                request.parent = parent
-            if taxonomy is not None:
-                request.taxonomy = taxonomy
+        if parent is not None:
+            request.parent = parent
+        if taxonomy is not None:
+            request.taxonomy = taxonomy
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = self._transport._wrapped_methods[self._transport.create_taxonomy]
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.create_taxonomy,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -450,12 +268,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
 
-    def delete_taxonomy(
+    async def delete_taxonomy(
         self,
         request: policytagmanager.DeleteTaxonomyRequest = None,
         *,
@@ -464,15 +282,15 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
-        r"""Deletes a taxonomy. This operation will also delete
-        all policy tags in this taxonomy along with their
-        associated policies.
+        r"""Deletes a taxonomy. This method will also delete all
+        policy tags in this taxonomy, their associated policies,
+        and the policy tags references from BigQuery columns.
 
         Args:
-            request (google.cloud.datacatalog_v1beta1.types.DeleteTaxonomyRequest):
+            request (:class:`google.cloud.datacatalog_v1.types.DeleteTaxonomyRequest`):
                 The request object. Request message for
-                [DeleteTaxonomy][google.cloud.datacatalog.v1beta1.PolicyTagManager.DeleteTaxonomy].
-            name (str):
+                [DeleteTaxonomy][google.cloud.datacatalog.v1.PolicyTagManager.DeleteTaxonomy].
+            name (:class:`str`):
                 Required. Resource name of the
                 taxonomy to be deleted. All policy tags
                 in this taxonomy will also be deleted.
@@ -497,22 +315,21 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 "the individual field arguments should be set."
             )
 
-        # Minor optimization to avoid making a copy if the user passes
-        # in a policytagmanager.DeleteTaxonomyRequest.
-        # There's no risk of modifying the input as we've already verified
-        # there are no flattened fields.
-        if not isinstance(request, policytagmanager.DeleteTaxonomyRequest):
-            request = policytagmanager.DeleteTaxonomyRequest(request)
+        request = policytagmanager.DeleteTaxonomyRequest(request)
 
-            # If we have keyword arguments corresponding to fields on the
-            # request, apply these.
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
 
-            if name is not None:
-                request.name = name
+        if name is not None:
+            request.name = name
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = self._transport._wrapped_methods[self._transport.delete_taxonomy]
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.delete_taxonomy,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -521,11 +338,11 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        rpc(
+        await rpc(
             request, retry=retry, timeout=timeout, metadata=metadata,
         )
 
-    def update_taxonomy(
+    async def update_taxonomy(
         self,
         request: policytagmanager.UpdateTaxonomyRequest = None,
         *,
@@ -534,13 +351,15 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> policytagmanager.Taxonomy:
-        r"""Updates a taxonomy.
+        r"""Updates a taxonomy. This method can update the
+        taxonomy's display name, description, and activated
+        policy types.
 
         Args:
-            request (google.cloud.datacatalog_v1beta1.types.UpdateTaxonomyRequest):
+            request (:class:`google.cloud.datacatalog_v1.types.UpdateTaxonomyRequest`):
                 The request object. Request message for
-                [UpdateTaxonomy][google.cloud.datacatalog.v1beta1.PolicyTagManager.UpdateTaxonomy].
-            taxonomy (google.cloud.datacatalog_v1beta1.types.Taxonomy):
+                [UpdateTaxonomy][google.cloud.datacatalog.v1.PolicyTagManager.UpdateTaxonomy].
+            taxonomy (:class:`google.cloud.datacatalog_v1.types.Taxonomy`):
                 The taxonomy to update. Only description, display_name,
                 and activated policy types can be updated.
 
@@ -555,13 +374,18 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 sent along with the request as metadata.
 
         Returns:
-            google.cloud.datacatalog_v1beta1.types.Taxonomy:
-                A taxonomy is a collection of policy tags that classify data along a common
-                   axis. For instance a data *sensitivity* taxonomy
-                   could contain policy tags denoting PII such as age,
-                   zipcode, and SSN. A data *origin* taxonomy could
-                   contain policy tags to distinguish user data,
-                   employee data, partner data, public data.
+            google.cloud.datacatalog_v1.types.Taxonomy:
+                A taxonomy is a collection of hierarchical policy tags that classify data
+                   along a common axis. For instance a "data
+                   sensitivity" taxonomy could contain the following
+                   policy tags:
+
+                   :literal:`\` + PII   + Account number   + Age   + SSN   + Zipcode + Financials   + Revenue`\ \`
+
+                   A "data origin" taxonomy could contain the following
+                   policy tags:
+
+                   :literal:`\` + User data + Employee data + Partner data + Public data`\ \`
 
         """
         # Create or coerce a protobuf request object.
@@ -574,22 +398,21 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 "the individual field arguments should be set."
             )
 
-        # Minor optimization to avoid making a copy if the user passes
-        # in a policytagmanager.UpdateTaxonomyRequest.
-        # There's no risk of modifying the input as we've already verified
-        # there are no flattened fields.
-        if not isinstance(request, policytagmanager.UpdateTaxonomyRequest):
-            request = policytagmanager.UpdateTaxonomyRequest(request)
+        request = policytagmanager.UpdateTaxonomyRequest(request)
 
-            # If we have keyword arguments corresponding to fields on the
-            # request, apply these.
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
 
-            if taxonomy is not None:
-                request.taxonomy = taxonomy
+        if taxonomy is not None:
+            request.taxonomy = taxonomy
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = self._transport._wrapped_methods[self._transport.update_taxonomy]
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.update_taxonomy,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -600,12 +423,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
 
-    def list_taxonomies(
+    async def list_taxonomies(
         self,
         request: policytagmanager.ListTaxonomiesRequest = None,
         *,
@@ -613,15 +436,15 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> pagers.ListTaxonomiesPager:
+    ) -> pagers.ListTaxonomiesAsyncPager:
         r"""Lists all taxonomies in a project in a particular
         location that the caller has permission to view.
 
         Args:
-            request (google.cloud.datacatalog_v1beta1.types.ListTaxonomiesRequest):
+            request (:class:`google.cloud.datacatalog_v1.types.ListTaxonomiesRequest`):
                 The request object. Request message for
-                [ListTaxonomies][google.cloud.datacatalog.v1beta1.PolicyTagManager.ListTaxonomies].
-            parent (str):
+                [ListTaxonomies][google.cloud.datacatalog.v1.PolicyTagManager.ListTaxonomies].
+            parent (:class:`str`):
                 Required. Resource name of the
                 project to list the taxonomies of.
 
@@ -636,9 +459,9 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 sent along with the request as metadata.
 
         Returns:
-            google.cloud.datacatalog_v1beta1.services.policy_tag_manager.pagers.ListTaxonomiesPager:
+            google.cloud.datacatalog_v1.services.policy_tag_manager.pagers.ListTaxonomiesAsyncPager:
                 Response message for
-                   [ListTaxonomies][google.cloud.datacatalog.v1beta1.PolicyTagManager.ListTaxonomies].
+                   [ListTaxonomies][google.cloud.datacatalog.v1.PolicyTagManager.ListTaxonomies].
 
                 Iterating over this object will yield results and
                 resolve additional pages automatically.
@@ -654,22 +477,21 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 "the individual field arguments should be set."
             )
 
-        # Minor optimization to avoid making a copy if the user passes
-        # in a policytagmanager.ListTaxonomiesRequest.
-        # There's no risk of modifying the input as we've already verified
-        # there are no flattened fields.
-        if not isinstance(request, policytagmanager.ListTaxonomiesRequest):
-            request = policytagmanager.ListTaxonomiesRequest(request)
+        request = policytagmanager.ListTaxonomiesRequest(request)
 
-            # If we have keyword arguments corresponding to fields on the
-            # request, apply these.
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
 
-            if parent is not None:
-                request.parent = parent
+        if parent is not None:
+            request.parent = parent
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = self._transport._wrapped_methods[self._transport.list_taxonomies]
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.list_taxonomies,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -678,18 +500,18 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # This method is paged; wrap the response in a pager, which provides
-        # an `__iter__` convenience method.
-        response = pagers.ListTaxonomiesPager(
+        # an `__aiter__` convenience method.
+        response = pagers.ListTaxonomiesAsyncPager(
             method=rpc, request=request, response=response, metadata=metadata,
         )
 
         # Done; return the response.
         return response
 
-    def get_taxonomy(
+    async def get_taxonomy(
         self,
         request: policytagmanager.GetTaxonomyRequest = None,
         *,
@@ -701,10 +523,10 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         r"""Gets a taxonomy.
 
         Args:
-            request (google.cloud.datacatalog_v1beta1.types.GetTaxonomyRequest):
+            request (:class:`google.cloud.datacatalog_v1.types.GetTaxonomyRequest`):
                 The request object. Request message for
-                [GetTaxonomy][google.cloud.datacatalog.v1beta1.PolicyTagManager.GetTaxonomy].
-            name (str):
+                [GetTaxonomy][google.cloud.datacatalog.v1.PolicyTagManager.GetTaxonomy].
+            name (:class:`str`):
                 Required. Resource name of the
                 requested taxonomy.
 
@@ -719,13 +541,18 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 sent along with the request as metadata.
 
         Returns:
-            google.cloud.datacatalog_v1beta1.types.Taxonomy:
-                A taxonomy is a collection of policy tags that classify data along a common
-                   axis. For instance a data *sensitivity* taxonomy
-                   could contain policy tags denoting PII such as age,
-                   zipcode, and SSN. A data *origin* taxonomy could
-                   contain policy tags to distinguish user data,
-                   employee data, partner data, public data.
+            google.cloud.datacatalog_v1.types.Taxonomy:
+                A taxonomy is a collection of hierarchical policy tags that classify data
+                   along a common axis. For instance a "data
+                   sensitivity" taxonomy could contain the following
+                   policy tags:
+
+                   :literal:`\` + PII   + Account number   + Age   + SSN   + Zipcode + Financials   + Revenue`\ \`
+
+                   A "data origin" taxonomy could contain the following
+                   policy tags:
+
+                   :literal:`\` + User data + Employee data + Partner data + Public data`\ \`
 
         """
         # Create or coerce a protobuf request object.
@@ -738,22 +565,21 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 "the individual field arguments should be set."
             )
 
-        # Minor optimization to avoid making a copy if the user passes
-        # in a policytagmanager.GetTaxonomyRequest.
-        # There's no risk of modifying the input as we've already verified
-        # there are no flattened fields.
-        if not isinstance(request, policytagmanager.GetTaxonomyRequest):
-            request = policytagmanager.GetTaxonomyRequest(request)
+        request = policytagmanager.GetTaxonomyRequest(request)
 
-            # If we have keyword arguments corresponding to fields on the
-            # request, apply these.
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
 
-            if name is not None:
-                request.name = name
+        if name is not None:
+            request.name = name
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = self._transport._wrapped_methods[self._transport.get_taxonomy]
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.get_taxonomy,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -762,12 +588,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
 
-    def create_policy_tag(
+    async def create_policy_tag(
         self,
         request: policytagmanager.CreatePolicyTagRequest = None,
         *,
@@ -777,13 +603,13 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> policytagmanager.PolicyTag:
-        r"""Creates a policy tag in the specified taxonomy.
+        r"""Creates a policy tag in a taxonomy.
 
         Args:
-            request (google.cloud.datacatalog_v1beta1.types.CreatePolicyTagRequest):
+            request (:class:`google.cloud.datacatalog_v1.types.CreatePolicyTagRequest`):
                 The request object. Request message for
-                [CreatePolicyTag][google.cloud.datacatalog.v1beta1.PolicyTagManager.CreatePolicyTag].
-            parent (str):
+                [CreatePolicyTag][google.cloud.datacatalog.v1.PolicyTagManager.CreatePolicyTag].
+            parent (:class:`str`):
                 Required. Resource name of the
                 taxonomy that the policy tag will belong
                 to.
@@ -791,7 +617,7 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-            policy_tag (google.cloud.datacatalog_v1beta1.types.PolicyTag):
+            policy_tag (:class:`google.cloud.datacatalog_v1.types.PolicyTag`):
                 The policy tag to be created.
                 This corresponds to the ``policy_tag`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -804,15 +630,15 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 sent along with the request as metadata.
 
         Returns:
-            google.cloud.datacatalog_v1beta1.types.PolicyTag:
-                Denotes one policy tag in a taxonomy
-                (e.g. ssn). Policy Tags can be defined
-                in a hierarchy. For example, consider
-                the following hierarchy: Geolocation
-                -&gt; (LatLong, City, ZipCode).
-                PolicyTag "Geolocation" contains three
-                child policy tags: "LatLong", "City",
-                and "ZipCode".
+            google.cloud.datacatalog_v1.types.PolicyTag:
+                Denotes one policy tag in a taxonomy (e.g. ssn). Policy tags can be defined
+                   in a hierarchy. For example, consider the following
+                   hierarchy:
+
+                   :literal:`\` + Geolocation   + LatLong   + City   + ZipCode`\ \`
+
+                   Policy tag "Geolocation" contains 3 child policy
+                   tags: "LatLong", "City", and "ZipCode".
 
         """
         # Create or coerce a protobuf request object.
@@ -825,24 +651,23 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 "the individual field arguments should be set."
             )
 
-        # Minor optimization to avoid making a copy if the user passes
-        # in a policytagmanager.CreatePolicyTagRequest.
-        # There's no risk of modifying the input as we've already verified
-        # there are no flattened fields.
-        if not isinstance(request, policytagmanager.CreatePolicyTagRequest):
-            request = policytagmanager.CreatePolicyTagRequest(request)
+        request = policytagmanager.CreatePolicyTagRequest(request)
 
-            # If we have keyword arguments corresponding to fields on the
-            # request, apply these.
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
 
-            if parent is not None:
-                request.parent = parent
-            if policy_tag is not None:
-                request.policy_tag = policy_tag
+        if parent is not None:
+            request.parent = parent
+        if policy_tag is not None:
+            request.policy_tag = policy_tag
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = self._transport._wrapped_methods[self._transport.create_policy_tag]
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.create_policy_tag,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -851,12 +676,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
 
-    def delete_policy_tag(
+    async def delete_policy_tag(
         self,
         request: policytagmanager.DeletePolicyTagRequest = None,
         *,
@@ -865,14 +690,19 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
-        r"""Deletes a policy tag. Also deletes all of its
-        descendant policy tags.
+        r"""Deletes a policy tag. This method also deletes:
+
+        -  all of its descendant policy tags, if any
+        -  the policies associated with the policy tag and its
+           descendants
+        -  references from BigQuery table schema of the policy tag and
+           its descendants.
 
         Args:
-            request (google.cloud.datacatalog_v1beta1.types.DeletePolicyTagRequest):
+            request (:class:`google.cloud.datacatalog_v1.types.DeletePolicyTagRequest`):
                 The request object. Request message for
-                [DeletePolicyTag][google.cloud.datacatalog.v1beta1.PolicyTagManager.DeletePolicyTag].
-            name (str):
+                [DeletePolicyTag][google.cloud.datacatalog.v1.PolicyTagManager.DeletePolicyTag].
+            name (:class:`str`):
                 Required. Resource name of the policy
                 tag to be deleted. All of its descendant
                 policy tags will also be deleted.
@@ -897,22 +727,21 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 "the individual field arguments should be set."
             )
 
-        # Minor optimization to avoid making a copy if the user passes
-        # in a policytagmanager.DeletePolicyTagRequest.
-        # There's no risk of modifying the input as we've already verified
-        # there are no flattened fields.
-        if not isinstance(request, policytagmanager.DeletePolicyTagRequest):
-            request = policytagmanager.DeletePolicyTagRequest(request)
+        request = policytagmanager.DeletePolicyTagRequest(request)
 
-            # If we have keyword arguments corresponding to fields on the
-            # request, apply these.
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
 
-            if name is not None:
-                request.name = name
+        if name is not None:
+            request.name = name
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = self._transport._wrapped_methods[self._transport.delete_policy_tag]
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.delete_policy_tag,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -921,11 +750,11 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        rpc(
+        await rpc(
             request, retry=retry, timeout=timeout, metadata=metadata,
         )
 
-    def update_policy_tag(
+    async def update_policy_tag(
         self,
         request: policytagmanager.UpdatePolicyTagRequest = None,
         *,
@@ -934,13 +763,15 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> policytagmanager.PolicyTag:
-        r"""Updates a policy tag.
+        r"""Updates a policy tag. This method can update the
+        policy tag's display name, description, and parent
+        policy tag.
 
         Args:
-            request (google.cloud.datacatalog_v1beta1.types.UpdatePolicyTagRequest):
+            request (:class:`google.cloud.datacatalog_v1.types.UpdatePolicyTagRequest`):
                 The request object. Request message for
-                [UpdatePolicyTag][google.cloud.datacatalog.v1beta1.PolicyTagManager.UpdatePolicyTag].
-            policy_tag (google.cloud.datacatalog_v1beta1.types.PolicyTag):
+                [UpdatePolicyTag][google.cloud.datacatalog.v1.PolicyTagManager.UpdatePolicyTag].
+            policy_tag (:class:`google.cloud.datacatalog_v1.types.PolicyTag`):
                 The policy tag to update. Only the description,
                 display_name, and parent_policy_tag fields can be
                 updated.
@@ -956,15 +787,15 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 sent along with the request as metadata.
 
         Returns:
-            google.cloud.datacatalog_v1beta1.types.PolicyTag:
-                Denotes one policy tag in a taxonomy
-                (e.g. ssn). Policy Tags can be defined
-                in a hierarchy. For example, consider
-                the following hierarchy: Geolocation
-                -&gt; (LatLong, City, ZipCode).
-                PolicyTag "Geolocation" contains three
-                child policy tags: "LatLong", "City",
-                and "ZipCode".
+            google.cloud.datacatalog_v1.types.PolicyTag:
+                Denotes one policy tag in a taxonomy (e.g. ssn). Policy tags can be defined
+                   in a hierarchy. For example, consider the following
+                   hierarchy:
+
+                   :literal:`\` + Geolocation   + LatLong   + City   + ZipCode`\ \`
+
+                   Policy tag "Geolocation" contains 3 child policy
+                   tags: "LatLong", "City", and "ZipCode".
 
         """
         # Create or coerce a protobuf request object.
@@ -977,22 +808,21 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 "the individual field arguments should be set."
             )
 
-        # Minor optimization to avoid making a copy if the user passes
-        # in a policytagmanager.UpdatePolicyTagRequest.
-        # There's no risk of modifying the input as we've already verified
-        # there are no flattened fields.
-        if not isinstance(request, policytagmanager.UpdatePolicyTagRequest):
-            request = policytagmanager.UpdatePolicyTagRequest(request)
+        request = policytagmanager.UpdatePolicyTagRequest(request)
 
-            # If we have keyword arguments corresponding to fields on the
-            # request, apply these.
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
 
-            if policy_tag is not None:
-                request.policy_tag = policy_tag
+        if policy_tag is not None:
+            request.policy_tag = policy_tag
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = self._transport._wrapped_methods[self._transport.update_policy_tag]
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.update_policy_tag,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -1003,12 +833,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
 
-    def list_policy_tags(
+    async def list_policy_tags(
         self,
         request: policytagmanager.ListPolicyTagsRequest = None,
         *,
@@ -1016,14 +846,14 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> pagers.ListPolicyTagsPager:
+    ) -> pagers.ListPolicyTagsAsyncPager:
         r"""Lists all policy tags in a taxonomy.
 
         Args:
-            request (google.cloud.datacatalog_v1beta1.types.ListPolicyTagsRequest):
+            request (:class:`google.cloud.datacatalog_v1.types.ListPolicyTagsRequest`):
                 The request object. Request message for
-                [ListPolicyTags][google.cloud.datacatalog.v1beta1.PolicyTagManager.ListPolicyTags].
-            parent (str):
+                [ListPolicyTags][google.cloud.datacatalog.v1.PolicyTagManager.ListPolicyTags].
+            parent (:class:`str`):
                 Required. Resource name of the
                 taxonomy to list the policy tags of.
 
@@ -1038,9 +868,9 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 sent along with the request as metadata.
 
         Returns:
-            google.cloud.datacatalog_v1beta1.services.policy_tag_manager.pagers.ListPolicyTagsPager:
+            google.cloud.datacatalog_v1.services.policy_tag_manager.pagers.ListPolicyTagsAsyncPager:
                 Response message for
-                   [ListPolicyTags][google.cloud.datacatalog.v1beta1.PolicyTagManager.ListPolicyTags].
+                   [ListPolicyTags][google.cloud.datacatalog.v1.PolicyTagManager.ListPolicyTags].
 
                 Iterating over this object will yield results and
                 resolve additional pages automatically.
@@ -1056,22 +886,21 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 "the individual field arguments should be set."
             )
 
-        # Minor optimization to avoid making a copy if the user passes
-        # in a policytagmanager.ListPolicyTagsRequest.
-        # There's no risk of modifying the input as we've already verified
-        # there are no flattened fields.
-        if not isinstance(request, policytagmanager.ListPolicyTagsRequest):
-            request = policytagmanager.ListPolicyTagsRequest(request)
+        request = policytagmanager.ListPolicyTagsRequest(request)
 
-            # If we have keyword arguments corresponding to fields on the
-            # request, apply these.
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
 
-            if parent is not None:
-                request.parent = parent
+        if parent is not None:
+            request.parent = parent
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = self._transport._wrapped_methods[self._transport.list_policy_tags]
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.list_policy_tags,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -1080,18 +909,18 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # This method is paged; wrap the response in a pager, which provides
-        # an `__iter__` convenience method.
-        response = pagers.ListPolicyTagsPager(
+        # an `__aiter__` convenience method.
+        response = pagers.ListPolicyTagsAsyncPager(
             method=rpc, request=request, response=response, metadata=metadata,
         )
 
         # Done; return the response.
         return response
 
-    def get_policy_tag(
+    async def get_policy_tag(
         self,
         request: policytagmanager.GetPolicyTagRequest = None,
         *,
@@ -1103,10 +932,10 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         r"""Gets a policy tag.
 
         Args:
-            request (google.cloud.datacatalog_v1beta1.types.GetPolicyTagRequest):
+            request (:class:`google.cloud.datacatalog_v1.types.GetPolicyTagRequest`):
                 The request object. Request message for
-                [GetPolicyTag][google.cloud.datacatalog.v1beta1.PolicyTagManager.GetPolicyTag].
-            name (str):
+                [GetPolicyTag][google.cloud.datacatalog.v1.PolicyTagManager.GetPolicyTag].
+            name (:class:`str`):
                 Required. Resource name of the
                 requested policy tag.
 
@@ -1121,15 +950,15 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 sent along with the request as metadata.
 
         Returns:
-            google.cloud.datacatalog_v1beta1.types.PolicyTag:
-                Denotes one policy tag in a taxonomy
-                (e.g. ssn). Policy Tags can be defined
-                in a hierarchy. For example, consider
-                the following hierarchy: Geolocation
-                -&gt; (LatLong, City, ZipCode).
-                PolicyTag "Geolocation" contains three
-                child policy tags: "LatLong", "City",
-                and "ZipCode".
+            google.cloud.datacatalog_v1.types.PolicyTag:
+                Denotes one policy tag in a taxonomy (e.g. ssn). Policy tags can be defined
+                   in a hierarchy. For example, consider the following
+                   hierarchy:
+
+                   :literal:`\` + Geolocation   + LatLong   + City   + ZipCode`\ \`
+
+                   Policy tag "Geolocation" contains 3 child policy
+                   tags: "LatLong", "City", and "ZipCode".
 
         """
         # Create or coerce a protobuf request object.
@@ -1142,22 +971,21 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
                 "the individual field arguments should be set."
             )
 
-        # Minor optimization to avoid making a copy if the user passes
-        # in a policytagmanager.GetPolicyTagRequest.
-        # There's no risk of modifying the input as we've already verified
-        # there are no flattened fields.
-        if not isinstance(request, policytagmanager.GetPolicyTagRequest):
-            request = policytagmanager.GetPolicyTagRequest(request)
+        request = policytagmanager.GetPolicyTagRequest(request)
 
-            # If we have keyword arguments corresponding to fields on the
-            # request, apply these.
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
 
-            if name is not None:
-                request.name = name
+        if name is not None:
+            request.name = name
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = self._transport._wrapped_methods[self._transport.get_policy_tag]
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.get_policy_tag,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -1166,23 +994,23 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
 
-    def get_iam_policy(
+    async def get_iam_policy(
         self,
         request: iam_policy.GetIamPolicyRequest = None,
         *,
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> giv_policy.Policy:
-        r"""Gets the IAM policy for a taxonomy or a policy tag.
+    ) -> gi_policy.Policy:
+        r"""Gets the IAM policy for a policy tag or a taxonomy.
 
         Args:
-            request (google.iam.v1.iam_policy_pb2.GetIamPolicyRequest):
+            request (:class:`google.iam.v1.iam_policy_pb2.GetIamPolicyRequest`):
                 The request object. Request message for `GetIamPolicy`
                 method.
 
@@ -1253,17 +1081,18 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         """
         # Create or coerce a protobuf request object.
 
+        # The request isn't a proto-plus wrapped type,
+        # so it must be constructed via keyword expansion.
         if isinstance(request, dict):
-            # The request isn't a proto-plus wrapped type,
-            # so it must be constructed via keyword expansion.
             request = iam_policy.GetIamPolicyRequest(**request)
-        elif not request:
-            # Null request, just make one.
-            request = iam_policy.GetIamPolicyRequest()
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = self._transport._wrapped_methods[self._transport.get_iam_policy]
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.get_iam_policy,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -1272,23 +1101,23 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
 
-    def set_iam_policy(
+    async def set_iam_policy(
         self,
         request: iam_policy.SetIamPolicyRequest = None,
         *,
         retry: retries.Retry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> giv_policy.Policy:
-        r"""Sets the IAM policy for a taxonomy or a policy tag.
+    ) -> gi_policy.Policy:
+        r"""Sets the IAM policy for a policy tag or a taxonomy.
 
         Args:
-            request (google.iam.v1.iam_policy_pb2.SetIamPolicyRequest):
+            request (:class:`google.iam.v1.iam_policy_pb2.SetIamPolicyRequest`):
                 The request object. Request message for `SetIamPolicy`
                 method.
 
@@ -1359,17 +1188,18 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         """
         # Create or coerce a protobuf request object.
 
+        # The request isn't a proto-plus wrapped type,
+        # so it must be constructed via keyword expansion.
         if isinstance(request, dict):
-            # The request isn't a proto-plus wrapped type,
-            # so it must be constructed via keyword expansion.
             request = iam_policy.SetIamPolicyRequest(**request)
-        elif not request:
-            # Null request, just make one.
-            request = iam_policy.SetIamPolicyRequest()
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = self._transport._wrapped_methods[self._transport.set_iam_policy]
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.set_iam_policy,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -1378,12 +1208,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
 
-    def test_iam_permissions(
+    async def test_iam_permissions(
         self,
         request: iam_policy.TestIamPermissionsRequest = None,
         *,
@@ -1391,11 +1221,11 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> iam_policy.TestIamPermissionsResponse:
-        r"""Returns the permissions that a caller has on the
-        specified taxonomy or policy tag.
+        r"""Returns the permissions that a caller has on a
+        specified policy tag or taxonomy.
 
         Args:
-            request (google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest):
+            request (:class:`google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest`):
                 The request object. Request message for
                 `TestIamPermissions` method.
 
@@ -1411,17 +1241,18 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         """
         # Create or coerce a protobuf request object.
 
+        # The request isn't a proto-plus wrapped type,
+        # so it must be constructed via keyword expansion.
         if isinstance(request, dict):
-            # The request isn't a proto-plus wrapped type,
-            # so it must be constructed via keyword expansion.
             request = iam_policy.TestIamPermissionsRequest(**request)
-        elif not request:
-            # Null request, just make one.
-            request = iam_policy.TestIamPermissionsRequest()
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
-        rpc = self._transport._wrapped_methods[self._transport.test_iam_permissions]
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.test_iam_permissions,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
 
         # Certain fields should be provided within the metadata header;
         # add these here.
@@ -1430,7 +1261,7 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
 
         # Done; return the response.
         return response
@@ -1446,4 +1277,4 @@ except pkg_resources.DistributionNotFound:
     DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo()
 
 
-__all__ = ("PolicyTagManagerClient",)
+__all__ = ("PolicyTagManagerAsyncClient",)

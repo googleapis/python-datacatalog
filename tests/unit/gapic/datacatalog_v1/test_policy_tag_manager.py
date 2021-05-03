@@ -32,20 +32,22 @@ from google.api_core import grpc_helpers
 from google.api_core import grpc_helpers_async
 from google.auth import credentials
 from google.auth.exceptions import MutualTLSChannelError
-from google.cloud.datacatalog_v1beta1.services.policy_tag_manager import (
+from google.cloud.datacatalog_v1.services.policy_tag_manager import (
     PolicyTagManagerAsyncClient,
 )
-from google.cloud.datacatalog_v1beta1.services.policy_tag_manager import (
+from google.cloud.datacatalog_v1.services.policy_tag_manager import (
     PolicyTagManagerClient,
 )
-from google.cloud.datacatalog_v1beta1.services.policy_tag_manager import pagers
-from google.cloud.datacatalog_v1beta1.services.policy_tag_manager import transports
-from google.cloud.datacatalog_v1beta1.types import policytagmanager
+from google.cloud.datacatalog_v1.services.policy_tag_manager import pagers
+from google.cloud.datacatalog_v1.services.policy_tag_manager import transports
+from google.cloud.datacatalog_v1.types import policytagmanager
+from google.cloud.datacatalog_v1.types import timestamps
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import options_pb2 as giv_options  # type: ignore
-from google.iam.v1 import policy_pb2 as giv_policy  # type: ignore
+from google.iam.v1 import options_pb2 as gi_options  # type: ignore
+from google.iam.v1 import policy_pb2 as gi_policy  # type: ignore
 from google.oauth2 import service_account
 from google.protobuf import field_mask_pb2 as field_mask  # type: ignore
+from google.protobuf import timestamp_pb2 as timestamp  # type: ignore
 from google.type import expr_pb2 as expr  # type: ignore
 
 
@@ -445,7 +447,7 @@ def test_policy_tag_manager_client_client_options_credentials_file(
 
 def test_policy_tag_manager_client_client_options_from_dict():
     with mock.patch(
-        "google.cloud.datacatalog_v1beta1.services.policy_tag_manager.transports.PolicyTagManagerGrpcTransport.__init__"
+        "google.cloud.datacatalog_v1.services.policy_tag_manager.transports.PolicyTagManagerGrpcTransport.__init__"
     ) as grpc_transport:
         grpc_transport.return_value = None
         client = PolicyTagManagerClient(
@@ -480,6 +482,7 @@ def test_create_taxonomy(
             name="name_value",
             display_name="display_name_value",
             description="description_value",
+            policy_tag_count=1715,
             activated_policy_types=[
                 policytagmanager.Taxonomy.PolicyType.FINE_GRAINED_ACCESS_CONTROL
             ],
@@ -502,6 +505,8 @@ def test_create_taxonomy(
     assert response.display_name == "display_name_value"
 
     assert response.description == "description_value"
+
+    assert response.policy_tag_count == 1715
 
     assert response.activated_policy_types == [
         policytagmanager.Taxonomy.PolicyType.FINE_GRAINED_ACCESS_CONTROL
@@ -548,6 +553,7 @@ async def test_create_taxonomy_async(
                 name="name_value",
                 display_name="display_name_value",
                 description="description_value",
+                policy_tag_count=1715,
                 activated_policy_types=[
                     policytagmanager.Taxonomy.PolicyType.FINE_GRAINED_ACCESS_CONTROL
                 ],
@@ -570,6 +576,8 @@ async def test_create_taxonomy_async(
     assert response.display_name == "display_name_value"
 
     assert response.description == "description_value"
+
+    assert response.policy_tag_count == 1715
 
     assert response.activated_policy_types == [
         policytagmanager.Taxonomy.PolicyType.FINE_GRAINED_ACCESS_CONTROL
@@ -939,6 +947,7 @@ def test_update_taxonomy(
             name="name_value",
             display_name="display_name_value",
             description="description_value",
+            policy_tag_count=1715,
             activated_policy_types=[
                 policytagmanager.Taxonomy.PolicyType.FINE_GRAINED_ACCESS_CONTROL
             ],
@@ -961,6 +970,8 @@ def test_update_taxonomy(
     assert response.display_name == "display_name_value"
 
     assert response.description == "description_value"
+
+    assert response.policy_tag_count == 1715
 
     assert response.activated_policy_types == [
         policytagmanager.Taxonomy.PolicyType.FINE_GRAINED_ACCESS_CONTROL
@@ -1007,6 +1018,7 @@ async def test_update_taxonomy_async(
                 name="name_value",
                 display_name="display_name_value",
                 description="description_value",
+                policy_tag_count=1715,
                 activated_policy_types=[
                     policytagmanager.Taxonomy.PolicyType.FINE_GRAINED_ACCESS_CONTROL
                 ],
@@ -1029,6 +1041,8 @@ async def test_update_taxonomy_async(
     assert response.display_name == "display_name_value"
 
     assert response.description == "description_value"
+
+    assert response.policy_tag_count == 1715
 
     assert response.activated_policy_types == [
         policytagmanager.Taxonomy.PolicyType.FINE_GRAINED_ACCESS_CONTROL
@@ -1553,6 +1567,7 @@ def test_get_taxonomy(
             name="name_value",
             display_name="display_name_value",
             description="description_value",
+            policy_tag_count=1715,
             activated_policy_types=[
                 policytagmanager.Taxonomy.PolicyType.FINE_GRAINED_ACCESS_CONTROL
             ],
@@ -1575,6 +1590,8 @@ def test_get_taxonomy(
     assert response.display_name == "display_name_value"
 
     assert response.description == "description_value"
+
+    assert response.policy_tag_count == 1715
 
     assert response.activated_policy_types == [
         policytagmanager.Taxonomy.PolicyType.FINE_GRAINED_ACCESS_CONTROL
@@ -1621,6 +1638,7 @@ async def test_get_taxonomy_async(
                 name="name_value",
                 display_name="display_name_value",
                 description="description_value",
+                policy_tag_count=1715,
                 activated_policy_types=[
                     policytagmanager.Taxonomy.PolicyType.FINE_GRAINED_ACCESS_CONTROL
                 ],
@@ -1643,6 +1661,8 @@ async def test_get_taxonomy_async(
     assert response.display_name == "display_name_value"
 
     assert response.description == "description_value"
+
+    assert response.policy_tag_count == 1715
 
     assert response.activated_policy_types == [
         policytagmanager.Taxonomy.PolicyType.FINE_GRAINED_ACCESS_CONTROL
@@ -3161,7 +3181,7 @@ def test_get_iam_policy(
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
-        call.return_value = giv_policy.Policy(version=774, etag=b"etag_blob",)
+        call.return_value = gi_policy.Policy(version=774, etag=b"etag_blob",)
 
         response = client.get_iam_policy(request)
 
@@ -3173,7 +3193,7 @@ def test_get_iam_policy(
 
     # Establish that the response is the type that we expect.
 
-    assert isinstance(response, giv_policy.Policy)
+    assert isinstance(response, gi_policy.Policy)
 
     assert response.version == 774
 
@@ -3216,7 +3236,7 @@ async def test_get_iam_policy_async(
     with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            giv_policy.Policy(version=774, etag=b"etag_blob",)
+            gi_policy.Policy(version=774, etag=b"etag_blob",)
         )
 
         response = await client.get_iam_policy(request)
@@ -3228,7 +3248,7 @@ async def test_get_iam_policy_async(
         assert args[0] == iam_policy.GetIamPolicyRequest()
 
     # Establish that the response is the type that we expect.
-    assert isinstance(response, giv_policy.Policy)
+    assert isinstance(response, gi_policy.Policy)
 
     assert response.version == 774
 
@@ -3250,7 +3270,7 @@ def test_get_iam_policy_field_headers():
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
-        call.return_value = giv_policy.Policy()
+        call.return_value = gi_policy.Policy()
 
         client.get_iam_policy(request)
 
@@ -3277,7 +3297,7 @@ async def test_get_iam_policy_field_headers_async():
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(giv_policy.Policy())
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gi_policy.Policy())
 
         await client.get_iam_policy(request)
 
@@ -3296,12 +3316,12 @@ def test_get_iam_policy_from_dict_foreign():
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client.transport.get_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
-        call.return_value = giv_policy.Policy()
+        call.return_value = gi_policy.Policy()
 
         response = client.get_iam_policy(
             request={
                 "resource": "resource_value",
-                "options_": giv_options.GetPolicyOptions(requested_policy_version=2598),
+                "options_": gi_options.GetPolicyOptions(requested_policy_version=2598),
             }
         )
         call.assert_called()
@@ -3321,7 +3341,7 @@ def test_set_iam_policy(
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
-        call.return_value = giv_policy.Policy(version=774, etag=b"etag_blob",)
+        call.return_value = gi_policy.Policy(version=774, etag=b"etag_blob",)
 
         response = client.set_iam_policy(request)
 
@@ -3333,7 +3353,7 @@ def test_set_iam_policy(
 
     # Establish that the response is the type that we expect.
 
-    assert isinstance(response, giv_policy.Policy)
+    assert isinstance(response, gi_policy.Policy)
 
     assert response.version == 774
 
@@ -3376,7 +3396,7 @@ async def test_set_iam_policy_async(
     with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            giv_policy.Policy(version=774, etag=b"etag_blob",)
+            gi_policy.Policy(version=774, etag=b"etag_blob",)
         )
 
         response = await client.set_iam_policy(request)
@@ -3388,7 +3408,7 @@ async def test_set_iam_policy_async(
         assert args[0] == iam_policy.SetIamPolicyRequest()
 
     # Establish that the response is the type that we expect.
-    assert isinstance(response, giv_policy.Policy)
+    assert isinstance(response, gi_policy.Policy)
 
     assert response.version == 774
 
@@ -3410,7 +3430,7 @@ def test_set_iam_policy_field_headers():
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
-        call.return_value = giv_policy.Policy()
+        call.return_value = gi_policy.Policy()
 
         client.set_iam_policy(request)
 
@@ -3437,7 +3457,7 @@ async def test_set_iam_policy_field_headers_async():
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
-        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(giv_policy.Policy())
+        call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(gi_policy.Policy())
 
         await client.set_iam_policy(request)
 
@@ -3456,12 +3476,12 @@ def test_set_iam_policy_from_dict_foreign():
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client.transport.set_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
-        call.return_value = giv_policy.Policy()
+        call.return_value = gi_policy.Policy()
 
         response = client.set_iam_policy(
             request={
                 "resource": "resource_value",
-                "policy_": giv_policy.Policy(version=774),
+                "policy_": gi_policy.Policy(version=774),
             }
         )
         call.assert_called()
@@ -3726,7 +3746,7 @@ def test_policy_tag_manager_base_transport_error():
 def test_policy_tag_manager_base_transport():
     # Instantiate the base transport.
     with mock.patch(
-        "google.cloud.datacatalog_v1beta1.services.policy_tag_manager.transports.PolicyTagManagerTransport.__init__"
+        "google.cloud.datacatalog_v1.services.policy_tag_manager.transports.PolicyTagManagerTransport.__init__"
     ) as Transport:
         Transport.return_value = None
         transport = transports.PolicyTagManagerTransport(
@@ -3760,7 +3780,7 @@ def test_policy_tag_manager_base_transport_with_credentials_file():
     with mock.patch.object(
         auth, "load_credentials_from_file"
     ) as load_creds, mock.patch(
-        "google.cloud.datacatalog_v1beta1.services.policy_tag_manager.transports.PolicyTagManagerTransport._prep_wrapped_messages"
+        "google.cloud.datacatalog_v1.services.policy_tag_manager.transports.PolicyTagManagerTransport._prep_wrapped_messages"
     ) as Transport:
         Transport.return_value = None
         load_creds.return_value = (credentials.AnonymousCredentials(), None)
@@ -3777,7 +3797,7 @@ def test_policy_tag_manager_base_transport_with_credentials_file():
 def test_policy_tag_manager_base_transport_with_adc():
     # Test the default credentials are used if credentials and credentials_file are None.
     with mock.patch.object(auth, "default") as adc, mock.patch(
-        "google.cloud.datacatalog_v1beta1.services.policy_tag_manager.transports.PolicyTagManagerTransport._prep_wrapped_messages"
+        "google.cloud.datacatalog_v1.services.policy_tag_manager.transports.PolicyTagManagerTransport._prep_wrapped_messages"
     ) as Transport:
         Transport.return_value = None
         adc.return_value = (credentials.AnonymousCredentials(), None)

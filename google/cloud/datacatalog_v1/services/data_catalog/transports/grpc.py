@@ -29,7 +29,7 @@ import grpc  # type: ignore
 from google.cloud.datacatalog_v1.types import datacatalog
 from google.cloud.datacatalog_v1.types import tags
 from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
+from google.iam.v1 import policy_pb2 as gi_policy  # type: ignore
 from google.protobuf import empty_pb2 as empty  # type: ignore
 
 from .base import DataCatalogTransport, DEFAULT_CLIENT_INFO
@@ -240,7 +240,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
         This is a custom method
         (https://cloud.google.com/apis/design/custom_methods) and does
         not return the complete resource, only the resource identifier
-        and high level fields. Clients can subsequentally call ``Get``
+        and high level fields. Clients can subsequently call ``Get``
         methods.
 
         Note that Data Catalog search queries do not guarantee full
@@ -437,8 +437,8 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
     ) -> Callable[[datacatalog.CreateEntryRequest], datacatalog.Entry]:
         r"""Return a callable for the create entry method over gRPC.
 
-        Creates an entry. Only entries of 'FILESET' type or
-        user-specified type can be created.
+        Creates an entry. Only entries of types 'FILESET', 'CLUSTER',
+        'DATA_STREAM' or with a user-specified type can be created.
 
         Users should enable the Data Catalog API in the project
         identified by the ``parent`` parameter (see [Data Catalog
@@ -817,6 +817,38 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
         return self._stubs["rename_tag_template_field"]
 
     @property
+    def rename_tag_template_field_enum_value(
+        self,
+    ) -> Callable[
+        [datacatalog.RenameTagTemplateFieldEnumValueRequest], tags.TagTemplateField
+    ]:
+        r"""Return a callable for the rename tag template field enum
+        value method over gRPC.
+
+        Renames an enum value in a tag template. The enum
+        values have to be unique within one enum field.
+
+        Returns:
+            Callable[[~.RenameTagTemplateFieldEnumValueRequest],
+                    ~.TagTemplateField]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "rename_tag_template_field_enum_value" not in self._stubs:
+            self._stubs[
+                "rename_tag_template_field_enum_value"
+            ] = self.grpc_channel.unary_unary(
+                "/google.cloud.datacatalog.v1.DataCatalog/RenameTagTemplateFieldEnumValue",
+                request_serializer=datacatalog.RenameTagTemplateFieldEnumValueRequest.serialize,
+                response_deserializer=tags.TagTemplateField.deserialize,
+            )
+        return self._stubs["rename_tag_template_field_enum_value"]
+
+    @property
     def delete_tag_template_field(
         self,
     ) -> Callable[[datacatalog.DeleteTagTemplateFieldRequest], empty.Empty]:
@@ -953,7 +985,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
     @property
     def set_iam_policy(
         self,
-    ) -> Callable[[iam_policy.SetIamPolicyRequest], policy.Policy]:
+    ) -> Callable[[iam_policy.SetIamPolicyRequest], gi_policy.Policy]:
         r"""Return a callable for the set iam policy method over gRPC.
 
         Sets the access control policy for a resource. Replaces any
@@ -988,14 +1020,14 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
             self._stubs["set_iam_policy"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1.DataCatalog/SetIamPolicy",
                 request_serializer=iam_policy.SetIamPolicyRequest.SerializeToString,
-                response_deserializer=policy.Policy.FromString,
+                response_deserializer=gi_policy.Policy.FromString,
             )
         return self._stubs["set_iam_policy"]
 
     @property
     def get_iam_policy(
         self,
-    ) -> Callable[[iam_policy.GetIamPolicyRequest], policy.Policy]:
+    ) -> Callable[[iam_policy.GetIamPolicyRequest], gi_policy.Policy]:
         r"""Return a callable for the get iam policy method over gRPC.
 
         Gets the access control policy for a resource. A ``NOT_FOUND``
@@ -1034,7 +1066,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
             self._stubs["get_iam_policy"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1.DataCatalog/GetIamPolicy",
                 request_serializer=iam_policy.GetIamPolicyRequest.SerializeToString,
-                response_deserializer=policy.Policy.FromString,
+                response_deserializer=gi_policy.Policy.FromString,
             )
         return self._stubs["get_iam_policy"]
 

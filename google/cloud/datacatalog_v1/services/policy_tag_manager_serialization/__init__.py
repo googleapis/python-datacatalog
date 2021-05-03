@@ -15,22 +15,10 @@
 # limitations under the License.
 #
 
-import proto  # type: ignore
+from .client import PolicyTagManagerSerializationClient
+from .async_client import PolicyTagManagerSerializationAsyncClient
 
-
-__protobuf__ = proto.module(
-    package="google.cloud.datacatalog.v1", manifest={"IntegratedSystem",},
+__all__ = (
+    "PolicyTagManagerSerializationClient",
+    "PolicyTagManagerSerializationAsyncClient",
 )
-
-
-class IntegratedSystem(proto.Enum):
-    r"""This enum describes all the possible systems that Data
-    Catalog integrates with.
-    """
-    INTEGRATED_SYSTEM_UNSPECIFIED = 0
-    BIGQUERY = 1
-    CLOUD_PUBSUB = 2
-    DATAPROC_METASTORE = 3
-
-
-__all__ = tuple(sorted(__protobuf__.manifest))
