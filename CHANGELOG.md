@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-datacatalog/#history
 
+### [3.2.2](https://www.github.com/googleapis/python-datacatalog/compare/v3.2.1...v3.2.2) (2021-06-22)
+
+
+### Documentation
+
+* omit mention of Python 2.7 in 'CONTRIBUTING.rst' ([#1127](https://www.github.com/googleapis/python-datacatalog/issues/1127)) ([#173](https://www.github.com/googleapis/python-datacatalog/issues/173)) ([a3d17d4](https://www.github.com/googleapis/python-datacatalog/commit/a3d17d4b485e757480040783259da234abec69a0)), closes [#1126](https://www.github.com/googleapis/python-datacatalog/issues/1126)
+
 ### [3.2.1](https://www.github.com/googleapis/python-datacatalog/compare/v3.2.0...v3.2.1) (2021-06-09)
 
 
