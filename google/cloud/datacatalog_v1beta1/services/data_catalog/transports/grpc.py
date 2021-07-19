@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,24 +13,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 import warnings
-from typing import Callable, Dict, Optional, Sequence, Tuple
+from typing import Callable, Dict, Optional, Sequence, Tuple, Union
 
 from google.api_core import grpc_helpers  # type: ignore
 from google.api_core import gapic_v1  # type: ignore
-from google import auth  # type: ignore
-from google.auth import credentials  # type: ignore
+import google.auth  # type: ignore
+from google.auth import credentials as ga_credentials  # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
 
 import grpc  # type: ignore
 
 from google.cloud.datacatalog_v1beta1.types import datacatalog
 from google.cloud.datacatalog_v1beta1.types import tags
-from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
-from google.protobuf import empty_pb2 as empty  # type: ignore
-
+from google.iam.v1 import iam_policy_pb2  # type: ignore
+from google.iam.v1 import policy_pb2  # type: ignore
+from google.protobuf import empty_pb2  # type: ignore
 from .base import DataCatalogTransport, DEFAULT_CLIENT_INFO
 
 
@@ -55,20 +52,23 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
         self,
         *,
         host: str = "datacatalog.googleapis.com",
-        credentials: credentials.Credentials = None,
+        credentials: ga_credentials.Credentials = None,
         credentials_file: str = None,
         scopes: Sequence[str] = None,
         channel: grpc.Channel = None,
         api_mtls_endpoint: str = None,
         client_cert_source: Callable[[], Tuple[bytes, bytes]] = None,
         ssl_channel_credentials: grpc.ChannelCredentials = None,
+        client_cert_source_for_mtls: Callable[[], Tuple[bytes, bytes]] = None,
         quota_project_id: Optional[str] = None,
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
+        always_use_jwt_access: Optional[bool] = False,
     ) -> None:
         """Instantiate the transport.
 
         Args:
-            host (Optional[str]): The hostname to connect to.
+            host (Optional[str]):
+                 The hostname to connect to.
             credentials (Optional[google.auth.credentials.Credentials]): The
                 authorization credentials to attach to requests. These
                 credentials identify the application to the service; if none
@@ -92,6 +92,10 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
                 ``api_mtls_endpoint`` is None.
             ssl_channel_credentials (grpc.ChannelCredentials): SSL credentials
                 for grpc channel. It is ignored if ``channel`` is provided.
+            client_cert_source_for_mtls (Optional[Callable[[], Tuple[bytes, bytes]]]):
+                A callback to provide client certificate bytes and private key bytes,
+                both in PEM format. It is used to configure mutual TLS channel. It is
+                ignored if ``channel`` or ``ssl_channel_credentials`` is provided.
             quota_project_id (Optional[str]): An optional project to use for billing
                 and quota.
             client_info (google.api_core.gapic_v1.client_info.ClientInfo):
@@ -99,6 +103,8 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
                 API requests. If ``None``, then default info will be used.
                 Generally, you only need to set this if you're developing
                 your own client library.
+            always_use_jwt_access (Optional[bool]): Whether self signed JWT should
+                be used for service account credentials.
 
         Raises:
           google.auth.exceptions.MutualTLSChannelError: If mutual TLS transport
@@ -106,96 +112,76 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
           google.api_core.exceptions.DuplicateCredentialArgs: If both ``credentials``
               and ``credentials_file`` are passed.
         """
+        self._grpc_channel = None
         self._ssl_channel_credentials = ssl_channel_credentials
+        self._stubs: Dict[str, Callable] = {}
+
+        if api_mtls_endpoint:
+            warnings.warn("api_mtls_endpoint is deprecated", DeprecationWarning)
+        if client_cert_source:
+            warnings.warn("client_cert_source is deprecated", DeprecationWarning)
 
         if channel:
-            # Sanity check: Ensure that channel and credentials are not both
-            # provided.
+            # Ignore credentials if a channel was passed.
             credentials = False
-
             # If a channel was explicitly provided, set it.
             self._grpc_channel = channel
             self._ssl_channel_credentials = None
-        elif api_mtls_endpoint:
-            warnings.warn(
-                "api_mtls_endpoint and client_cert_source are deprecated",
-                DeprecationWarning,
-            )
 
-            host = (
-                api_mtls_endpoint
-                if ":" in api_mtls_endpoint
-                else api_mtls_endpoint + ":443"
-            )
-
-            if credentials is None:
-                credentials, _ = auth.default(
-                    scopes=self.AUTH_SCOPES, quota_project_id=quota_project_id
-                )
-
-            # Create SSL credentials with client_cert_source or application
-            # default SSL credentials.
-            if client_cert_source:
-                cert, key = client_cert_source()
-                ssl_credentials = grpc.ssl_channel_credentials(
-                    certificate_chain=cert, private_key=key
-                )
-            else:
-                ssl_credentials = SslCredentials().ssl_credentials
-
-            # create a new channel. The provided one is ignored.
-            self._grpc_channel = type(self).create_channel(
-                host,
-                credentials=credentials,
-                credentials_file=credentials_file,
-                ssl_credentials=ssl_credentials,
-                scopes=scopes or self.AUTH_SCOPES,
-                quota_project_id=quota_project_id,
-                options=[
-                    ("grpc.max_send_message_length", -1),
-                    ("grpc.max_receive_message_length", -1),
-                ],
-            )
-            self._ssl_channel_credentials = ssl_credentials
         else:
-            host = host if ":" in host else host + ":443"
+            if api_mtls_endpoint:
+                host = api_mtls_endpoint
 
-            if credentials is None:
-                credentials, _ = auth.default(
-                    scopes=self.AUTH_SCOPES, quota_project_id=quota_project_id
-                )
+                # Create SSL credentials with client_cert_source or application
+                # default SSL credentials.
+                if client_cert_source:
+                    cert, key = client_cert_source()
+                    self._ssl_channel_credentials = grpc.ssl_channel_credentials(
+                        certificate_chain=cert, private_key=key
+                    )
+                else:
+                    self._ssl_channel_credentials = SslCredentials().ssl_credentials
 
-            # create a new channel. The provided one is ignored.
-            self._grpc_channel = type(self).create_channel(
-                host,
-                credentials=credentials,
-                credentials_file=credentials_file,
-                ssl_credentials=ssl_channel_credentials,
-                scopes=scopes or self.AUTH_SCOPES,
-                quota_project_id=quota_project_id,
-                options=[
-                    ("grpc.max_send_message_length", -1),
-                    ("grpc.max_receive_message_length", -1),
-                ],
-            )
+            else:
+                if client_cert_source_for_mtls and not ssl_channel_credentials:
+                    cert, key = client_cert_source_for_mtls()
+                    self._ssl_channel_credentials = grpc.ssl_channel_credentials(
+                        certificate_chain=cert, private_key=key
+                    )
 
-        self._stubs = {}  # type: Dict[str, Callable]
-
-        # Run the base constructor.
+        # The base transport sets the host, credentials and scopes
         super().__init__(
             host=host,
             credentials=credentials,
             credentials_file=credentials_file,
-            scopes=scopes or self.AUTH_SCOPES,
+            scopes=scopes,
             quota_project_id=quota_project_id,
             client_info=client_info,
+            always_use_jwt_access=always_use_jwt_access,
         )
+
+        if not self._grpc_channel:
+            self._grpc_channel = type(self).create_channel(
+                self._host,
+                credentials=self._credentials,
+                credentials_file=credentials_file,
+                scopes=self._scopes,
+                ssl_credentials=self._ssl_channel_credentials,
+                quota_project_id=quota_project_id,
+                options=[
+                    ("grpc.max_send_message_length", -1),
+                    ("grpc.max_receive_message_length", -1),
+                ],
+            )
+
+        # Wrap messages. This must be done after self._grpc_channel exists
+        self._prep_wrapped_messages(client_info)
 
     @classmethod
     def create_channel(
         cls,
         host: str = "datacatalog.googleapis.com",
-        credentials: credentials.Credentials = None,
+        credentials: ga_credentials.Credentials = None,
         credentials_file: str = None,
         scopes: Optional[Sequence[str]] = None,
         quota_project_id: Optional[str] = None,
@@ -203,7 +189,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
     ) -> grpc.Channel:
         """Create and return a gRPC channel object.
         Args:
-            address (Optional[str]): The host for the channel to use.
+            host (Optional[str]): The host for the channel to use.
             credentials (Optional[~.Credentials]): The
                 authorization credentials to attach to requests. These
                 credentials identify this application to the service. If
@@ -226,13 +212,15 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
             google.api_core.exceptions.DuplicateCredentialArgs: If both ``credentials``
               and ``credentials_file`` are passed.
         """
-        scopes = scopes or cls.AUTH_SCOPES
+
         return grpc_helpers.create_channel(
             host,
             credentials=credentials,
             credentials_file=credentials_file,
-            scopes=scopes,
             quota_project_id=quota_project_id,
+            default_scopes=cls.AUTH_SCOPES,
+            scopes=scopes,
+            default_host=cls.DEFAULT_HOST,
             **kwargs,
         )
 
@@ -378,7 +366,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
     @property
     def delete_entry_group(
         self,
-    ) -> Callable[[datacatalog.DeleteEntryGroupRequest], empty.Empty]:
+    ) -> Callable[[datacatalog.DeleteEntryGroupRequest], empty_pb2.Empty]:
         r"""Return a callable for the delete entry group method over gRPC.
 
         Deletes an EntryGroup. Only entry groups that do not contain
@@ -402,7 +390,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
             self._stubs["delete_entry_group"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1beta1.DataCatalog/DeleteEntryGroup",
                 request_serializer=datacatalog.DeleteEntryGroupRequest.serialize,
-                response_deserializer=empty.Empty.FromString,
+                response_deserializer=empty_pb2.Empty.FromString,
             )
         return self._stubs["delete_entry_group"]
 
@@ -500,7 +488,9 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
         return self._stubs["update_entry"]
 
     @property
-    def delete_entry(self) -> Callable[[datacatalog.DeleteEntryRequest], empty.Empty]:
+    def delete_entry(
+        self,
+    ) -> Callable[[datacatalog.DeleteEntryRequest], empty_pb2.Empty]:
         r"""Return a callable for the delete entry method over gRPC.
 
         Deletes an existing entry. Only entries created through
@@ -525,7 +515,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
             self._stubs["delete_entry"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1beta1.DataCatalog/DeleteEntry",
                 request_serializer=datacatalog.DeleteEntryRequest.serialize,
-                response_deserializer=empty.Empty.FromString,
+                response_deserializer=empty_pb2.Empty.FromString,
             )
         return self._stubs["delete_entry"]
 
@@ -701,7 +691,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
     @property
     def delete_tag_template(
         self,
-    ) -> Callable[[datacatalog.DeleteTagTemplateRequest], empty.Empty]:
+    ) -> Callable[[datacatalog.DeleteTagTemplateRequest], empty_pb2.Empty]:
         r"""Return a callable for the delete tag template method over gRPC.
 
         Deletes a tag template and all tags using the template. Users
@@ -724,7 +714,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
             self._stubs["delete_tag_template"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1beta1.DataCatalog/DeleteTagTemplate",
                 request_serializer=datacatalog.DeleteTagTemplateRequest.serialize,
-                response_deserializer=empty.Empty.FromString,
+                response_deserializer=empty_pb2.Empty.FromString,
             )
         return self._stubs["delete_tag_template"]
 
@@ -822,7 +812,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
     @property
     def delete_tag_template_field(
         self,
-    ) -> Callable[[datacatalog.DeleteTagTemplateFieldRequest], empty.Empty]:
+    ) -> Callable[[datacatalog.DeleteTagTemplateFieldRequest], empty_pb2.Empty]:
         r"""Return a callable for the delete tag template field method over gRPC.
 
         Deletes a field in a tag template and all uses of that field.
@@ -846,7 +836,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
             self._stubs["delete_tag_template_field"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1beta1.DataCatalog/DeleteTagTemplateField",
                 request_serializer=datacatalog.DeleteTagTemplateFieldRequest.serialize,
-                response_deserializer=empty.Empty.FromString,
+                response_deserializer=empty_pb2.Empty.FromString,
             )
         return self._stubs["delete_tag_template_field"]
 
@@ -905,7 +895,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
         return self._stubs["update_tag"]
 
     @property
-    def delete_tag(self) -> Callable[[datacatalog.DeleteTagRequest], empty.Empty]:
+    def delete_tag(self) -> Callable[[datacatalog.DeleteTagRequest], empty_pb2.Empty]:
         r"""Return a callable for the delete tag method over gRPC.
 
         Deletes a tag.
@@ -924,7 +914,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
             self._stubs["delete_tag"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1beta1.DataCatalog/DeleteTag",
                 request_serializer=datacatalog.DeleteTagRequest.serialize,
-                response_deserializer=empty.Empty.FromString,
+                response_deserializer=empty_pb2.Empty.FromString,
             )
         return self._stubs["delete_tag"]
 
@@ -958,7 +948,7 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
     @property
     def set_iam_policy(
         self,
-    ) -> Callable[[iam_policy.SetIamPolicyRequest], policy.Policy]:
+    ) -> Callable[[iam_policy_pb2.SetIamPolicyRequest], policy_pb2.Policy]:
         r"""Return a callable for the set iam policy method over gRPC.
 
         Sets the access control policy for a resource. Replaces any
@@ -992,15 +982,15 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
         if "set_iam_policy" not in self._stubs:
             self._stubs["set_iam_policy"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1beta1.DataCatalog/SetIamPolicy",
-                request_serializer=iam_policy.SetIamPolicyRequest.SerializeToString,
-                response_deserializer=policy.Policy.FromString,
+                request_serializer=iam_policy_pb2.SetIamPolicyRequest.SerializeToString,
+                response_deserializer=policy_pb2.Policy.FromString,
             )
         return self._stubs["set_iam_policy"]
 
     @property
     def get_iam_policy(
         self,
-    ) -> Callable[[iam_policy.GetIamPolicyRequest], policy.Policy]:
+    ) -> Callable[[iam_policy_pb2.GetIamPolicyRequest], policy_pb2.Policy]:
         r"""Return a callable for the get iam policy method over gRPC.
 
         Gets the access control policy for a resource. A ``NOT_FOUND``
@@ -1038,8 +1028,8 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
         if "get_iam_policy" not in self._stubs:
             self._stubs["get_iam_policy"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1beta1.DataCatalog/GetIamPolicy",
-                request_serializer=iam_policy.GetIamPolicyRequest.SerializeToString,
-                response_deserializer=policy.Policy.FromString,
+                request_serializer=iam_policy_pb2.GetIamPolicyRequest.SerializeToString,
+                response_deserializer=policy_pb2.Policy.FromString,
             )
         return self._stubs["get_iam_policy"]
 
@@ -1047,7 +1037,8 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
     def test_iam_permissions(
         self,
     ) -> Callable[
-        [iam_policy.TestIamPermissionsRequest], iam_policy.TestIamPermissionsResponse
+        [iam_policy_pb2.TestIamPermissionsRequest],
+        iam_policy_pb2.TestIamPermissionsResponse,
     ]:
         r"""Return a callable for the test iam permissions method over gRPC.
 
@@ -1079,8 +1070,8 @@ class DataCatalogGrpcTransport(DataCatalogTransport):
         if "test_iam_permissions" not in self._stubs:
             self._stubs["test_iam_permissions"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1beta1.DataCatalog/TestIamPermissions",
-                request_serializer=iam_policy.TestIamPermissionsRequest.SerializeToString,
-                response_deserializer=iam_policy.TestIamPermissionsResponse.FromString,
+                request_serializer=iam_policy_pb2.TestIamPermissionsRequest.SerializeToString,
+                response_deserializer=iam_policy_pb2.TestIamPermissionsResponse.FromString,
             )
         return self._stubs["test_iam_permissions"]
 

@@ -4,6 +4,69 @@
 
 [1]: https://pypi.org/project/google-cloud-datacatalog/#history
 
+## [3.3.0](https://www.github.com/googleapis/python-datacatalog/compare/v3.2.1...v3.3.0) (2021-07-01)
+
+
+### Features
+
+* add always_use_jwt_access ([#178](https://www.github.com/googleapis/python-datacatalog/issues/178)) ([2cb3cc2](https://www.github.com/googleapis/python-datacatalog/commit/2cb3cc2e062045b4b1f602c6e2ed79b3dc6f0014))
+
+
+### Bug Fixes
+
+* disable always_use_jwt_access ([#182](https://www.github.com/googleapis/python-datacatalog/issues/182)) ([1bef446](https://www.github.com/googleapis/python-datacatalog/commit/1bef4465d7c0f7f4e84afb664ca5d9f55e92ea14))
+
+
+### Documentation
+
+* omit mention of Python 2.7 in 'CONTRIBUTING.rst' ([#1127](https://www.github.com/googleapis/python-datacatalog/issues/1127)) ([#173](https://www.github.com/googleapis/python-datacatalog/issues/173)) ([a3d17d4](https://www.github.com/googleapis/python-datacatalog/commit/a3d17d4b485e757480040783259da234abec69a0)), closes [#1126](https://www.github.com/googleapis/python-datacatalog/issues/1126)
+
+### [3.2.1](https://www.github.com/googleapis/python-datacatalog/compare/v3.2.0...v3.2.1) (2021-06-09)
+
+
+### Bug Fixes
+
+* **deps:** add packaging requirement ([#163](https://www.github.com/googleapis/python-datacatalog/issues/163)) ([1cfdb5a](https://www.github.com/googleapis/python-datacatalog/commit/1cfdb5a444cd6c845546b060da2e0a0f7d533a0c))
+
+## [3.2.0](https://www.github.com/googleapis/python-datacatalog/compare/v3.1.1...v3.2.0) (2021-05-18)
+
+
+### Features
+
+* support self-signed JWT flow for service accounts ([85e46e1](https://www.github.com/googleapis/python-datacatalog/commit/85e46e144d32a0d66bc2d7c056453951eb77d592))
+
+
+### Bug Fixes
+
+* add async client to %name_%version/init.py ([85e46e1](https://www.github.com/googleapis/python-datacatalog/commit/85e46e144d32a0d66bc2d7c056453951eb77d592))
+
+### [3.1.1](https://www.github.com/googleapis/python-datacatalog/compare/v3.1.0...v3.1.1) (2021-03-29)
+
+
+### Bug Fixes
+
+* use correct retry deadline ([#124](https://www.github.com/googleapis/python-datacatalog/issues/124)) ([0c69bc2](https://www.github.com/googleapis/python-datacatalog/commit/0c69bc2fbae593f62c543c5a15dbe810467b7510))
+
+## [3.1.0](https://www.github.com/googleapis/python-datacatalog/compare/v3.0.0...v3.1.0) (2021-03-22)
+
+
+### Features
+
+* add `client_cert_source_for_mtls` argument to transports ([#107](https://www.github.com/googleapis/python-datacatalog/issues/107)) ([59a44bc](https://www.github.com/googleapis/python-datacatalog/commit/59a44bc744a6322a2a23313c851eb77204110e79))
+
+
+### Bug Fixes
+
+* remove gRPC send/recv limit; add enums to `types/__init__.py` ([#87](https://www.github.com/googleapis/python-datacatalog/issues/87)) ([e0c40c7](https://www.github.com/googleapis/python-datacatalog/commit/e0c40c765242868570532b5074fd239aa2c259e9))
+
+
+### Documentation
+
+* document enum values with `undoc-members` option ([#93](https://www.github.com/googleapis/python-datacatalog/issues/93)) ([2dbb3ef](https://www.github.com/googleapis/python-datacatalog/commit/2dbb3ef062b52925ad421c5c469ed6e67671e878))
+* fix `type_` attribute name in the migration guide ([#113](https://www.github.com/googleapis/python-datacatalog/issues/113)) ([2f98f22](https://www.github.com/googleapis/python-datacatalog/commit/2f98f2244271d92f79fdb26103478166958b8c8a))
+* fix upgrade guide ([#114](https://www.github.com/googleapis/python-datacatalog/issues/114)) ([4bfa587](https://www.github.com/googleapis/python-datacatalog/commit/4bfa587903105cb3de2272618374df0b04156017))
+* update the upgrade guide to be from 1.0 to 3.0 ([#77](https://www.github.com/googleapis/python-datacatalog/issues/77)) ([eed034a](https://www.github.com/googleapis/python-datacatalog/commit/eed034a3969913e40554300ae97c5e00e4fcc79a))
+
 ## [3.0.0](https://www.github.com/googleapis/python-datacatalog/compare/v2.0.0...v3.0.0) (2020-11-17)
 
 
