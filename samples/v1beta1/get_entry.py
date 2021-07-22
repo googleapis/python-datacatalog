@@ -22,13 +22,13 @@
 #   description: Get Entry
 #   usage: python3 samples/v1beta1/datacatalog_get_entry.py [--project_id "[Google Cloud Project ID]"] [--location_id "[Google Cloud Location ID]"] [--entry_group_id "[Entry Group ID]"] [--entry_id "[Entry ID]"]
 
-# [START data_catalog_get_entry_v1beta1]
-from google.cloud import datacatalog_v1beta1
-
 
 def sample_get_entry(
     project_id: str, location_id: str, entry_group_id: str, entry_id: str
 ):
+    # [START datacatalog_get_entry]
+    # [START data_catalog_get_entry_v1beta1]
+    from google.cloud import datacatalog_v1beta1
     """
     Get Entry
 
@@ -52,6 +52,7 @@ def sample_get_entry(
     print(f"Entry type: {datacatalog_v1beta1.EntryType(entry.type_).name}")
     print(f"Linked resource: {entry.linked_resource}")
     # [END data_catalog_get_entry_v1beta1]
+    # [END datacatalog_get_entry]
     return entry
 
 

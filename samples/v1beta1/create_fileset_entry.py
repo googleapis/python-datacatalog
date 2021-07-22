@@ -14,7 +14,7 @@
 
 
 def create_fileset_entry(client, entry_group_name, entry_id):
-
+    # [START datacatalog_create_fileset_tag]
     # [START data_catalog_create_fileset_v1beta1]
     from google.cloud import datacatalog_v1beta1
 
@@ -86,3 +86,4 @@ def create_fileset_entry(client, entry_group_name, entry_id):
     )
     print("Created entry {}".format(entry.name))
     # [END data_catalog_create_fileset_v1beta1]
+    # [END datacatalog_create_fileset_tag]

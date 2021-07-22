@@ -15,6 +15,7 @@
 
 def quickstart(override_values):
     """Creates a tag template and attach a tag to a BigQuery table."""
+    # [START datacatalog_create_fileset_quickstart_tag]
     # [START data_catalog_quickstart]
     # Import required modules.
     from google.cloud import datacatalog_v1
@@ -129,3 +130,4 @@ def quickstart(override_values):
     tag = datacatalog_client.create_tag(parent=table_entry.name, tag=tag)
     print(f"Created tag: {tag.name}")
     # [END data_catalog_quickstart]
+    # [END datacatalog_create_fileset_quickstart_tag]

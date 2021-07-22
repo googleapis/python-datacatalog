@@ -14,7 +14,7 @@
 
 
 def create_entry_group(project_id, entry_group_id):
-
+    # [START datacatalog_create_entry_group_tag]
     # [START data_catalog_create_entry_group_v1beta1]
     from google.cloud import datacatalog_v1beta1
 
@@ -53,3 +53,4 @@ def create_entry_group(project_id, entry_group_id):
     )  # Make an API request.
     print("Created entry group {}".format(entry_group.name))
     # [END data_catalog_create_entry_group_v1beta1]
+    # [END datacatalog_create_entry_group_tag]
