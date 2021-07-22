@@ -28,7 +28,7 @@ def sample_search_catalog(
 ):
     # [START datacatalog_search]
     # [START data_catalog_search_v1beta1]
-    from google.cloud import datacatalog_v1beta1    
+    from google.cloud import datacatalog_v1beta1
     """
     Search Catalog
 

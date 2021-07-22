@@ -23,11 +23,10 @@
 #   usage: python3 samples/v1beta1/datacatalog_lookup_entry_sql_resource.py [--sql_name "[SQL Resource Name]"]
 
 
-
 def sample_lookup_entry(sql_name: str):
     # [START datacatalog_lookup_entry_sql_resource]
     # [START data_catalog_lookup_entry_sql_resource_v1beta1]
-    from google.cloud import datacatalog_v1beta1        
+    from google.cloud import datacatalog_v1beta1
     """
     Lookup Entry using SQL resource
 

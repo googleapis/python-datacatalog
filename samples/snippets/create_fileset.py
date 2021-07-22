@@ -84,10 +84,7 @@ def create_fileset(override_values):
 
     # Create the addresses parent column
     addresses_column = datacatalog_v1.types.ColumnSchema(
-        column="addresses",
-        description="Addresses",
-        mode="REPEATED",
-        type_="RECORD",
+        column="addresses", description="Addresses", mode="REPEATED", type_="RECORD",
     )
 
     # Create sub columns for the addresses parent column
