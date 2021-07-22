@@ -173,7 +173,9 @@ def blacken(session: nox.sessions.Session) -> None:
 PYTEST_COMMON_ARGS = ["--junitxml=sponge_log.xml"]
 
 
-def _session_tests(session: nox.sessions.Session, post_install: Callable = None) -> None:
+def _session_tests(
+    session: nox.sessions.Session, post_install: Callable = None
+) -> None:
     if TEST_CONFIG["pip_version_override"]:
         pip_version = TEST_CONFIG["pip_version_override"]
         session.install(f"pip=={pip_version}")
@@ -203,7 +205,7 @@ def _session_tests(session: nox.sessions.Session, post_install: Callable = None)
         # on travis where slow and flaky tests are excluded.
         # See http://doc.pytest.org/en/latest/_modules/_pytest/main.html
         success_codes=[0, 5],
-        env=get_pytest_env_vars()
+        env=get_pytest_env_vars(),
     )
 
 
@@ -224,7 +226,7 @@ def py(session: nox.sessions.Session) -> None:
 
 
 def _get_repo_root() -> Optional[str]:
-    """ Returns the root folder of the project. """
+    """Returns the root folder of the project."""
     # Get root of this repository. Assume we don't have directories nested deeper than 10 items.
     p = Path(os.getcwd())
     for i in range(10):
