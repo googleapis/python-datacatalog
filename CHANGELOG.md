@@ -4,6 +4,18 @@
 
 [1]: https://pypi.org/project/google-cloud-datacatalog/#history
 
+## [3.4.0](https://www.github.com/googleapis/python-datacatalog/compare/v3.3.1...v3.4.0) (2021-07-24)
+
+
+### Features
+
+* add Samples section to CONTRIBUTING.rst ([#187](https://www.github.com/googleapis/python-datacatalog/issues/187)) ([317b207](https://www.github.com/googleapis/python-datacatalog/commit/317b207ef03ecedb84bd4619da71859b9ec1d6db))
+
+
+### Bug Fixes
+
+* enable self signed jwt for grpc ([#192](https://www.github.com/googleapis/python-datacatalog/issues/192)) ([90a0be2](https://www.github.com/googleapis/python-datacatalog/commit/90a0be276e38e889a5086f8fd233d5b25e19965e))
+
 ### [3.3.1](https://www.github.com/googleapis/python-datacatalog/compare/v3.3.0...v3.3.1) (2021-07-20)
 
 
