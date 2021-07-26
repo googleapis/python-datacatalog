@@ -26,7 +26,6 @@
 def sample_get_entry(
     project_id: str, location_id: str, entry_group_id: str, entry_id: str
 ):
-    # [START datacatalog_get_entry]
     # [START data_catalog_get_entry_v1beta1]
     from google.cloud import datacatalog_v1beta1
     """
@@ -52,7 +51,6 @@ def sample_get_entry(
     print(f"Entry type: {datacatalog_v1beta1.EntryType(entry.type_).name}")
     print(f"Linked resource: {entry.linked_resource}")
     # [END data_catalog_get_entry_v1beta1]
-    # [END datacatalog_get_entry]
     return entry
 
 

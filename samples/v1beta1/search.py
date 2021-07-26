@@ -26,7 +26,6 @@
 def sample_search_catalog(
     include_project_id: str, include_gcp_public_datasets: bool, query: str
 ):
-    # [START datacatalog_search]
     # [START data_catalog_search_v1beta1]
     from google.cloud import datacatalog_v1beta1
     """
@@ -62,7 +61,6 @@ def sample_search_catalog(
         print(f"Relative resource name: {response_item.relative_resource_name}")
         print(f"Linked resource: {response_item.linked_resource}\n")
     # [END data_catalog_search_v1beta1]
-    # [END datacatalog_search]
     return results
 
 

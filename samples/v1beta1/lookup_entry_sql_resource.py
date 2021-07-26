@@ -24,7 +24,6 @@
 
 
 def sample_lookup_entry(sql_name: str):
-    # [START datacatalog_lookup_entry_sql_resource]
     # [START data_catalog_lookup_entry_sql_resource_v1beta1]
     from google.cloud import datacatalog_v1beta1
     """
@@ -46,7 +45,6 @@ def sample_lookup_entry(sql_name: str):
     print(f"Entry type: {datacatalog_v1beta1.EntryType(entry.type_).name}")
     print(f"Linked resource: {entry.linked_resource}")
     # [END data_catalog_lookup_entry_sql_resource_v1beta1]
-    # [END datacatalog_lookup_entry_sql_resource]
     return entry
 
 
