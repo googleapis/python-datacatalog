@@ -17,11 +17,11 @@ import proto  # type: ignore
 
 
 __protobuf__ = proto.module(
-    package='google.cloud.datacatalog.v1',
+    package="google.cloud.datacatalog.v1",
     manifest={
-        'BigQueryConnectionSpec',
-        'CloudSqlBigQueryConnectionSpec',
-        'BigQueryRoutineSpec',
+        "BigQueryConnectionSpec",
+        "CloudSqlBigQueryConnectionSpec",
+        "BigQueryRoutineSpec",
     },
 )
 
@@ -38,26 +38,20 @@ class BigQueryConnectionSpec(proto.Message):
             True if there are credentials attached to the
             BigQuery connection; false otherwise.
     """
+
     class ConnectionType(proto.Enum):
         r"""The type of the BigQuery connection."""
         CONNECTION_TYPE_UNSPECIFIED = 0
         CLOUD_SQL = 1
 
-    connection_type = proto.Field(
-        proto.ENUM,
-        number=1,
-        enum=ConnectionType,
-    )
+    connection_type = proto.Field(proto.ENUM, number=1, enum=ConnectionType,)
     cloud_sql = proto.Field(
         proto.MESSAGE,
         number=2,
-        oneof='connection_spec',
-        message='CloudSqlBigQueryConnectionSpec',
+        oneof="connection_spec",
+        message="CloudSqlBigQueryConnectionSpec",
     )
-    has_credential = proto.Field(
-        proto.BOOL,
-        number=3,
-    )
+    has_credential = proto.Field(proto.BOOL, number=3,)
 
 
 class CloudSqlBigQueryConnectionSpec(proto.Message):
@@ -73,25 +67,16 @@ class CloudSqlBigQueryConnectionSpec(proto.Message):
         type_ (google.cloud.datacatalog_v1.types.CloudSqlBigQueryConnectionSpec.DatabaseType):
             Type of the Cloud SQL database.
     """
+
     class DatabaseType(proto.Enum):
         r"""Supported Cloud SQL database types."""
         DATABASE_TYPE_UNSPECIFIED = 0
         POSTGRES = 1
         MYSQL = 2
 
-    instance_id = proto.Field(
-        proto.STRING,
-        number=1,
-    )
-    database = proto.Field(
-        proto.STRING,
-        number=2,
-    )
-    type_ = proto.Field(
-        proto.ENUM,
-        number=3,
-        enum=DatabaseType,
-    )
+    instance_id = proto.Field(proto.STRING, number=1,)
+    database = proto.Field(proto.STRING, number=2,)
+    type_ = proto.Field(proto.ENUM, number=3, enum=DatabaseType,)
 
 
 class BigQueryRoutineSpec(proto.Message):
@@ -101,10 +86,7 @@ class BigQueryRoutineSpec(proto.Message):
             Paths of the imported libraries.
     """
 
-    imported_libraries = proto.RepeatedField(
-        proto.STRING,
-        number=1,
-    )
+    imported_libraries = proto.RepeatedField(proto.STRING, number=1,)
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))
