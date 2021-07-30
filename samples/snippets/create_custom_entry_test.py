@@ -19,34 +19,21 @@ def test_create_custom_entry(
     capsys,
     client,
     project_id,
+    random_existing_entry_group,
     random_entry_group_id,
     random_entry_id,
-    random_tag_template_id,
     resources_to_delete,
 ):
     location = "us-central1"
     override_values = {
         "project_id": project_id,
-        "entry_group_id": random_entry_group_id,
+        "entry_group_name": random_existing_entry_group.name,
         "entry_id": random_entry_id,
-        "tag_template_id": random_tag_template_id,
-        "tag_name": "tagtastic",
     }
-    expected_group = client.entry_group_path(
-        project_id, location, random_entry_group_id
-    )
     expected_entry = client.entry_path(
         project_id, location, random_entry_group_id, random_entry_id
     )
-    expected_template = client.tag_template_path(
-        project_id, location, random_tag_template_id
-    )
     create_custom_entry.create_custom_entry(override_values)
     out, err = capsys.readouterr()
-    assert f"Created entry group: {expected_group}" in out
     assert f"Created entry: {expected_entry}" in out
-    assert f"Created template: {expected_template}" in out
-    assert "Created tag:" in out
-    resources_to_delete["entry_groups"].append(expected_group)
     resources_to_delete["entries"].append(expected_entry)
-    resources_to_delete["templates"].append(expected_template)

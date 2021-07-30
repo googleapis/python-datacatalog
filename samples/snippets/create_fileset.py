@@ -39,10 +39,6 @@ def create_fileset(override_values):
     # https://cloud.google.com/data-catalog/docs/concepts/regions
     location = "us-central1"
 
-    # Use Application Default Credentials to create a new
-    # Data Catalog client. GOOGLE_APPLICATION_CREDENTIALS
-    # environment variable must be set with the location
-    # of a service account key file.
     datacatalog = datacatalog_v1.DataCatalogClient()
 
     # Create an Entry Group.
@@ -63,7 +59,7 @@ def create_fileset(override_values):
     entry = datacatalog_v1.types.Entry()
     entry.display_name = "My Fileset"
     entry.description = "This fileset consists of ...."
-    entry.gcs_fileset_spec.file_patterns.append("gs://my_bucket/*")
+    entry.gcs_fileset_spec.file_patterns.append("gs://my_bucket/*.csv")
     entry.type_ = datacatalog_v1.EntryType.FILESET
 
     # Create the Schema, for example when you have a csv file.
@@ -84,7 +80,7 @@ def create_fileset(override_values):
 
     # Create the addresses parent column
     addresses_column = datacatalog_v1.types.ColumnSchema(
-        column="addresses", description="Addresses", mode="REPEATED", type_="RECORD",
+        column="addresses", description="Addresses", mode="REPEATED", type_="RECORD"
     )
 
     # Create sub columns for the addresses parent column
