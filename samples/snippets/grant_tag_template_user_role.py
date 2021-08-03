@@ -25,6 +25,8 @@ def grant_tag_template_user_role(override_values):
     # TODO: Set these values before running the sample.
     project_id = "project_id"
     tag_template_id = "existing_tag_template_id"
+    # For a full list of values a member can have, see:
+    # https://cloud.google.com/iam/docs/reference/rest/v1/Policy?hl=en#binding
     member_id = "user:super-cool.test-user@gmail.com"
 
     # [END data_catalog_grant_tag_template_user_role]
