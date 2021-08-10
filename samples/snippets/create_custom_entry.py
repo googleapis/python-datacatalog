@@ -22,7 +22,8 @@ def create_custom_entry(override_values):
     # Google Cloud Platform project.
     project_id = "my-project"
     # Entry group to be created.
-    # For sample code demonstrating entry group creation, see quickstart.
+    # For sample code demonstrating entry group creation, see quickstart:
+    # https://cloud.google.com/data-catalog/docs/quickstart-tagging
     entry_group_name = "my_existing_entry_group"
     # Entry to be created.
     entry_id = "my_new_entry_id"
