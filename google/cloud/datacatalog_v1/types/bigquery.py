@@ -37,6 +37,7 @@ class BigQueryConnectionSpec(proto.Message):
         cloud_sql (google.cloud.datacatalog_v1.types.CloudSqlBigQueryConnectionSpec):
             Specification for the BigQuery connection to
             a Cloud SQL instance.
+
             This field is a member of `oneof`_ ``connection_spec``.
         has_credential (bool):
             True if there are credentials attached to the

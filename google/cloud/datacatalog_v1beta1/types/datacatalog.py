@@ -425,6 +425,7 @@ class LookupEntryRequest(proto.Message):
 
             -  //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId
             -  //pubsub.googleapis.com/projects/projectId/topics/topicId
+
             This field is a member of `oneof`_ ``target_name``.
         sql_resource (str):
             The SQL name of the entry. SQL names are case-sensitive.
@@ -440,6 +441,7 @@ class LookupEntryRequest(proto.Message):
             ``*_id``\ s shoud satisfy the standard SQL rules for
             identifiers.
             https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.
+
             This field is a member of `oneof`_ ``target_name``.
     """
 
@@ -492,6 +494,7 @@ class Entry(proto.Message):
             The type of the entry.
             Only used for Entries with types in the
             EntryType enum.
+
             This field is a member of `oneof`_ ``entry_type``.
         user_specified_type (str):
             Entry type if it does not fit any of the input-allowed
@@ -507,11 +510,13 @@ class Entry(proto.Message):
             Currently, only FILESET enum value is allowed. All other
             entries created through Data Catalog must use
             ``user_specified_type``.
+
             This field is a member of `oneof`_ ``entry_type``.
         integrated_system (google.cloud.datacatalog_v1beta1.types.IntegratedSystem):
             Output only. This field indicates the entry's
             source system that Data Catalog integrates with,
             such as BigQuery or Pub/Sub.
+
             This field is a member of `oneof`_ ``system``.
         user_specified_system (str):
             This field indicates the entry's source system that Data
@@ -520,20 +525,24 @@ class Entry(proto.Message):
             contain letters, numbers, and underscores; are case
             insensitive; must be at least 1 character and at most 64
             characters long.
+
             This field is a member of `oneof`_ ``system``.
         gcs_fileset_spec (google.cloud.datacatalog_v1beta1.types.GcsFilesetSpec):
             Specification that applies to a Cloud Storage
             fileset. This is only valid on entries of type
             FILESET.
+
             This field is a member of `oneof`_ ``type_spec``.
         bigquery_table_spec (google.cloud.datacatalog_v1beta1.types.BigQueryTableSpec):
             Specification that applies to a BigQuery table. This is only
             valid on entries of type ``TABLE``.
+
             This field is a member of `oneof`_ ``type_spec``.
         bigquery_date_sharded_spec (google.cloud.datacatalog_v1beta1.types.BigQueryDateShardedSpec):
             Specification for a group of BigQuery tables with name
             pattern ``[prefix]YYYYMMDD``. Context:
             https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding.
+
             This field is a member of `oneof`_ ``type_spec``.
         display_name (str):
             Display information such as title and

@@ -82,10 +82,12 @@ class SearchCatalogResult(proto.Message):
             Output only. The source system that Data
             Catalog automatically integrates  with, such as
             BigQuery, Cloud Pub/Sub, or Dataproc Metastore.
+
             This field is a member of `oneof`_ ``system``.
         user_specified_system (str):
             Custom source system that you can manually
             integrate Data Catalog with.
+
             This field is a member of `oneof`_ ``system``.
         fully_qualified_name (str):
             Fully qualified name (FQN) of the resource.
