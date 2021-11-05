@@ -52,10 +52,12 @@ class BigQueryTableSpec(proto.Message):
         view_spec (google.cloud.datacatalog_v1.types.ViewSpec):
             Table view specification. Populated only if the
             ``table_source_type`` is ``BIGQUERY_VIEW``.
+
             This field is a member of `oneof`_ ``type_spec``.
         table_spec (google.cloud.datacatalog_v1.types.TableSpec):
             Specification of a BigQuery table. Populated only if the
             ``table_source_type`` is ``BIGQUERY_TABLE``.
+
             This field is a member of `oneof`_ ``type_spec``.
     """
 

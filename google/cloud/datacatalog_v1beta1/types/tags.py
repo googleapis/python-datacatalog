@@ -63,6 +63,7 @@ class Tag(proto.Message):
             separate the column names. Example:
 
             -  ``outer_column.inner_column``
+
             This field is a member of `oneof`_ ``scope``.
         fields (Sequence[google.cloud.datacatalog_v1beta1.types.Tag.FieldsEntry]):
             Required. This maps the ID of a tag field to
@@ -96,23 +97,28 @@ class TagField(proto.Message):
         double_value (float):
             Holds the value for a tag field with double
             type.
+
             This field is a member of `oneof`_ ``kind``.
         string_value (str):
             Holds the value for a tag field with string
             type.
+
             This field is a member of `oneof`_ ``kind``.
         bool_value (bool):
             Holds the value for a tag field with boolean
             type.
+
             This field is a member of `oneof`_ ``kind``.
         timestamp_value (google.protobuf.timestamp_pb2.Timestamp):
             Holds the value for a tag field with
             timestamp type.
+
             This field is a member of `oneof`_ ``kind``.
         enum_value (google.cloud.datacatalog_v1beta1.types.TagField.EnumValue):
             Holds the value for a tag field with enum
             type. This value must be one of the allowed
             values in the definition of this enum.
+
             This field is a member of `oneof`_ ``kind``.
         order (int):
             Output only. The order of this field with respect to other
@@ -239,9 +245,11 @@ class FieldType(proto.Message):
         primitive_type (google.cloud.datacatalog_v1beta1.types.FieldType.PrimitiveType):
             Represents primitive types - string, bool
             etc.
+
             This field is a member of `oneof`_ ``type_decl``.
         enum_type (google.cloud.datacatalog_v1beta1.types.FieldType.EnumType):
             Represents an enum type.
+
             This field is a member of `oneof`_ ``type_decl``.
     """
 
