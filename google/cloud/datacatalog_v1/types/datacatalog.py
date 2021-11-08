@@ -102,7 +102,7 @@ class SearchCatalogRequest(proto.Message):
             Optional. The query string with a minimum of 3 characters
             and specific syntax. For more information, see `Data Catalog
             search
-            syntax <https://cloud.google.com/data-catalog/docs/how-to/search-reference>`__.
+            syntax </data-catalog/docs/how-to/search-reference>`__.
 
             An empty query string returns all data assets (in the
             specified scope) that you have access to.
@@ -481,7 +481,6 @@ class LookupEntryRequest(proto.Message):
 
             -  ``//bigquery.googleapis.com/projects/{PROJECT_ID}/datasets/{DATASET_ID}/tables/{TABLE_ID}``
             -  ``//pubsub.googleapis.com/projects/{PROJECT_ID}/topics/{TOPIC_ID}``
-
             This field is a member of `oneof`_ ``target_name``.
         sql_resource (str):
             The SQL name of the entry. SQL names are case-sensitive.
@@ -497,7 +496,6 @@ class LookupEntryRequest(proto.Message):
             Identifiers (``*_ID``) should comply with the [Lexical
             structure in Standard SQL]
             (https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical).
-
             This field is a member of `oneof`_ ``target_name``.
         fully_qualified_name (str):
             Fully qualified name (FQN) of the resource.
@@ -596,7 +594,6 @@ class Entry(proto.Message):
             Currently, only ``FILESET`` enum value is allowed. All other
             entries created in Data Catalog must use the
             ``user_specified_type``.
-
             This field is a member of `oneof`_ ``entry_type``.
         user_specified_type (str):
             Custom entry type that doesn't match any of the values
@@ -614,13 +611,11 @@ class Entry(proto.Message):
             -  Can only contain letters, numbers, and underscores.
             -  Must be at least 1 character and at most 64 characters
                long.
-
             This field is a member of `oneof`_ ``entry_type``.
         integrated_system (google.cloud.datacatalog_v1.types.IntegratedSystem):
             Output only. Indicates the entry's source
             system that Data Catalog integrates with, such
             as BigQuery, Pub/Sub, or Dataproc Metastore.
-
             This field is a member of `oneof`_ ``system``.
         user_specified_system (str):
             Indicates the entry's source system that Data Catalog
@@ -634,17 +629,14 @@ class Entry(proto.Message):
             -  Can only contain letters, numbers, and underscores.
             -  Must be at least 1 character and at most 64 characters
                long.
-
             This field is a member of `oneof`_ ``system``.
         gcs_fileset_spec (google.cloud.datacatalog_v1.types.GcsFilesetSpec):
             Specification that applies to a Cloud Storage fileset. Valid
             only for entries with the ``FILESET`` type.
-
             This field is a member of `oneof`_ ``type_spec``.
         bigquery_table_spec (google.cloud.datacatalog_v1.types.BigQueryTableSpec):
             Specification that applies to a BigQuery table. Valid only
             for entries with the ``TABLE`` type.
-
             This field is a member of `oneof`_ ``type_spec``.
         bigquery_date_sharded_spec (google.cloud.datacatalog_v1.types.BigQueryDateShardedSpec):
             Specification for a group of BigQuery tables with the
@@ -653,23 +645,19 @@ class Entry(proto.Message):
             For more information, see [Introduction to partitioned
             tables]
             (https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding).
-
             This field is a member of `oneof`_ ``type_spec``.
         database_table_spec (google.cloud.datacatalog_v1.types.DatabaseTableSpec):
             Specification that applies to a table resource. Valid only
             for entries with the ``TABLE`` type.
-
             This field is a member of `oneof`_ ``spec``.
         data_source_connection_spec (google.cloud.datacatalog_v1.types.DataSourceConnectionSpec):
             Specification that applies to a data source connection.
             Valid only for entries with the ``DATA_SOURCE_CONNECTION``
             type.
-
             This field is a member of `oneof`_ ``spec``.
         routine_spec (google.cloud.datacatalog_v1.types.RoutineSpec):
             Specification that applies to a user-defined function or
             procedure. Valid only for entries with the ``ROUTINE`` type.
-
             This field is a member of `oneof`_ ``spec``.
         display_name (str):
             Display name of an entry.
@@ -818,7 +806,6 @@ class RoutineSpec(proto.Message):
             The body of the routine.
         bigquery_routine_spec (google.cloud.datacatalog_v1.types.BigQueryRoutineSpec):
             Fields specific for BigQuery routines.
-
             This field is a member of `oneof`_ ``system_spec``.
     """
 
@@ -950,11 +937,18 @@ class UpdateTagTemplateRequest(proto.Message):
             set.
         update_mask (google.protobuf.field_mask_pb2.FieldMask):
             Names of fields whose values to overwrite on a tag template.
-            Currently, only ``display_name`` can be overwritten.
+            Currently, only ``display_name`` and
+            ``is_publicly_readable`` can be overwritten.
 
             If this parameter is absent or empty, all modifiable fields
             are overwritten. If such fields are non-required and omitted
             in the request body, their values are emptied.
+
+            Note: Updating the ``is_publicly_readable`` field may
+            require up to 12 hours to take effect in search results.
+            Additionally, it also requires the
+            ``tagTemplates.getIamPolicy`` and
+            ``tagTemplates.setIamPolicy`` permissions.
     """
 
     tag_template = proto.Field(proto.MESSAGE, number=1, message=gcd_tags.TagTemplate,)
@@ -1114,7 +1108,7 @@ class RenameTagTemplateFieldRequest(proto.Message):
 
     Attributes:
         name (str):
-            Required. The name of the tag template.
+            Required. The name of the tag template field.
         new_tag_template_field_id (str):
             Required. The new ID of this tag template field. For
             example, ``my_new_field``.

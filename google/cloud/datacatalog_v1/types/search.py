@@ -82,12 +82,10 @@ class SearchCatalogResult(proto.Message):
             Output only. The source system that Data
             Catalog automatically integrates  with, such as
             BigQuery, Cloud Pub/Sub, or Dataproc Metastore.
-
             This field is a member of `oneof`_ ``system``.
         user_specified_system (str):
             Custom source system that you can manually
             integrate Data Catalog with.
-
             This field is a member of `oneof`_ ``system``.
         fully_qualified_name (str):
             Fully qualified name (FQN) of the resource.
@@ -105,6 +103,12 @@ class SearchCatalogResult(proto.Message):
             Example for a DPMS table:
 
             ``dataproc_metastore:PROJECT_ID.LOCATION_ID.INSTANCE_ID.DATABASE_ID.TABLE_ID``
+        display_name (str):
+            The display name of the result.
+        description (str):
+            Entry description that can consist of several
+            sentences or paragraphs that describe entry
+            contents.
     """
 
     search_result_type = proto.Field(proto.ENUM, number=1, enum="SearchResultType",)
@@ -117,6 +121,8 @@ class SearchCatalogResult(proto.Message):
     )
     user_specified_system = proto.Field(proto.STRING, number=9, oneof="system",)
     fully_qualified_name = proto.Field(proto.STRING, number=10,)
+    display_name = proto.Field(proto.STRING, number=12,)
+    description = proto.Field(proto.STRING, number=13,)
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))

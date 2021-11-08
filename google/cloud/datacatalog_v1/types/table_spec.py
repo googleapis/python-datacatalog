@@ -52,12 +52,10 @@ class BigQueryTableSpec(proto.Message):
         view_spec (google.cloud.datacatalog_v1.types.ViewSpec):
             Table view specification. Populated only if the
             ``table_source_type`` is ``BIGQUERY_VIEW``.
-
             This field is a member of `oneof`_ ``type_spec``.
         table_spec (google.cloud.datacatalog_v1.types.TableSpec):
             Specification of a BigQuery table. Populated only if the
             ``table_source_type`` is ``BIGQUERY_TABLE``.
-
             This field is a member of `oneof`_ ``type_spec``.
     """
 
@@ -121,11 +119,15 @@ class BigQueryDateShardedSpec(proto.Message):
             ``table_prefix`` is ``MyTable``.
         shard_count (int):
             Output only. Total number of shards.
+        latest_shard_resource (str):
+            Output only. BigQuery resource name of the
+            latest shard.
     """
 
     dataset = proto.Field(proto.STRING, number=1,)
     table_prefix = proto.Field(proto.STRING, number=2,)
     shard_count = proto.Field(proto.INT64, number=3,)
+    latest_shard_resource = proto.Field(proto.STRING, number=4,)
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))

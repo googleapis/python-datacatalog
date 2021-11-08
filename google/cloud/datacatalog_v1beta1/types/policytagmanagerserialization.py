@@ -146,7 +146,6 @@ class ExportTaxonomiesRequest(proto.Message):
             be exported.
         serialized_taxonomies (bool):
             Export taxonomies as serialized taxonomies.
-
             This field is a member of `oneof`_ ``destination``.
     """
 
