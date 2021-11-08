@@ -21,14 +21,17 @@ import setuptools
 
 name = "google-cloud-datacatalog"
 description = "Google Cloud Data Catalog API API client library"
-version = "3.0.0"
+version = "3.5.0"
 # Should be one of:
 # 'Development Status :: 3 - Alpha'
 # 'Development Status :: 4 - Beta'
 # 'Development Status :: 5 - Production/Stable'
 release_status = "Development Status :: 5 - Production/Stable"
 dependencies = [
-    "google-api-core[grpc] >= 1.22.0, < 2.0.0dev",
+    # NOTE: Maintainers, please do not require google-api-core>=2.x.x
+    # Until this issue is closed
+    # https://github.com/googleapis/google-cloud-python/issues/10566
+    "google-api-core[grpc] >= 1.28.0, <3.0.0dev",
     "grpc-google-iam-v1 >= 0.12.3, < 0.13dev",
     "libcst >= 0.2.5",
     "proto-plus >= 1.4.0",

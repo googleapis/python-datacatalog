@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,8 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-from typing import Any, AsyncIterable, Awaitable, Callable, Iterable, Sequence, Tuple
+from typing import (
+    Any,
+    AsyncIterator,
+    Awaitable,
+    Callable,
+    Sequence,
+    Tuple,
+    Optional,
+    Iterator,
+)
 
 from google.cloud.datacatalog_v1beta1.types import policytagmanager
 
@@ -67,14 +74,14 @@ class ListTaxonomiesPager:
         return getattr(self._response, name)
 
     @property
-    def pages(self) -> Iterable[policytagmanager.ListTaxonomiesResponse]:
+    def pages(self) -> Iterator[policytagmanager.ListTaxonomiesResponse]:
         yield self._response
         while self._response.next_page_token:
             self._request.page_token = self._response.next_page_token
             self._response = self._method(self._request, metadata=self._metadata)
             yield self._response
 
-    def __iter__(self) -> Iterable[policytagmanager.Taxonomy]:
+    def __iter__(self) -> Iterator[policytagmanager.Taxonomy]:
         for page in self.pages:
             yield from page.taxonomies
 
@@ -108,7 +115,7 @@ class ListTaxonomiesAsyncPager:
         *,
         metadata: Sequence[Tuple[str, str]] = ()
     ):
-        """Instantiate the pager.
+        """Instantiates the pager.
 
         Args:
             method (Callable): The method that was originally called, and
@@ -129,14 +136,14 @@ class ListTaxonomiesAsyncPager:
         return getattr(self._response, name)
 
     @property
-    async def pages(self) -> AsyncIterable[policytagmanager.ListTaxonomiesResponse]:
+    async def pages(self) -> AsyncIterator[policytagmanager.ListTaxonomiesResponse]:
         yield self._response
         while self._response.next_page_token:
             self._request.page_token = self._response.next_page_token
             self._response = await self._method(self._request, metadata=self._metadata)
             yield self._response
 
-    def __aiter__(self) -> AsyncIterable[policytagmanager.Taxonomy]:
+    def __aiter__(self) -> AsyncIterator[policytagmanager.Taxonomy]:
         async def async_generator():
             async for page in self.pages:
                 for response in page.taxonomies:
@@ -195,14 +202,14 @@ class ListPolicyTagsPager:
         return getattr(self._response, name)
 
     @property
-    def pages(self) -> Iterable[policytagmanager.ListPolicyTagsResponse]:
+    def pages(self) -> Iterator[policytagmanager.ListPolicyTagsResponse]:
         yield self._response
         while self._response.next_page_token:
             self._request.page_token = self._response.next_page_token
             self._response = self._method(self._request, metadata=self._metadata)
             yield self._response
 
-    def __iter__(self) -> Iterable[policytagmanager.PolicyTag]:
+    def __iter__(self) -> Iterator[policytagmanager.PolicyTag]:
         for page in self.pages:
             yield from page.policy_tags
 
@@ -236,7 +243,7 @@ class ListPolicyTagsAsyncPager:
         *,
         metadata: Sequence[Tuple[str, str]] = ()
     ):
-        """Instantiate the pager.
+        """Instantiates the pager.
 
         Args:
             method (Callable): The method that was originally called, and
@@ -257,14 +264,14 @@ class ListPolicyTagsAsyncPager:
         return getattr(self._response, name)
 
     @property
-    async def pages(self) -> AsyncIterable[policytagmanager.ListPolicyTagsResponse]:
+    async def pages(self) -> AsyncIterator[policytagmanager.ListPolicyTagsResponse]:
         yield self._response
         while self._response.next_page_token:
             self._request.page_token = self._response.next_page_token
             self._response = await self._method(self._request, metadata=self._metadata)
             yield self._response
 
-    def __aiter__(self) -> AsyncIterable[policytagmanager.PolicyTag]:
+    def __aiter__(self) -> AsyncIterator[policytagmanager.PolicyTag]:
         async def async_generator():
             async for page in self.pages:
                 for response in page.policy_tags:

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,22 +13,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 from collections import OrderedDict
 import functools
 import re
 from typing import Dict, Sequence, Tuple, Type, Union
 import pkg_resources
 
-import google.api_core.client_options as ClientOptions  # type: ignore
-from google.api_core import exceptions  # type: ignore
+from google.api_core.client_options import ClientOptions  # type: ignore
+from google.api_core import exceptions as core_exceptions  # type: ignore
 from google.api_core import gapic_v1  # type: ignore
 from google.api_core import retry as retries  # type: ignore
-from google.auth import credentials  # type: ignore
+from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
+
+OptionalRetry = Union[retries.Retry, object]
 
 from google.cloud.datacatalog_v1.services.data_catalog import pagers
 from google.cloud.datacatalog_v1.types import common
+from google.cloud.datacatalog_v1.types import data_source
 from google.cloud.datacatalog_v1.types import datacatalog
 from google.cloud.datacatalog_v1.types import gcs_fileset_spec
 from google.cloud.datacatalog_v1.types import schema
@@ -37,18 +38,18 @@ from google.cloud.datacatalog_v1.types import search
 from google.cloud.datacatalog_v1.types import table_spec
 from google.cloud.datacatalog_v1.types import tags
 from google.cloud.datacatalog_v1.types import timestamps
-from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
-from google.protobuf import field_mask_pb2 as field_mask  # type: ignore
-
+from google.cloud.datacatalog_v1.types import usage
+from google.iam.v1 import iam_policy_pb2  # type: ignore
+from google.iam.v1 import policy_pb2  # type: ignore
+from google.protobuf import field_mask_pb2  # type: ignore
 from .transports.base import DataCatalogTransport, DEFAULT_CLIENT_INFO
 from .transports.grpc_asyncio import DataCatalogGrpcAsyncIOTransport
 from .client import DataCatalogClient
 
 
 class DataCatalogAsyncClient:
-    """Data Catalog API service allows clients to discover,
-    understand, and manage their data.
+    """Data Catalog API service allows you to discover, understand,
+    and manage your data.
     """
 
     _client: DataCatalogClient
@@ -68,39 +69,69 @@ class DataCatalogAsyncClient:
     parse_tag_template_field_path = staticmethod(
         DataCatalogClient.parse_tag_template_field_path
     )
-
+    tag_template_field_enum_value_path = staticmethod(
+        DataCatalogClient.tag_template_field_enum_value_path
+    )
+    parse_tag_template_field_enum_value_path = staticmethod(
+        DataCatalogClient.parse_tag_template_field_enum_value_path
+    )
     common_billing_account_path = staticmethod(
         DataCatalogClient.common_billing_account_path
     )
     parse_common_billing_account_path = staticmethod(
         DataCatalogClient.parse_common_billing_account_path
     )
-
     common_folder_path = staticmethod(DataCatalogClient.common_folder_path)
     parse_common_folder_path = staticmethod(DataCatalogClient.parse_common_folder_path)
-
     common_organization_path = staticmethod(DataCatalogClient.common_organization_path)
     parse_common_organization_path = staticmethod(
         DataCatalogClient.parse_common_organization_path
     )
-
     common_project_path = staticmethod(DataCatalogClient.common_project_path)
     parse_common_project_path = staticmethod(
         DataCatalogClient.parse_common_project_path
     )
-
     common_location_path = staticmethod(DataCatalogClient.common_location_path)
     parse_common_location_path = staticmethod(
         DataCatalogClient.parse_common_location_path
     )
 
-    from_service_account_info = DataCatalogClient.from_service_account_info
-    from_service_account_file = DataCatalogClient.from_service_account_file
+    @classmethod
+    def from_service_account_info(cls, info: dict, *args, **kwargs):
+        """Creates an instance of this client using the provided credentials
+            info.
+
+        Args:
+            info (dict): The service account private key info.
+            args: Additional arguments to pass to the constructor.
+            kwargs: Additional arguments to pass to the constructor.
+
+        Returns:
+            DataCatalogAsyncClient: The constructed client.
+        """
+        return DataCatalogClient.from_service_account_info.__func__(DataCatalogAsyncClient, info, *args, **kwargs)  # type: ignore
+
+    @classmethod
+    def from_service_account_file(cls, filename: str, *args, **kwargs):
+        """Creates an instance of this client using the provided credentials
+            file.
+
+        Args:
+            filename (str): The path to the service account private key json
+                file.
+            args: Additional arguments to pass to the constructor.
+            kwargs: Additional arguments to pass to the constructor.
+
+        Returns:
+            DataCatalogAsyncClient: The constructed client.
+        """
+        return DataCatalogClient.from_service_account_file.__func__(DataCatalogAsyncClient, filename, *args, **kwargs)  # type: ignore
+
     from_service_account_json = from_service_account_file
 
     @property
     def transport(self) -> DataCatalogTransport:
-        """Return the transport used by the client instance.
+        """Returns the transport used by the client instance.
 
         Returns:
             DataCatalogTransport: The transport used by the client instance.
@@ -114,12 +145,12 @@ class DataCatalogAsyncClient:
     def __init__(
         self,
         *,
-        credentials: credentials.Credentials = None,
+        credentials: ga_credentials.Credentials = None,
         transport: Union[str, DataCatalogTransport] = "grpc_asyncio",
         client_options: ClientOptions = None,
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
     ) -> None:
-        """Instantiate the data catalog client.
+        """Instantiates the data catalog client.
 
         Args:
             credentials (Optional[google.auth.credentials.Credentials]): The
@@ -151,7 +182,6 @@ class DataCatalogAsyncClient:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
                 creation failed for any reason.
         """
-
         self._client = DataCatalogClient(
             credentials=credentials,
             transport=transport,
@@ -161,66 +191,65 @@ class DataCatalogAsyncClient:
 
     async def search_catalog(
         self,
-        request: datacatalog.SearchCatalogRequest = None,
+        request: Union[datacatalog.SearchCatalogRequest, dict] = None,
         *,
         scope: datacatalog.SearchCatalogRequest.Scope = None,
         query: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> pagers.SearchCatalogAsyncPager:
-        r"""Searches Data Catalog for multiple resources like entries, tags
-        that match a query.
+        r"""Searches Data Catalog for multiple resources like entries and
+        tags that match a query.
 
-        This is a custom method
-        (https://cloud.google.com/apis/design/custom_methods) and does
-        not return the complete resource, only the resource identifier
-        and high level fields. Clients can subsequentally call ``Get``
-        methods.
+        This is a [Custom Method]
+        (https://cloud.google.com/apis/design/custom_methods) that
+        doesn't return all information on a resource, only its ID and
+        high level fields. To get more information, you can subsequently
+        call specific get methods.
 
-        Note that Data Catalog search queries do not guarantee full
-        recall. Query results that match your query may not be returned,
-        even in subsequent result pages. Also note that results returned
-        (and not returned) can vary across repeated search queries.
+        Note: Data Catalog search queries don't guarantee full recall.
+        Results that match your query might not be returned, even in
+        subsequent result pages. Additionally, returned (and not
+        returned) results can vary if you repeat search queries.
 
-        See `Data Catalog Search
-        Syntax <https://cloud.google.com/data-catalog/docs/how-to/search-reference>`__
-        for more information.
+        For more information, see [Data Catalog search syntax]
+        (https://cloud.google.com/data-catalog/docs/how-to/search-reference).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.SearchCatalogRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.SearchCatalogRequest, dict]):
                 The request object. Request message for
                 [SearchCatalog][google.cloud.datacatalog.v1.DataCatalog.SearchCatalog].
             scope (:class:`google.cloud.datacatalog_v1.types.SearchCatalogRequest.Scope`):
-                Required. The scope of this search request. A ``scope``
-                that has empty ``include_org_ids``,
-                ``include_project_ids`` AND false
-                ``include_gcp_public_datasets`` is considered invalid.
-                Data Catalog will return an error in such a case.
+                Required. The scope of this search request.
+
+                The ``scope`` is invalid if ``include_org_ids``,
+                ``include_project_ids`` are empty AND
+                ``include_gcp_public_datasets`` is set to ``false``. In
+                this case, the request returns an error.
 
                 This corresponds to the ``scope`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             query (:class:`str`):
-                Required. The query string in search query syntax. The
-                query must be non-empty.
+                Optional. The query string with a minimum of 3
+                characters and specific syntax. For more information,
+                see `Data Catalog search
+                syntax <https://cloud.google.com/data-catalog/docs/how-to/search-reference>`__.
 
-                Query strings can be simple as "x" or more qualified as:
+                An empty query string returns all data assets (in the
+                specified scope) that you have access to.
 
-                -  name:x
-                -  column:x
-                -  description:y
+                A query string can be a simple ``xyz`` or qualified by
+                predicates:
 
-                Note: Query tokens need to have a minimum of 3
-                characters for substring matching to work correctly. See
-                `Data Catalog Search
-                Syntax <https://cloud.google.com/data-catalog/docs/how-to/search-reference>`__
-                for more information.
+                -  ``name:x``
+                -  ``column:y``
+                -  ``description:z``
 
                 This corresponds to the ``query`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -250,7 +279,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if scope is not None:
             request.scope = scope
         if query is not None:
@@ -264,7 +292,10 @@ class DataCatalogAsyncClient:
                 initial=0.1,
                 maximum=60.0,
                 multiplier=1.3,
-                predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                predicate=retries.if_exception_type(
+                    core_exceptions.ServiceUnavailable,
+                ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -284,72 +315,79 @@ class DataCatalogAsyncClient:
 
     async def create_entry_group(
         self,
-        request: datacatalog.CreateEntryGroupRequest = None,
+        request: Union[datacatalog.CreateEntryGroupRequest, dict] = None,
         *,
         parent: str = None,
         entry_group_id: str = None,
         entry_group: datacatalog.EntryGroup = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.EntryGroup:
-        r"""Creates an EntryGroup.
+        r"""Creates an entry group.
 
         An entry group contains logically related entries together with
-        Cloud Identity and Access Management policies that specify the
-        users who can create, edit, and view entries within the entry
-        group.
+        `Cloud Identity and Access
+        Management </data-catalog/docs/concepts/iam>`__ policies. These
+        policies specify users who can create, edit, and view entries
+        within entry groups.
 
-        Data Catalog automatically creates an entry group for BigQuery
-        entries ("@bigquery") and Pub/Sub topics ("@pubsub"). Users
-        create their own entry group to contain Cloud Storage fileset
-        entries or custom type entries, and the IAM policies associated
-        with those entries. Entry groups, like entries, can be searched.
+        Data Catalog automatically creates entry groups with names that
+        start with the ``@`` symbol for the following resources:
+
+        -  BigQuery entries (``@bigquery``)
+        -  Pub/Sub topics (``@pubsub``)
+        -  Dataproc Metastore services
+           (``@dataproc_metastore_{SERVICE_NAME_HASH}``)
+
+        You can create your own entry groups for Cloud Storage fileset
+        entries and custom entries together with the corresponding IAM
+        policies. User-created entry groups can't contain the ``@``
+        symbol, it is reserved for automatically created groups.
+
+        Entry groups, like entries, can be searched.
 
         A maximum of 10,000 entry groups may be created per organization
         across all locations.
 
-        Users should enable the Data Catalog API in the project
-        identified by the ``parent`` parameter (see [Data Catalog
-        Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        You must enable the Data Catalog API in the project identified
+        by the ``parent`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.CreateEntryGroupRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.CreateEntryGroupRequest, dict]):
                 The request object. Request message for
                 [CreateEntryGroup][google.cloud.datacatalog.v1.DataCatalog.CreateEntryGroup].
             parent (:class:`str`):
-                Required. The name of the project this entry group is
-                in. Example:
-
-                -  projects/{project_id}/locations/{location}
-
-                Note that this EntryGroup and its child resources may
-                not actually be stored in the location in this name.
+                Required. The names of the project
+                and location that the new entry group
+                belongs to.  Note: The entry group
+                itself and its child resources might not
+                be stored in the location specified in
+                its name.
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             entry_group_id (:class:`str`):
-                Required. The id of the entry group
-                to create. The id must begin with a
-                letter or underscore, contain only
-                English letters, numbers and
-                underscores, and be at most 64
-                characters.
+                Required. The ID of the entry group to create.
+
+                The ID must contain only letters (a-z, A-Z), numbers
+                (0-9), underscores (_), and must start with a letter or
+                underscore. The maximum size is 64 bytes when encoded in
+                UTF-8.
 
                 This corresponds to the ``entry_group_id`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             entry_group (:class:`google.cloud.datacatalog_v1.types.EntryGroup`):
                 The entry group to create. Defaults
-                to an empty entry group.
+                to empty.
 
                 This corresponds to the ``entry_group`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -358,7 +396,8 @@ class DataCatalogAsyncClient:
 
         Returns:
             google.cloud.datacatalog_v1.types.EntryGroup:
-                EntryGroup Metadata.
+                Entry group metadata.
+
                    An EntryGroup resource represents a logical grouping
                    of zero or more Data Catalog
                    [Entry][google.cloud.datacatalog.v1.Entry] resources.
@@ -378,7 +417,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if entry_group_id is not None:
@@ -408,35 +446,34 @@ class DataCatalogAsyncClient:
 
     async def get_entry_group(
         self,
-        request: datacatalog.GetEntryGroupRequest = None,
+        request: Union[datacatalog.GetEntryGroupRequest, dict] = None,
         *,
         name: str = None,
-        read_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        read_mask: field_mask_pb2.FieldMask = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.EntryGroup:
-        r"""Gets an EntryGroup.
+        r"""Gets an entry group.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.GetEntryGroupRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.GetEntryGroupRequest, dict]):
                 The request object. Request message for
                 [GetEntryGroup][google.cloud.datacatalog.v1.DataCatalog.GetEntryGroup].
             name (:class:`str`):
-                Required. The name of the entry group. For example,
-                ``projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}``.
+                Required. The name of the entry group
+                to get.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             read_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                The fields to return. If not set or
-                empty, all fields are returned.
+                The fields to return. If empty or
+                omitted, all fields are returned.
 
                 This corresponds to the ``read_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -445,7 +482,8 @@ class DataCatalogAsyncClient:
 
         Returns:
             google.cloud.datacatalog_v1.types.EntryGroup:
-                EntryGroup Metadata.
+                Entry group metadata.
+
                    An EntryGroup resource represents a logical grouping
                    of zero or more Data Catalog
                    [Entry][google.cloud.datacatalog.v1.Entry] resources.
@@ -465,7 +503,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if read_mask is not None:
@@ -479,7 +516,10 @@ class DataCatalogAsyncClient:
                 initial=0.1,
                 maximum=60.0,
                 multiplier=1.3,
-                predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                predicate=retries.if_exception_type(
+                    core_exceptions.ServiceUnavailable,
+                ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -499,40 +539,44 @@ class DataCatalogAsyncClient:
 
     async def update_entry_group(
         self,
-        request: datacatalog.UpdateEntryGroupRequest = None,
+        request: Union[datacatalog.UpdateEntryGroupRequest, dict] = None,
         *,
         entry_group: datacatalog.EntryGroup = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        update_mask: field_mask_pb2.FieldMask = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.EntryGroup:
-        r"""Updates an EntryGroup. The user should enable the Data Catalog
-        API in the project identified by the ``entry_group.name``
-        parameter (see [Data Catalog Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        r"""Updates an entry group.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``entry_group.name`` parameter. For more information, see
+        `Data Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.UpdateEntryGroupRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.UpdateEntryGroupRequest, dict]):
                 The request object. Request message for
                 [UpdateEntryGroup][google.cloud.datacatalog.v1.DataCatalog.UpdateEntryGroup].
             entry_group (:class:`google.cloud.datacatalog_v1.types.EntryGroup`):
-                Required. The updated entry group.
-                "name" field must be set.
+                Required. Updates for the entry group. The ``name``
+                field must be set.
 
                 This corresponds to the ``entry_group`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                The fields to update on the entry
-                group. If absent or empty, all
-                modifiable fields are updated.
+                Names of fields whose values to
+                overwrite on an entry group.
+                If this parameter is absent or empty,
+                all modifiable fields are overwritten.
+                If such fields are non-required and
+                omitted in the request body, their
+                values are emptied.
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -541,7 +585,8 @@ class DataCatalogAsyncClient:
 
         Returns:
             google.cloud.datacatalog_v1.types.EntryGroup:
-                EntryGroup Metadata.
+                Entry group metadata.
+
                    An EntryGroup resource represents a logical grouping
                    of zero or more Data Catalog
                    [Entry][google.cloud.datacatalog.v1.Entry] resources.
@@ -561,7 +606,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if entry_group is not None:
             request.entry_group = entry_group
         if update_mask is not None:
@@ -591,32 +635,31 @@ class DataCatalogAsyncClient:
 
     async def delete_entry_group(
         self,
-        request: datacatalog.DeleteEntryGroupRequest = None,
+        request: Union[datacatalog.DeleteEntryGroupRequest, dict] = None,
         *,
         name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
-        r"""Deletes an EntryGroup. Only entry groups that do not contain
-        entries can be deleted. Users should enable the Data Catalog API
-        in the project identified by the ``name`` parameter (see [Data
-        Catalog Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        r"""Deletes an entry group.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``name`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.DeleteEntryGroupRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.DeleteEntryGroupRequest, dict]):
                 The request object. Request message for
                 [DeleteEntryGroup][google.cloud.datacatalog.v1.DataCatalog.DeleteEntryGroup].
             name (:class:`str`):
-                Required. The name of the entry group. For example,
-                ``projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}``.
+                Required. The name of the entry group
+                to delete.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -637,7 +680,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -662,30 +704,27 @@ class DataCatalogAsyncClient:
 
     async def list_entry_groups(
         self,
-        request: datacatalog.ListEntryGroupsRequest = None,
+        request: Union[datacatalog.ListEntryGroupsRequest, dict] = None,
         *,
         parent: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> pagers.ListEntryGroupsAsyncPager:
         r"""Lists entry groups.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.ListEntryGroupsRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.ListEntryGroupsRequest, dict]):
                 The request object. Request message for
                 [ListEntryGroups][google.cloud.datacatalog.v1.DataCatalog.ListEntryGroups].
             parent (:class:`str`):
-                Required. The name of the location that contains the
-                entry groups, which can be provided in URL format.
-                Example:
-
-                -  projects/{project_id}/locations/{location}
+                Required. The name of the location
+                that contains the entry groups to list.
+                Can be provided as a URL.
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -715,7 +754,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
 
@@ -727,7 +765,10 @@ class DataCatalogAsyncClient:
                 initial=0.1,
                 maximum=60.0,
                 multiplier=1.3,
-                predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                predicate=retries.if_exception_type(
+                    core_exceptions.ServiceUnavailable,
+                ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -753,45 +794,49 @@ class DataCatalogAsyncClient:
 
     async def create_entry(
         self,
-        request: datacatalog.CreateEntryRequest = None,
+        request: Union[datacatalog.CreateEntryRequest, dict] = None,
         *,
         parent: str = None,
         entry_id: str = None,
         entry: datacatalog.Entry = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.Entry:
-        r"""Creates an entry. Only entries of 'FILESET' type or
-        user-specified type can be created.
+        r"""Creates an entry.
 
-        Users should enable the Data Catalog API in the project
-        identified by the ``parent`` parameter (see [Data Catalog
-        Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        You can create entries only with 'FILESET', 'CLUSTER',
+        'DATA_STREAM', or custom types. Data Catalog automatically
+        creates entries with other types during metadata ingestion from
+        integrated systems.
 
-        A maximum of 100,000 entries may be created per entry group.
+        You must enable the Data Catalog API in the project identified
+        by the ``parent`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
+
+        An entry group can have a maximum of 100,000 entries.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.CreateEntryRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.CreateEntryRequest, dict]):
                 The request object. Request message for
                 [CreateEntry][google.cloud.datacatalog.v1.DataCatalog.CreateEntry].
             parent (:class:`str`):
-                Required. The name of the entry group this entry is in.
-                Example:
-
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}
-
-                Note that this Entry and its child resources may not
-                actually be stored in the location in this name.
+                Required. The name of the entry group
+                this entry belongs to.
+                Note: The entry itself and its child
+                resources might not be stored in the
+                location specified in its name.
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             entry_id (:class:`str`):
-                Required. The id of the entry to
-                create.
+                Required. The ID of the entry to create.
+
+                The ID must contain only letters (a-z, A-Z), numbers
+                (0-9), and underscores (_). The maximum size is 64 bytes
+                when encoded in UTF-8.
 
                 This corresponds to the ``entry_id`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -801,7 +846,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``entry`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -810,17 +854,16 @@ class DataCatalogAsyncClient:
 
         Returns:
             google.cloud.datacatalog_v1.types.Entry:
-                Entry Metadata.
-                   A Data Catalog Entry resource represents another
-                   resource in Google Cloud Platform (such as a BigQuery
-                   dataset or a Pub/Sub topic) or outside of Google
-                   Cloud Platform. Clients can use the linked_resource
-                   field in the Entry resource to refer to the original
-                   resource ID of the source system.
+                Entry metadata.
+                   A Data Catalog entry represents another resource in
+                   Google Cloud Platform (such as a BigQuery dataset or
+                   a Pub/Sub topic) or outside of it. You can use the
+                   linked_resource field in the entry resource to refer
+                   to the original resource ID of the source system.
 
-                   An Entry resource contains resource details, such as
-                   its schema. An Entry can also be used to attach
-                   flexible metadata, such as a
+                   An entry resource contains resource details, for
+                   example, its schema. Additionally, you can attach
+                   flexible metadata to an entry in the form of a
                    [Tag][google.cloud.datacatalog.v1.Tag].
 
         """
@@ -838,7 +881,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if entry_id is not None:
@@ -868,63 +910,67 @@ class DataCatalogAsyncClient:
 
     async def update_entry(
         self,
-        request: datacatalog.UpdateEntryRequest = None,
+        request: Union[datacatalog.UpdateEntryRequest, dict] = None,
         *,
         entry: datacatalog.Entry = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        update_mask: field_mask_pb2.FieldMask = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.Entry:
-        r"""Updates an existing entry. Users should enable the Data Catalog
-        API in the project identified by the ``entry.name`` parameter
-        (see [Data Catalog Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        r"""Updates an existing entry.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``entry.name`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.UpdateEntryRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.UpdateEntryRequest, dict]):
                 The request object. Request message for
                 [UpdateEntry][google.cloud.datacatalog.v1.DataCatalog.UpdateEntry].
             entry (:class:`google.cloud.datacatalog_v1.types.Entry`):
-                Required. The updated entry. The
-                "name" field must be set.
+                Required. Updates for the entry. The ``name`` field must
+                be set.
 
                 This corresponds to the ``entry`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                The fields to update on the entry. If absent or empty,
-                all modifiable fields are updated.
+                Names of fields whose values to overwrite on an entry.
 
-                The following fields are modifiable:
+                If this parameter is absent or empty, all modifiable
+                fields are overwritten. If such fields are non-required
+                and omitted in the request body, their values are
+                emptied.
 
-                -  For entries with type ``DATA_STREAM``:
+                You can modify only the fields listed below.
 
-                   -  ``schema``
+                For entries with type ``DATA_STREAM``:
 
-                -  For entries with type ``FILESET``
+                -  ``schema``
 
-                   -  ``schema``
-                   -  ``display_name``
-                   -  ``description``
-                   -  ``gcs_fileset_spec``
-                   -  ``gcs_fileset_spec.file_patterns``
+                For entries with type ``FILESET``:
 
-                -  For entries with ``user_specified_type``
+                -  ``schema``
+                -  ``display_name``
+                -  ``description``
+                -  ``gcs_fileset_spec``
+                -  ``gcs_fileset_spec.file_patterns``
 
-                   -  ``schema``
-                   -  ``display_name``
-                   -  ``description``
-                   -  user_specified_type
-                   -  user_specified_system
-                   -  linked_resource
-                   -  source_system_timestamps
+                For entries with ``user_specified_type``:
+
+                -  ``schema``
+                -  ``display_name``
+                -  ``description``
+                -  ``user_specified_type``
+                -  ``user_specified_system``
+                -  ``linked_resource``
+                -  ``source_system_timestamps``
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -933,17 +979,16 @@ class DataCatalogAsyncClient:
 
         Returns:
             google.cloud.datacatalog_v1.types.Entry:
-                Entry Metadata.
-                   A Data Catalog Entry resource represents another
-                   resource in Google Cloud Platform (such as a BigQuery
-                   dataset or a Pub/Sub topic) or outside of Google
-                   Cloud Platform. Clients can use the linked_resource
-                   field in the Entry resource to refer to the original
-                   resource ID of the source system.
+                Entry metadata.
+                   A Data Catalog entry represents another resource in
+                   Google Cloud Platform (such as a BigQuery dataset or
+                   a Pub/Sub topic) or outside of it. You can use the
+                   linked_resource field in the entry resource to refer
+                   to the original resource ID of the source system.
 
-                   An Entry resource contains resource details, such as
-                   its schema. An Entry can also be used to attach
-                   flexible metadata, such as a
+                   An entry resource contains resource details, for
+                   example, its schema. Additionally, you can attach
+                   flexible metadata to an entry in the form of a
                    [Tag][google.cloud.datacatalog.v1.Tag].
 
         """
@@ -961,7 +1006,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if entry is not None:
             request.entry = entry
         if update_mask is not None:
@@ -991,34 +1035,35 @@ class DataCatalogAsyncClient:
 
     async def delete_entry(
         self,
-        request: datacatalog.DeleteEntryRequest = None,
+        request: Union[datacatalog.DeleteEntryRequest, dict] = None,
         *,
         name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
-        r"""Deletes an existing entry. Only entries created through
+        r"""Deletes an existing entry.
+
+        You can delete only the entries created by the
         [CreateEntry][google.cloud.datacatalog.v1.DataCatalog.CreateEntry]
-        method can be deleted. Users should enable the Data Catalog API
-        in the project identified by the ``name`` parameter (see [Data
-        Catalog Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        method.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``name`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.DeleteEntryRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.DeleteEntryRequest, dict]):
                 The request object. Request message for
                 [DeleteEntry][google.cloud.datacatalog.v1.DataCatalog.DeleteEntry].
             name (:class:`str`):
-                Required. The name of the entry. Example:
-
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}
+                Required. The name of the entry to
+                delete.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1039,7 +1084,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -1064,28 +1108,26 @@ class DataCatalogAsyncClient:
 
     async def get_entry(
         self,
-        request: datacatalog.GetEntryRequest = None,
+        request: Union[datacatalog.GetEntryRequest, dict] = None,
         *,
         name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.Entry:
         r"""Gets an entry.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.GetEntryRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.GetEntryRequest, dict]):
                 The request object. Request message for
                 [GetEntry][google.cloud.datacatalog.v1.DataCatalog.GetEntry].
             name (:class:`str`):
-                Required. The name of the entry. Example:
-
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}
+                Required. The name of the entry to
+                get.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1094,17 +1136,16 @@ class DataCatalogAsyncClient:
 
         Returns:
             google.cloud.datacatalog_v1.types.Entry:
-                Entry Metadata.
-                   A Data Catalog Entry resource represents another
-                   resource in Google Cloud Platform (such as a BigQuery
-                   dataset or a Pub/Sub topic) or outside of Google
-                   Cloud Platform. Clients can use the linked_resource
-                   field in the Entry resource to refer to the original
-                   resource ID of the source system.
+                Entry metadata.
+                   A Data Catalog entry represents another resource in
+                   Google Cloud Platform (such as a BigQuery dataset or
+                   a Pub/Sub topic) or outside of it. You can use the
+                   linked_resource field in the entry resource to refer
+                   to the original resource ID of the source system.
 
-                   An Entry resource contains resource details, such as
-                   its schema. An Entry can also be used to attach
-                   flexible metadata, such as a
+                   An entry resource contains resource details, for
+                   example, its schema. Additionally, you can attach
+                   flexible metadata to an entry in the form of a
                    [Tag][google.cloud.datacatalog.v1.Tag].
 
         """
@@ -1122,7 +1163,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -1134,7 +1174,10 @@ class DataCatalogAsyncClient:
                 initial=0.1,
                 maximum=60.0,
                 multiplier=1.3,
-                predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                predicate=retries.if_exception_type(
+                    core_exceptions.ServiceUnavailable,
+                ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -1154,22 +1197,20 @@ class DataCatalogAsyncClient:
 
     async def lookup_entry(
         self,
-        request: datacatalog.LookupEntryRequest = None,
+        request: Union[datacatalog.LookupEntryRequest, dict] = None,
         *,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.Entry:
-        r"""Get an entry by target resource name. This method
-        allows clients to use the resource name from the source
-        Google Cloud Platform service to get the Data Catalog
-        Entry.
+        r"""Gets an entry by its target resource name.
+        The resource name comes from the source Google Cloud
+        Platform service.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.LookupEntryRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.LookupEntryRequest, dict]):
                 The request object. Request message for
                 [LookupEntry][google.cloud.datacatalog.v1.DataCatalog.LookupEntry].
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1178,22 +1219,20 @@ class DataCatalogAsyncClient:
 
         Returns:
             google.cloud.datacatalog_v1.types.Entry:
-                Entry Metadata.
-                   A Data Catalog Entry resource represents another
-                   resource in Google Cloud Platform (such as a BigQuery
-                   dataset or a Pub/Sub topic) or outside of Google
-                   Cloud Platform. Clients can use the linked_resource
-                   field in the Entry resource to refer to the original
-                   resource ID of the source system.
+                Entry metadata.
+                   A Data Catalog entry represents another resource in
+                   Google Cloud Platform (such as a BigQuery dataset or
+                   a Pub/Sub topic) or outside of it. You can use the
+                   linked_resource field in the entry resource to refer
+                   to the original resource ID of the source system.
 
-                   An Entry resource contains resource details, such as
-                   its schema. An Entry can also be used to attach
-                   flexible metadata, such as a
+                   An entry resource contains resource details, for
+                   example, its schema. Additionally, you can attach
+                   flexible metadata to an entry in the form of a
                    [Tag][google.cloud.datacatalog.v1.Tag].
 
         """
         # Create or coerce a protobuf request object.
-
         request = datacatalog.LookupEntryRequest(request)
 
         # Wrap the RPC method; this adds retry and timeout information,
@@ -1204,7 +1243,10 @@ class DataCatalogAsyncClient:
                 initial=0.1,
                 maximum=60.0,
                 multiplier=1.3,
-                predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                predicate=retries.if_exception_type(
+                    core_exceptions.ServiceUnavailable,
+                ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -1218,29 +1260,27 @@ class DataCatalogAsyncClient:
 
     async def list_entries(
         self,
-        request: datacatalog.ListEntriesRequest = None,
+        request: Union[datacatalog.ListEntriesRequest, dict] = None,
         *,
         parent: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> pagers.ListEntriesAsyncPager:
         r"""Lists entries.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.ListEntriesRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.ListEntriesRequest, dict]):
                 The request object. Request message for
                 [ListEntries][google.cloud.datacatalog.v1.DataCatalog.ListEntries].
             parent (:class:`str`):
-                Required. The name of the entry group that contains the
-                entries, which can be provided in URL format. Example:
-
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}
+                Required. The name of the entry group
+                that contains the entries to list.
+                Can be provided in URL format.
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1270,7 +1310,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
 
@@ -1282,7 +1321,10 @@ class DataCatalogAsyncClient:
                 initial=0.1,
                 maximum=60.0,
                 multiplier=1.3,
-                predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                predicate=retries.if_exception_type(
+                    core_exceptions.ServiceUnavailable,
+                ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -1308,23 +1350,24 @@ class DataCatalogAsyncClient:
 
     async def create_tag_template(
         self,
-        request: datacatalog.CreateTagTemplateRequest = None,
+        request: Union[datacatalog.CreateTagTemplateRequest, dict] = None,
         *,
         parent: str = None,
         tag_template_id: str = None,
         tag_template: tags.TagTemplate = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplate:
-        r"""Creates a tag template. The user should enable the Data Catalog
-        API in the project identified by the ``parent`` parameter (see
-        `Data Catalog Resource
-        Project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__
-        for more information).
+        r"""Creates a tag template.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``parent`` parameter. For more information, see [Data
+        Catalog resource project]
+        (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.CreateTagTemplateRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.CreateTagTemplateRequest, dict]):
                 The request object. Request message for
                 [CreateTagTemplate][google.cloud.datacatalog.v1.DataCatalog.CreateTagTemplate].
             parent (:class:`str`):
@@ -1332,16 +1375,16 @@ class DataCatalogAsyncClient:
                 location
                 `region <https://cloud.google.com/data-catalog/docs/concepts/regions>`__.
 
-                Example:
-
-                -  projects/{project_id}/locations/us-central1
-
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             tag_template_id (:class:`str`):
-                Required. The id of the tag template
-                to create.
+                Required. The ID of the tag template to create.
+
+                The ID must contain only lowercase letters (a-z),
+                numbers (0-9), or underscores (_), and must start with a
+                letter or underscore. The maximum size is 64 bytes when
+                encoded in UTF-8.
 
                 This corresponds to the ``tag_template_id`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1351,7 +1394,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``tag_template`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1360,14 +1402,16 @@ class DataCatalogAsyncClient:
 
         Returns:
             google.cloud.datacatalog_v1.types.TagTemplate:
-                A tag template defines a tag, which can have one or more typed fields.
-                   The template is used to create and attach the tag to
-                   GCP resources. [Tag template
-                   roles](\ https://cloud.google.com/iam/docs/understanding-roles#data-catalog-roles)
+                A tag template defines a tag that can have one or more
+                typed fields.
+
+                   The template is used to create tags that are attached
+                   to GCP resources. [Tag template roles]
+                   (https://cloud.google.com/iam/docs/understanding-roles#data-catalog-roles)
                    provide permissions to create, edit, and use the
-                   template. See, for example, the [TagTemplate
-                   User](\ https://cloud.google.com/data-catalog/docs/how-to/template-user)
-                   role, which includes permission to use the tag
+                   template. For example, see the [TagTemplate User]
+                   (https://cloud.google.com/data-catalog/docs/how-to/template-user)
+                   role that includes a permission to use the tag
                    template to tag resources.
 
         """
@@ -1385,7 +1429,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if tag_template_id is not None:
@@ -1415,28 +1458,26 @@ class DataCatalogAsyncClient:
 
     async def get_tag_template(
         self,
-        request: datacatalog.GetTagTemplateRequest = None,
+        request: Union[datacatalog.GetTagTemplateRequest, dict] = None,
         *,
         name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplate:
         r"""Gets a tag template.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.GetTagTemplateRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.GetTagTemplateRequest, dict]):
                 The request object. Request message for
                 [GetTagTemplate][google.cloud.datacatalog.v1.DataCatalog.GetTagTemplate].
             name (:class:`str`):
-                Required. The name of the tag template. Example:
-
-                -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}
+                Required. The name of the tag
+                template to get.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1445,14 +1486,16 @@ class DataCatalogAsyncClient:
 
         Returns:
             google.cloud.datacatalog_v1.types.TagTemplate:
-                A tag template defines a tag, which can have one or more typed fields.
-                   The template is used to create and attach the tag to
-                   GCP resources. [Tag template
-                   roles](\ https://cloud.google.com/iam/docs/understanding-roles#data-catalog-roles)
+                A tag template defines a tag that can have one or more
+                typed fields.
+
+                   The template is used to create tags that are attached
+                   to GCP resources. [Tag template roles]
+                   (https://cloud.google.com/iam/docs/understanding-roles#data-catalog-roles)
                    provide permissions to create, edit, and use the
-                   template. See, for example, the [TagTemplate
-                   User](\ https://cloud.google.com/data-catalog/docs/how-to/template-user)
-                   role, which includes permission to use the tag
+                   template. For example, see the [TagTemplate User]
+                   (https://cloud.google.com/data-catalog/docs/how-to/template-user)
+                   role that includes a permission to use the tag
                    template to tag resources.
 
         """
@@ -1470,7 +1513,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -1496,50 +1538,49 @@ class DataCatalogAsyncClient:
 
     async def update_tag_template(
         self,
-        request: datacatalog.UpdateTagTemplateRequest = None,
+        request: Union[datacatalog.UpdateTagTemplateRequest, dict] = None,
         *,
         tag_template: tags.TagTemplate = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        update_mask: field_mask_pb2.FieldMask = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplate:
-        r"""Updates a tag template. This method cannot be used to update the
-        fields of a template. The tag template fields are represented as
-        separate resources and should be updated using their own
-        create/update/delete methods. Users should enable the Data
-        Catalog API in the project identified by the
-        ``tag_template.name`` parameter (see [Data Catalog Resource
-        Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        r"""Updates a tag template.
+
+        You can't update template fields with this method. These fields
+        are separate resources with their own create, update, and delete
+        methods.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``tag_template.name`` parameter. For more information,
+        see `Data Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.UpdateTagTemplateRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.UpdateTagTemplateRequest, dict]):
                 The request object. Request message for
                 [UpdateTagTemplate][google.cloud.datacatalog.v1.DataCatalog.UpdateTagTemplate].
             tag_template (:class:`google.cloud.datacatalog_v1.types.TagTemplate`):
-                Required. The template to update. The
-                "name" field must be set.
+                Required. The template to update. The ``name`` field
+                must be set.
 
                 This corresponds to the ``tag_template`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                The field mask specifies the parts of the template to
-                overwrite.
+                Names of fields whose values to overwrite on a tag
+                template. Currently, only ``display_name`` can be
+                overwritten.
 
-                Allowed fields:
-
-                -  ``display_name``
-
-                If absent or empty, all of the allowed fields above will
-                be updated.
+                If this parameter is absent or empty, all modifiable
+                fields are overwritten. If such fields are non-required
+                and omitted in the request body, their values are
+                emptied.
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1548,14 +1589,16 @@ class DataCatalogAsyncClient:
 
         Returns:
             google.cloud.datacatalog_v1.types.TagTemplate:
-                A tag template defines a tag, which can have one or more typed fields.
-                   The template is used to create and attach the tag to
-                   GCP resources. [Tag template
-                   roles](\ https://cloud.google.com/iam/docs/understanding-roles#data-catalog-roles)
+                A tag template defines a tag that can have one or more
+                typed fields.
+
+                   The template is used to create tags that are attached
+                   to GCP resources. [Tag template roles]
+                   (https://cloud.google.com/iam/docs/understanding-roles#data-catalog-roles)
                    provide permissions to create, edit, and use the
-                   template. See, for example, the [TagTemplate
-                   User](\ https://cloud.google.com/data-catalog/docs/how-to/template-user)
-                   role, which includes permission to use the tag
+                   template. For example, see the [TagTemplate User]
+                   (https://cloud.google.com/data-catalog/docs/how-to/template-user)
+                   role that includes a permission to use the tag
                    template to tag resources.
 
         """
@@ -1573,7 +1616,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if tag_template is not None:
             request.tag_template = tag_template
         if update_mask is not None:
@@ -1603,43 +1645,41 @@ class DataCatalogAsyncClient:
 
     async def delete_tag_template(
         self,
-        request: datacatalog.DeleteTagTemplateRequest = None,
+        request: Union[datacatalog.DeleteTagTemplateRequest, dict] = None,
         *,
         name: str = None,
         force: bool = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
-        r"""Deletes a tag template and all tags using the template. Users
-        should enable the Data Catalog API in the project identified by
-        the ``name`` parameter (see [Data Catalog Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        r"""Deletes a tag template and all tags that use it.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``name`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.DeleteTagTemplateRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.DeleteTagTemplateRequest, dict]):
                 The request object. Request message for
                 [DeleteTagTemplate][google.cloud.datacatalog.v1.DataCatalog.DeleteTagTemplate].
             name (:class:`str`):
-                Required. The name of the tag template to delete.
-                Example:
-
-                -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}
+                Required. The name of the tag
+                template to delete.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             force (:class:`bool`):
-                Required. Currently, this field must always be set to
-                ``true``. This confirms the deletion of any possible
-                tags using this template. ``force = false`` will be
-                supported in the future.
+                Required. If true, deletes all tags that use this
+                template.
+
+                Currently, ``true`` is the only supported value.
 
                 This corresponds to the ``force`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1660,7 +1700,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if force is not None:
@@ -1687,23 +1726,24 @@ class DataCatalogAsyncClient:
 
     async def create_tag_template_field(
         self,
-        request: datacatalog.CreateTagTemplateFieldRequest = None,
+        request: Union[datacatalog.CreateTagTemplateFieldRequest, dict] = None,
         *,
         parent: str = None,
         tag_template_field_id: str = None,
         tag_template_field: tags.TagTemplateField = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplateField:
-        r"""Creates a field in a tag template. The user should enable the
-        Data Catalog API in the project identified by the ``parent``
-        parameter (see `Data Catalog Resource
-        Project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__
-        for more information).
+        r"""Creates a field in a tag template.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``parent`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.CreateTagTemplateFieldRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.CreateTagTemplateFieldRequest, dict]):
                 The request object. Request message for
                 [CreateTagTemplateField][google.cloud.datacatalog.v1.DataCatalog.CreateTagTemplateField].
             parent (:class:`str`):
@@ -1711,16 +1751,16 @@ class DataCatalogAsyncClient:
                 location
                 `region <https://cloud.google.com/data-catalog/docs/concepts/regions>`__.
 
-                Example:
-
-                -  projects/{project_id}/locations/us-central1/tagTemplates/{tag_template_id}
-
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             tag_template_field_id (:class:`str`):
                 Required. The ID of the tag template field to create.
-                Field ids can contain letters (both uppercase and
+
+                Note: Adding a required field to an existing template is
+                *not* allowed.
+
+                Field IDs can contain letters (both uppercase and
                 lowercase), numbers (0-9), underscores (_) and dashes
                 (-). Field IDs must be at least 1 character long and at
                 most 128 characters long. Field IDs must also be unique
@@ -1736,7 +1776,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``tag_template_field`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1763,7 +1802,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if tag_template_field_id is not None:
@@ -1793,30 +1831,31 @@ class DataCatalogAsyncClient:
 
     async def update_tag_template_field(
         self,
-        request: datacatalog.UpdateTagTemplateFieldRequest = None,
+        request: Union[datacatalog.UpdateTagTemplateFieldRequest, dict] = None,
         *,
         name: str = None,
         tag_template_field: tags.TagTemplateField = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        update_mask: field_mask_pb2.FieldMask = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplateField:
-        r"""Updates a field in a tag template. This method cannot be used to
-        update the field type. Users should enable the Data Catalog API
-        in the project identified by the ``name`` parameter (see [Data
-        Catalog Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        r"""Updates a field in a tag template.
+
+        You can't update the field type with this method.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``name`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.UpdateTagTemplateFieldRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.UpdateTagTemplateFieldRequest, dict]):
                 The request object. Request message for
                 [UpdateTagTemplateField][google.cloud.datacatalog.v1.DataCatalog.UpdateTagTemplateField].
             name (:class:`str`):
-                Required. The name of the tag template field. Example:
-
-                -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}
+                Required. The name of the tag
+                template field.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1827,26 +1866,28 @@ class DataCatalogAsyncClient:
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                Optional. The field mask specifies the parts of the
-                template to be updated. Allowed fields:
+                Optional. Names of fields whose values to overwrite on
+                an individual field of a tag template. The following
+                fields are modifiable:
 
                 -  ``display_name``
                 -  ``type.enum_type``
                 -  ``is_required``
 
-                If ``update_mask`` is not set or empty, all of the
-                allowed fields above will be updated.
+                If this parameter is absent or empty, all modifiable
+                fields are overwritten. If such fields are non-required
+                and omitted in the request body, their values are
+                emptied with one exception: when updating an enum type,
+                the provided values are merged with the existing values.
+                Therefore, enum values can only be added, existing enum
+                values cannot be deleted or renamed.
 
-                When updating an enum type, the provided values will be
-                merged with the existing values. Therefore, enum values
-                can only be added, existing enum values cannot be
-                deleted nor renamed. Updating a template field from
-                optional to required is NOT allowed.
+                Additionally, updating a template field from optional to
+                required is *not* allowed.
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1873,7 +1914,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if tag_template_field is not None:
@@ -1903,28 +1943,28 @@ class DataCatalogAsyncClient:
 
     async def rename_tag_template_field(
         self,
-        request: datacatalog.RenameTagTemplateFieldRequest = None,
+        request: Union[datacatalog.RenameTagTemplateFieldRequest, dict] = None,
         *,
         name: str = None,
         new_tag_template_field_id: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplateField:
-        r"""Renames a field in a tag template. The user should enable the
-        Data Catalog API in the project identified by the ``name``
-        parameter (see `Data Catalog Resource
-        Project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__
-        for more information).
+        r"""Renames a field in a tag template.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``name`` parameter. For more information, see [Data
+        Catalog resource project]
+        (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.RenameTagTemplateFieldRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.RenameTagTemplateFieldRequest, dict]):
                 The request object. Request message for
                 [RenameTagTemplateField][google.cloud.datacatalog.v1.DataCatalog.RenameTagTemplateField].
             name (:class:`str`):
-                Required. The name of the tag template. Example:
-
-                -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}
+                Required. The name of the tag
+                template.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -1936,7 +1976,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``new_tag_template_field_id`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1963,7 +2002,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if new_tag_template_field_id is not None:
@@ -1989,46 +2027,126 @@ class DataCatalogAsyncClient:
         # Done; return the response.
         return response
 
+    async def rename_tag_template_field_enum_value(
+        self,
+        request: Union[datacatalog.RenameTagTemplateFieldEnumValueRequest, dict] = None,
+        *,
+        name: str = None,
+        new_enum_value_display_name: str = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
+        timeout: float = None,
+        metadata: Sequence[Tuple[str, str]] = (),
+    ) -> tags.TagTemplateField:
+        r"""Renames an enum value in a tag template.
+        Within a single enum field, enum values must be unique.
+
+        Args:
+            request (Union[google.cloud.datacatalog_v1.types.RenameTagTemplateFieldEnumValueRequest, dict]):
+                The request object. Request message for
+                [RenameTagTemplateFieldEnumValue][google.cloud.datacatalog.v1.DataCatalog.RenameTagTemplateFieldEnumValue].
+            name (:class:`str`):
+                Required. The name of the enum field
+                value.
+
+                This corresponds to the ``name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            new_enum_value_display_name (:class:`str`):
+                Required. The new display name of the enum value. For
+                example, ``my_new_enum_value``.
+
+                This corresponds to the ``new_enum_value_display_name`` field
+                on the ``request`` instance; if ``request`` is provided, this
+                should not be set.
+            retry (google.api_core.retry.Retry): Designation of what errors, if any,
+                should be retried.
+            timeout (float): The timeout for this request.
+            metadata (Sequence[Tuple[str, str]]): Strings which should be
+                sent along with the request as metadata.
+
+        Returns:
+            google.cloud.datacatalog_v1.types.TagTemplateField:
+                The template for an individual field
+                within a tag template.
+
+        """
+        # Create or coerce a protobuf request object.
+        # Sanity check: If we got a request object, we should *not* have
+        # gotten any keyword arguments that map to the request.
+        has_flattened_params = any([name, new_enum_value_display_name])
+        if request is not None and has_flattened_params:
+            raise ValueError(
+                "If the `request` argument is set, then none of "
+                "the individual field arguments should be set."
+            )
+
+        request = datacatalog.RenameTagTemplateFieldEnumValueRequest(request)
+
+        # If we have keyword arguments corresponding to fields on the
+        # request, apply these.
+        if name is not None:
+            request.name = name
+        if new_enum_value_display_name is not None:
+            request.new_enum_value_display_name = new_enum_value_display_name
+
+        # Wrap the RPC method; this adds retry and timeout information,
+        # and friendly error handling.
+        rpc = gapic_v1.method_async.wrap_method(
+            self._client._transport.rename_tag_template_field_enum_value,
+            default_timeout=None,
+            client_info=DEFAULT_CLIENT_INFO,
+        )
+
+        # Certain fields should be provided within the metadata header;
+        # add these here.
+        metadata = tuple(metadata) + (
+            gapic_v1.routing_header.to_grpc_metadata((("name", request.name),)),
+        )
+
+        # Send the request.
+        response = await rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+
+        # Done; return the response.
+        return response
+
     async def delete_tag_template_field(
         self,
-        request: datacatalog.DeleteTagTemplateFieldRequest = None,
+        request: Union[datacatalog.DeleteTagTemplateFieldRequest, dict] = None,
         *,
         name: str = None,
         force: bool = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
-        r"""Deletes a field in a tag template and all uses of that field.
-        Users should enable the Data Catalog API in the project
-        identified by the ``name`` parameter (see [Data Catalog Resource
-        Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        r"""Deletes a field in a tag template and all uses of this field
+        from the tags based on this template.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``name`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.DeleteTagTemplateFieldRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.DeleteTagTemplateFieldRequest, dict]):
                 The request object. Request message for
                 [DeleteTagTemplateField][google.cloud.datacatalog.v1.DataCatalog.DeleteTagTemplateField].
             name (:class:`str`):
-                Required. The name of the tag template field to delete.
-                Example:
-
-                -  projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id}/fields/{tag_template_field_id}
+                Required. The name of the tag
+                template field to delete.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             force (:class:`bool`):
-                Required. Currently, this field must always be set to
-                ``true``. This confirms the deletion of this field from
-                any tags using this field. ``force = false`` will be
-                supported in the future.
+                Required. If true, deletes this field from any tags that
+                use it.
+
+                Currently, ``true`` is the only supported value.
 
                 This corresponds to the ``force`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2049,7 +2167,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if force is not None:
@@ -2076,33 +2193,44 @@ class DataCatalogAsyncClient:
 
     async def create_tag(
         self,
-        request: datacatalog.CreateTagRequest = None,
+        request: Union[datacatalog.CreateTagRequest, dict] = None,
         *,
         parent: str = None,
         tag: tags.Tag = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.Tag:
-        r"""Creates a tag on an [Entry][google.cloud.datacatalog.v1.Entry].
+        r"""Creates a tag and assigns it to:
+
+        -  An [Entry][google.cloud.datacatalog.v1.Entry] if the method
+           name is
+           ``projects.locations.entryGroups.entries.tags.create``.
+        -  Or [EntryGroup][google.cloud.datacatalog.v1.EntryGroup]if the
+           method name is
+           ``projects.locations.entryGroups.tags.create``.
+
         Note: The project identified by the ``parent`` parameter for the
-        `tag <https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries.tags/create#path-parameters>`__
-        and the `tag
-        template <https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#path-parameters>`__
-        used to create the tag must be from the same organization.
+        [tag]
+        (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries.tags/create#path-parameters)
+        and the [tag template]
+        (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#path-parameters)
+        used to create the tag must be in the same organization.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.CreateTagRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.CreateTagRequest, dict]):
                 The request object. Request message for
                 [CreateTag][google.cloud.datacatalog.v1.DataCatalog.CreateTag].
             parent (:class:`str`):
-                Required. The name of the resource to attach this tag
-                to. Tags can be attached to Entries. Example:
+                Required. The name of the resource to
+                attach this tag to.
+                Tags can be attached to entries or entry
+                groups. An entry can have up to 1000
+                attached tags.
 
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}
-
-                Note that this Tag and its child resources may not
-                actually be stored in the location in this name.
+                Note: The tag and its child resources
+                might not be stored in the location
+                specified in its name.
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -2112,7 +2240,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``tag`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2121,9 +2248,8 @@ class DataCatalogAsyncClient:
 
         Returns:
             google.cloud.datacatalog_v1.types.Tag:
-                Tags are used to attach custom metadata to Data Catalog resources. Tags
-                   conform to the specifications within their tag
-                   template.
+                Tags contain custom metadata and are attached to Data Catalog resources. Tags
+                   conform with the specification of their tag template.
 
                    See [Data Catalog
                    IAM](\ https://cloud.google.com/data-catalog/docs/concepts/iam)
@@ -2145,7 +2271,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if tag is not None:
@@ -2173,18 +2298,18 @@ class DataCatalogAsyncClient:
 
     async def update_tag(
         self,
-        request: datacatalog.UpdateTagRequest = None,
+        request: Union[datacatalog.UpdateTagRequest, dict] = None,
         *,
         tag: tags.Tag = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        update_mask: field_mask_pb2.FieldMask = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.Tag:
         r"""Updates an existing tag.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.UpdateTagRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.UpdateTagRequest, dict]):
                 The request object. Request message for
                 [UpdateTag][google.cloud.datacatalog.v1.DataCatalog.UpdateTag].
             tag (:class:`google.cloud.datacatalog_v1.types.Tag`):
@@ -2195,14 +2320,18 @@ class DataCatalogAsyncClient:
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
             update_mask (:class:`google.protobuf.field_mask_pb2.FieldMask`):
-                The fields to update on the Tag. If absent or empty, all
-                modifiable fields are updated. Currently the only
-                modifiable field is the field ``fields``.
+                Names of fields whose values to overwrite on a tag.
+                Currently, a tag has the only modifiable field with the
+                name ``fields``.
+
+                In general, if this parameter is absent or empty, all
+                modifiable fields are overwritten. If such fields are
+                non-required and omitted in the request body, their
+                values are emptied.
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2211,9 +2340,8 @@ class DataCatalogAsyncClient:
 
         Returns:
             google.cloud.datacatalog_v1.types.Tag:
-                Tags are used to attach custom metadata to Data Catalog resources. Tags
-                   conform to the specifications within their tag
-                   template.
+                Tags contain custom metadata and are attached to Data Catalog resources. Tags
+                   conform with the specification of their tag template.
 
                    See [Data Catalog
                    IAM](\ https://cloud.google.com/data-catalog/docs/concepts/iam)
@@ -2235,7 +2363,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if tag is not None:
             request.tag = tag
         if update_mask is not None:
@@ -2263,28 +2390,26 @@ class DataCatalogAsyncClient:
 
     async def delete_tag(
         self,
-        request: datacatalog.DeleteTagRequest = None,
+        request: Union[datacatalog.DeleteTagRequest, dict] = None,
         *,
         name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
         r"""Deletes a tag.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.DeleteTagRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.DeleteTagRequest, dict]):
                 The request object. Request message for
                 [DeleteTag][google.cloud.datacatalog.v1.DataCatalog.DeleteTag].
             name (:class:`str`):
-                Required. The name of the tag to delete. Example:
-
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id}
+                Required. The name of the tag to
+                delete.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2305,7 +2430,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -2330,34 +2454,32 @@ class DataCatalogAsyncClient:
 
     async def list_tags(
         self,
-        request: datacatalog.ListTagsRequest = None,
+        request: Union[datacatalog.ListTagsRequest, dict] = None,
         *,
         parent: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> pagers.ListTagsAsyncPager:
-        r"""Lists the tags on an [Entry][google.cloud.datacatalog.v1.Entry].
+        r"""Lists tags assigned to an
+        [Entry][google.cloud.datacatalog.v1.Entry].
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1.types.ListTagsRequest`):
+            request (Union[google.cloud.datacatalog_v1.types.ListTagsRequest, dict]):
                 The request object. Request message for
                 [ListTags][google.cloud.datacatalog.v1.DataCatalog.ListTags].
             parent (:class:`str`):
                 Required. The name of the Data Catalog resource to list
-                the tags of. The resource could be an
+                the tags of.
+
+                The resource can be an
                 [Entry][google.cloud.datacatalog.v1.Entry] or an
-                [EntryGroup][google.cloud.datacatalog.v1.EntryGroup].
-
-                Examples:
-
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}
-                -  projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id}
+                [EntryGroup][google.cloud.datacatalog.v1.EntryGroup]
+                (without ``/entries/{entries}`` at the end).
 
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2387,7 +2509,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
 
@@ -2399,7 +2520,10 @@ class DataCatalogAsyncClient:
                 initial=0.1,
                 maximum=60.0,
                 multiplier=1.3,
-                predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                predicate=retries.if_exception_type(
+                    core_exceptions.ServiceUnavailable,
+                ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -2425,33 +2549,36 @@ class DataCatalogAsyncClient:
 
     async def set_iam_policy(
         self,
-        request: iam_policy.SetIamPolicyRequest = None,
+        request: Union[iam_policy_pb2.SetIamPolicyRequest, dict] = None,
         *,
         resource: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
-        r"""Sets the access control policy for a resource. Replaces any
-        existing policy. Supported resources are:
+    ) -> policy_pb2.Policy:
+        r"""Sets an access control policy for a resource. Replaces any
+        existing policy.
 
-        -  Tag templates.
-        -  Entries.
-        -  Entry groups. Note, this method cannot be used to manage
-           policies for BigQuery, Pub/Sub and any external Google Cloud
-           Platform resources synced to Data Catalog.
+        Supported resources are:
 
-        Callers must have following Google IAM permission
+        -  Tag templates
+        -  Entry groups
+
+        Note: This method sets policies only within Data Catalog and
+        can't be used to manage policies in BigQuery, Pub/Sub, Dataproc
+        Metastore, and any external Google Cloud Platform resources
+        synced with the Data Catalog.
+
+        To call this method, you must have the following Google IAM
+        permissions:
 
         -  ``datacatalog.tagTemplates.setIamPolicy`` to set policies on
            tag templates.
-        -  ``datacatalog.entries.setIamPolicy`` to set policies on
-           entries.
         -  ``datacatalog.entryGroups.setIamPolicy`` to set policies on
            entry groups.
 
         Args:
-            request (:class:`google.iam.v1.iam_policy_pb2.SetIamPolicyRequest`):
+            request (Union[google.iam.v1.iam_policy_pb2.SetIamPolicyRequest, dict]):
                 The request object. Request message for `SetIamPolicy`
                 method.
             resource (:class:`str`):
@@ -2463,7 +2590,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``resource`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2542,10 +2668,9 @@ class DataCatalogAsyncClient:
         # The request isn't a proto-plus wrapped type,
         # so it must be constructed via keyword expansion.
         if isinstance(request, dict):
-            request = iam_policy.SetIamPolicyRequest(**request)
-
+            request = iam_policy_pb2.SetIamPolicyRequest(**request)
         elif not request:
-            request = iam_policy.SetIamPolicyRequest(resource=resource,)
+            request = iam_policy_pb2.SetIamPolicyRequest(resource=resource,)
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
@@ -2569,37 +2694,40 @@ class DataCatalogAsyncClient:
 
     async def get_iam_policy(
         self,
-        request: iam_policy.GetIamPolicyRequest = None,
+        request: Union[iam_policy_pb2.GetIamPolicyRequest, dict] = None,
         *,
         resource: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
-        r"""Gets the access control policy for a resource. A ``NOT_FOUND``
-        error is returned if the resource does not exist. An empty
-        policy is returned if the resource exists but does not have a
-        policy set on it.
+    ) -> policy_pb2.Policy:
+        r"""Gets the access control policy for a resource.
+
+        May return:
+
+        -  A\ ``NOT_FOUND`` error if the resource doesn't exist or you
+           don't have the permission to view it.
+        -  An empty policy if the resource exists but doesn't have a set
+           policy.
 
         Supported resources are:
 
-        -  Tag templates.
-        -  Entries.
-        -  Entry groups. Note, this method cannot be used to manage
-           policies for BigQuery, Pub/Sub and any external Google Cloud
-           Platform resources synced to Data Catalog.
+        -  Tag templates
+        -  Entry groups
 
-        Callers must have following Google IAM permission
+        Note: This method doesn't get policies from Google Cloud
+        Platform resources ingested into Data Catalog.
+
+        To call this method, you must have the following Google IAM
+        permissions:
 
         -  ``datacatalog.tagTemplates.getIamPolicy`` to get policies on
            tag templates.
-        -  ``datacatalog.entries.getIamPolicy`` to get policies on
-           entries.
         -  ``datacatalog.entryGroups.getIamPolicy`` to get policies on
            entry groups.
 
         Args:
-            request (:class:`google.iam.v1.iam_policy_pb2.GetIamPolicyRequest`):
+            request (Union[google.iam.v1.iam_policy_pb2.GetIamPolicyRequest, dict]):
                 The request object. Request message for `GetIamPolicy`
                 method.
             resource (:class:`str`):
@@ -2611,7 +2739,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``resource`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2690,10 +2817,9 @@ class DataCatalogAsyncClient:
         # The request isn't a proto-plus wrapped type,
         # so it must be constructed via keyword expansion.
         if isinstance(request, dict):
-            request = iam_policy.GetIamPolicyRequest(**request)
-
+            request = iam_policy_pb2.GetIamPolicyRequest(**request)
         elif not request:
-            request = iam_policy.GetIamPolicyRequest(resource=resource,)
+            request = iam_policy_pb2.GetIamPolicyRequest(resource=resource,)
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
@@ -2703,7 +2829,10 @@ class DataCatalogAsyncClient:
                 initial=0.1,
                 maximum=60.0,
                 multiplier=1.3,
-                predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                predicate=retries.if_exception_type(
+                    core_exceptions.ServiceUnavailable,
+                ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -2723,32 +2852,31 @@ class DataCatalogAsyncClient:
 
     async def test_iam_permissions(
         self,
-        request: iam_policy.TestIamPermissionsRequest = None,
+        request: Union[iam_policy_pb2.TestIamPermissionsRequest, dict] = None,
         *,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> iam_policy.TestIamPermissionsResponse:
-        r"""Returns the caller's permissions on a resource. If the resource
-        does not exist, an empty set of permissions is returned (We
-        don't return a ``NOT_FOUND`` error).
-
+    ) -> iam_policy_pb2.TestIamPermissionsResponse:
+        r"""Gets your permissions on a resource.
+        Returns an empty set of permissions if the resource
+        doesn't exist.
         Supported resources are:
 
-        -  Tag templates.
-        -  Entries.
-        -  Entry groups. Note, this method cannot be used to manage
-           policies for BigQuery, Pub/Sub and any external Google Cloud
-           Platform resources synced to Data Catalog.
+        - Tag templates
+        - Entry groups
 
-        A caller is not required to have Google IAM permission to make
-        this request.
+        Note: This method gets policies only within Data Catalog
+        and can't be used to get policies from BigQuery,
+        Pub/Sub, Dataproc Metastore, and any external Google
+        Cloud Platform resources ingested into Data Catalog.
+        No Google IAM permissions are required to call this
+        method.
 
         Args:
-            request (:class:`google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest`):
+            request (Union[google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest, dict]):
                 The request object. Request message for
                 `TestIamPermissions` method.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2760,11 +2888,10 @@ class DataCatalogAsyncClient:
                 Response message for TestIamPermissions method.
         """
         # Create or coerce a protobuf request object.
-
         # The request isn't a proto-plus wrapped type,
         # so it must be constructed via keyword expansion.
         if isinstance(request, dict):
-            request = iam_policy.TestIamPermissionsRequest(**request)
+            request = iam_policy_pb2.TestIamPermissionsRequest(**request)
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
@@ -2785,6 +2912,12 @@ class DataCatalogAsyncClient:
 
         # Done; return the response.
         return response
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc, tb):
+        await self.transport.close()
 
 
 try:

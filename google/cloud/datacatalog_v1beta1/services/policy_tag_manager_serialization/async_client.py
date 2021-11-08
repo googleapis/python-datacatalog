@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,23 +13,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 from collections import OrderedDict
 import functools
 import re
 from typing import Dict, Sequence, Tuple, Type, Union
 import pkg_resources
 
-import google.api_core.client_options as ClientOptions  # type: ignore
-from google.api_core import exceptions  # type: ignore
+from google.api_core.client_options import ClientOptions  # type: ignore
+from google.api_core import exceptions as core_exceptions  # type: ignore
 from google.api_core import gapic_v1  # type: ignore
 from google.api_core import retry as retries  # type: ignore
-from google.auth import credentials  # type: ignore
+from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
+
+OptionalRetry = Union[retries.Retry, object]
 
 from google.cloud.datacatalog_v1beta1.types import policytagmanager
 from google.cloud.datacatalog_v1beta1.types import policytagmanagerserialization
-
 from .transports.base import PolicyTagManagerSerializationTransport, DEFAULT_CLIENT_INFO
 from .transports.grpc_asyncio import PolicyTagManagerSerializationGrpcAsyncIOTransport
 from .client import PolicyTagManagerSerializationClient
@@ -51,35 +50,30 @@ class PolicyTagManagerSerializationAsyncClient:
     parse_taxonomy_path = staticmethod(
         PolicyTagManagerSerializationClient.parse_taxonomy_path
     )
-
     common_billing_account_path = staticmethod(
         PolicyTagManagerSerializationClient.common_billing_account_path
     )
     parse_common_billing_account_path = staticmethod(
         PolicyTagManagerSerializationClient.parse_common_billing_account_path
     )
-
     common_folder_path = staticmethod(
         PolicyTagManagerSerializationClient.common_folder_path
     )
     parse_common_folder_path = staticmethod(
         PolicyTagManagerSerializationClient.parse_common_folder_path
     )
-
     common_organization_path = staticmethod(
         PolicyTagManagerSerializationClient.common_organization_path
     )
     parse_common_organization_path = staticmethod(
         PolicyTagManagerSerializationClient.parse_common_organization_path
     )
-
     common_project_path = staticmethod(
         PolicyTagManagerSerializationClient.common_project_path
     )
     parse_common_project_path = staticmethod(
         PolicyTagManagerSerializationClient.parse_common_project_path
     )
-
     common_location_path = staticmethod(
         PolicyTagManagerSerializationClient.common_location_path
     )
@@ -87,17 +81,42 @@ class PolicyTagManagerSerializationAsyncClient:
         PolicyTagManagerSerializationClient.parse_common_location_path
     )
 
-    from_service_account_info = (
-        PolicyTagManagerSerializationClient.from_service_account_info
-    )
-    from_service_account_file = (
-        PolicyTagManagerSerializationClient.from_service_account_file
-    )
+    @classmethod
+    def from_service_account_info(cls, info: dict, *args, **kwargs):
+        """Creates an instance of this client using the provided credentials
+            info.
+
+        Args:
+            info (dict): The service account private key info.
+            args: Additional arguments to pass to the constructor.
+            kwargs: Additional arguments to pass to the constructor.
+
+        Returns:
+            PolicyTagManagerSerializationAsyncClient: The constructed client.
+        """
+        return PolicyTagManagerSerializationClient.from_service_account_info.__func__(PolicyTagManagerSerializationAsyncClient, info, *args, **kwargs)  # type: ignore
+
+    @classmethod
+    def from_service_account_file(cls, filename: str, *args, **kwargs):
+        """Creates an instance of this client using the provided credentials
+            file.
+
+        Args:
+            filename (str): The path to the service account private key json
+                file.
+            args: Additional arguments to pass to the constructor.
+            kwargs: Additional arguments to pass to the constructor.
+
+        Returns:
+            PolicyTagManagerSerializationAsyncClient: The constructed client.
+        """
+        return PolicyTagManagerSerializationClient.from_service_account_file.__func__(PolicyTagManagerSerializationAsyncClient, filename, *args, **kwargs)  # type: ignore
+
     from_service_account_json = from_service_account_file
 
     @property
     def transport(self) -> PolicyTagManagerSerializationTransport:
-        """Return the transport used by the client instance.
+        """Returns the transport used by the client instance.
 
         Returns:
             PolicyTagManagerSerializationTransport: The transport used by the client instance.
@@ -112,12 +131,12 @@ class PolicyTagManagerSerializationAsyncClient:
     def __init__(
         self,
         *,
-        credentials: credentials.Credentials = None,
+        credentials: ga_credentials.Credentials = None,
         transport: Union[str, PolicyTagManagerSerializationTransport] = "grpc_asyncio",
         client_options: ClientOptions = None,
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
     ) -> None:
-        """Instantiate the policy tag manager serialization client.
+        """Instantiates the policy tag manager serialization client.
 
         Args:
             credentials (Optional[google.auth.credentials.Credentials]): The
@@ -149,7 +168,6 @@ class PolicyTagManagerSerializationAsyncClient:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
                 creation failed for any reason.
         """
-
         self._client = PolicyTagManagerSerializationClient(
             credentials=credentials,
             transport=transport,
@@ -159,9 +177,11 @@ class PolicyTagManagerSerializationAsyncClient:
 
     async def import_taxonomies(
         self,
-        request: policytagmanagerserialization.ImportTaxonomiesRequest = None,
+        request: Union[
+            policytagmanagerserialization.ImportTaxonomiesRequest, dict
+        ] = None,
         *,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> policytagmanagerserialization.ImportTaxonomiesResponse:
@@ -172,10 +192,9 @@ class PolicyTagManagerSerializationAsyncClient:
         creation using nested proto structure.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.ImportTaxonomiesRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.ImportTaxonomiesRequest, dict]):
                 The request object. Request message for
                 [ImportTaxonomies][google.cloud.datacatalog.v1beta1.PolicyTagManagerSerialization.ImportTaxonomies].
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -189,7 +208,6 @@ class PolicyTagManagerSerializationAsyncClient:
 
         """
         # Create or coerce a protobuf request object.
-
         request = policytagmanagerserialization.ImportTaxonomiesRequest(request)
 
         # Wrap the RPC method; this adds retry and timeout information,
@@ -214,9 +232,11 @@ class PolicyTagManagerSerializationAsyncClient:
 
     async def export_taxonomies(
         self,
-        request: policytagmanagerserialization.ExportTaxonomiesRequest = None,
+        request: Union[
+            policytagmanagerserialization.ExportTaxonomiesRequest, dict
+        ] = None,
         *,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> policytagmanagerserialization.ExportTaxonomiesResponse:
@@ -227,10 +247,9 @@ class PolicyTagManagerSerializationAsyncClient:
         future ImportTaxonomies calls.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.ExportTaxonomiesRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.ExportTaxonomiesRequest, dict]):
                 The request object. Request message for
                 [ExportTaxonomies][google.cloud.datacatalog.v1beta1.PolicyTagManagerSerialization.ExportTaxonomies].
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -244,7 +263,6 @@ class PolicyTagManagerSerializationAsyncClient:
 
         """
         # Create or coerce a protobuf request object.
-
         request = policytagmanagerserialization.ExportTaxonomiesRequest(request)
 
         # Wrap the RPC method; this adds retry and timeout information,
@@ -266,6 +284,12 @@ class PolicyTagManagerSerializationAsyncClient:
 
         # Done; return the response.
         return response
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc, tb):
+        await self.transport.close()
 
 
 try:

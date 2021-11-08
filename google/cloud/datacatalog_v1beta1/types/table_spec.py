@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 import proto  # type: ignore
 
 
@@ -40,23 +38,32 @@ class TableSourceType(proto.Enum):
 class BigQueryTableSpec(proto.Message):
     r"""Describes a BigQuery table.
 
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         table_source_type (google.cloud.datacatalog_v1beta1.types.TableSourceType):
             Output only. The table source type.
         view_spec (google.cloud.datacatalog_v1beta1.types.ViewSpec):
             Table view specification. This field should only be
             populated if ``table_source_type`` is ``BIGQUERY_VIEW``.
+
+            This field is a member of `oneof`_ ``type_spec``.
         table_spec (google.cloud.datacatalog_v1beta1.types.TableSpec):
             Spec of a BigQuery table. This field should only be
             populated if ``table_source_type`` is ``BIGQUERY_TABLE``.
+
+            This field is a member of `oneof`_ ``type_spec``.
     """
 
     table_source_type = proto.Field(proto.ENUM, number=1, enum="TableSourceType",)
-
     view_spec = proto.Field(
         proto.MESSAGE, number=2, oneof="type_spec", message="ViewSpec",
     )
-
     table_spec = proto.Field(
         proto.MESSAGE, number=3, oneof="type_spec", message="TableSpec",
     )
@@ -71,7 +78,7 @@ class ViewSpec(proto.Message):
             view.
     """
 
-    view_query = proto.Field(proto.STRING, number=1)
+    view_query = proto.Field(proto.STRING, number=1,)
 
 
 class TableSpec(proto.Message):
@@ -87,7 +94,7 @@ class TableSpec(proto.Message):
             Otherwise, ``grouped_entry`` is empty.
     """
 
-    grouped_entry = proto.Field(proto.STRING, number=1)
+    grouped_entry = proto.Field(proto.STRING, number=1,)
 
 
 class BigQueryDateShardedSpec(proto.Message):
@@ -109,11 +116,9 @@ class BigQueryDateShardedSpec(proto.Message):
             Output only. Total number of shards.
     """
 
-    dataset = proto.Field(proto.STRING, number=1)
-
-    table_prefix = proto.Field(proto.STRING, number=2)
-
-    shard_count = proto.Field(proto.INT64, number=3)
+    dataset = proto.Field(proto.STRING, number=1,)
+    table_prefix = proto.Field(proto.STRING, number=2,)
+    shard_count = proto.Field(proto.INT64, number=3,)
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))

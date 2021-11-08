@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 import proto  # type: ignore
 
 
@@ -35,28 +33,38 @@ class TableSourceType(proto.Enum):
     TABLE_SOURCE_TYPE_UNSPECIFIED = 0
     BIGQUERY_VIEW = 2
     BIGQUERY_TABLE = 5
+    BIGQUERY_MATERIALIZED_VIEW = 7
 
 
 class BigQueryTableSpec(proto.Message):
     r"""Describes a BigQuery table.
 
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         table_source_type (google.cloud.datacatalog_v1.types.TableSourceType):
             Output only. The table source type.
         view_spec (google.cloud.datacatalog_v1.types.ViewSpec):
-            Table view specification. This field should only be
-            populated if ``table_source_type`` is ``BIGQUERY_VIEW``.
+            Table view specification. Populated only if the
+            ``table_source_type`` is ``BIGQUERY_VIEW``.
+
+            This field is a member of `oneof`_ ``type_spec``.
         table_spec (google.cloud.datacatalog_v1.types.TableSpec):
-            Spec of a BigQuery table. This field should only be
-            populated if ``table_source_type`` is ``BIGQUERY_TABLE``.
+            Specification of a BigQuery table. Populated only if the
+            ``table_source_type`` is ``BIGQUERY_TABLE``.
+
+            This field is a member of `oneof`_ ``type_spec``.
     """
 
     table_source_type = proto.Field(proto.ENUM, number=1, enum="TableSourceType",)
-
     view_spec = proto.Field(
         proto.MESSAGE, number=2, oneof="type_spec", message="ViewSpec",
     )
-
     table_spec = proto.Field(
         proto.MESSAGE, number=3, oneof="type_spec", message="TableSpec",
     )
@@ -71,49 +79,53 @@ class ViewSpec(proto.Message):
             view.
     """
 
-    view_query = proto.Field(proto.STRING, number=1)
+    view_query = proto.Field(proto.STRING, number=1,)
 
 
 class TableSpec(proto.Message):
-    r"""Normal BigQuery table spec.
+    r"""Normal BigQuery table specification.
 
     Attributes:
         grouped_entry (str):
-            Output only. If the table is a dated shard, i.e., with name
-            pattern ``[prefix]YYYYMMDD``, ``grouped_entry`` is the Data
-            Catalog resource name of the date sharded grouped entry, for
-            example,
-            ``projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}``.
+            Output only. If the table is date-sharded, that is, it
+            matches the ``[prefix]YYYYMMDD`` name pattern, this field is
+            the Data Catalog resource name of the date-sharded grouped
+            entry. For example:
+
+            ``projects/{PROJECT_ID}/locations/{LOCATION}/entrygroups/{ENTRY_GROUP_ID}/entries/{ENTRY_ID}``.
+
             Otherwise, ``grouped_entry`` is empty.
     """
 
-    grouped_entry = proto.Field(proto.STRING, number=1)
+    grouped_entry = proto.Field(proto.STRING, number=1,)
 
 
 class BigQueryDateShardedSpec(proto.Message):
-    r"""Spec for a group of BigQuery tables with name pattern
-    ``[prefix]YYYYMMDD``. Context:
-    https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding
+    r"""Specification for a group of BigQuery tables with the
+    ``[prefix]YYYYMMDD`` name pattern.
+
+    For more information, see [Introduction to partitioned tables]
+    (https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding).
 
     Attributes:
         dataset (str):
             Output only. The Data Catalog resource name of the dataset
-            entry the current table belongs to, for example,
-            ``projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}``.
+            entry the current table belongs to. For example:
+
+            ``projects/{PROJECT_ID}/locations/{LOCATION}/entrygroups/{ENTRY_GROUP_ID}/entries/{ENTRY_ID}``.
         table_prefix (str):
-            Output only. The table name prefix of the shards. The name
-            of any given shard is ``[table_prefix]YYYYMMDD``, for
-            example, for shard ``MyTable20180101``, the ``table_prefix``
-            is ``MyTable``.
+            Output only. The table name prefix of the shards.
+
+            The name of any given shard is ``[table_prefix]YYYYMMDD``.
+            For example, for the ``MyTable20180101`` shard, the
+            ``table_prefix`` is ``MyTable``.
         shard_count (int):
             Output only. Total number of shards.
     """
 
-    dataset = proto.Field(proto.STRING, number=1)
-
-    table_prefix = proto.Field(proto.STRING, number=2)
-
-    shard_count = proto.Field(proto.INT64, number=3)
+    dataset = proto.Field(proto.STRING, number=1,)
+    table_prefix = proto.Field(proto.STRING, number=2,)
+    shard_count = proto.Field(proto.INT64, number=3,)
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))

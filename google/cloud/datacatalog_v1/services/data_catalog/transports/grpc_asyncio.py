@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 import warnings
-from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple
+from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
 
 from google.api_core import gapic_v1  # type: ignore
 from google.api_core import grpc_helpers_async  # type: ignore
-from google import auth  # type: ignore
-from google.auth import credentials  # type: ignore
+from google.auth import credentials as ga_credentials  # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
 
 import grpc  # type: ignore
@@ -29,10 +26,9 @@ from grpc.experimental import aio  # type: ignore
 
 from google.cloud.datacatalog_v1.types import datacatalog
 from google.cloud.datacatalog_v1.types import tags
-from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
-from google.protobuf import empty_pb2 as empty  # type: ignore
-
+from google.iam.v1 import iam_policy_pb2  # type: ignore
+from google.iam.v1 import policy_pb2  # type: ignore
+from google.protobuf import empty_pb2  # type: ignore
 from .base import DataCatalogTransport, DEFAULT_CLIENT_INFO
 from .grpc import DataCatalogGrpcTransport
 
@@ -40,8 +36,8 @@ from .grpc import DataCatalogGrpcTransport
 class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     """gRPC AsyncIO backend transport for DataCatalog.
 
-    Data Catalog API service allows clients to discover,
-    understand, and manage their data.
+    Data Catalog API service allows you to discover, understand,
+    and manage your data.
 
     This class defines the same methods as the primary client, so the
     primary client can load the underlying transport implementation
@@ -58,7 +54,7 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     def create_channel(
         cls,
         host: str = "datacatalog.googleapis.com",
-        credentials: credentials.Credentials = None,
+        credentials: ga_credentials.Credentials = None,
         credentials_file: Optional[str] = None,
         scopes: Optional[Sequence[str]] = None,
         quota_project_id: Optional[str] = None,
@@ -66,7 +62,7 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ) -> aio.Channel:
         """Create and return a gRPC AsyncIO channel object.
         Args:
-            address (Optional[str]): The host for the channel to use.
+            host (Optional[str]): The host for the channel to use.
             credentials (Optional[~.Credentials]): The
                 authorization credentials to attach to requests. These
                 credentials identify this application to the service. If
@@ -85,13 +81,15 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
         Returns:
             aio.Channel: A gRPC AsyncIO channel object.
         """
-        scopes = scopes or cls.AUTH_SCOPES
+
         return grpc_helpers_async.create_channel(
             host,
             credentials=credentials,
             credentials_file=credentials_file,
-            scopes=scopes,
             quota_project_id=quota_project_id,
+            default_scopes=cls.AUTH_SCOPES,
+            scopes=scopes,
+            default_host=cls.DEFAULT_HOST,
             **kwargs,
         )
 
@@ -99,7 +97,7 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
         self,
         *,
         host: str = "datacatalog.googleapis.com",
-        credentials: credentials.Credentials = None,
+        credentials: ga_credentials.Credentials = None,
         credentials_file: Optional[str] = None,
         scopes: Optional[Sequence[str]] = None,
         channel: aio.Channel = None,
@@ -109,11 +107,13 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
         client_cert_source_for_mtls: Callable[[], Tuple[bytes, bytes]] = None,
         quota_project_id=None,
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
+        always_use_jwt_access: Optional[bool] = False,
     ) -> None:
         """Instantiate the transport.
 
         Args:
-            host (Optional[str]): The hostname to connect to.
+            host (Optional[str]):
+                 The hostname to connect to.
             credentials (Optional[google.auth.credentials.Credentials]): The
                 authorization credentials to attach to requests. These
                 credentials identify the application to the service; if none
@@ -131,24 +131,26 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
             api_mtls_endpoint (Optional[str]): Deprecated. The mutual TLS endpoint.
                 If provided, it overrides the ``host`` argument and tries to create
                 a mutual TLS channel with client SSL credentials from
-                ``client_cert_source`` or applicatin default SSL credentials.
+                ``client_cert_source`` or application default SSL credentials.
             client_cert_source (Optional[Callable[[], Tuple[bytes, bytes]]]):
                 Deprecated. A callback to provide client SSL certificate bytes and
                 private key bytes, both in PEM format. It is ignored if
                 ``api_mtls_endpoint`` is None.
             ssl_channel_credentials (grpc.ChannelCredentials): SSL credentials
-                for grpc channel. It is ignored if ``channel`` is provided.
+                for the grpc channel. It is ignored if ``channel`` is provided.
             client_cert_source_for_mtls (Optional[Callable[[], Tuple[bytes, bytes]]]):
                 A callback to provide client certificate bytes and private key bytes,
-                both in PEM format. It is used to configure mutual TLS channel. It is
+                both in PEM format. It is used to configure a mutual TLS channel. It is
                 ignored if ``channel`` or ``ssl_channel_credentials`` is provided.
             quota_project_id (Optional[str]): An optional project to use for billing
                 and quota.
-            client_info (google.api_core.gapic_v1.client_info.ClientInfo):	
-                The client info used to send a user-agent string along with	
-                API requests. If ``None``, then default info will be used.	
-                Generally, you only need to set this if you're developing	
+            client_info (google.api_core.gapic_v1.client_info.ClientInfo):
+                The client info used to send a user-agent string along with
+                API requests. If ``None``, then default info will be used.
+                Generally, you only need to set this if you're developing
                 your own client library.
+            always_use_jwt_access (Optional[bool]): Whether self signed JWT should
+                be used for service account credentials.
 
         Raises:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
@@ -156,7 +158,9 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
           google.api_core.exceptions.DuplicateCredentialArgs: If both ``credentials``
               and ``credentials_file`` are passed.
         """
+        self._grpc_channel = None
         self._ssl_channel_credentials = ssl_channel_credentials
+        self._stubs: Dict[str, Callable] = {}
 
         if api_mtls_endpoint:
             warnings.warn("api_mtls_endpoint is deprecated", DeprecationWarning)
@@ -164,88 +168,59 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
             warnings.warn("client_cert_source is deprecated", DeprecationWarning)
 
         if channel:
-            # Sanity check: Ensure that channel and credentials are not both
-            # provided.
+            # Ignore credentials if a channel was passed.
             credentials = False
-
             # If a channel was explicitly provided, set it.
             self._grpc_channel = channel
             self._ssl_channel_credentials = None
-        elif api_mtls_endpoint:
-            host = (
-                api_mtls_endpoint
-                if ":" in api_mtls_endpoint
-                else api_mtls_endpoint + ":443"
-            )
-
-            if credentials is None:
-                credentials, _ = auth.default(
-                    scopes=self.AUTH_SCOPES, quota_project_id=quota_project_id
-                )
-
-            # Create SSL credentials with client_cert_source or application
-            # default SSL credentials.
-            if client_cert_source:
-                cert, key = client_cert_source()
-                ssl_credentials = grpc.ssl_channel_credentials(
-                    certificate_chain=cert, private_key=key
-                )
-            else:
-                ssl_credentials = SslCredentials().ssl_credentials
-
-            # create a new channel. The provided one is ignored.
-            self._grpc_channel = type(self).create_channel(
-                host,
-                credentials=credentials,
-                credentials_file=credentials_file,
-                ssl_credentials=ssl_credentials,
-                scopes=scopes or self.AUTH_SCOPES,
-                quota_project_id=quota_project_id,
-                options=[
-                    ("grpc.max_send_message_length", -1),
-                    ("grpc.max_receive_message_length", -1),
-                ],
-            )
-            self._ssl_channel_credentials = ssl_credentials
         else:
-            host = host if ":" in host else host + ":443"
+            if api_mtls_endpoint:
+                host = api_mtls_endpoint
 
-            if credentials is None:
-                credentials, _ = auth.default(
-                    scopes=self.AUTH_SCOPES, quota_project_id=quota_project_id
-                )
+                # Create SSL credentials with client_cert_source or application
+                # default SSL credentials.
+                if client_cert_source:
+                    cert, key = client_cert_source()
+                    self._ssl_channel_credentials = grpc.ssl_channel_credentials(
+                        certificate_chain=cert, private_key=key
+                    )
+                else:
+                    self._ssl_channel_credentials = SslCredentials().ssl_credentials
 
-            if client_cert_source_for_mtls and not ssl_channel_credentials:
-                cert, key = client_cert_source_for_mtls()
-                self._ssl_channel_credentials = grpc.ssl_channel_credentials(
-                    certificate_chain=cert, private_key=key
-                )
+            else:
+                if client_cert_source_for_mtls and not ssl_channel_credentials:
+                    cert, key = client_cert_source_for_mtls()
+                    self._ssl_channel_credentials = grpc.ssl_channel_credentials(
+                        certificate_chain=cert, private_key=key
+                    )
 
-            # create a new channel. The provided one is ignored.
-            self._grpc_channel = type(self).create_channel(
-                host,
-                credentials=credentials,
-                credentials_file=credentials_file,
-                ssl_credentials=self._ssl_channel_credentials,
-                scopes=scopes or self.AUTH_SCOPES,
-                quota_project_id=quota_project_id,
-                options=[
-                    ("grpc.max_send_message_length", -1),
-                    ("grpc.max_receive_message_length", -1),
-                ],
-            )
-
-        # Run the base constructor.
+        # The base transport sets the host, credentials and scopes
         super().__init__(
             host=host,
             credentials=credentials,
             credentials_file=credentials_file,
-            scopes=scopes or self.AUTH_SCOPES,
+            scopes=scopes,
             quota_project_id=quota_project_id,
             client_info=client_info,
+            always_use_jwt_access=always_use_jwt_access,
         )
 
-        self._stubs = {}
+        if not self._grpc_channel:
+            self._grpc_channel = type(self).create_channel(
+                self._host,
+                credentials=self._credentials,
+                credentials_file=credentials_file,
+                scopes=self._scopes,
+                ssl_credentials=self._ssl_channel_credentials,
+                quota_project_id=quota_project_id,
+                options=[
+                    ("grpc.max_send_message_length", -1),
+                    ("grpc.max_receive_message_length", -1),
+                ],
+            )
+
+        # Wrap messages. This must be done after self._grpc_channel exists
+        self._prep_wrapped_messages(client_info)
 
     @property
     def grpc_channel(self) -> aio.Channel:
@@ -265,23 +240,22 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ]:
         r"""Return a callable for the search catalog method over gRPC.
 
-        Searches Data Catalog for multiple resources like entries, tags
-        that match a query.
+        Searches Data Catalog for multiple resources like entries and
+        tags that match a query.
 
-        This is a custom method
-        (https://cloud.google.com/apis/design/custom_methods) and does
-        not return the complete resource, only the resource identifier
-        and high level fields. Clients can subsequentally call ``Get``
-        methods.
+        This is a [Custom Method]
+        (https://cloud.google.com/apis/design/custom_methods) that
+        doesn't return all information on a resource, only its ID and
+        high level fields. To get more information, you can subsequently
+        call specific get methods.
 
-        Note that Data Catalog search queries do not guarantee full
-        recall. Query results that match your query may not be returned,
-        even in subsequent result pages. Also note that results returned
-        (and not returned) can vary across repeated search queries.
+        Note: Data Catalog search queries don't guarantee full recall.
+        Results that match your query might not be returned, even in
+        subsequent result pages. Additionally, returned (and not
+        returned) results can vary if you repeat search queries.
 
-        See `Data Catalog Search
-        Syntax <https://cloud.google.com/data-catalog/docs/how-to/search-reference>`__
-        for more information.
+        For more information, see [Data Catalog search syntax]
+        (https://cloud.google.com/data-catalog/docs/how-to/search-reference).
 
         Returns:
             Callable[[~.SearchCatalogRequest],
@@ -309,27 +283,36 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ]:
         r"""Return a callable for the create entry group method over gRPC.
 
-        Creates an EntryGroup.
+        Creates an entry group.
 
         An entry group contains logically related entries together with
-        Cloud Identity and Access Management policies that specify the
-        users who can create, edit, and view entries within the entry
-        group.
+        `Cloud Identity and Access
+        Management </data-catalog/docs/concepts/iam>`__ policies. These
+        policies specify users who can create, edit, and view entries
+        within entry groups.
 
-        Data Catalog automatically creates an entry group for BigQuery
-        entries ("@bigquery") and Pub/Sub topics ("@pubsub"). Users
-        create their own entry group to contain Cloud Storage fileset
-        entries or custom type entries, and the IAM policies associated
-        with those entries. Entry groups, like entries, can be searched.
+        Data Catalog automatically creates entry groups with names that
+        start with the ``@`` symbol for the following resources:
+
+        -  BigQuery entries (``@bigquery``)
+        -  Pub/Sub topics (``@pubsub``)
+        -  Dataproc Metastore services
+           (``@dataproc_metastore_{SERVICE_NAME_HASH}``)
+
+        You can create your own entry groups for Cloud Storage fileset
+        entries and custom entries together with the corresponding IAM
+        policies. User-created entry groups can't contain the ``@``
+        symbol, it is reserved for automatically created groups.
+
+        Entry groups, like entries, can be searched.
 
         A maximum of 10,000 entry groups may be created per organization
         across all locations.
 
-        Users should enable the Data Catalog API in the project
-        identified by the ``parent`` parameter (see [Data Catalog
-        Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        You must enable the Data Catalog API in the project identified
+        by the ``parent`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Returns:
             Callable[[~.CreateEntryGroupRequest],
@@ -357,7 +340,7 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ]:
         r"""Return a callable for the get entry group method over gRPC.
 
-        Gets an EntryGroup.
+        Gets an entry group.
 
         Returns:
             Callable[[~.GetEntryGroupRequest],
@@ -385,11 +368,12 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ]:
         r"""Return a callable for the update entry group method over gRPC.
 
-        Updates an EntryGroup. The user should enable the Data Catalog
-        API in the project identified by the ``entry_group.name``
-        parameter (see [Data Catalog Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        Updates an entry group.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``entry_group.name`` parameter. For more information, see
+        `Data Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Returns:
             Callable[[~.UpdateEntryGroupRequest],
@@ -412,15 +396,15 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     @property
     def delete_entry_group(
         self,
-    ) -> Callable[[datacatalog.DeleteEntryGroupRequest], Awaitable[empty.Empty]]:
+    ) -> Callable[[datacatalog.DeleteEntryGroupRequest], Awaitable[empty_pb2.Empty]]:
         r"""Return a callable for the delete entry group method over gRPC.
 
-        Deletes an EntryGroup. Only entry groups that do not contain
-        entries can be deleted. Users should enable the Data Catalog API
-        in the project identified by the ``name`` parameter (see [Data
-        Catalog Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        Deletes an entry group.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``name`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Returns:
             Callable[[~.DeleteEntryGroupRequest],
@@ -436,7 +420,7 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
             self._stubs["delete_entry_group"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1.DataCatalog/DeleteEntryGroup",
                 request_serializer=datacatalog.DeleteEntryGroupRequest.serialize,
-                response_deserializer=empty.Empty.FromString,
+                response_deserializer=empty_pb2.Empty.FromString,
             )
         return self._stubs["delete_entry_group"]
 
@@ -475,16 +459,19 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ) -> Callable[[datacatalog.CreateEntryRequest], Awaitable[datacatalog.Entry]]:
         r"""Return a callable for the create entry method over gRPC.
 
-        Creates an entry. Only entries of 'FILESET' type or
-        user-specified type can be created.
+        Creates an entry.
 
-        Users should enable the Data Catalog API in the project
-        identified by the ``parent`` parameter (see [Data Catalog
-        Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        You can create entries only with 'FILESET', 'CLUSTER',
+        'DATA_STREAM', or custom types. Data Catalog automatically
+        creates entries with other types during metadata ingestion from
+        integrated systems.
 
-        A maximum of 100,000 entries may be created per entry group.
+        You must enable the Data Catalog API in the project identified
+        by the ``parent`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
+
+        An entry group can have a maximum of 100,000 entries.
 
         Returns:
             Callable[[~.CreateEntryRequest],
@@ -510,11 +497,12 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ) -> Callable[[datacatalog.UpdateEntryRequest], Awaitable[datacatalog.Entry]]:
         r"""Return a callable for the update entry method over gRPC.
 
-        Updates an existing entry. Users should enable the Data Catalog
-        API in the project identified by the ``entry.name`` parameter
-        (see [Data Catalog Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        Updates an existing entry.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``entry.name`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Returns:
             Callable[[~.UpdateEntryRequest],
@@ -537,16 +525,19 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     @property
     def delete_entry(
         self,
-    ) -> Callable[[datacatalog.DeleteEntryRequest], Awaitable[empty.Empty]]:
+    ) -> Callable[[datacatalog.DeleteEntryRequest], Awaitable[empty_pb2.Empty]]:
         r"""Return a callable for the delete entry method over gRPC.
 
-        Deletes an existing entry. Only entries created through
+        Deletes an existing entry.
+
+        You can delete only the entries created by the
         [CreateEntry][google.cloud.datacatalog.v1.DataCatalog.CreateEntry]
-        method can be deleted. Users should enable the Data Catalog API
-        in the project identified by the ``name`` parameter (see [Data
-        Catalog Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        method.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``name`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Returns:
             Callable[[~.DeleteEntryRequest],
@@ -562,7 +553,7 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
             self._stubs["delete_entry"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1.DataCatalog/DeleteEntry",
                 request_serializer=datacatalog.DeleteEntryRequest.serialize,
-                response_deserializer=empty.Empty.FromString,
+                response_deserializer=empty_pb2.Empty.FromString,
             )
         return self._stubs["delete_entry"]
 
@@ -598,10 +589,9 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ) -> Callable[[datacatalog.LookupEntryRequest], Awaitable[datacatalog.Entry]]:
         r"""Return a callable for the lookup entry method over gRPC.
 
-        Get an entry by target resource name. This method
-        allows clients to use the resource name from the source
-        Google Cloud Platform service to get the Data Catalog
-        Entry.
+        Gets an entry by its target resource name.
+        The resource name comes from the source Google Cloud
+        Platform service.
 
         Returns:
             Callable[[~.LookupEntryRequest],
@@ -655,11 +645,12 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ) -> Callable[[datacatalog.CreateTagTemplateRequest], Awaitable[tags.TagTemplate]]:
         r"""Return a callable for the create tag template method over gRPC.
 
-        Creates a tag template. The user should enable the Data Catalog
-        API in the project identified by the ``parent`` parameter (see
-        `Data Catalog Resource
-        Project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__
-        for more information).
+        Creates a tag template.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``parent`` parameter. For more information, see [Data
+        Catalog resource project]
+        (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 
         Returns:
             Callable[[~.CreateTagTemplateRequest],
@@ -711,15 +702,16 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ) -> Callable[[datacatalog.UpdateTagTemplateRequest], Awaitable[tags.TagTemplate]]:
         r"""Return a callable for the update tag template method over gRPC.
 
-        Updates a tag template. This method cannot be used to update the
-        fields of a template. The tag template fields are represented as
-        separate resources and should be updated using their own
-        create/update/delete methods. Users should enable the Data
-        Catalog API in the project identified by the
-        ``tag_template.name`` parameter (see [Data Catalog Resource
-        Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        Updates a tag template.
+
+        You can't update template fields with this method. These fields
+        are separate resources with their own create, update, and delete
+        methods.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``tag_template.name`` parameter. For more information,
+        see `Data Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Returns:
             Callable[[~.UpdateTagTemplateRequest],
@@ -742,14 +734,15 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     @property
     def delete_tag_template(
         self,
-    ) -> Callable[[datacatalog.DeleteTagTemplateRequest], Awaitable[empty.Empty]]:
+    ) -> Callable[[datacatalog.DeleteTagTemplateRequest], Awaitable[empty_pb2.Empty]]:
         r"""Return a callable for the delete tag template method over gRPC.
 
-        Deletes a tag template and all tags using the template. Users
-        should enable the Data Catalog API in the project identified by
-        the ``name`` parameter (see [Data Catalog Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        Deletes a tag template and all tags that use it.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``name`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Returns:
             Callable[[~.DeleteTagTemplateRequest],
@@ -765,7 +758,7 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
             self._stubs["delete_tag_template"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1.DataCatalog/DeleteTagTemplate",
                 request_serializer=datacatalog.DeleteTagTemplateRequest.serialize,
-                response_deserializer=empty.Empty.FromString,
+                response_deserializer=empty_pb2.Empty.FromString,
             )
         return self._stubs["delete_tag_template"]
 
@@ -777,11 +770,12 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ]:
         r"""Return a callable for the create tag template field method over gRPC.
 
-        Creates a field in a tag template. The user should enable the
-        Data Catalog API in the project identified by the ``parent``
-        parameter (see `Data Catalog Resource
-        Project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__
-        for more information).
+        Creates a field in a tag template.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``parent`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Returns:
             Callable[[~.CreateTagTemplateFieldRequest],
@@ -809,12 +803,14 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ]:
         r"""Return a callable for the update tag template field method over gRPC.
 
-        Updates a field in a tag template. This method cannot be used to
-        update the field type. Users should enable the Data Catalog API
-        in the project identified by the ``name`` parameter (see [Data
-        Catalog Resource Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        Updates a field in a tag template.
+
+        You can't update the field type with this method.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``name`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Returns:
             Callable[[~.UpdateTagTemplateFieldRequest],
@@ -842,11 +838,12 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ]:
         r"""Return a callable for the rename tag template field method over gRPC.
 
-        Renames a field in a tag template. The user should enable the
-        Data Catalog API in the project identified by the ``name``
-        parameter (see `Data Catalog Resource
-        Project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__
-        for more information).
+        Renames a field in a tag template.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``name`` parameter. For more information, see [Data
+        Catalog resource project]
+        (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 
         Returns:
             Callable[[~.RenameTagTemplateFieldRequest],
@@ -867,17 +864,53 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
         return self._stubs["rename_tag_template_field"]
 
     @property
+    def rename_tag_template_field_enum_value(
+        self,
+    ) -> Callable[
+        [datacatalog.RenameTagTemplateFieldEnumValueRequest],
+        Awaitable[tags.TagTemplateField],
+    ]:
+        r"""Return a callable for the rename tag template field enum
+        value method over gRPC.
+
+        Renames an enum value in a tag template.
+        Within a single enum field, enum values must be unique.
+
+        Returns:
+            Callable[[~.RenameTagTemplateFieldEnumValueRequest],
+                    Awaitable[~.TagTemplateField]]:
+                A function that, when called, will call the underlying RPC
+                on the server.
+        """
+        # Generate a "stub function" on-the-fly which will actually make
+        # the request.
+        # gRPC handles serialization and deserialization, so we just need
+        # to pass in the functions for each.
+        if "rename_tag_template_field_enum_value" not in self._stubs:
+            self._stubs[
+                "rename_tag_template_field_enum_value"
+            ] = self.grpc_channel.unary_unary(
+                "/google.cloud.datacatalog.v1.DataCatalog/RenameTagTemplateFieldEnumValue",
+                request_serializer=datacatalog.RenameTagTemplateFieldEnumValueRequest.serialize,
+                response_deserializer=tags.TagTemplateField.deserialize,
+            )
+        return self._stubs["rename_tag_template_field_enum_value"]
+
+    @property
     def delete_tag_template_field(
         self,
-    ) -> Callable[[datacatalog.DeleteTagTemplateFieldRequest], Awaitable[empty.Empty]]:
+    ) -> Callable[
+        [datacatalog.DeleteTagTemplateFieldRequest], Awaitable[empty_pb2.Empty]
+    ]:
         r"""Return a callable for the delete tag template field method over gRPC.
 
-        Deletes a field in a tag template and all uses of that field.
-        Users should enable the Data Catalog API in the project
-        identified by the ``name`` parameter (see [Data Catalog Resource
-        Project]
-        (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-        for more information).
+        Deletes a field in a tag template and all uses of this field
+        from the tags based on this template.
+
+        You must enable the Data Catalog API in the project identified
+        by the ``name`` parameter. For more information, see `Data
+        Catalog resource
+        project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
         Returns:
             Callable[[~.DeleteTagTemplateFieldRequest],
@@ -893,7 +926,7 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
             self._stubs["delete_tag_template_field"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1.DataCatalog/DeleteTagTemplateField",
                 request_serializer=datacatalog.DeleteTagTemplateFieldRequest.serialize,
-                response_deserializer=empty.Empty.FromString,
+                response_deserializer=empty_pb2.Empty.FromString,
             )
         return self._stubs["delete_tag_template_field"]
 
@@ -903,12 +936,21 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ) -> Callable[[datacatalog.CreateTagRequest], Awaitable[tags.Tag]]:
         r"""Return a callable for the create tag method over gRPC.
 
-        Creates a tag on an [Entry][google.cloud.datacatalog.v1.Entry].
+        Creates a tag and assigns it to:
+
+        -  An [Entry][google.cloud.datacatalog.v1.Entry] if the method
+           name is
+           ``projects.locations.entryGroups.entries.tags.create``.
+        -  Or [EntryGroup][google.cloud.datacatalog.v1.EntryGroup]if the
+           method name is
+           ``projects.locations.entryGroups.tags.create``.
+
         Note: The project identified by the ``parent`` parameter for the
-        `tag <https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries.tags/create#path-parameters>`__
-        and the `tag
-        template <https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#path-parameters>`__
-        used to create the tag must be from the same organization.
+        [tag]
+        (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries.tags/create#path-parameters)
+        and the [tag template]
+        (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#path-parameters)
+        used to create the tag must be in the same organization.
 
         Returns:
             Callable[[~.CreateTagRequest],
@@ -957,7 +999,7 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     @property
     def delete_tag(
         self,
-    ) -> Callable[[datacatalog.DeleteTagRequest], Awaitable[empty.Empty]]:
+    ) -> Callable[[datacatalog.DeleteTagRequest], Awaitable[empty_pb2.Empty]]:
         r"""Return a callable for the delete tag method over gRPC.
 
         Deletes a tag.
@@ -976,7 +1018,7 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
             self._stubs["delete_tag"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1.DataCatalog/DeleteTag",
                 request_serializer=datacatalog.DeleteTagRequest.serialize,
-                response_deserializer=empty.Empty.FromString,
+                response_deserializer=empty_pb2.Empty.FromString,
             )
         return self._stubs["delete_tag"]
 
@@ -988,7 +1030,8 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     ]:
         r"""Return a callable for the list tags method over gRPC.
 
-        Lists the tags on an [Entry][google.cloud.datacatalog.v1.Entry].
+        Lists tags assigned to an
+        [Entry][google.cloud.datacatalog.v1.Entry].
 
         Returns:
             Callable[[~.ListTagsRequest],
@@ -1011,24 +1054,27 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     @property
     def set_iam_policy(
         self,
-    ) -> Callable[[iam_policy.SetIamPolicyRequest], Awaitable[policy.Policy]]:
+    ) -> Callable[[iam_policy_pb2.SetIamPolicyRequest], Awaitable[policy_pb2.Policy]]:
         r"""Return a callable for the set iam policy method over gRPC.
 
-        Sets the access control policy for a resource. Replaces any
-        existing policy. Supported resources are:
+        Sets an access control policy for a resource. Replaces any
+        existing policy.
 
-        -  Tag templates.
-        -  Entries.
-        -  Entry groups. Note, this method cannot be used to manage
-           policies for BigQuery, Pub/Sub and any external Google Cloud
-           Platform resources synced to Data Catalog.
+        Supported resources are:
 
-        Callers must have following Google IAM permission
+        -  Tag templates
+        -  Entry groups
+
+        Note: This method sets policies only within Data Catalog and
+        can't be used to manage policies in BigQuery, Pub/Sub, Dataproc
+        Metastore, and any external Google Cloud Platform resources
+        synced with the Data Catalog.
+
+        To call this method, you must have the following Google IAM
+        permissions:
 
         -  ``datacatalog.tagTemplates.setIamPolicy`` to set policies on
            tag templates.
-        -  ``datacatalog.entries.setIamPolicy`` to set policies on
-           entries.
         -  ``datacatalog.entryGroups.setIamPolicy`` to set policies on
            entry groups.
 
@@ -1045,36 +1091,39 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
         if "set_iam_policy" not in self._stubs:
             self._stubs["set_iam_policy"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1.DataCatalog/SetIamPolicy",
-                request_serializer=iam_policy.SetIamPolicyRequest.SerializeToString,
-                response_deserializer=policy.Policy.FromString,
+                request_serializer=iam_policy_pb2.SetIamPolicyRequest.SerializeToString,
+                response_deserializer=policy_pb2.Policy.FromString,
             )
         return self._stubs["set_iam_policy"]
 
     @property
     def get_iam_policy(
         self,
-    ) -> Callable[[iam_policy.GetIamPolicyRequest], Awaitable[policy.Policy]]:
+    ) -> Callable[[iam_policy_pb2.GetIamPolicyRequest], Awaitable[policy_pb2.Policy]]:
         r"""Return a callable for the get iam policy method over gRPC.
 
-        Gets the access control policy for a resource. A ``NOT_FOUND``
-        error is returned if the resource does not exist. An empty
-        policy is returned if the resource exists but does not have a
-        policy set on it.
+        Gets the access control policy for a resource.
+
+        May return:
+
+        -  A\ ``NOT_FOUND`` error if the resource doesn't exist or you
+           don't have the permission to view it.
+        -  An empty policy if the resource exists but doesn't have a set
+           policy.
 
         Supported resources are:
 
-        -  Tag templates.
-        -  Entries.
-        -  Entry groups. Note, this method cannot be used to manage
-           policies for BigQuery, Pub/Sub and any external Google Cloud
-           Platform resources synced to Data Catalog.
+        -  Tag templates
+        -  Entry groups
 
-        Callers must have following Google IAM permission
+        Note: This method doesn't get policies from Google Cloud
+        Platform resources ingested into Data Catalog.
+
+        To call this method, you must have the following Google IAM
+        permissions:
 
         -  ``datacatalog.tagTemplates.getIamPolicy`` to get policies on
            tag templates.
-        -  ``datacatalog.entries.getIamPolicy`` to get policies on
-           entries.
         -  ``datacatalog.entryGroups.getIamPolicy`` to get policies on
            entry groups.
 
@@ -1091,8 +1140,8 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
         if "get_iam_policy" not in self._stubs:
             self._stubs["get_iam_policy"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1.DataCatalog/GetIamPolicy",
-                request_serializer=iam_policy.GetIamPolicyRequest.SerializeToString,
-                response_deserializer=policy.Policy.FromString,
+                request_serializer=iam_policy_pb2.GetIamPolicyRequest.SerializeToString,
+                response_deserializer=policy_pb2.Policy.FromString,
             )
         return self._stubs["get_iam_policy"]
 
@@ -1100,25 +1149,25 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
     def test_iam_permissions(
         self,
     ) -> Callable[
-        [iam_policy.TestIamPermissionsRequest],
-        Awaitable[iam_policy.TestIamPermissionsResponse],
+        [iam_policy_pb2.TestIamPermissionsRequest],
+        Awaitable[iam_policy_pb2.TestIamPermissionsResponse],
     ]:
         r"""Return a callable for the test iam permissions method over gRPC.
 
-        Returns the caller's permissions on a resource. If the resource
-        does not exist, an empty set of permissions is returned (We
-        don't return a ``NOT_FOUND`` error).
-
+        Gets your permissions on a resource.
+        Returns an empty set of permissions if the resource
+        doesn't exist.
         Supported resources are:
 
-        -  Tag templates.
-        -  Entries.
-        -  Entry groups. Note, this method cannot be used to manage
-           policies for BigQuery, Pub/Sub and any external Google Cloud
-           Platform resources synced to Data Catalog.
+        - Tag templates
+        - Entry groups
 
-        A caller is not required to have Google IAM permission to make
-        this request.
+        Note: This method gets policies only within Data Catalog
+        and can't be used to get policies from BigQuery,
+        Pub/Sub, Dataproc Metastore, and any external Google
+        Cloud Platform resources ingested into Data Catalog.
+        No Google IAM permissions are required to call this
+        method.
 
         Returns:
             Callable[[~.TestIamPermissionsRequest],
@@ -1133,10 +1182,13 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
         if "test_iam_permissions" not in self._stubs:
             self._stubs["test_iam_permissions"] = self.grpc_channel.unary_unary(
                 "/google.cloud.datacatalog.v1.DataCatalog/TestIamPermissions",
-                request_serializer=iam_policy.TestIamPermissionsRequest.SerializeToString,
-                response_deserializer=iam_policy.TestIamPermissionsResponse.FromString,
+                request_serializer=iam_policy_pb2.TestIamPermissionsRequest.SerializeToString,
+                response_deserializer=iam_policy_pb2.TestIamPermissionsResponse.FromString,
             )
         return self._stubs["test_iam_permissions"]
+
+    def close(self):
+        return self.grpc_channel.close()
 
 
 __all__ = ("DataCatalogGrpcAsyncIOTransport",)

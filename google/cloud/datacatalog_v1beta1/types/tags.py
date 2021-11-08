@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 import proto  # type: ignore
 
-
-from google.protobuf import timestamp_pb2 as timestamp  # type: ignore
+from google.protobuf import timestamp_pb2  # type: ignore
 
 
 __protobuf__ = proto.module(
@@ -34,6 +31,9 @@ class Tag(proto.Message):
     See `Data Catalog
     IAM <https://cloud.google.com/data-catalog/docs/concepts/iam>`__ for
     information on the permissions needed to create or view tags.
+
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
 
     Attributes:
         name (str):
@@ -63,6 +63,8 @@ class Tag(proto.Message):
             separate the column names. Example:
 
             -  ``outer_column.inner_column``
+
+            This field is a member of `oneof`_ ``scope``.
         fields (Sequence[google.cloud.datacatalog_v1beta1.types.Tag.FieldsEntry]):
             Required. This maps the ID of a tag field to
             the value of and additional information about
@@ -71,14 +73,10 @@ class Tag(proto.Message):
             and at most 500 fields.
     """
 
-    name = proto.Field(proto.STRING, number=1)
-
-    template = proto.Field(proto.STRING, number=2)
-
-    template_display_name = proto.Field(proto.STRING, number=5)
-
-    column = proto.Field(proto.STRING, number=4, oneof="scope")
-
+    name = proto.Field(proto.STRING, number=1,)
+    template = proto.Field(proto.STRING, number=2,)
+    template_display_name = proto.Field(proto.STRING, number=5,)
+    column = proto.Field(proto.STRING, number=4, oneof="scope",)
     fields = proto.MapField(proto.STRING, proto.MESSAGE, number=3, message="TagField",)
 
 
@@ -86,25 +84,42 @@ class TagField(proto.Message):
     r"""Contains the value and supporting information for a field within a
     [Tag][google.cloud.datacatalog.v1beta1.Tag].
 
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         display_name (str):
             Output only. The display name of this field.
         double_value (float):
             Holds the value for a tag field with double
             type.
+
+            This field is a member of `oneof`_ ``kind``.
         string_value (str):
             Holds the value for a tag field with string
             type.
+
+            This field is a member of `oneof`_ ``kind``.
         bool_value (bool):
             Holds the value for a tag field with boolean
             type.
+
+            This field is a member of `oneof`_ ``kind``.
         timestamp_value (google.protobuf.timestamp_pb2.Timestamp):
             Holds the value for a tag field with
             timestamp type.
+
+            This field is a member of `oneof`_ ``kind``.
         enum_value (google.cloud.datacatalog_v1beta1.types.TagField.EnumValue):
             Holds the value for a tag field with enum
             type. This value must be one of the allowed
             values in the definition of this enum.
+
+            This field is a member of `oneof`_ ``kind``.
         order (int):
             Output only. The order of this field with respect to other
             fields in this tag. It can be set in
@@ -123,23 +138,17 @@ class TagField(proto.Message):
                 The display name of the enum value.
         """
 
-        display_name = proto.Field(proto.STRING, number=1)
+        display_name = proto.Field(proto.STRING, number=1,)
 
-    display_name = proto.Field(proto.STRING, number=1)
-
-    double_value = proto.Field(proto.DOUBLE, number=2, oneof="kind")
-
-    string_value = proto.Field(proto.STRING, number=3, oneof="kind")
-
-    bool_value = proto.Field(proto.BOOL, number=4, oneof="kind")
-
+    display_name = proto.Field(proto.STRING, number=1,)
+    double_value = proto.Field(proto.DOUBLE, number=2, oneof="kind",)
+    string_value = proto.Field(proto.STRING, number=3, oneof="kind",)
+    bool_value = proto.Field(proto.BOOL, number=4, oneof="kind",)
     timestamp_value = proto.Field(
-        proto.MESSAGE, number=5, oneof="kind", message=timestamp.Timestamp,
+        proto.MESSAGE, number=5, oneof="kind", message=timestamp_pb2.Timestamp,
     )
-
     enum_value = proto.Field(proto.MESSAGE, number=6, oneof="kind", message=EnumValue,)
-
-    order = proto.Field(proto.INT32, number=7)
+    order = proto.Field(proto.INT32, number=7,)
 
 
 class TagTemplate(proto.Message):
@@ -178,10 +187,8 @@ class TagTemplate(proto.Message):
             must start with a letter or underscore.
     """
 
-    name = proto.Field(proto.STRING, number=1)
-
-    display_name = proto.Field(proto.STRING, number=2)
-
+    name = proto.Field(proto.STRING, number=1,)
+    display_name = proto.Field(proto.STRING, number=2,)
     fields = proto.MapField(
         proto.STRING, proto.MESSAGE, number=3, message="TagTemplateField",
     )
@@ -217,26 +224,33 @@ class TagTemplateField(proto.Message):
             to be sequential.
     """
 
-    name = proto.Field(proto.STRING, number=6)
-
-    display_name = proto.Field(proto.STRING, number=1)
-
+    name = proto.Field(proto.STRING, number=6,)
+    display_name = proto.Field(proto.STRING, number=1,)
     type_ = proto.Field(proto.MESSAGE, number=2, message="FieldType",)
-
-    is_required = proto.Field(proto.BOOL, number=3)
-
-    order = proto.Field(proto.INT32, number=5)
+    is_required = proto.Field(proto.BOOL, number=3,)
+    order = proto.Field(proto.INT32, number=5,)
 
 
 class FieldType(proto.Message):
     r"""
 
+    This message has `oneof`_ fields (mutually exclusive fields).
+    For each oneof, at most one member field can be set at the same time.
+    Setting any member of the oneof automatically clears all other
+    members.
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         primitive_type (google.cloud.datacatalog_v1beta1.types.FieldType.PrimitiveType):
             Represents primitive types - string, bool
             etc.
+
+            This field is a member of `oneof`_ ``type_decl``.
         enum_type (google.cloud.datacatalog_v1beta1.types.FieldType.EnumType):
             Represents an enum type.
+
+            This field is a member of `oneof`_ ``type_decl``.
     """
 
     class PrimitiveType(proto.Enum):
@@ -273,7 +287,7 @@ class FieldType(proto.Message):
                     Must not be an empty string.
             """
 
-            display_name = proto.Field(proto.STRING, number=1)
+            display_name = proto.Field(proto.STRING, number=1,)
 
         allowed_values = proto.RepeatedField(
             proto.MESSAGE, number=1, message="FieldType.EnumType.EnumValue",
@@ -282,7 +296,6 @@ class FieldType(proto.Message):
     primitive_type = proto.Field(
         proto.ENUM, number=1, oneof="type_decl", enum=PrimitiveType,
     )
-
     enum_type = proto.Field(
         proto.MESSAGE, number=2, oneof="type_decl", message=EnumType,
     )

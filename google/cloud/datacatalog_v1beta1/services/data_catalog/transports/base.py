@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,23 +13,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 import abc
-import typing
+from typing import Awaitable, Callable, Dict, Optional, Sequence, Union
 import pkg_resources
 
-from google import auth  # type: ignore
-from google.api_core import exceptions  # type: ignore
+import google.auth  # type: ignore
+import google.api_core  # type: ignore
+from google.api_core import exceptions as core_exceptions  # type: ignore
 from google.api_core import gapic_v1  # type: ignore
 from google.api_core import retry as retries  # type: ignore
-from google.auth import credentials  # type: ignore
+from google.auth import credentials as ga_credentials  # type: ignore
+from google.oauth2 import service_account  # type: ignore
 
 from google.cloud.datacatalog_v1beta1.types import datacatalog
 from google.cloud.datacatalog_v1beta1.types import tags
-from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
-from google.protobuf import empty_pb2 as empty  # type: ignore
-
+from google.iam.v1 import iam_policy_pb2  # type: ignore
+from google.iam.v1 import policy_pb2  # type: ignore
+from google.protobuf import empty_pb2  # type: ignore
 
 try:
     DEFAULT_CLIENT_INFO = gapic_v1.client_info.ClientInfo(
@@ -47,21 +46,25 @@ class DataCatalogTransport(abc.ABC):
 
     AUTH_SCOPES = ("https://www.googleapis.com/auth/cloud-platform",)
 
+    DEFAULT_HOST: str = "datacatalog.googleapis.com"
+
     def __init__(
         self,
         *,
-        host: str = "datacatalog.googleapis.com",
-        credentials: credentials.Credentials = None,
-        credentials_file: typing.Optional[str] = None,
-        scopes: typing.Optional[typing.Sequence[str]] = AUTH_SCOPES,
-        quota_project_id: typing.Optional[str] = None,
+        host: str = DEFAULT_HOST,
+        credentials: ga_credentials.Credentials = None,
+        credentials_file: Optional[str] = None,
+        scopes: Optional[Sequence[str]] = None,
+        quota_project_id: Optional[str] = None,
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
+        always_use_jwt_access: Optional[bool] = False,
         **kwargs,
     ) -> None:
         """Instantiate the transport.
 
         Args:
-            host (Optional[str]): The hostname to connect to.
+            host (Optional[str]):
+                 The hostname to connect to.
             credentials (Optional[google.auth.credentials.Credentials]): The
                 authorization credentials to attach to requests. These
                 credentials identify the application to the service; if none
@@ -70,42 +73,54 @@ class DataCatalogTransport(abc.ABC):
             credentials_file (Optional[str]): A file with credentials that can
                 be loaded with :func:`google.auth.load_credentials_from_file`.
                 This argument is mutually exclusive with credentials.
-            scope (Optional[Sequence[str]]): A list of scopes.
+            scopes (Optional[Sequence[str]]): A list of scopes.
             quota_project_id (Optional[str]): An optional project to use for billing
                 and quota.
-            client_info (google.api_core.gapic_v1.client_info.ClientInfo):	
-                The client info used to send a user-agent string along with	
-                API requests. If ``None``, then default info will be used.	
-                Generally, you only need to set this if you're developing	
+            client_info (google.api_core.gapic_v1.client_info.ClientInfo):
+                The client info used to send a user-agent string along with
+                API requests. If ``None``, then default info will be used.
+                Generally, you only need to set this if you're developing
                 your own client library.
+            always_use_jwt_access (Optional[bool]): Whether self signed JWT should
+                be used for service account credentials.
         """
         # Save the hostname. Default to port 443 (HTTPS) if none is specified.
         if ":" not in host:
             host += ":443"
         self._host = host
 
+        scopes_kwargs = {"scopes": scopes, "default_scopes": self.AUTH_SCOPES}
+
+        # Save the scopes.
+        self._scopes = scopes
+
         # If no credentials are provided, then determine the appropriate
         # defaults.
         if credentials and credentials_file:
-            raise exceptions.DuplicateCredentialArgs(
+            raise core_exceptions.DuplicateCredentialArgs(
                 "'credentials_file' and 'credentials' are mutually exclusive"
             )
 
         if credentials_file is not None:
-            credentials, _ = auth.load_credentials_from_file(
-                credentials_file, scopes=scopes, quota_project_id=quota_project_id
+            credentials, _ = google.auth.load_credentials_from_file(
+                credentials_file, **scopes_kwargs, quota_project_id=quota_project_id
             )
 
         elif credentials is None:
-            credentials, _ = auth.default(
-                scopes=scopes, quota_project_id=quota_project_id
+            credentials, _ = google.auth.default(
+                **scopes_kwargs, quota_project_id=quota_project_id
             )
+
+        # If the credentials are service account credentials, then always try to use self signed JWT.
+        if (
+            always_use_jwt_access
+            and isinstance(credentials, service_account.Credentials)
+            and hasattr(service_account.Credentials, "with_always_use_jwt_access")
+        ):
+            credentials = credentials.with_always_use_jwt_access(True)
 
         # Save the credentials.
         self._credentials = credentials
-
-        # Lifted into its own function so it can be stubbed out during tests.
-        self._prep_wrapped_messages(client_info)
 
     def _prep_wrapped_messages(self, client_info):
         # Precompute the wrapped methods.
@@ -126,8 +141,10 @@ class DataCatalogTransport(abc.ABC):
                     maximum=60.0,
                     multiplier=1.3,
                     predicate=retries.if_exception_type(
-                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
                     ),
+                    deadline=60.0,
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
@@ -139,8 +156,10 @@ class DataCatalogTransport(abc.ABC):
                     maximum=60.0,
                     multiplier=1.3,
                     predicate=retries.if_exception_type(
-                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
                     ),
+                    deadline=60.0,
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
@@ -161,8 +180,10 @@ class DataCatalogTransport(abc.ABC):
                     maximum=60.0,
                     multiplier=1.3,
                     predicate=retries.if_exception_type(
-                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
                     ),
+                    deadline=60.0,
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
@@ -174,8 +195,10 @@ class DataCatalogTransport(abc.ABC):
                     maximum=60.0,
                     multiplier=1.3,
                     predicate=retries.if_exception_type(
-                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
                     ),
+                    deadline=60.0,
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
@@ -187,8 +210,10 @@ class DataCatalogTransport(abc.ABC):
                     maximum=60.0,
                     multiplier=1.3,
                     predicate=retries.if_exception_type(
-                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
                     ),
+                    deadline=60.0,
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
@@ -206,8 +231,10 @@ class DataCatalogTransport(abc.ABC):
                     maximum=60.0,
                     multiplier=1.3,
                     predicate=retries.if_exception_type(
-                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
                     ),
+                    deadline=60.0,
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
@@ -222,8 +249,10 @@ class DataCatalogTransport(abc.ABC):
                     maximum=60.0,
                     multiplier=1.3,
                     predicate=retries.if_exception_type(
-                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
                     ),
+                    deadline=60.0,
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
@@ -250,8 +279,10 @@ class DataCatalogTransport(abc.ABC):
                     maximum=60.0,
                     multiplier=1.3,
                     predicate=retries.if_exception_type(
-                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
                     ),
+                    deadline=60.0,
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
@@ -269,8 +300,10 @@ class DataCatalogTransport(abc.ABC):
                     maximum=60.0,
                     multiplier=1.3,
                     predicate=retries.if_exception_type(
-                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
                     ),
+                    deadline=60.0,
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
@@ -282,8 +315,10 @@ class DataCatalogTransport(abc.ABC):
                     maximum=60.0,
                     multiplier=1.3,
                     predicate=retries.if_exception_type(
-                        exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                        core_exceptions.DeadlineExceeded,
+                        core_exceptions.ServiceUnavailable,
                     ),
+                    deadline=60.0,
                 ),
                 default_timeout=60.0,
                 client_info=client_info,
@@ -301,14 +336,23 @@ class DataCatalogTransport(abc.ABC):
             ),
         }
 
+    def close(self):
+        """Closes resources associated with the transport.
+
+       .. warning::
+            Only call this method if the transport is NOT shared
+            with other clients - this may cause errors in other clients!
+        """
+        raise NotImplementedError()
+
     @property
     def search_catalog(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.SearchCatalogRequest],
-        typing.Union[
+        Union[
             datacatalog.SearchCatalogResponse,
-            typing.Awaitable[datacatalog.SearchCatalogResponse],
+            Awaitable[datacatalog.SearchCatalogResponse],
         ],
     ]:
         raise NotImplementedError()
@@ -316,47 +360,47 @@ class DataCatalogTransport(abc.ABC):
     @property
     def create_entry_group(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.CreateEntryGroupRequest],
-        typing.Union[datacatalog.EntryGroup, typing.Awaitable[datacatalog.EntryGroup]],
+        Union[datacatalog.EntryGroup, Awaitable[datacatalog.EntryGroup]],
     ]:
         raise NotImplementedError()
 
     @property
     def update_entry_group(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.UpdateEntryGroupRequest],
-        typing.Union[datacatalog.EntryGroup, typing.Awaitable[datacatalog.EntryGroup]],
+        Union[datacatalog.EntryGroup, Awaitable[datacatalog.EntryGroup]],
     ]:
         raise NotImplementedError()
 
     @property
     def get_entry_group(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.GetEntryGroupRequest],
-        typing.Union[datacatalog.EntryGroup, typing.Awaitable[datacatalog.EntryGroup]],
+        Union[datacatalog.EntryGroup, Awaitable[datacatalog.EntryGroup]],
     ]:
         raise NotImplementedError()
 
     @property
     def delete_entry_group(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.DeleteEntryGroupRequest],
-        typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
     ]:
         raise NotImplementedError()
 
     @property
     def list_entry_groups(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.ListEntryGroupsRequest],
-        typing.Union[
+        Union[
             datacatalog.ListEntryGroupsResponse,
-            typing.Awaitable[datacatalog.ListEntryGroupsResponse],
+            Awaitable[datacatalog.ListEntryGroupsResponse],
         ],
     ]:
         raise NotImplementedError()
@@ -364,56 +408,55 @@ class DataCatalogTransport(abc.ABC):
     @property
     def create_entry(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.CreateEntryRequest],
-        typing.Union[datacatalog.Entry, typing.Awaitable[datacatalog.Entry]],
+        Union[datacatalog.Entry, Awaitable[datacatalog.Entry]],
     ]:
         raise NotImplementedError()
 
     @property
     def update_entry(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.UpdateEntryRequest],
-        typing.Union[datacatalog.Entry, typing.Awaitable[datacatalog.Entry]],
+        Union[datacatalog.Entry, Awaitable[datacatalog.Entry]],
     ]:
         raise NotImplementedError()
 
     @property
     def delete_entry(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.DeleteEntryRequest],
-        typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
     ]:
         raise NotImplementedError()
 
     @property
     def get_entry(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.GetEntryRequest],
-        typing.Union[datacatalog.Entry, typing.Awaitable[datacatalog.Entry]],
+        Union[datacatalog.Entry, Awaitable[datacatalog.Entry]],
     ]:
         raise NotImplementedError()
 
     @property
     def lookup_entry(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.LookupEntryRequest],
-        typing.Union[datacatalog.Entry, typing.Awaitable[datacatalog.Entry]],
+        Union[datacatalog.Entry, Awaitable[datacatalog.Entry]],
     ]:
         raise NotImplementedError()
 
     @property
     def list_entries(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.ListEntriesRequest],
-        typing.Union[
-            datacatalog.ListEntriesResponse,
-            typing.Awaitable[datacatalog.ListEntriesResponse],
+        Union[
+            datacatalog.ListEntriesResponse, Awaitable[datacatalog.ListEntriesResponse]
         ],
     ]:
         raise NotImplementedError()
@@ -421,139 +464,131 @@ class DataCatalogTransport(abc.ABC):
     @property
     def create_tag_template(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.CreateTagTemplateRequest],
-        typing.Union[tags.TagTemplate, typing.Awaitable[tags.TagTemplate]],
+        Union[tags.TagTemplate, Awaitable[tags.TagTemplate]],
     ]:
         raise NotImplementedError()
 
     @property
     def get_tag_template(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.GetTagTemplateRequest],
-        typing.Union[tags.TagTemplate, typing.Awaitable[tags.TagTemplate]],
+        Union[tags.TagTemplate, Awaitable[tags.TagTemplate]],
     ]:
         raise NotImplementedError()
 
     @property
     def update_tag_template(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.UpdateTagTemplateRequest],
-        typing.Union[tags.TagTemplate, typing.Awaitable[tags.TagTemplate]],
+        Union[tags.TagTemplate, Awaitable[tags.TagTemplate]],
     ]:
         raise NotImplementedError()
 
     @property
     def delete_tag_template(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.DeleteTagTemplateRequest],
-        typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
     ]:
         raise NotImplementedError()
 
     @property
     def create_tag_template_field(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.CreateTagTemplateFieldRequest],
-        typing.Union[tags.TagTemplateField, typing.Awaitable[tags.TagTemplateField]],
+        Union[tags.TagTemplateField, Awaitable[tags.TagTemplateField]],
     ]:
         raise NotImplementedError()
 
     @property
     def update_tag_template_field(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.UpdateTagTemplateFieldRequest],
-        typing.Union[tags.TagTemplateField, typing.Awaitable[tags.TagTemplateField]],
+        Union[tags.TagTemplateField, Awaitable[tags.TagTemplateField]],
     ]:
         raise NotImplementedError()
 
     @property
     def rename_tag_template_field(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.RenameTagTemplateFieldRequest],
-        typing.Union[tags.TagTemplateField, typing.Awaitable[tags.TagTemplateField]],
+        Union[tags.TagTemplateField, Awaitable[tags.TagTemplateField]],
     ]:
         raise NotImplementedError()
 
     @property
     def delete_tag_template_field(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.DeleteTagTemplateFieldRequest],
-        typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
     ]:
         raise NotImplementedError()
 
     @property
     def create_tag(
         self,
-    ) -> typing.Callable[
-        [datacatalog.CreateTagRequest],
-        typing.Union[tags.Tag, typing.Awaitable[tags.Tag]],
-    ]:
+    ) -> Callable[[datacatalog.CreateTagRequest], Union[tags.Tag, Awaitable[tags.Tag]]]:
         raise NotImplementedError()
 
     @property
     def update_tag(
         self,
-    ) -> typing.Callable[
-        [datacatalog.UpdateTagRequest],
-        typing.Union[tags.Tag, typing.Awaitable[tags.Tag]],
-    ]:
+    ) -> Callable[[datacatalog.UpdateTagRequest], Union[tags.Tag, Awaitable[tags.Tag]]]:
         raise NotImplementedError()
 
     @property
     def delete_tag(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.DeleteTagRequest],
-        typing.Union[empty.Empty, typing.Awaitable[empty.Empty]],
+        Union[empty_pb2.Empty, Awaitable[empty_pb2.Empty]],
     ]:
         raise NotImplementedError()
 
     @property
     def list_tags(
         self,
-    ) -> typing.Callable[
+    ) -> Callable[
         [datacatalog.ListTagsRequest],
-        typing.Union[
-            datacatalog.ListTagsResponse, typing.Awaitable[datacatalog.ListTagsResponse]
-        ],
+        Union[datacatalog.ListTagsResponse, Awaitable[datacatalog.ListTagsResponse]],
     ]:
         raise NotImplementedError()
 
     @property
     def set_iam_policy(
         self,
-    ) -> typing.Callable[
-        [iam_policy.SetIamPolicyRequest],
-        typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
+    ) -> Callable[
+        [iam_policy_pb2.SetIamPolicyRequest],
+        Union[policy_pb2.Policy, Awaitable[policy_pb2.Policy]],
     ]:
         raise NotImplementedError()
 
     @property
     def get_iam_policy(
         self,
-    ) -> typing.Callable[
-        [iam_policy.GetIamPolicyRequest],
-        typing.Union[policy.Policy, typing.Awaitable[policy.Policy]],
+    ) -> Callable[
+        [iam_policy_pb2.GetIamPolicyRequest],
+        Union[policy_pb2.Policy, Awaitable[policy_pb2.Policy]],
     ]:
         raise NotImplementedError()
 
     @property
     def test_iam_permissions(
         self,
-    ) -> typing.Callable[
-        [iam_policy.TestIamPermissionsRequest],
-        typing.Union[
-            iam_policy.TestIamPermissionsResponse,
-            typing.Awaitable[iam_policy.TestIamPermissionsResponse],
+    ) -> Callable[
+        [iam_policy_pb2.TestIamPermissionsRequest],
+        Union[
+            iam_policy_pb2.TestIamPermissionsResponse,
+            Awaitable[iam_policy_pb2.TestIamPermissionsResponse],
         ],
     ]:
         raise NotImplementedError()

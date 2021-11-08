@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,9 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 import proto  # type: ignore
-
 
 from google.cloud.datacatalog_v1beta1.types import policytagmanager
 
@@ -53,10 +50,8 @@ class SerializedTaxonomy(proto.Message):
             taxonomy if any.
     """
 
-    display_name = proto.Field(proto.STRING, number=1)
-
-    description = proto.Field(proto.STRING, number=2)
-
+    display_name = proto.Field(proto.STRING, number=1,)
+    description = proto.Field(proto.STRING, number=2,)
     policy_tags = proto.RepeatedField(
         proto.MESSAGE, number=3, message="SerializedPolicyTag",
     )
@@ -79,10 +74,8 @@ class SerializedPolicyTag(proto.Message):
             Children of the policy tag if any.
     """
 
-    display_name = proto.Field(proto.STRING, number=2)
-
-    description = proto.Field(proto.STRING, number=3)
-
+    display_name = proto.Field(proto.STRING, number=2,)
+    description = proto.Field(proto.STRING, number=3,)
     child_policy_tags = proto.RepeatedField(
         proto.MESSAGE, number=4, message="SerializedPolicyTag",
     )
@@ -92,16 +85,19 @@ class ImportTaxonomiesRequest(proto.Message):
     r"""Request message for
     [ImportTaxonomies][google.cloud.datacatalog.v1beta1.PolicyTagManagerSerialization.ImportTaxonomies].
 
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         parent (str):
             Required. Resource name of project that the
             newly created taxonomies will belong to.
         inline_source (google.cloud.datacatalog_v1beta1.types.InlineSource):
             Inline source used for taxonomies import
+            This field is a member of `oneof`_ ``source``.
     """
 
-    parent = proto.Field(proto.STRING, number=1)
-
+    parent = proto.Field(proto.STRING, number=1,)
     inline_source = proto.Field(
         proto.MESSAGE, number=2, oneof="source", message="InlineSource",
     )
@@ -138,6 +134,9 @@ class ExportTaxonomiesRequest(proto.Message):
     r"""Request message for
     [ExportTaxonomies][google.cloud.datacatalog.v1beta1.PolicyTagManagerSerialization.ExportTaxonomies].
 
+
+    .. _oneof: https://proto-plus-python.readthedocs.io/en/stable/fields.html#oneofs-mutually-exclusive-fields
+
     Attributes:
         parent (str):
             Required. Resource name of the project that
@@ -147,13 +146,13 @@ class ExportTaxonomiesRequest(proto.Message):
             be exported.
         serialized_taxonomies (bool):
             Export taxonomies as serialized taxonomies.
+
+            This field is a member of `oneof`_ ``destination``.
     """
 
-    parent = proto.Field(proto.STRING, number=1)
-
-    taxonomies = proto.RepeatedField(proto.STRING, number=2)
-
-    serialized_taxonomies = proto.Field(proto.BOOL, number=3, oneof="destination")
+    parent = proto.Field(proto.STRING, number=1,)
+    taxonomies = proto.RepeatedField(proto.STRING, number=2,)
+    serialized_taxonomies = proto.Field(proto.BOOL, number=3, oneof="destination",)
 
 
 class ExportTaxonomiesResponse(proto.Message):

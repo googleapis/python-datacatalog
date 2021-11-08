@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,19 +13,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 from collections import OrderedDict
 import functools
 import re
 from typing import Dict, Sequence, Tuple, Type, Union
 import pkg_resources
 
-import google.api_core.client_options as ClientOptions  # type: ignore
-from google.api_core import exceptions  # type: ignore
+from google.api_core.client_options import ClientOptions  # type: ignore
+from google.api_core import exceptions as core_exceptions  # type: ignore
 from google.api_core import gapic_v1  # type: ignore
 from google.api_core import retry as retries  # type: ignore
-from google.auth import credentials  # type: ignore
+from google.auth import credentials as ga_credentials  # type: ignore
 from google.oauth2 import service_account  # type: ignore
+
+OptionalRetry = Union[retries.Retry, object]
 
 from google.cloud.datacatalog_v1beta1.services.data_catalog import pagers
 from google.cloud.datacatalog_v1beta1.types import common
@@ -37,10 +37,9 @@ from google.cloud.datacatalog_v1beta1.types import search
 from google.cloud.datacatalog_v1beta1.types import table_spec
 from google.cloud.datacatalog_v1beta1.types import tags
 from google.cloud.datacatalog_v1beta1.types import timestamps
-from google.iam.v1 import iam_policy_pb2 as iam_policy  # type: ignore
-from google.iam.v1 import policy_pb2 as policy  # type: ignore
-from google.protobuf import field_mask_pb2 as field_mask  # type: ignore
-
+from google.iam.v1 import iam_policy_pb2  # type: ignore
+from google.iam.v1 import policy_pb2  # type: ignore
+from google.protobuf import field_mask_pb2  # type: ignore
 from .transports.base import DataCatalogTransport, DEFAULT_CLIENT_INFO
 from .transports.grpc_asyncio import DataCatalogGrpcAsyncIOTransport
 from .client import DataCatalogClient
@@ -68,39 +67,63 @@ class DataCatalogAsyncClient:
     parse_tag_template_field_path = staticmethod(
         DataCatalogClient.parse_tag_template_field_path
     )
-
     common_billing_account_path = staticmethod(
         DataCatalogClient.common_billing_account_path
     )
     parse_common_billing_account_path = staticmethod(
         DataCatalogClient.parse_common_billing_account_path
     )
-
     common_folder_path = staticmethod(DataCatalogClient.common_folder_path)
     parse_common_folder_path = staticmethod(DataCatalogClient.parse_common_folder_path)
-
     common_organization_path = staticmethod(DataCatalogClient.common_organization_path)
     parse_common_organization_path = staticmethod(
         DataCatalogClient.parse_common_organization_path
     )
-
     common_project_path = staticmethod(DataCatalogClient.common_project_path)
     parse_common_project_path = staticmethod(
         DataCatalogClient.parse_common_project_path
     )
-
     common_location_path = staticmethod(DataCatalogClient.common_location_path)
     parse_common_location_path = staticmethod(
         DataCatalogClient.parse_common_location_path
     )
 
-    from_service_account_info = DataCatalogClient.from_service_account_info
-    from_service_account_file = DataCatalogClient.from_service_account_file
+    @classmethod
+    def from_service_account_info(cls, info: dict, *args, **kwargs):
+        """Creates an instance of this client using the provided credentials
+            info.
+
+        Args:
+            info (dict): The service account private key info.
+            args: Additional arguments to pass to the constructor.
+            kwargs: Additional arguments to pass to the constructor.
+
+        Returns:
+            DataCatalogAsyncClient: The constructed client.
+        """
+        return DataCatalogClient.from_service_account_info.__func__(DataCatalogAsyncClient, info, *args, **kwargs)  # type: ignore
+
+    @classmethod
+    def from_service_account_file(cls, filename: str, *args, **kwargs):
+        """Creates an instance of this client using the provided credentials
+            file.
+
+        Args:
+            filename (str): The path to the service account private key json
+                file.
+            args: Additional arguments to pass to the constructor.
+            kwargs: Additional arguments to pass to the constructor.
+
+        Returns:
+            DataCatalogAsyncClient: The constructed client.
+        """
+        return DataCatalogClient.from_service_account_file.__func__(DataCatalogAsyncClient, filename, *args, **kwargs)  # type: ignore
+
     from_service_account_json = from_service_account_file
 
     @property
     def transport(self) -> DataCatalogTransport:
-        """Return the transport used by the client instance.
+        """Returns the transport used by the client instance.
 
         Returns:
             DataCatalogTransport: The transport used by the client instance.
@@ -114,12 +137,12 @@ class DataCatalogAsyncClient:
     def __init__(
         self,
         *,
-        credentials: credentials.Credentials = None,
+        credentials: ga_credentials.Credentials = None,
         transport: Union[str, DataCatalogTransport] = "grpc_asyncio",
         client_options: ClientOptions = None,
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
     ) -> None:
-        """Instantiate the data catalog client.
+        """Instantiates the data catalog client.
 
         Args:
             credentials (Optional[google.auth.credentials.Credentials]): The
@@ -151,7 +174,6 @@ class DataCatalogAsyncClient:
             google.auth.exceptions.MutualTlsChannelError: If mutual TLS transport
                 creation failed for any reason.
         """
-
         self._client = DataCatalogClient(
             credentials=credentials,
             transport=transport,
@@ -161,11 +183,11 @@ class DataCatalogAsyncClient:
 
     async def search_catalog(
         self,
-        request: datacatalog.SearchCatalogRequest = None,
+        request: Union[datacatalog.SearchCatalogRequest, dict] = None,
         *,
         scope: datacatalog.SearchCatalogRequest.Scope = None,
         query: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> pagers.SearchCatalogAsyncPager:
@@ -188,7 +210,7 @@ class DataCatalogAsyncClient:
         for more information.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.SearchCatalogRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.SearchCatalogRequest, dict]):
                 The request object. Request message for
                 [SearchCatalog][google.cloud.datacatalog.v1beta1.DataCatalog.SearchCatalog].
             scope (:class:`google.cloud.datacatalog_v1beta1.types.SearchCatalogRequest.Scope`):
@@ -220,7 +242,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``query`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -250,7 +271,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if scope is not None:
             request.scope = scope
         if query is not None:
@@ -278,12 +298,12 @@ class DataCatalogAsyncClient:
 
     async def create_entry_group(
         self,
-        request: datacatalog.CreateEntryGroupRequest = None,
+        request: Union[datacatalog.CreateEntryGroupRequest, dict] = None,
         *,
         parent: str = None,
         entry_group_id: str = None,
         entry_group: datacatalog.EntryGroup = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.EntryGroup:
@@ -297,7 +317,7 @@ class DataCatalogAsyncClient:
         for more information).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.CreateEntryGroupRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.CreateEntryGroupRequest, dict]):
                 The request object. Request message for
                 [CreateEntryGroup][google.cloud.datacatalog.v1beta1.DataCatalog.CreateEntryGroup].
             parent (:class:`str`):
@@ -330,7 +350,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``entry_group`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -360,7 +379,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if entry_group_id is not None:
@@ -390,11 +408,11 @@ class DataCatalogAsyncClient:
 
     async def update_entry_group(
         self,
-        request: datacatalog.UpdateEntryGroupRequest = None,
+        request: Union[datacatalog.UpdateEntryGroupRequest, dict] = None,
         *,
         entry_group: datacatalog.EntryGroup = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        update_mask: field_mask_pb2.FieldMask = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.EntryGroup:
@@ -405,7 +423,7 @@ class DataCatalogAsyncClient:
         for more information).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.UpdateEntryGroupRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.UpdateEntryGroupRequest, dict]):
                 The request object. Request message for
                 [UpdateEntryGroup][google.cloud.datacatalog.v1beta1.DataCatalog.UpdateEntryGroup].
             entry_group (:class:`google.cloud.datacatalog_v1beta1.types.EntryGroup`):
@@ -423,7 +441,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -453,7 +470,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if entry_group is not None:
             request.entry_group = entry_group
         if update_mask is not None:
@@ -483,18 +499,18 @@ class DataCatalogAsyncClient:
 
     async def get_entry_group(
         self,
-        request: datacatalog.GetEntryGroupRequest = None,
+        request: Union[datacatalog.GetEntryGroupRequest, dict] = None,
         *,
         name: str = None,
-        read_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        read_mask: field_mask_pb2.FieldMask = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.EntryGroup:
         r"""Gets an EntryGroup.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.GetEntryGroupRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.GetEntryGroupRequest, dict]):
                 The request object. Request message for
                 [GetEntryGroup][google.cloud.datacatalog.v1beta1.DataCatalog.GetEntryGroup].
             name (:class:`str`):
@@ -511,7 +527,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``read_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -541,7 +556,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if read_mask is not None:
@@ -556,8 +570,10 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    core_exceptions.DeadlineExceeded,
+                    core_exceptions.ServiceUnavailable,
                 ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -577,10 +593,10 @@ class DataCatalogAsyncClient:
 
     async def delete_entry_group(
         self,
-        request: datacatalog.DeleteEntryGroupRequest = None,
+        request: Union[datacatalog.DeleteEntryGroupRequest, dict] = None,
         *,
         name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
@@ -592,7 +608,7 @@ class DataCatalogAsyncClient:
         for more information).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.DeleteEntryGroupRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.DeleteEntryGroupRequest, dict]):
                 The request object. Request message for
                 [DeleteEntryGroup][google.cloud.datacatalog.v1beta1.DataCatalog.DeleteEntryGroup].
             name (:class:`str`):
@@ -602,7 +618,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -623,7 +638,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -636,8 +650,10 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    core_exceptions.DeadlineExceeded,
+                    core_exceptions.ServiceUnavailable,
                 ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -656,17 +672,17 @@ class DataCatalogAsyncClient:
 
     async def list_entry_groups(
         self,
-        request: datacatalog.ListEntryGroupsRequest = None,
+        request: Union[datacatalog.ListEntryGroupsRequest, dict] = None,
         *,
         parent: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> pagers.ListEntryGroupsAsyncPager:
         r"""Lists entry groups.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.ListEntryGroupsRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.ListEntryGroupsRequest, dict]):
                 The request object. Request message for
                 [ListEntryGroups][google.cloud.datacatalog.v1beta1.DataCatalog.ListEntryGroups].
             parent (:class:`str`):
@@ -679,7 +695,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -709,7 +724,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
 
@@ -741,12 +755,12 @@ class DataCatalogAsyncClient:
 
     async def create_entry(
         self,
-        request: datacatalog.CreateEntryRequest = None,
+        request: Union[datacatalog.CreateEntryRequest, dict] = None,
         *,
         parent: str = None,
         entry_id: str = None,
         entry: datacatalog.Entry = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.Entry:
@@ -762,7 +776,7 @@ class DataCatalogAsyncClient:
         A maximum of 100,000 entries may be created per entry group.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.CreateEntryRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.CreateEntryRequest, dict]):
                 The request object. Request message for
                 [CreateEntry][google.cloud.datacatalog.v1beta1.DataCatalog.CreateEntry].
             parent (:class:`str`):
@@ -789,7 +803,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``entry`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -826,7 +839,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if entry_id is not None:
@@ -856,11 +868,11 @@ class DataCatalogAsyncClient:
 
     async def update_entry(
         self,
-        request: datacatalog.UpdateEntryRequest = None,
+        request: Union[datacatalog.UpdateEntryRequest, dict] = None,
         *,
         entry: datacatalog.Entry = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        update_mask: field_mask_pb2.FieldMask = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.Entry:
@@ -871,7 +883,7 @@ class DataCatalogAsyncClient:
         for more information).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.UpdateEntryRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.UpdateEntryRequest, dict]):
                 The request object. Request message for
                 [UpdateEntry][google.cloud.datacatalog.v1beta1.DataCatalog.UpdateEntry].
             entry (:class:`google.cloud.datacatalog_v1beta1.types.Entry`):
@@ -912,7 +924,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -949,7 +960,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if entry is not None:
             request.entry = entry
         if update_mask is not None:
@@ -979,10 +989,10 @@ class DataCatalogAsyncClient:
 
     async def delete_entry(
         self,
-        request: datacatalog.DeleteEntryRequest = None,
+        request: Union[datacatalog.DeleteEntryRequest, dict] = None,
         *,
         name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
@@ -995,7 +1005,7 @@ class DataCatalogAsyncClient:
         for more information).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.DeleteEntryRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.DeleteEntryRequest, dict]):
                 The request object. Request message for
                 [DeleteEntry][google.cloud.datacatalog.v1beta1.DataCatalog.DeleteEntry].
             name (:class:`str`):
@@ -1006,7 +1016,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1027,7 +1036,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -1040,8 +1048,10 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    core_exceptions.DeadlineExceeded,
+                    core_exceptions.ServiceUnavailable,
                 ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -1060,17 +1070,17 @@ class DataCatalogAsyncClient:
 
     async def get_entry(
         self,
-        request: datacatalog.GetEntryRequest = None,
+        request: Union[datacatalog.GetEntryRequest, dict] = None,
         *,
         name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.Entry:
         r"""Gets an entry.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.GetEntryRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.GetEntryRequest, dict]):
                 The request object. Request message for
                 [GetEntry][google.cloud.datacatalog.v1beta1.DataCatalog.GetEntry].
             name (:class:`str`):
@@ -1081,7 +1091,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1118,7 +1127,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -1131,8 +1139,10 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    core_exceptions.DeadlineExceeded,
+                    core_exceptions.ServiceUnavailable,
                 ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -1152,9 +1162,9 @@ class DataCatalogAsyncClient:
 
     async def lookup_entry(
         self,
-        request: datacatalog.LookupEntryRequest = None,
+        request: Union[datacatalog.LookupEntryRequest, dict] = None,
         *,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.Entry:
@@ -1164,10 +1174,9 @@ class DataCatalogAsyncClient:
         Entry.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.LookupEntryRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.LookupEntryRequest, dict]):
                 The request object. Request message for
                 [LookupEntry][google.cloud.datacatalog.v1beta1.DataCatalog.LookupEntry].
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1191,7 +1200,6 @@ class DataCatalogAsyncClient:
 
         """
         # Create or coerce a protobuf request object.
-
         request = datacatalog.LookupEntryRequest(request)
 
         # Wrap the RPC method; this adds retry and timeout information,
@@ -1203,8 +1211,10 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    core_exceptions.DeadlineExceeded,
+                    core_exceptions.ServiceUnavailable,
                 ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -1218,17 +1228,17 @@ class DataCatalogAsyncClient:
 
     async def list_entries(
         self,
-        request: datacatalog.ListEntriesRequest = None,
+        request: Union[datacatalog.ListEntriesRequest, dict] = None,
         *,
         parent: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> pagers.ListEntriesAsyncPager:
         r"""Lists entries.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.ListEntriesRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.ListEntriesRequest, dict]):
                 The request object. Request message for
                 [ListEntries][google.cloud.datacatalog.v1beta1.DataCatalog.ListEntries].
             parent (:class:`str`):
@@ -1240,7 +1250,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1270,7 +1279,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
 
@@ -1302,12 +1310,12 @@ class DataCatalogAsyncClient:
 
     async def create_tag_template(
         self,
-        request: datacatalog.CreateTagTemplateRequest = None,
+        request: Union[datacatalog.CreateTagTemplateRequest, dict] = None,
         *,
         parent: str = None,
         tag_template_id: str = None,
         tag_template: tags.TagTemplate = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplate:
@@ -1318,7 +1326,7 @@ class DataCatalogAsyncClient:
         for more information).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.CreateTagTemplateRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.CreateTagTemplateRequest, dict]):
                 The request object. Request message for
                 [CreateTagTemplate][google.cloud.datacatalog.v1beta1.DataCatalog.CreateTagTemplate].
             parent (:class:`str`):
@@ -1345,7 +1353,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``tag_template`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1379,7 +1386,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if tag_template_id is not None:
@@ -1409,17 +1415,17 @@ class DataCatalogAsyncClient:
 
     async def get_tag_template(
         self,
-        request: datacatalog.GetTagTemplateRequest = None,
+        request: Union[datacatalog.GetTagTemplateRequest, dict] = None,
         *,
         name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplate:
         r"""Gets a tag template.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.GetTagTemplateRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.GetTagTemplateRequest, dict]):
                 The request object. Request message for
                 [GetTagTemplate][google.cloud.datacatalog.v1beta1.DataCatalog.GetTagTemplate].
             name (:class:`str`):
@@ -1430,7 +1436,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1464,7 +1469,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -1477,8 +1481,10 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    core_exceptions.DeadlineExceeded,
+                    core_exceptions.ServiceUnavailable,
                 ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -1498,11 +1504,11 @@ class DataCatalogAsyncClient:
 
     async def update_tag_template(
         self,
-        request: datacatalog.UpdateTagTemplateRequest = None,
+        request: Union[datacatalog.UpdateTagTemplateRequest, dict] = None,
         *,
         tag_template: tags.TagTemplate = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        update_mask: field_mask_pb2.FieldMask = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplate:
@@ -1517,7 +1523,7 @@ class DataCatalogAsyncClient:
         for more information).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.UpdateTagTemplateRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.UpdateTagTemplateRequest, dict]):
                 The request object. Request message for
                 [UpdateTagTemplate][google.cloud.datacatalog.v1beta1.DataCatalog.UpdateTagTemplate].
             tag_template (:class:`google.cloud.datacatalog_v1beta1.types.TagTemplate`):
@@ -1541,7 +1547,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1575,7 +1580,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if tag_template is not None:
             request.tag_template = tag_template
         if update_mask is not None:
@@ -1605,11 +1609,11 @@ class DataCatalogAsyncClient:
 
     async def delete_tag_template(
         self,
-        request: datacatalog.DeleteTagTemplateRequest = None,
+        request: Union[datacatalog.DeleteTagTemplateRequest, dict] = None,
         *,
         name: str = None,
         force: bool = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
@@ -1620,7 +1624,7 @@ class DataCatalogAsyncClient:
         for more information).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.DeleteTagTemplateRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.DeleteTagTemplateRequest, dict]):
                 The request object. Request message for
                 [DeleteTagTemplate][google.cloud.datacatalog.v1beta1.DataCatalog.DeleteTagTemplate].
             name (:class:`str`):
@@ -1641,7 +1645,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``force`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1662,7 +1665,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if force is not None:
@@ -1677,8 +1679,10 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    core_exceptions.DeadlineExceeded,
+                    core_exceptions.ServiceUnavailable,
                 ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -1697,12 +1701,12 @@ class DataCatalogAsyncClient:
 
     async def create_tag_template_field(
         self,
-        request: datacatalog.CreateTagTemplateFieldRequest = None,
+        request: Union[datacatalog.CreateTagTemplateFieldRequest, dict] = None,
         *,
         parent: str = None,
         tag_template_field_id: str = None,
         tag_template_field: tags.TagTemplateField = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplateField:
@@ -1713,7 +1717,7 @@ class DataCatalogAsyncClient:
         for more information).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.CreateTagTemplateFieldRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.CreateTagTemplateFieldRequest, dict]):
                 The request object. Request message for
                 [CreateTagTemplateField][google.cloud.datacatalog.v1beta1.DataCatalog.CreateTagTemplateField].
             parent (:class:`str`):
@@ -1746,7 +1750,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``tag_template_field`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1773,7 +1776,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if tag_template_field_id is not None:
@@ -1803,12 +1805,12 @@ class DataCatalogAsyncClient:
 
     async def update_tag_template_field(
         self,
-        request: datacatalog.UpdateTagTemplateFieldRequest = None,
+        request: Union[datacatalog.UpdateTagTemplateFieldRequest, dict] = None,
         *,
         name: str = None,
         tag_template_field: tags.TagTemplateField = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        update_mask: field_mask_pb2.FieldMask = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplateField:
@@ -1820,7 +1822,7 @@ class DataCatalogAsyncClient:
         for more information).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.UpdateTagTemplateFieldRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.UpdateTagTemplateFieldRequest, dict]):
                 The request object. Request message for
                 [UpdateTagTemplateField][google.cloud.datacatalog.v1beta1.DataCatalog.UpdateTagTemplateField].
             name (:class:`str`):
@@ -1856,7 +1858,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1883,7 +1884,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if tag_template_field is not None:
@@ -1913,11 +1913,11 @@ class DataCatalogAsyncClient:
 
     async def rename_tag_template_field(
         self,
-        request: datacatalog.RenameTagTemplateFieldRequest = None,
+        request: Union[datacatalog.RenameTagTemplateFieldRequest, dict] = None,
         *,
         name: str = None,
         new_tag_template_field_id: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplateField:
@@ -1928,7 +1928,7 @@ class DataCatalogAsyncClient:
         for more information).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.RenameTagTemplateFieldRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.RenameTagTemplateFieldRequest, dict]):
                 The request object. Request message for
                 [RenameTagTemplateField][google.cloud.datacatalog.v1beta1.DataCatalog.RenameTagTemplateField].
             name (:class:`str`):
@@ -1946,7 +1946,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``new_tag_template_field_id`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -1973,7 +1972,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if new_tag_template_field_id is not None:
@@ -2001,11 +1999,11 @@ class DataCatalogAsyncClient:
 
     async def delete_tag_template_field(
         self,
-        request: datacatalog.DeleteTagTemplateFieldRequest = None,
+        request: Union[datacatalog.DeleteTagTemplateFieldRequest, dict] = None,
         *,
         name: str = None,
         force: bool = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
@@ -2017,7 +2015,7 @@ class DataCatalogAsyncClient:
         for more information).
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.DeleteTagTemplateFieldRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.DeleteTagTemplateFieldRequest, dict]):
                 The request object. Request message for
                 [DeleteTagTemplateField][google.cloud.datacatalog.v1beta1.DataCatalog.DeleteTagTemplateField].
             name (:class:`str`):
@@ -2038,7 +2036,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``force`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2059,7 +2056,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
         if force is not None:
@@ -2074,8 +2070,10 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    core_exceptions.DeadlineExceeded,
+                    core_exceptions.ServiceUnavailable,
                 ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -2094,11 +2092,11 @@ class DataCatalogAsyncClient:
 
     async def create_tag(
         self,
-        request: datacatalog.CreateTagRequest = None,
+        request: Union[datacatalog.CreateTagRequest, dict] = None,
         *,
         parent: str = None,
         tag: tags.Tag = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.Tag:
@@ -2111,7 +2109,7 @@ class DataCatalogAsyncClient:
         used to create the tag must be from the same organization.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.CreateTagRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.CreateTagRequest, dict]):
                 The request object. Request message for
                 [CreateTag][google.cloud.datacatalog.v1beta1.DataCatalog.CreateTag].
             parent (:class:`str`):
@@ -2131,7 +2129,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``tag`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2164,7 +2161,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
         if tag is not None:
@@ -2192,18 +2188,18 @@ class DataCatalogAsyncClient:
 
     async def update_tag(
         self,
-        request: datacatalog.UpdateTagRequest = None,
+        request: Union[datacatalog.UpdateTagRequest, dict] = None,
         *,
         tag: tags.Tag = None,
-        update_mask: field_mask.FieldMask = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        update_mask: field_mask_pb2.FieldMask = None,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.Tag:
         r"""Updates an existing tag.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.UpdateTagRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.UpdateTagRequest, dict]):
                 The request object. Request message for
                 [UpdateTag][google.cloud.datacatalog.v1beta1.DataCatalog.UpdateTag].
             tag (:class:`google.cloud.datacatalog_v1beta1.types.Tag`):
@@ -2221,7 +2217,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2254,7 +2249,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if tag is not None:
             request.tag = tag
         if update_mask is not None:
@@ -2282,17 +2276,17 @@ class DataCatalogAsyncClient:
 
     async def delete_tag(
         self,
-        request: datacatalog.DeleteTagRequest = None,
+        request: Union[datacatalog.DeleteTagRequest, dict] = None,
         *,
         name: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
         r"""Deletes a tag.
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.DeleteTagRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.DeleteTagRequest, dict]):
                 The request object. Request message for
                 [DeleteTag][google.cloud.datacatalog.v1beta1.DataCatalog.DeleteTag].
             name (:class:`str`):
@@ -2303,7 +2297,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2324,7 +2317,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if name is not None:
             request.name = name
 
@@ -2337,8 +2329,10 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    core_exceptions.DeadlineExceeded,
+                    core_exceptions.ServiceUnavailable,
                 ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -2357,10 +2351,10 @@ class DataCatalogAsyncClient:
 
     async def list_tags(
         self,
-        request: datacatalog.ListTagsRequest = None,
+        request: Union[datacatalog.ListTagsRequest, dict] = None,
         *,
         parent: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> pagers.ListTagsAsyncPager:
@@ -2368,7 +2362,7 @@ class DataCatalogAsyncClient:
         [Entry][google.cloud.datacatalog.v1beta1.Entry].
 
         Args:
-            request (:class:`google.cloud.datacatalog_v1beta1.types.ListTagsRequest`):
+            request (Union[google.cloud.datacatalog_v1beta1.types.ListTagsRequest, dict]):
                 The request object. Request message for
                 [ListTags][google.cloud.datacatalog.v1beta1.DataCatalog.ListTags].
             parent (:class:`str`):
@@ -2385,7 +2379,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``parent`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2415,7 +2408,6 @@ class DataCatalogAsyncClient:
 
         # If we have keyword arguments corresponding to fields on the
         # request, apply these.
-
         if parent is not None:
             request.parent = parent
 
@@ -2428,8 +2420,10 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    exceptions.DeadlineExceeded, exceptions.ServiceUnavailable,
+                    core_exceptions.DeadlineExceeded,
+                    core_exceptions.ServiceUnavailable,
                 ),
+                deadline=60.0,
             ),
             default_timeout=60.0,
             client_info=DEFAULT_CLIENT_INFO,
@@ -2455,13 +2449,13 @@ class DataCatalogAsyncClient:
 
     async def set_iam_policy(
         self,
-        request: iam_policy.SetIamPolicyRequest = None,
+        request: Union[iam_policy_pb2.SetIamPolicyRequest, dict] = None,
         *,
         resource: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> policy_pb2.Policy:
         r"""Sets the access control policy for a resource. Replaces any
         existing policy. Supported resources are:
 
@@ -2481,7 +2475,7 @@ class DataCatalogAsyncClient:
            entry groups.
 
         Args:
-            request (:class:`google.iam.v1.iam_policy_pb2.SetIamPolicyRequest`):
+            request (Union[google.iam.v1.iam_policy_pb2.SetIamPolicyRequest, dict]):
                 The request object. Request message for `SetIamPolicy`
                 method.
             resource (:class:`str`):
@@ -2493,7 +2487,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``resource`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2572,10 +2565,9 @@ class DataCatalogAsyncClient:
         # The request isn't a proto-plus wrapped type,
         # so it must be constructed via keyword expansion.
         if isinstance(request, dict):
-            request = iam_policy.SetIamPolicyRequest(**request)
-
+            request = iam_policy_pb2.SetIamPolicyRequest(**request)
         elif not request:
-            request = iam_policy.SetIamPolicyRequest(resource=resource,)
+            request = iam_policy_pb2.SetIamPolicyRequest(resource=resource,)
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
@@ -2599,13 +2591,13 @@ class DataCatalogAsyncClient:
 
     async def get_iam_policy(
         self,
-        request: iam_policy.GetIamPolicyRequest = None,
+        request: Union[iam_policy_pb2.GetIamPolicyRequest, dict] = None,
         *,
         resource: str = None,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> policy.Policy:
+    ) -> policy_pb2.Policy:
         r"""Gets the access control policy for a resource. A ``NOT_FOUND``
         error is returned if the resource does not exist. An empty
         policy is returned if the resource exists but does not have a
@@ -2629,7 +2621,7 @@ class DataCatalogAsyncClient:
            entry groups.
 
         Args:
-            request (:class:`google.iam.v1.iam_policy_pb2.GetIamPolicyRequest`):
+            request (Union[google.iam.v1.iam_policy_pb2.GetIamPolicyRequest, dict]):
                 The request object. Request message for `GetIamPolicy`
                 method.
             resource (:class:`str`):
@@ -2641,7 +2633,6 @@ class DataCatalogAsyncClient:
                 This corresponds to the ``resource`` field
                 on the ``request`` instance; if ``request`` is provided, this
                 should not be set.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2720,10 +2711,9 @@ class DataCatalogAsyncClient:
         # The request isn't a proto-plus wrapped type,
         # so it must be constructed via keyword expansion.
         if isinstance(request, dict):
-            request = iam_policy.GetIamPolicyRequest(**request)
-
+            request = iam_policy_pb2.GetIamPolicyRequest(**request)
         elif not request:
-            request = iam_policy.GetIamPolicyRequest(resource=resource,)
+            request = iam_policy_pb2.GetIamPolicyRequest(resource=resource,)
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
@@ -2747,12 +2737,12 @@ class DataCatalogAsyncClient:
 
     async def test_iam_permissions(
         self,
-        request: iam_policy.TestIamPermissionsRequest = None,
+        request: Union[iam_policy_pb2.TestIamPermissionsRequest, dict] = None,
         *,
-        retry: retries.Retry = gapic_v1.method.DEFAULT,
+        retry: OptionalRetry = gapic_v1.method.DEFAULT,
         timeout: float = None,
         metadata: Sequence[Tuple[str, str]] = (),
-    ) -> iam_policy.TestIamPermissionsResponse:
+    ) -> iam_policy_pb2.TestIamPermissionsResponse:
         r"""Returns the caller's permissions on a resource. If the resource
         does not exist, an empty set of permissions is returned (We
         don't return a ``NOT_FOUND`` error).
@@ -2769,10 +2759,9 @@ class DataCatalogAsyncClient:
         this request.
 
         Args:
-            request (:class:`google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest`):
+            request (Union[google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest, dict]):
                 The request object. Request message for
                 `TestIamPermissions` method.
-
             retry (google.api_core.retry.Retry): Designation of what errors, if any,
                 should be retried.
             timeout (float): The timeout for this request.
@@ -2784,11 +2773,10 @@ class DataCatalogAsyncClient:
                 Response message for TestIamPermissions method.
         """
         # Create or coerce a protobuf request object.
-
         # The request isn't a proto-plus wrapped type,
         # so it must be constructed via keyword expansion.
         if isinstance(request, dict):
-            request = iam_policy.TestIamPermissionsRequest(**request)
+            request = iam_policy_pb2.TestIamPermissionsRequest(**request)
 
         # Wrap the RPC method; this adds retry and timeout information,
         # and friendly error handling.
@@ -2809,6 +2797,12 @@ class DataCatalogAsyncClient:
 
         # Done; return the response.
         return response
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc, tb):
+        await self.transport.close()
 
 
 try:

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
 import proto  # type: ignore
 
-
-from google.protobuf import timestamp_pb2 as timestamp  # type: ignore
+from google.protobuf import timestamp_pb2  # type: ignore
 
 
 __protobuf__ = proto.module(
@@ -27,27 +24,29 @@ __protobuf__ = proto.module(
 
 
 class SystemTimestamps(proto.Message):
-    r"""Timestamps about this resource according to a particular
+    r"""Timestamps associated with this resource in a particular
     system.
 
     Attributes:
         create_time (google.protobuf.timestamp_pb2.Timestamp):
-            The creation time of the resource within the
+            Creation timestamp of the resource within the
             given system.
         update_time (google.protobuf.timestamp_pb2.Timestamp):
-            The last-modified time of the resource within
-            the given system.
+            Timestamp of the last modification of the
+            resource or its metadata within a given system.
+            Note: Depending on the source system, not every
+            modification updates this timestamp.
+            For example, BigQuery timestamps every metadata
+            modification but not data or permission changes.
         expire_time (google.protobuf.timestamp_pb2.Timestamp):
-            Output only. The expiration time of the
-            resource within the given system. Currently only
-            apllicable to BigQuery resources.
+            Output only. Expiration timestamp of the
+            resource within the given system.
+            Currently only applicable to BigQuery resources.
     """
 
-    create_time = proto.Field(proto.MESSAGE, number=1, message=timestamp.Timestamp,)
-
-    update_time = proto.Field(proto.MESSAGE, number=2, message=timestamp.Timestamp,)
-
-    expire_time = proto.Field(proto.MESSAGE, number=3, message=timestamp.Timestamp,)
+    create_time = proto.Field(proto.MESSAGE, number=1, message=timestamp_pb2.Timestamp,)
+    update_time = proto.Field(proto.MESSAGE, number=2, message=timestamp_pb2.Timestamp,)
+    expire_time = proto.Field(proto.MESSAGE, number=3, message=timestamp_pb2.Timestamp,)
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))
