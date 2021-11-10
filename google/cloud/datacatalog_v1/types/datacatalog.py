@@ -102,7 +102,7 @@ class SearchCatalogRequest(proto.Message):
             Optional. The query string with a minimum of 3 characters
             and specific syntax. For more information, see `Data Catalog
             search
-            syntax </data-catalog/docs/how-to/search-reference>`__.
+            syntax <https://cloud.google.com/data-catalog/docs/how-to/search-reference>`__.
 
             An empty query string returns all data assets (in the
             specified scope) that you have access to.
@@ -515,6 +515,7 @@ class LookupEntryRequest(proto.Message):
             Example for a DPMS table:
 
             ``dataproc_metastore:{PROJECT_ID}.{LOCATION_ID}.{INSTANCE_ID}.{DATABASE_ID}.{TABLE_ID}``
+
             This field is a member of `oneof`_ ``target_name``.
     """
 
