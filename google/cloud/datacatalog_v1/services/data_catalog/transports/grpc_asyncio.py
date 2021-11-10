@@ -16,8 +16,8 @@
 import warnings
 from typing import Awaitable, Callable, Dict, Optional, Sequence, Tuple, Union
 
-from google.api_core import gapic_v1  # type: ignore
-from google.api_core import grpc_helpers_async  # type: ignore
+from google.api_core import gapic_v1
+from google.api_core import grpc_helpers_async
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
 
@@ -620,6 +620,10 @@ class DataCatalogGrpcAsyncIOTransport(DataCatalogTransport):
         r"""Return a callable for the list entries method over gRPC.
 
         Lists entries.
+
+        Note: Currently, this method can list only custom entries. To
+        get a list of both custom and automatically created entries, use
+        [SearchCatalog][google.cloud.datacatalog.v1.DataCatalog.SearchCatalog].
 
         Returns:
             Callable[[~.ListEntriesRequest],

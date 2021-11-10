@@ -14,23 +14,25 @@
 # limitations under the License.
 #
 from collections import OrderedDict
-from distutils import util
 import os
 import re
 from typing import Dict, Optional, Sequence, Tuple, Type, Union
 import pkg_resources
 
-from google.api_core import client_options as client_options_lib  # type: ignore
-from google.api_core import exceptions as core_exceptions  # type: ignore
-from google.api_core import gapic_v1  # type: ignore
-from google.api_core import retry as retries  # type: ignore
+from google.api_core import client_options as client_options_lib
+from google.api_core import exceptions as core_exceptions
+from google.api_core import gapic_v1
+from google.api_core import retry as retries
 from google.auth import credentials as ga_credentials  # type: ignore
 from google.auth.transport import mtls  # type: ignore
 from google.auth.transport.grpc import SslCredentials  # type: ignore
 from google.auth.exceptions import MutualTLSChannelError  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
-OptionalRetry = Union[retries.Retry, object]
+try:
+    OptionalRetry = Union[retries.Retry, gapic_v1.method._MethodDefault]
+except AttributeError:  # pragma: NO COVER
+    OptionalRetry = Union[retries.Retry, object]  # type: ignore
 
 from google.cloud.datacatalog_v1.services.data_catalog import pagers
 from google.cloud.datacatalog_v1.types import common
@@ -393,8 +395,15 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
             client_options = client_options_lib.ClientOptions()
 
         # Create SSL credentials for mutual TLS if needed.
-        use_client_cert = bool(
-            util.strtobool(os.getenv("GOOGLE_API_USE_CLIENT_CERTIFICATE", "false"))
+        if os.getenv("GOOGLE_API_USE_CLIENT_CERTIFICATE", "false") not in (
+            "true",
+            "false",
+        ):
+            raise ValueError(
+                "Environment variable `GOOGLE_API_USE_CLIENT_CERTIFICATE` must be either `true` or `false`"
+            )
+        use_client_cert = (
+            os.getenv("GOOGLE_API_USE_CLIENT_CERTIFICATE", "false") == "true"
         )
 
         client_cert_source_func = None
@@ -505,7 +514,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 Optional. The query string with a minimum of 3
                 characters and specific syntax. For more information,
                 see `Data Catalog search
-                syntax <https://cloud.google.com/data-catalog/docs/how-to/search-reference>`__.
+                syntax </data-catalog/docs/how-to/search-reference>`__.
 
                 An empty query string returns all data assets (in the
                 specified scope) that you have access to.
@@ -1495,6 +1504,10 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
     ) -> pagers.ListEntriesPager:
         r"""Lists entries.
 
+        Note: Currently, this method can list only custom entries. To
+        get a list of both custom and automatically created entries, use
+        [SearchCatalog][google.cloud.datacatalog.v1.DataCatalog.SearchCatalog].
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.ListEntriesRequest, dict]):
                 The request object. Request message for
@@ -1787,13 +1800,19 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 should not be set.
             update_mask (google.protobuf.field_mask_pb2.FieldMask):
                 Names of fields whose values to overwrite on a tag
-                template. Currently, only ``display_name`` can be
-                overwritten.
+                template. Currently, only ``display_name`` and
+                ``is_publicly_readable`` can be overwritten.
 
                 If this parameter is absent or empty, all modifiable
                 fields are overwritten. If such fields are non-required
                 and omitted in the request body, their values are
                 emptied.
+
+                Note: Updating the ``is_publicly_readable`` field may
+                require up to 12 hours to take effect in search results.
+                Additionally, it also requires the
+                ``tagTemplates.getIamPolicy`` and
+                ``tagTemplates.setIamPolicy`` permissions.
 
                 This corresponds to the ``update_mask`` field
                 on the ``request`` instance; if ``request`` is provided, this
@@ -2185,7 +2204,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 [RenameTagTemplateField][google.cloud.datacatalog.v1.DataCatalog.RenameTagTemplateField].
             name (str):
                 Required. The name of the tag
-                template.
+                template field.
 
                 This corresponds to the ``name`` field
                 on the ``request`` instance; if ``request`` is provided, this
