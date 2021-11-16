@@ -127,7 +127,7 @@ def random_existing_tag_template_id(client, project_id, resources_to_delete):
     yield random_tag_template_id
     resources_to_delete["templates"].append(random_tag_template.name)
 
-    
+
 @pytest.fixture(scope="session")
 def policy_tag_manager_client(credentials):
     return datacatalog.PolicyTagManagerClient(credentials=credentials)
