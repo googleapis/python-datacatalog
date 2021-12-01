@@ -23,17 +23,6 @@ API Reference
     datacatalog_v1beta1/types
 
 
-Migration Guide
----------------
-
-See the guide below for instructions on migrating to the latest version.
-
-.. toctree::
-    :maxdepth: 2
-
-    UPGRADING
-
-
 Changelog
 ---------
 
