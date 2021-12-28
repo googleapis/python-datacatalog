@@ -17,13 +17,12 @@ import data_catalog_ptm_create_taxonomy
 
 
 def test_create_taxonomy(capsys,
-                         policy_tag_manager_client,
-                         project_id,
-                         random_taxonomy_display_name):
+                         project_id: str,
+                         random_taxonomy_display_name: str):
 
     data_catalog_ptm_create_taxonomy.create_taxonomy(
-        policy_tag_manager_client, project_id, random_taxonomy_display_name)
-    out, err = capsys.readouterr()
+        project_id=project_id, location_id="us", display_name=random_taxonomy_display_name)
+    out, _ = capsys.readouterr()
     assert (
         f'Created taxonomy projects/{project_id}/locations/us/taxonomies/'
         in out

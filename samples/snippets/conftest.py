@@ -21,9 +21,6 @@ from google.cloud import datacatalog_v1
 
 import pytest
 
-datacatalog = datacatalog_v1.DataCatalogClient()
-
-
 LOCATION = "us-central1"
 
 
@@ -61,7 +58,7 @@ def valid_member_id(client, project_id, random_existing_tag_template_id):
     )
 
     # Retrieve Template's current IAM Policy.
-    policy = datacatalog.get_iam_policy(resource=template_name)
+    policy = client.get_iam_policy(resource=template_name)
     yield policy.bindings[0].members[0]
 
 
