@@ -130,7 +130,7 @@ def random_existing_tag_template_id(client, project_id, resources_to_delete):
 
 @pytest.fixture(scope="session")
 def policy_tag_manager_client(credentials):
-    return datacatalog.PolicyTagManagerClient(credentials=credentials)
+    return datacatalog_v1.PolicyTagManagerClient(credentials=credentials)
 
 
 @pytest.fixture
@@ -140,7 +140,7 @@ def random_taxonomy_display_name(policy_tag_manager_client, project_id):
                           f'_{now.strftime("%Y%m%d%H%M%S")}' \
                           f'_{uuid.uuid4().hex[:8]}'
     yield random_display_name
-    parent = datacatalog.PolicyTagManagerClient.common_location_path(
+    parent = datacatalog_v1.PolicyTagManagerClient.common_location_path(
         project_id, 'us'
     )
     taxonomies = policy_tag_manager_client.list_taxonomies(parent=parent)
