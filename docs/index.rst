@@ -20,7 +20,18 @@ API Reference
     :maxdepth: 2
 
     datacatalog_v1beta1/services
-    datacatalog_v1beta1/types
+   datacatalog_v1beta1/types
+
+
+Migration Guide
+---------------
+
+See the guide below for instructions on migrating to the latest version.
+
+.. toctree::
+    :maxdepth: 2
+
+    UPGRADING
 
 
 Changelog
