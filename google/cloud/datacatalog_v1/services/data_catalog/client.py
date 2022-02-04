@@ -536,6 +536,25 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         For more information, see [Data Catalog search syntax]
         (https://cloud.google.com/data-catalog/docs/how-to/search-reference).
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_search_catalog():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.SearchCatalogRequest(
+                )
+
+                # Make the request
+                page_result = client.search_catalog(request=request)
+                for response in page_result:
+                    print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.SearchCatalogRequest, dict]):
                 The request object. Request message for
@@ -586,7 +605,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([scope, query])
         if request is not None and has_flattened_params:
@@ -666,6 +685,28 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         Catalog resource
         project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_create_entry_group():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.CreateEntryGroupRequest(
+                    parent="parent_value",
+                    entry_group_id="entry_group_id_value",
+                )
+
+                # Make the request
+                response = client.create_entry_group(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.CreateEntryGroupRequest, dict]):
                 The request object. Request message for
@@ -715,7 +756,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent, entry_group_id, entry_group])
         if request is not None and has_flattened_params:
@@ -767,6 +808,26 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
     ) -> datacatalog.EntryGroup:
         r"""Gets an entry group.
 
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_get_entry_group():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.GetEntryGroupRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_entry_group(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.GetEntryGroupRequest, dict]):
                 The request object. Request message for
@@ -801,7 +862,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name, read_mask])
         if request is not None and has_flattened_params:
@@ -856,6 +917,26 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         `Data Catalog resource
         project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_update_entry_group():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.UpdateEntryGroupRequest(
+                )
+
+                # Make the request
+                response = client.update_entry_group(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.UpdateEntryGroupRequest, dict]):
                 The request object. Request message for
@@ -895,7 +976,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([entry_group, update_mask])
         if request is not None and has_flattened_params:
@@ -951,6 +1032,24 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         Catalog resource
         project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_delete_entry_group():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.DeleteEntryGroupRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.delete_entry_group(request=request)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.DeleteEntryGroupRequest, dict]):
                 The request object. Request message for
@@ -969,7 +1068,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 sent along with the request as metadata.
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name])
         if request is not None and has_flattened_params:
@@ -1015,6 +1114,25 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
     ) -> pagers.ListEntryGroupsPager:
         r"""Lists entry groups.
 
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_list_entry_groups():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.ListEntryGroupsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_entry_groups(request=request)
+                for response in page_result:
+                    print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.ListEntryGroupsRequest, dict]):
                 The request object. Request message for
@@ -1043,7 +1161,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent])
         if request is not None and has_flattened_params:
@@ -1110,6 +1228,34 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         An entry group can have a maximum of 100,000 entries.
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_create_entry():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                entry = datacatalog_v1.Entry()
+                entry.type_ = "SERVICE"
+                entry.integrated_system = "DATAPROC_METASTORE"
+                entry.gcs_fileset_spec.file_patterns = ['file_patterns_value_1', 'file_patterns_value_2']
+
+                request = datacatalog_v1.CreateEntryRequest(
+                    parent="parent_value",
+                    entry_id="entry_id_value",
+                    entry=entry,
+                )
+
+                # Make the request
+                response = client.create_entry(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.CreateEntryRequest, dict]):
                 The request object. Request message for
@@ -1161,7 +1307,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent, entry_id, entry])
         if request is not None and has_flattened_params:
@@ -1217,6 +1363,32 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         by the ``entry.name`` parameter. For more information, see `Data
         Catalog resource
         project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
+
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_update_entry():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                entry = datacatalog_v1.Entry()
+                entry.type_ = "SERVICE"
+                entry.integrated_system = "DATAPROC_METASTORE"
+                entry.gcs_fileset_spec.file_patterns = ['file_patterns_value_1', 'file_patterns_value_2']
+
+                request = datacatalog_v1.UpdateEntryRequest(
+                    entry=entry,
+                )
+
+                # Make the request
+                response = client.update_entry(request=request)
+
+                # Handle response
+                print(response)
 
         Args:
             request (Union[google.cloud.datacatalog_v1.types.UpdateEntryRequest, dict]):
@@ -1286,7 +1458,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([entry, update_mask])
         if request is not None and has_flattened_params:
@@ -1346,6 +1518,24 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         Catalog resource
         project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_delete_entry():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.DeleteEntryRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.delete_entry(request=request)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.DeleteEntryRequest, dict]):
                 The request object. Request message for
@@ -1364,7 +1554,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 sent along with the request as metadata.
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name])
         if request is not None and has_flattened_params:
@@ -1410,6 +1600,26 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
     ) -> datacatalog.Entry:
         r"""Gets an entry.
 
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_get_entry():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.GetEntryRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_entry(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.GetEntryRequest, dict]):
                 The request object. Request message for
@@ -1443,7 +1653,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name])
         if request is not None and has_flattened_params:
@@ -1490,6 +1700,27 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         r"""Gets an entry by its target resource name.
         The resource name comes from the source Google Cloud
         Platform service.
+
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_lookup_entry():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.LookupEntryRequest(
+                    linked_resource="linked_resource_value",
+                )
+
+                # Make the request
+                response = client.lookup_entry(request=request)
+
+                # Handle response
+                print(response)
 
         Args:
             request (Union[google.cloud.datacatalog_v1.types.LookupEntryRequest, dict]):
@@ -1549,6 +1780,26 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         get a list of both custom and automatically created entries, use
         [SearchCatalog][google.cloud.datacatalog.v1.DataCatalog.SearchCatalog].
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_list_entries():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.ListEntriesRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_entries(request=request)
+                for response in page_result:
+                    print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.ListEntriesRequest, dict]):
                 The request object. Request message for
@@ -1577,7 +1828,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent])
         if request is not None and has_flattened_params:
@@ -1637,6 +1888,28 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         Catalog resource project]
         (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_create_tag_template():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.CreateTagTemplateRequest(
+                    parent="parent_value",
+                    tag_template_id="tag_template_id_value",
+                )
+
+                # Make the request
+                response = client.create_tag_template(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.CreateTagTemplateRequest, dict]):
                 The request object. Request message for
@@ -1687,7 +1960,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent, tag_template_id, tag_template])
         if request is not None and has_flattened_params:
@@ -1738,6 +2011,26 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
     ) -> tags.TagTemplate:
         r"""Gets a tag template.
 
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_get_tag_template():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.GetTagTemplateRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.get_tag_template(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.GetTagTemplateRequest, dict]):
                 The request object. Request message for
@@ -1771,7 +2064,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name])
         if request is not None and has_flattened_params:
@@ -1828,6 +2121,26 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         see `Data Catalog resource
         project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_update_tag_template():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.UpdateTagTemplateRequest(
+                )
+
+                # Make the request
+                response = client.update_tag_template(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.UpdateTagTemplateRequest, dict]):
                 The request object. Request message for
@@ -1880,7 +2193,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([tag_template, update_mask])
         if request is not None and has_flattened_params:
@@ -1937,6 +2250,25 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         Catalog resource
         project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_delete_tag_template():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.DeleteTagTemplateRequest(
+                    name="name_value",
+                    force=True,
+                )
+
+                # Make the request
+                response = client.delete_tag_template(request=request)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.DeleteTagTemplateRequest, dict]):
                 The request object. Request message for
@@ -1964,7 +2296,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 sent along with the request as metadata.
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name, force])
         if request is not None and has_flattened_params:
@@ -2019,6 +2351,32 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         Catalog resource
         project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_create_tag_template_field():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                tag_template_field = datacatalog_v1.TagTemplateField()
+                tag_template_field.type_.primitive_type = "RICHTEXT"
+
+                request = datacatalog_v1.CreateTagTemplateFieldRequest(
+                    parent="parent_value",
+                    tag_template_field_id="tag_template_field_id_value",
+                    tag_template_field=tag_template_field,
+                )
+
+                # Make the request
+                response = client.create_tag_template_field(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.CreateTagTemplateFieldRequest, dict]):
                 The request object. Request message for
@@ -2066,7 +2424,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent, tag_template_field_id, tag_template_field])
         if request is not None and has_flattened_params:
@@ -2128,6 +2486,31 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         Catalog resource
         project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_update_tag_template_field():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                tag_template_field = datacatalog_v1.TagTemplateField()
+                tag_template_field.type_.primitive_type = "RICHTEXT"
+
+                request = datacatalog_v1.UpdateTagTemplateFieldRequest(
+                    name="name_value",
+                    tag_template_field=tag_template_field,
+                )
+
+                # Make the request
+                response = client.update_tag_template_field(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.UpdateTagTemplateFieldRequest, dict]):
                 The request object. Request message for
@@ -2180,7 +2563,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name, tag_template_field, update_mask])
         if request is not None and has_flattened_params:
@@ -2239,6 +2622,28 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         Catalog resource project]
         (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_rename_tag_template_field():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.RenameTagTemplateFieldRequest(
+                    name="name_value",
+                    new_tag_template_field_id="new_tag_template_field_id_value",
+                )
+
+                # Make the request
+                response = client.rename_tag_template_field(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.RenameTagTemplateFieldRequest, dict]):
                 The request object. Request message for
@@ -2270,7 +2675,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name, new_tag_template_field_id])
         if request is not None and has_flattened_params:
@@ -2323,6 +2728,28 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         r"""Renames an enum value in a tag template.
         Within a single enum field, enum values must be unique.
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_rename_tag_template_field_enum_value():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.RenameTagTemplateFieldEnumValueRequest(
+                    name="name_value",
+                    new_enum_value_display_name="new_enum_value_display_name_value",
+                )
+
+                # Make the request
+                response = client.rename_tag_template_field_enum_value(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.RenameTagTemplateFieldEnumValueRequest, dict]):
                 The request object. Request message for
@@ -2354,7 +2781,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name, new_enum_value_display_name])
         if request is not None and has_flattened_params:
@@ -2412,6 +2839,25 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         Catalog resource
         project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__.
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_delete_tag_template_field():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.DeleteTagTemplateFieldRequest(
+                    name="name_value",
+                    force=True,
+                )
+
+                # Make the request
+                response = client.delete_tag_template_field(request=request)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.DeleteTagTemplateFieldRequest, dict]):
                 The request object. Request message for
@@ -2439,7 +2885,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 sent along with the request as metadata.
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name, force])
         if request is not None and has_flattened_params:
@@ -2504,6 +2950,32 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#path-parameters)
         used to create the tag must be in the same organization.
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_create_tag():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                tag = datacatalog_v1.Tag()
+                tag.column = "column_value"
+                tag.template = "template_value"
+
+                request = datacatalog_v1.CreateTagRequest(
+                    parent="parent_value",
+                    tag=tag,
+                )
+
+                # Make the request
+                response = client.create_tag(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.CreateTagRequest, dict]):
                 The request object. Request message for
@@ -2545,7 +3017,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent, tag])
         if request is not None and has_flattened_params:
@@ -2595,6 +3067,30 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
     ) -> tags.Tag:
         r"""Updates an existing tag.
 
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_update_tag():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                tag = datacatalog_v1.Tag()
+                tag.column = "column_value"
+                tag.template = "template_value"
+
+                request = datacatalog_v1.UpdateTagRequest(
+                    tag=tag,
+                )
+
+                # Make the request
+                response = client.update_tag(request=request)
+
+                # Handle response
+                print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.UpdateTagRequest, dict]):
                 The request object. Request message for
@@ -2637,7 +3133,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([tag, update_mask])
         if request is not None and has_flattened_params:
@@ -2686,6 +3182,23 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
     ) -> None:
         r"""Deletes a tag.
 
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_delete_tag():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.DeleteTagRequest(
+                    name="name_value",
+                )
+
+                # Make the request
+                response = client.delete_tag(request=request)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.DeleteTagRequest, dict]):
                 The request object. Request message for
@@ -2704,7 +3217,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
                 sent along with the request as metadata.
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([name])
         if request is not None and has_flattened_params:
@@ -2751,6 +3264,26 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         r"""Lists tags assigned to an
         [Entry][google.cloud.datacatalog.v1.Entry].
 
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_list_tags():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.ListTagsRequest(
+                    parent="parent_value",
+                )
+
+                # Make the request
+                page_result = client.list_tags(request=request)
+                for response in page_result:
+                    print(response)
+
         Args:
             request (Union[google.cloud.datacatalog_v1.types.ListTagsRequest, dict]):
                 The request object. Request message for
@@ -2783,7 +3316,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([parent])
         if request is not None and has_flattened_params:
@@ -2854,6 +3387,27 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
            tag templates.
         -  ``datacatalog.entryGroups.setIamPolicy`` to set policies on
            entry groups.
+
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_set_iam_policy():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.SetIamPolicyRequest(
+                    resource="resource_value",
+                )
+
+                # Make the request
+                response = client.set_iam_policy(request=request)
+
+                # Handle response
+                print(response)
 
         Args:
             request (Union[google.iam.v1.iam_policy_pb2.SetIamPolicyRequest, dict]):
@@ -2934,7 +3488,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([resource])
         if request is not None and has_flattened_params:
@@ -3002,6 +3556,27 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
            tag templates.
         -  ``datacatalog.entryGroups.getIamPolicy`` to get policies on
            entry groups.
+
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_get_iam_policy():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.GetIamPolicyRequest(
+                    resource="resource_value",
+                )
+
+                # Make the request
+                response = client.get_iam_policy(request=request)
+
+                # Handle response
+                print(response)
 
         Args:
             request (Union[google.iam.v1.iam_policy_pb2.GetIamPolicyRequest, dict]):
@@ -3082,7 +3657,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         """
         # Create or coerce a protobuf request object.
-        # Sanity check: If we got a request object, we should *not* have
+        # Quick check: If we got a request object, we should *not* have
         # gotten any keyword arguments that map to the request.
         has_flattened_params = any([resource])
         if request is not None and has_flattened_params:
@@ -3139,6 +3714,28 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         Cloud Platform resources ingested into Data Catalog.
         No Google IAM permissions are required to call this
         method.
+
+
+
+        .. code-block::
+
+            from google.cloud import datacatalog_v1
+
+            def sample_test_iam_permissions():
+                # Create a client
+                client = datacatalog_v1.DataCatalogClient()
+
+                # Initialize request argument(s)
+                request = datacatalog_v1.TestIamPermissionsRequest(
+                    resource="resource_value",
+                    permissions=['permissions_value_1', 'permissions_value_2'],
+                )
+
+                # Make the request
+                response = client.test_iam_permissions(request=request)
+
+                # Handle response
+                print(response)
 
         Args:
             request (Union[google.iam.v1.iam_policy_pb2.TestIamPermissionsRequest, dict]):
