@@ -36,7 +36,7 @@ dependencies = [
     "proto-plus >= 1.4.0",
 ]
 
-extras = {"libcst >= 0.2.5"}
+extras = {"libcst": "libcst >= 0.2.5"}
 
 package_root = os.path.abspath(os.path.dirname(__file__))
 
