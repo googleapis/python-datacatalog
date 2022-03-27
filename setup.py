@@ -28,7 +28,7 @@ version = "0.8.0"
 # 'Development Status :: 5 - Production/Stable'
 release_status = "Development Status :: 4 - Beta"
 dependencies = [
-    "google-api-core[grpc] >= 1.14.0, < 2.0.0dev",
+    "google-api-core[grpc] >= 1.31.5, <3.0.0dev,!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.0",
     "grpc-google-iam-v1 >= 0.12.3, < 0.13dev",
     'enum34; python_version < "3.4"',
 ]
