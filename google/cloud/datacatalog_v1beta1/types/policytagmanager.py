@@ -84,7 +84,11 @@ class Taxonomy(proto.Message):
 
     description = proto.Field(proto.STRING, number=3)
 
-    activated_policy_types = proto.RepeatedField(proto.ENUM, number=6, enum=PolicyType,)
+    activated_policy_types = proto.RepeatedField(
+        proto.ENUM,
+        number=6,
+        enum=PolicyType,
+    )
 
 
 class PolicyTag(proto.Message):
@@ -152,7 +156,11 @@ class CreateTaxonomyRequest(proto.Message):
 
     parent = proto.Field(proto.STRING, number=1)
 
-    taxonomy = proto.Field(proto.MESSAGE, number=2, message=Taxonomy,)
+    taxonomy = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=Taxonomy,
+    )
 
 
 class DeleteTaxonomyRequest(proto.Message):
@@ -185,9 +193,17 @@ class UpdateTaxonomyRequest(proto.Message):
             to update.
     """
 
-    taxonomy = proto.Field(proto.MESSAGE, number=1, message=Taxonomy,)
+    taxonomy = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=Taxonomy,
+    )
 
-    update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask,)
+    update_mask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask.FieldMask,
+    )
 
 
 class ListTaxonomiesRequest(proto.Message):
@@ -231,7 +247,11 @@ class ListTaxonomiesResponse(proto.Message):
     def raw_page(self):
         return self
 
-    taxonomies = proto.RepeatedField(proto.MESSAGE, number=1, message=Taxonomy,)
+    taxonomies = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=Taxonomy,
+    )
 
     next_page_token = proto.Field(proto.STRING, number=2)
 
@@ -263,7 +283,11 @@ class CreatePolicyTagRequest(proto.Message):
 
     parent = proto.Field(proto.STRING, number=1)
 
-    policy_tag = proto.Field(proto.MESSAGE, number=2, message=PolicyTag,)
+    policy_tag = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=PolicyTag,
+    )
 
 
 class DeletePolicyTagRequest(proto.Message):
@@ -300,9 +324,17 @@ class UpdatePolicyTagRequest(proto.Message):
             to update.
     """
 
-    policy_tag = proto.Field(proto.MESSAGE, number=1, message=PolicyTag,)
+    policy_tag = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=PolicyTag,
+    )
 
-    update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask,)
+    update_mask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask.FieldMask,
+    )
 
 
 class ListPolicyTagsRequest(proto.Message):
@@ -347,7 +379,11 @@ class ListPolicyTagsResponse(proto.Message):
     def raw_page(self):
         return self
 
-    policy_tags = proto.RepeatedField(proto.MESSAGE, number=1, message=PolicyTag,)
+    policy_tags = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=PolicyTag,
+    )
 
     next_page_token = proto.Field(proto.STRING, number=2)
 

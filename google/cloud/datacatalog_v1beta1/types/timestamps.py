@@ -22,7 +22,10 @@ from google.protobuf import timestamp_pb2 as timestamp  # type: ignore
 
 
 __protobuf__ = proto.module(
-    package="google.cloud.datacatalog.v1beta1", manifest={"SystemTimestamps",},
+    package="google.cloud.datacatalog.v1beta1",
+    manifest={
+        "SystemTimestamps",
+    },
 )
 
 
@@ -43,11 +46,23 @@ class SystemTimestamps(proto.Message):
             apllicable to BigQuery resources.
     """
 
-    create_time = proto.Field(proto.MESSAGE, number=1, message=timestamp.Timestamp,)
+    create_time = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=timestamp.Timestamp,
+    )
 
-    update_time = proto.Field(proto.MESSAGE, number=2, message=timestamp.Timestamp,)
+    update_time = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=timestamp.Timestamp,
+    )
 
-    expire_time = proto.Field(proto.MESSAGE, number=3, message=timestamp.Timestamp,)
+    expire_time = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=timestamp.Timestamp,
+    )
 
 
 __all__ = tuple(sorted(__protobuf__.manifest))

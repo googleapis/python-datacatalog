@@ -110,13 +110,17 @@ class DataCatalogTransport(abc.ABC):
                     initial=0.1,
                     maximum=60.0,
                     multiplier=1.3,
-                    predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                    predicate=retries.if_exception_type(
+                        exceptions.ServiceUnavailable,
+                    ),
                 ),
                 default_timeout=60.0,
                 client_info=_client_info,
             ),
             self.create_entry_group: gapic_v1.method.wrap_method(
-                self.create_entry_group, default_timeout=None, client_info=_client_info,
+                self.create_entry_group,
+                default_timeout=None,
+                client_info=_client_info,
             ),
             self.get_entry_group: gapic_v1.method.wrap_method(
                 self.get_entry_group,
@@ -124,16 +128,22 @@ class DataCatalogTransport(abc.ABC):
                     initial=0.1,
                     maximum=60.0,
                     multiplier=1.3,
-                    predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                    predicate=retries.if_exception_type(
+                        exceptions.ServiceUnavailable,
+                    ),
                 ),
                 default_timeout=60.0,
                 client_info=_client_info,
             ),
             self.update_entry_group: gapic_v1.method.wrap_method(
-                self.update_entry_group, default_timeout=None, client_info=_client_info,
+                self.update_entry_group,
+                default_timeout=None,
+                client_info=_client_info,
             ),
             self.delete_entry_group: gapic_v1.method.wrap_method(
-                self.delete_entry_group, default_timeout=None, client_info=_client_info,
+                self.delete_entry_group,
+                default_timeout=None,
+                client_info=_client_info,
             ),
             self.list_entry_groups: gapic_v1.method.wrap_method(
                 self.list_entry_groups,
@@ -141,19 +151,27 @@ class DataCatalogTransport(abc.ABC):
                     initial=0.1,
                     maximum=60.0,
                     multiplier=1.3,
-                    predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                    predicate=retries.if_exception_type(
+                        exceptions.ServiceUnavailable,
+                    ),
                 ),
                 default_timeout=60.0,
                 client_info=_client_info,
             ),
             self.create_entry: gapic_v1.method.wrap_method(
-                self.create_entry, default_timeout=None, client_info=_client_info,
+                self.create_entry,
+                default_timeout=None,
+                client_info=_client_info,
             ),
             self.update_entry: gapic_v1.method.wrap_method(
-                self.update_entry, default_timeout=None, client_info=_client_info,
+                self.update_entry,
+                default_timeout=None,
+                client_info=_client_info,
             ),
             self.delete_entry: gapic_v1.method.wrap_method(
-                self.delete_entry, default_timeout=None, client_info=_client_info,
+                self.delete_entry,
+                default_timeout=None,
+                client_info=_client_info,
             ),
             self.get_entry: gapic_v1.method.wrap_method(
                 self.get_entry,
@@ -161,7 +179,9 @@ class DataCatalogTransport(abc.ABC):
                     initial=0.1,
                     maximum=60.0,
                     multiplier=1.3,
-                    predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                    predicate=retries.if_exception_type(
+                        exceptions.ServiceUnavailable,
+                    ),
                 ),
                 default_timeout=60.0,
                 client_info=_client_info,
@@ -172,7 +192,9 @@ class DataCatalogTransport(abc.ABC):
                     initial=0.1,
                     maximum=60.0,
                     multiplier=1.3,
-                    predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                    predicate=retries.if_exception_type(
+                        exceptions.ServiceUnavailable,
+                    ),
                 ),
                 default_timeout=60.0,
                 client_info=_client_info,
@@ -183,7 +205,9 @@ class DataCatalogTransport(abc.ABC):
                     initial=0.1,
                     maximum=60.0,
                     multiplier=1.3,
-                    predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                    predicate=retries.if_exception_type(
+                        exceptions.ServiceUnavailable,
+                    ),
                 ),
                 default_timeout=60.0,
                 client_info=_client_info,
@@ -194,7 +218,9 @@ class DataCatalogTransport(abc.ABC):
                 client_info=_client_info,
             ),
             self.get_tag_template: gapic_v1.method.wrap_method(
-                self.get_tag_template, default_timeout=None, client_info=_client_info,
+                self.get_tag_template,
+                default_timeout=None,
+                client_info=_client_info,
             ),
             self.update_tag_template: gapic_v1.method.wrap_method(
                 self.update_tag_template,
@@ -227,13 +253,19 @@ class DataCatalogTransport(abc.ABC):
                 client_info=_client_info,
             ),
             self.create_tag: gapic_v1.method.wrap_method(
-                self.create_tag, default_timeout=None, client_info=_client_info,
+                self.create_tag,
+                default_timeout=None,
+                client_info=_client_info,
             ),
             self.update_tag: gapic_v1.method.wrap_method(
-                self.update_tag, default_timeout=None, client_info=_client_info,
+                self.update_tag,
+                default_timeout=None,
+                client_info=_client_info,
             ),
             self.delete_tag: gapic_v1.method.wrap_method(
-                self.delete_tag, default_timeout=None, client_info=_client_info,
+                self.delete_tag,
+                default_timeout=None,
+                client_info=_client_info,
             ),
             self.list_tags: gapic_v1.method.wrap_method(
                 self.list_tags,
@@ -241,13 +273,17 @@ class DataCatalogTransport(abc.ABC):
                     initial=0.1,
                     maximum=60.0,
                     multiplier=1.3,
-                    predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                    predicate=retries.if_exception_type(
+                        exceptions.ServiceUnavailable,
+                    ),
                 ),
                 default_timeout=60.0,
                 client_info=_client_info,
             ),
             self.set_iam_policy: gapic_v1.method.wrap_method(
-                self.set_iam_policy, default_timeout=None, client_info=_client_info,
+                self.set_iam_policy,
+                default_timeout=None,
+                client_info=_client_info,
             ),
             self.get_iam_policy: gapic_v1.method.wrap_method(
                 self.get_iam_policy,
@@ -255,7 +291,9 @@ class DataCatalogTransport(abc.ABC):
                     initial=0.1,
                     maximum=60.0,
                     multiplier=1.3,
-                    predicate=retries.if_exception_type(exceptions.ServiceUnavailable,),
+                    predicate=retries.if_exception_type(
+                        exceptions.ServiceUnavailable,
+                    ),
                 ),
                 default_timeout=60.0,
                 client_info=_client_info,

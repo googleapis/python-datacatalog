@@ -55,7 +55,8 @@ class PolicyTagManagerSerializationClientMeta(type):
     ] = PolicyTagManagerSerializationGrpcAsyncIOTransport
 
     def get_transport_class(
-        cls, label: str = None,
+        cls,
+        label: str = None,
     ) -> Type[PolicyTagManagerSerializationTransport]:
         """Return an appropriate transport class.
 
@@ -280,7 +281,12 @@ class PolicyTagManagerSerializationClient(
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
@@ -338,7 +344,12 @@ class PolicyTagManagerSerializationClient(
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response

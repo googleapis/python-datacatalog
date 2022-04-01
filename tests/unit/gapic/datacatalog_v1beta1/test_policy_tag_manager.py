@@ -298,7 +298,9 @@ def test_policy_tag_manager_client_client_options_scopes(
     client_class, transport_class, transport_name
 ):
     # Check the case scopes are provided.
-    options = client_options.ClientOptions(scopes=["1", "2"],)
+    options = client_options.ClientOptions(
+        scopes=["1", "2"],
+    )
     with mock.patch.object(transport_class, "__init__") as patched:
         patched.return_value = None
         client = client_class(client_options=options)
@@ -366,7 +368,8 @@ def test_create_taxonomy(
     transport: str = "grpc", request_type=policytagmanager.CreateTaxonomyRequest
 ):
     client = PolicyTagManagerClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -414,7 +417,8 @@ def test_create_taxonomy_from_dict():
 @pytest.mark.asyncio
 async def test_create_taxonomy_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -460,7 +464,9 @@ async def test_create_taxonomy_async(transport: str = "grpc_asyncio"):
 
 
 def test_create_taxonomy_field_headers():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -480,7 +486,10 @@ def test_create_taxonomy_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -511,11 +520,16 @@ async def test_create_taxonomy_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_create_taxonomy_flattened():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.create_taxonomy), "__call__") as call:
@@ -540,7 +554,9 @@ def test_create_taxonomy_flattened():
 
 
 def test_create_taxonomy_flattened_error():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -605,7 +621,8 @@ def test_delete_taxonomy(
     transport: str = "grpc", request_type=policytagmanager.DeleteTaxonomyRequest
 ):
     client = PolicyTagManagerClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -636,7 +653,8 @@ def test_delete_taxonomy_from_dict():
 @pytest.mark.asyncio
 async def test_delete_taxonomy_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -663,7 +681,9 @@ async def test_delete_taxonomy_async(transport: str = "grpc_asyncio"):
 
 
 def test_delete_taxonomy_field_headers():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -683,7 +703,10 @@ def test_delete_taxonomy_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -712,11 +735,16 @@ async def test_delete_taxonomy_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_delete_taxonomy_flattened():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.delete_taxonomy), "__call__") as call:
@@ -725,7 +753,9 @@ def test_delete_taxonomy_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.delete_taxonomy(name="name_value",)
+        client.delete_taxonomy(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -736,13 +766,16 @@ def test_delete_taxonomy_flattened():
 
 
 def test_delete_taxonomy_flattened_error():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.delete_taxonomy(
-            policytagmanager.DeleteTaxonomyRequest(), name="name_value",
+            policytagmanager.DeleteTaxonomyRequest(),
+            name="name_value",
         )
 
 
@@ -762,7 +795,9 @@ async def test_delete_taxonomy_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.delete_taxonomy(name="name_value",)
+        response = await client.delete_taxonomy(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -782,7 +817,8 @@ async def test_delete_taxonomy_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.delete_taxonomy(
-            policytagmanager.DeleteTaxonomyRequest(), name="name_value",
+            policytagmanager.DeleteTaxonomyRequest(),
+            name="name_value",
         )
 
 
@@ -790,7 +826,8 @@ def test_update_taxonomy(
     transport: str = "grpc", request_type=policytagmanager.UpdateTaxonomyRequest
 ):
     client = PolicyTagManagerClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -838,7 +875,8 @@ def test_update_taxonomy_from_dict():
 @pytest.mark.asyncio
 async def test_update_taxonomy_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -884,7 +922,9 @@ async def test_update_taxonomy_async(transport: str = "grpc_asyncio"):
 
 
 def test_update_taxonomy_field_headers():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -904,9 +944,10 @@ def test_update_taxonomy_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "taxonomy.name=taxonomy.name/value",) in kw[
-        "metadata"
-    ]
+    assert (
+        "x-goog-request-params",
+        "taxonomy.name=taxonomy.name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -937,13 +978,16 @@ async def test_update_taxonomy_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "taxonomy.name=taxonomy.name/value",) in kw[
-        "metadata"
-    ]
+    assert (
+        "x-goog-request-params",
+        "taxonomy.name=taxonomy.name/value",
+    ) in kw["metadata"]
 
 
 def test_update_taxonomy_flattened():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.update_taxonomy), "__call__") as call:
@@ -952,7 +996,9 @@ def test_update_taxonomy_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.update_taxonomy(taxonomy=policytagmanager.Taxonomy(name="name_value"),)
+        client.update_taxonomy(
+            taxonomy=policytagmanager.Taxonomy(name="name_value"),
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -963,7 +1009,9 @@ def test_update_taxonomy_flattened():
 
 
 def test_update_taxonomy_flattened_error():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -1023,7 +1071,8 @@ def test_list_taxonomies(
     transport: str = "grpc", request_type=policytagmanager.ListTaxonomiesRequest
 ):
     client = PolicyTagManagerClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1058,7 +1107,8 @@ def test_list_taxonomies_from_dict():
 @pytest.mark.asyncio
 async def test_list_taxonomies_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1091,7 +1141,9 @@ async def test_list_taxonomies_async(transport: str = "grpc_asyncio"):
 
 
 def test_list_taxonomies_field_headers():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -1111,7 +1163,10 @@ def test_list_taxonomies_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -1142,11 +1197,16 @@ async def test_list_taxonomies_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_list_taxonomies_flattened():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.list_taxonomies), "__call__") as call:
@@ -1155,7 +1215,9 @@ def test_list_taxonomies_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.list_taxonomies(parent="parent_value",)
+        client.list_taxonomies(
+            parent="parent_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -1166,13 +1228,16 @@ def test_list_taxonomies_flattened():
 
 
 def test_list_taxonomies_flattened_error():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.list_taxonomies(
-            policytagmanager.ListTaxonomiesRequest(), parent="parent_value",
+            policytagmanager.ListTaxonomiesRequest(),
+            parent="parent_value",
         )
 
 
@@ -1194,7 +1259,9 @@ async def test_list_taxonomies_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_taxonomies(parent="parent_value",)
+        response = await client.list_taxonomies(
+            parent="parent_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -1214,12 +1281,15 @@ async def test_list_taxonomies_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.list_taxonomies(
-            policytagmanager.ListTaxonomiesRequest(), parent="parent_value",
+            policytagmanager.ListTaxonomiesRequest(),
+            parent="parent_value",
         )
 
 
 def test_list_taxonomies_pager():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials,)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.list_taxonomies), "__call__") as call:
@@ -1234,13 +1304,20 @@ def test_list_taxonomies_pager():
                 next_page_token="abc",
             ),
             policytagmanager.ListTaxonomiesResponse(
-                taxonomies=[], next_page_token="def",
+                taxonomies=[],
+                next_page_token="def",
             ),
             policytagmanager.ListTaxonomiesResponse(
-                taxonomies=[policytagmanager.Taxonomy(),], next_page_token="ghi",
+                taxonomies=[
+                    policytagmanager.Taxonomy(),
+                ],
+                next_page_token="ghi",
             ),
             policytagmanager.ListTaxonomiesResponse(
-                taxonomies=[policytagmanager.Taxonomy(), policytagmanager.Taxonomy(),],
+                taxonomies=[
+                    policytagmanager.Taxonomy(),
+                    policytagmanager.Taxonomy(),
+                ],
             ),
             RuntimeError,
         )
@@ -1259,7 +1336,9 @@ def test_list_taxonomies_pager():
 
 
 def test_list_taxonomies_pages():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials,)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.list_taxonomies), "__call__") as call:
@@ -1274,13 +1353,20 @@ def test_list_taxonomies_pages():
                 next_page_token="abc",
             ),
             policytagmanager.ListTaxonomiesResponse(
-                taxonomies=[], next_page_token="def",
+                taxonomies=[],
+                next_page_token="def",
             ),
             policytagmanager.ListTaxonomiesResponse(
-                taxonomies=[policytagmanager.Taxonomy(),], next_page_token="ghi",
+                taxonomies=[
+                    policytagmanager.Taxonomy(),
+                ],
+                next_page_token="ghi",
             ),
             policytagmanager.ListTaxonomiesResponse(
-                taxonomies=[policytagmanager.Taxonomy(), policytagmanager.Taxonomy(),],
+                taxonomies=[
+                    policytagmanager.Taxonomy(),
+                    policytagmanager.Taxonomy(),
+                ],
             ),
             RuntimeError,
         )
@@ -1291,7 +1377,9 @@ def test_list_taxonomies_pages():
 
 @pytest.mark.asyncio
 async def test_list_taxonomies_async_pager():
-    client = PolicyTagManagerAsyncClient(credentials=credentials.AnonymousCredentials,)
+    client = PolicyTagManagerAsyncClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1310,17 +1398,26 @@ async def test_list_taxonomies_async_pager():
                 next_page_token="abc",
             ),
             policytagmanager.ListTaxonomiesResponse(
-                taxonomies=[], next_page_token="def",
+                taxonomies=[],
+                next_page_token="def",
             ),
             policytagmanager.ListTaxonomiesResponse(
-                taxonomies=[policytagmanager.Taxonomy(),], next_page_token="ghi",
+                taxonomies=[
+                    policytagmanager.Taxonomy(),
+                ],
+                next_page_token="ghi",
             ),
             policytagmanager.ListTaxonomiesResponse(
-                taxonomies=[policytagmanager.Taxonomy(), policytagmanager.Taxonomy(),],
+                taxonomies=[
+                    policytagmanager.Taxonomy(),
+                    policytagmanager.Taxonomy(),
+                ],
             ),
             RuntimeError,
         )
-        async_pager = await client.list_taxonomies(request={},)
+        async_pager = await client.list_taxonomies(
+            request={},
+        )
         assert async_pager.next_page_token == "abc"
         responses = []
         async for response in async_pager:
@@ -1332,7 +1429,9 @@ async def test_list_taxonomies_async_pager():
 
 @pytest.mark.asyncio
 async def test_list_taxonomies_async_pages():
-    client = PolicyTagManagerAsyncClient(credentials=credentials.AnonymousCredentials,)
+    client = PolicyTagManagerAsyncClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1351,13 +1450,20 @@ async def test_list_taxonomies_async_pages():
                 next_page_token="abc",
             ),
             policytagmanager.ListTaxonomiesResponse(
-                taxonomies=[], next_page_token="def",
+                taxonomies=[],
+                next_page_token="def",
             ),
             policytagmanager.ListTaxonomiesResponse(
-                taxonomies=[policytagmanager.Taxonomy(),], next_page_token="ghi",
+                taxonomies=[
+                    policytagmanager.Taxonomy(),
+                ],
+                next_page_token="ghi",
             ),
             policytagmanager.ListTaxonomiesResponse(
-                taxonomies=[policytagmanager.Taxonomy(), policytagmanager.Taxonomy(),],
+                taxonomies=[
+                    policytagmanager.Taxonomy(),
+                    policytagmanager.Taxonomy(),
+                ],
             ),
             RuntimeError,
         )
@@ -1372,7 +1478,8 @@ def test_get_taxonomy(
     transport: str = "grpc", request_type=policytagmanager.GetTaxonomyRequest
 ):
     client = PolicyTagManagerClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1420,7 +1527,8 @@ def test_get_taxonomy_from_dict():
 @pytest.mark.asyncio
 async def test_get_taxonomy_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1466,7 +1574,9 @@ async def test_get_taxonomy_async(transport: str = "grpc_asyncio"):
 
 
 def test_get_taxonomy_field_headers():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -1486,7 +1596,10 @@ def test_get_taxonomy_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -1517,11 +1630,16 @@ async def test_get_taxonomy_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_get_taxonomy_flattened():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.get_taxonomy), "__call__") as call:
@@ -1530,7 +1648,9 @@ def test_get_taxonomy_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.get_taxonomy(name="name_value",)
+        client.get_taxonomy(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -1541,13 +1661,16 @@ def test_get_taxonomy_flattened():
 
 
 def test_get_taxonomy_flattened_error():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.get_taxonomy(
-            policytagmanager.GetTaxonomyRequest(), name="name_value",
+            policytagmanager.GetTaxonomyRequest(),
+            name="name_value",
         )
 
 
@@ -1569,7 +1692,9 @@ async def test_get_taxonomy_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.get_taxonomy(name="name_value",)
+        response = await client.get_taxonomy(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -1589,7 +1714,8 @@ async def test_get_taxonomy_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.get_taxonomy(
-            policytagmanager.GetTaxonomyRequest(), name="name_value",
+            policytagmanager.GetTaxonomyRequest(),
+            name="name_value",
         )
 
 
@@ -1597,7 +1723,8 @@ def test_create_policy_tag(
     transport: str = "grpc", request_type=policytagmanager.CreatePolicyTagRequest
 ):
     client = PolicyTagManagerClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1646,7 +1773,8 @@ def test_create_policy_tag_from_dict():
 @pytest.mark.asyncio
 async def test_create_policy_tag_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1691,7 +1819,9 @@ async def test_create_policy_tag_async(transport: str = "grpc_asyncio"):
 
 
 def test_create_policy_tag_field_headers():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -1713,7 +1843,10 @@ def test_create_policy_tag_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -1744,11 +1877,16 @@ async def test_create_policy_tag_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_create_policy_tag_flattened():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1775,7 +1913,9 @@ def test_create_policy_tag_flattened():
 
 
 def test_create_policy_tag_flattened_error():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -1840,7 +1980,8 @@ def test_delete_policy_tag(
     transport: str = "grpc", request_type=policytagmanager.DeletePolicyTagRequest
 ):
     client = PolicyTagManagerClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1873,7 +2014,8 @@ def test_delete_policy_tag_from_dict():
 @pytest.mark.asyncio
 async def test_delete_policy_tag_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1900,7 +2042,9 @@ async def test_delete_policy_tag_async(transport: str = "grpc_asyncio"):
 
 
 def test_delete_policy_tag_field_headers():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -1922,7 +2066,10 @@ def test_delete_policy_tag_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -1951,11 +2098,16 @@ async def test_delete_policy_tag_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_delete_policy_tag_flattened():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1966,7 +2118,9 @@ def test_delete_policy_tag_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.delete_policy_tag(name="name_value",)
+        client.delete_policy_tag(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -1977,13 +2131,16 @@ def test_delete_policy_tag_flattened():
 
 
 def test_delete_policy_tag_flattened_error():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.delete_policy_tag(
-            policytagmanager.DeletePolicyTagRequest(), name="name_value",
+            policytagmanager.DeletePolicyTagRequest(),
+            name="name_value",
         )
 
 
@@ -2003,7 +2160,9 @@ async def test_delete_policy_tag_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.delete_policy_tag(name="name_value",)
+        response = await client.delete_policy_tag(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -2023,7 +2182,8 @@ async def test_delete_policy_tag_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.delete_policy_tag(
-            policytagmanager.DeletePolicyTagRequest(), name="name_value",
+            policytagmanager.DeletePolicyTagRequest(),
+            name="name_value",
         )
 
 
@@ -2031,7 +2191,8 @@ def test_update_policy_tag(
     transport: str = "grpc", request_type=policytagmanager.UpdatePolicyTagRequest
 ):
     client = PolicyTagManagerClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2080,7 +2241,8 @@ def test_update_policy_tag_from_dict():
 @pytest.mark.asyncio
 async def test_update_policy_tag_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2125,7 +2287,9 @@ async def test_update_policy_tag_async(transport: str = "grpc_asyncio"):
 
 
 def test_update_policy_tag_field_headers():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2147,9 +2311,10 @@ def test_update_policy_tag_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "policy_tag.name=policy_tag.name/value",) in kw[
-        "metadata"
-    ]
+    assert (
+        "x-goog-request-params",
+        "policy_tag.name=policy_tag.name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -2180,13 +2345,16 @@ async def test_update_policy_tag_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "policy_tag.name=policy_tag.name/value",) in kw[
-        "metadata"
-    ]
+    assert (
+        "x-goog-request-params",
+        "policy_tag.name=policy_tag.name/value",
+    ) in kw["metadata"]
 
 
 def test_update_policy_tag_flattened():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -2210,7 +2378,9 @@ def test_update_policy_tag_flattened():
 
 
 def test_update_policy_tag_flattened_error():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -2270,7 +2440,8 @@ def test_list_policy_tags(
     transport: str = "grpc", request_type=policytagmanager.ListPolicyTagsRequest
 ):
     client = PolicyTagManagerClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2307,7 +2478,8 @@ def test_list_policy_tags_from_dict():
 @pytest.mark.asyncio
 async def test_list_policy_tags_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2340,7 +2512,9 @@ async def test_list_policy_tags_async(transport: str = "grpc_asyncio"):
 
 
 def test_list_policy_tags_field_headers():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2362,7 +2536,10 @@ def test_list_policy_tags_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -2393,11 +2570,16 @@ async def test_list_policy_tags_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_list_policy_tags_flattened():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -2408,7 +2590,9 @@ def test_list_policy_tags_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.list_policy_tags(parent="parent_value",)
+        client.list_policy_tags(
+            parent="parent_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -2419,13 +2603,16 @@ def test_list_policy_tags_flattened():
 
 
 def test_list_policy_tags_flattened_error():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.list_policy_tags(
-            policytagmanager.ListPolicyTagsRequest(), parent="parent_value",
+            policytagmanager.ListPolicyTagsRequest(),
+            parent="parent_value",
         )
 
 
@@ -2447,7 +2634,9 @@ async def test_list_policy_tags_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_policy_tags(parent="parent_value",)
+        response = await client.list_policy_tags(
+            parent="parent_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -2467,12 +2656,15 @@ async def test_list_policy_tags_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.list_policy_tags(
-            policytagmanager.ListPolicyTagsRequest(), parent="parent_value",
+            policytagmanager.ListPolicyTagsRequest(),
+            parent="parent_value",
         )
 
 
 def test_list_policy_tags_pager():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials,)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -2489,10 +2681,14 @@ def test_list_policy_tags_pager():
                 next_page_token="abc",
             ),
             policytagmanager.ListPolicyTagsResponse(
-                policy_tags=[], next_page_token="def",
+                policy_tags=[],
+                next_page_token="def",
             ),
             policytagmanager.ListPolicyTagsResponse(
-                policy_tags=[policytagmanager.PolicyTag(),], next_page_token="ghi",
+                policy_tags=[
+                    policytagmanager.PolicyTag(),
+                ],
+                next_page_token="ghi",
             ),
             policytagmanager.ListPolicyTagsResponse(
                 policy_tags=[
@@ -2517,7 +2713,9 @@ def test_list_policy_tags_pager():
 
 
 def test_list_policy_tags_pages():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials,)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -2534,10 +2732,14 @@ def test_list_policy_tags_pages():
                 next_page_token="abc",
             ),
             policytagmanager.ListPolicyTagsResponse(
-                policy_tags=[], next_page_token="def",
+                policy_tags=[],
+                next_page_token="def",
             ),
             policytagmanager.ListPolicyTagsResponse(
-                policy_tags=[policytagmanager.PolicyTag(),], next_page_token="ghi",
+                policy_tags=[
+                    policytagmanager.PolicyTag(),
+                ],
+                next_page_token="ghi",
             ),
             policytagmanager.ListPolicyTagsResponse(
                 policy_tags=[
@@ -2554,7 +2756,9 @@ def test_list_policy_tags_pages():
 
 @pytest.mark.asyncio
 async def test_list_policy_tags_async_pager():
-    client = PolicyTagManagerAsyncClient(credentials=credentials.AnonymousCredentials,)
+    client = PolicyTagManagerAsyncClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -2573,10 +2777,14 @@ async def test_list_policy_tags_async_pager():
                 next_page_token="abc",
             ),
             policytagmanager.ListPolicyTagsResponse(
-                policy_tags=[], next_page_token="def",
+                policy_tags=[],
+                next_page_token="def",
             ),
             policytagmanager.ListPolicyTagsResponse(
-                policy_tags=[policytagmanager.PolicyTag(),], next_page_token="ghi",
+                policy_tags=[
+                    policytagmanager.PolicyTag(),
+                ],
+                next_page_token="ghi",
             ),
             policytagmanager.ListPolicyTagsResponse(
                 policy_tags=[
@@ -2586,7 +2794,9 @@ async def test_list_policy_tags_async_pager():
             ),
             RuntimeError,
         )
-        async_pager = await client.list_policy_tags(request={},)
+        async_pager = await client.list_policy_tags(
+            request={},
+        )
         assert async_pager.next_page_token == "abc"
         responses = []
         async for response in async_pager:
@@ -2598,7 +2808,9 @@ async def test_list_policy_tags_async_pager():
 
 @pytest.mark.asyncio
 async def test_list_policy_tags_async_pages():
-    client = PolicyTagManagerAsyncClient(credentials=credentials.AnonymousCredentials,)
+    client = PolicyTagManagerAsyncClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -2617,10 +2829,14 @@ async def test_list_policy_tags_async_pages():
                 next_page_token="abc",
             ),
             policytagmanager.ListPolicyTagsResponse(
-                policy_tags=[], next_page_token="def",
+                policy_tags=[],
+                next_page_token="def",
             ),
             policytagmanager.ListPolicyTagsResponse(
-                policy_tags=[policytagmanager.PolicyTag(),], next_page_token="ghi",
+                policy_tags=[
+                    policytagmanager.PolicyTag(),
+                ],
+                next_page_token="ghi",
             ),
             policytagmanager.ListPolicyTagsResponse(
                 policy_tags=[
@@ -2641,7 +2857,8 @@ def test_get_policy_tag(
     transport: str = "grpc", request_type=policytagmanager.GetPolicyTagRequest
 ):
     client = PolicyTagManagerClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2688,7 +2905,8 @@ def test_get_policy_tag_from_dict():
 @pytest.mark.asyncio
 async def test_get_policy_tag_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2733,7 +2951,9 @@ async def test_get_policy_tag_async(transport: str = "grpc_asyncio"):
 
 
 def test_get_policy_tag_field_headers():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2753,7 +2973,10 @@ def test_get_policy_tag_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -2784,11 +3007,16 @@ async def test_get_policy_tag_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_get_policy_tag_flattened():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.get_policy_tag), "__call__") as call:
@@ -2797,7 +3025,9 @@ def test_get_policy_tag_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.get_policy_tag(name="name_value",)
+        client.get_policy_tag(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -2808,13 +3038,16 @@ def test_get_policy_tag_flattened():
 
 
 def test_get_policy_tag_flattened_error():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.get_policy_tag(
-            policytagmanager.GetPolicyTagRequest(), name="name_value",
+            policytagmanager.GetPolicyTagRequest(),
+            name="name_value",
         )
 
 
@@ -2836,7 +3069,9 @@ async def test_get_policy_tag_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.get_policy_tag(name="name_value",)
+        response = await client.get_policy_tag(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -2856,7 +3091,8 @@ async def test_get_policy_tag_flattened_error_async():
     # fields is an error.
     with pytest.raises(ValueError):
         await client.get_policy_tag(
-            policytagmanager.GetPolicyTagRequest(), name="name_value",
+            policytagmanager.GetPolicyTagRequest(),
+            name="name_value",
         )
 
 
@@ -2864,7 +3100,8 @@ def test_get_iam_policy(
     transport: str = "grpc", request_type=iam_policy.GetIamPolicyRequest
 ):
     client = PolicyTagManagerClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2874,7 +3111,10 @@ def test_get_iam_policy(
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.get_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
-        call.return_value = policy.Policy(version=774, etag=b"etag_blob",)
+        call.return_value = policy.Policy(
+            version=774,
+            etag=b"etag_blob",
+        )
 
         response = client.get_iam_policy(request)
 
@@ -2899,7 +3139,8 @@ def test_get_iam_policy_from_dict():
 @pytest.mark.asyncio
 async def test_get_iam_policy_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2912,7 +3153,10 @@ async def test_get_iam_policy_async(transport: str = "grpc_asyncio"):
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            policy.Policy(version=774, etag=b"etag_blob",)
+            policy.Policy(
+                version=774,
+                etag=b"etag_blob",
+            )
         )
 
         response = await client.get_iam_policy(request)
@@ -2932,7 +3176,9 @@ async def test_get_iam_policy_async(transport: str = "grpc_asyncio"):
 
 
 def test_get_iam_policy_field_headers():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2952,7 +3198,10 @@ def test_get_iam_policy_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "resource=resource/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -2981,11 +3230,16 @@ async def test_get_iam_policy_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "resource=resource/value",
+    ) in kw["metadata"]
 
 
 def test_get_iam_policy_from_dict():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.get_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
@@ -3004,7 +3258,8 @@ def test_set_iam_policy(
     transport: str = "grpc", request_type=iam_policy.SetIamPolicyRequest
 ):
     client = PolicyTagManagerClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3014,7 +3269,10 @@ def test_set_iam_policy(
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.set_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
-        call.return_value = policy.Policy(version=774, etag=b"etag_blob",)
+        call.return_value = policy.Policy(
+            version=774,
+            etag=b"etag_blob",
+        )
 
         response = client.set_iam_policy(request)
 
@@ -3039,7 +3297,8 @@ def test_set_iam_policy_from_dict():
 @pytest.mark.asyncio
 async def test_set_iam_policy_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3052,7 +3311,10 @@ async def test_set_iam_policy_async(transport: str = "grpc_asyncio"):
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            policy.Policy(version=774, etag=b"etag_blob",)
+            policy.Policy(
+                version=774,
+                etag=b"etag_blob",
+            )
         )
 
         response = await client.set_iam_policy(request)
@@ -3072,7 +3334,9 @@ async def test_set_iam_policy_async(transport: str = "grpc_asyncio"):
 
 
 def test_set_iam_policy_field_headers():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -3092,7 +3356,10 @@ def test_set_iam_policy_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "resource=resource/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -3121,11 +3388,16 @@ async def test_set_iam_policy_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "resource=resource/value",
+    ) in kw["metadata"]
 
 
 def test_set_iam_policy_from_dict():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.set_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
@@ -3144,7 +3416,8 @@ def test_test_iam_permissions(
     transport: str = "grpc", request_type=iam_policy.TestIamPermissionsRequest
 ):
     client = PolicyTagManagerClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3181,7 +3454,8 @@ def test_test_iam_permissions_from_dict():
 @pytest.mark.asyncio
 async def test_test_iam_permissions_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3194,7 +3468,9 @@ async def test_test_iam_permissions_async(transport: str = "grpc_asyncio"):
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            iam_policy.TestIamPermissionsResponse(permissions=["permissions_value"],)
+            iam_policy.TestIamPermissionsResponse(
+                permissions=["permissions_value"],
+            )
         )
 
         response = await client.test_iam_permissions(request)
@@ -3212,7 +3488,9 @@ async def test_test_iam_permissions_async(transport: str = "grpc_asyncio"):
 
 
 def test_test_iam_permissions_field_headers():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -3234,7 +3512,10 @@ def test_test_iam_permissions_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "resource=resource/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -3265,11 +3546,16 @@ async def test_test_iam_permissions_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "resource=resource/value",
+    ) in kw["metadata"]
 
 
 def test_test_iam_permissions_from_dict():
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
         type(client._transport.test_iam_permissions), "__call__"
@@ -3293,7 +3579,8 @@ def test_credentials_transport_error():
     )
     with pytest.raises(ValueError):
         client = PolicyTagManagerClient(
-            credentials=credentials.AnonymousCredentials(), transport=transport,
+            credentials=credentials.AnonymousCredentials(),
+            transport=transport,
         )
 
     # It is an error to provide a credentials file and a transport instance.
@@ -3312,7 +3599,8 @@ def test_credentials_transport_error():
     )
     with pytest.raises(ValueError):
         client = PolicyTagManagerClient(
-            client_options={"scopes": ["1", "2"]}, transport=transport,
+            client_options={"scopes": ["1", "2"]},
+            transport=transport,
         )
 
 
@@ -3342,8 +3630,13 @@ def test_transport_get_channel():
 
 def test_transport_grpc_default():
     # A client should use the gRPC transport by default.
-    client = PolicyTagManagerClient(credentials=credentials.AnonymousCredentials(),)
-    assert isinstance(client._transport, transports.PolicyTagManagerGrpcTransport,)
+    client = PolicyTagManagerClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
+    assert isinstance(
+        client._transport,
+        transports.PolicyTagManagerGrpcTransport,
+    )
 
 
 def test_policy_tag_manager_base_transport_error():
@@ -3397,7 +3690,8 @@ def test_policy_tag_manager_base_transport_with_credentials_file():
         Transport.return_value = None
         load_creds.return_value = (credentials.AnonymousCredentials(), None)
         transport = transports.PolicyTagManagerTransport(
-            credentials_file="credentials.json", quota_project_id="octopus",
+            credentials_file="credentials.json",
+            quota_project_id="octopus",
         )
         load_creds.assert_called_once_with(
             "credentials.json",
@@ -3635,7 +3929,9 @@ def test_taxonomy_path():
     taxonomy = "whelk"
 
     expected = "projects/{project}/locations/{location}/taxonomies/{taxonomy}".format(
-        project=project, location=location, taxonomy=taxonomy,
+        project=project,
+        location=location,
+        taxonomy=taxonomy,
     )
     actual = PolicyTagManagerClient.taxonomy_path(project, location, taxonomy)
     assert expected == actual
@@ -3661,7 +3957,10 @@ def test_policy_tag_path():
     policy_tag = "octopus"
 
     expected = "projects/{project}/locations/{location}/taxonomies/{taxonomy}/policyTags/{policy_tag}".format(
-        project=project, location=location, taxonomy=taxonomy, policy_tag=policy_tag,
+        project=project,
+        location=location,
+        taxonomy=taxonomy,
+        policy_tag=policy_tag,
     )
     actual = PolicyTagManagerClient.policy_tag_path(
         project, location, taxonomy, policy_tag

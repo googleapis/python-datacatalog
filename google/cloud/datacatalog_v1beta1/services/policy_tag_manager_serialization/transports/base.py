@@ -101,10 +101,14 @@ class PolicyTagManagerSerializationTransport(abc.ABC):
         # Precompute the wrapped methods.
         self._wrapped_methods = {
             self.import_taxonomies: gapic_v1.method.wrap_method(
-                self.import_taxonomies, default_timeout=None, client_info=_client_info,
+                self.import_taxonomies,
+                default_timeout=None,
+                client_info=_client_info,
             ),
             self.export_taxonomies: gapic_v1.method.wrap_method(
-                self.export_taxonomies, default_timeout=None, client_info=_client_info,
+                self.export_taxonomies,
+                default_timeout=None,
+                client_info=_client_info,
             ),
         }
 
