@@ -8,15 +8,15 @@ from google.cloud.datacatalog_v1beta1.proto import (
 
 class PolicyTagManagerSerializationStub(object):
     """Policy tag manager serialization API service allows clients to manipulate
-  their taxonomies and policy tags data with serialized format.
-  """
+    their taxonomies and policy tags data with serialized format.
+    """
 
     def __init__(self, channel):
         """Constructor.
 
-    Args:
-      channel: A grpc.Channel.
-    """
+        Args:
+          channel: A grpc.Channel.
+        """
         self.ImportTaxonomies = channel.unary_unary(
             "/google.cloud.datacatalog.v1beta1.PolicyTagManagerSerialization/ImportTaxonomies",
             request_serializer=google_dot_cloud_dot_datacatalog__v1beta1_dot_proto_dot_policytagmanagerserialization__pb2.ImportTaxonomiesRequest.SerializeToString,
@@ -31,16 +31,16 @@ class PolicyTagManagerSerializationStub(object):
 
 class PolicyTagManagerSerializationServicer(object):
     """Policy tag manager serialization API service allows clients to manipulate
-  their taxonomies and policy tags data with serialized format.
-  """
+    their taxonomies and policy tags data with serialized format.
+    """
 
     def ImportTaxonomies(self, request, context):
         """Imports all taxonomies and their policy tags to a project as new
-    taxonomies.
+        taxonomies.
 
-    This method provides a bulk taxonomy / policy tag creation using nested
-    proto structure.
-    """
+        This method provides a bulk taxonomy / policy tag creation using nested
+        proto structure.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
@@ -48,9 +48,9 @@ class PolicyTagManagerSerializationServicer(object):
     def ExportTaxonomies(self, request, context):
         """Exports all taxonomies and their policy tags in a project.
 
-    This method generates SerializedTaxonomy protos with nested policy tags
-    that can be used as an input for future ImportTaxonomies calls.
-    """
+        This method generates SerializedTaxonomy protos with nested policy tags
+        that can be used as an input for future ImportTaxonomies calls.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")

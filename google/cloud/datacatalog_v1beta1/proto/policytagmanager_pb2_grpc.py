@@ -11,15 +11,15 @@ from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 class PolicyTagManagerStub(object):
     """The policy tag manager API service allows clients to manage their taxonomies
-  and policy tags.
-  """
+    and policy tags.
+    """
 
     def __init__(self, channel):
         """Constructor.
 
-    Args:
-      channel: A grpc.Channel.
-    """
+        Args:
+          channel: A grpc.Channel.
+        """
         self.CreateTaxonomy = channel.unary_unary(
             "/google.cloud.datacatalog.v1beta1.PolicyTagManager/CreateTaxonomy",
             request_serializer=google_dot_cloud_dot_datacatalog__v1beta1_dot_proto_dot_policytagmanager__pb2.CreateTaxonomyRequest.SerializeToString,
@@ -89,99 +89,89 @@ class PolicyTagManagerStub(object):
 
 class PolicyTagManagerServicer(object):
     """The policy tag manager API service allows clients to manage their taxonomies
-  and policy tags.
-  """
+    and policy tags.
+    """
 
     def CreateTaxonomy(self, request, context):
-        """Creates a taxonomy in the specified project.
-    """
+        """Creates a taxonomy in the specified project."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
     def DeleteTaxonomy(self, request, context):
         """Deletes a taxonomy. This operation will also delete all
-    policy tags in this taxonomy along with their associated policies.
-    """
+        policy tags in this taxonomy along with their associated policies.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
     def UpdateTaxonomy(self, request, context):
-        """Updates a taxonomy.
-    """
+        """Updates a taxonomy."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
     def ListTaxonomies(self, request, context):
         """Lists all taxonomies in a project in a particular location that the caller
-    has permission to view.
-    """
+        has permission to view.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
     def GetTaxonomy(self, request, context):
-        """Gets a taxonomy.
-    """
+        """Gets a taxonomy."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
     def CreatePolicyTag(self, request, context):
-        """Creates a policy tag in the specified taxonomy.
-    """
+        """Creates a policy tag in the specified taxonomy."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
     def DeletePolicyTag(self, request, context):
-        """Deletes a policy tag. Also deletes all of its descendant policy tags.
-    """
+        """Deletes a policy tag. Also deletes all of its descendant policy tags."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
     def UpdatePolicyTag(self, request, context):
-        """Updates a policy tag.
-    """
+        """Updates a policy tag."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
     def ListPolicyTags(self, request, context):
-        """Lists all policy tags in a taxonomy.
-    """
+        """Lists all policy tags in a taxonomy."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
     def GetPolicyTag(self, request, context):
-        """Gets a policy tag.
-    """
+        """Gets a policy tag."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
     def GetIamPolicy(self, request, context):
-        """Gets the IAM policy for a taxonomy or a policy tag.
-    """
+        """Gets the IAM policy for a taxonomy or a policy tag."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
     def SetIamPolicy(self, request, context):
-        """Sets the IAM policy for a taxonomy or a policy tag.
-    """
+        """Sets the IAM policy for a taxonomy or a policy tag."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
 
     def TestIamPermissions(self, request, context):
         """Returns the permissions that a caller has on the specified taxonomy or
-    policy tag.
-    """
+        policy tag.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details("Method not implemented!")
         raise NotImplementedError("Method not implemented!")
