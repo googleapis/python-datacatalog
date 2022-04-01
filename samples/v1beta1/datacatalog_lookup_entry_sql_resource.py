@@ -46,9 +46,9 @@ def sample_lookup_entry(sql_name):
     # sql_name = '[SQL Resource Name]'
     response = client.lookup_entry(sql_resource=sql_name)
     entry = response
-    print(u"Entry name: {}".format(entry.name))
-    print(u"Entry type: {}".format(enums.EntryType(entry.type).name))
-    print(u"Linked resource: {}".format(entry.linked_resource))
+    print("Entry name: {}".format(entry.name))
+    print("Entry type: {}".format(enums.EntryType(entry.type).name))
+    print("Linked resource: {}".format(entry.linked_resource))
 
 
 # [END datacatalog_lookup_entry_sql_resource]

@@ -47,9 +47,9 @@ def sample_lookup_entry(resource_name):
     # resource_name = '[Full Resource Name]'
     response = client.lookup_entry(linked_resource=resource_name)
     entry = response
-    print(u"Entry name: {}".format(entry.name))
-    print(u"Entry type: {}".format(enums.EntryType(entry.type).name))
-    print(u"Linked resource: {}".format(entry.linked_resource))
+    print("Entry name: {}".format(entry.name))
+    print("Entry type: {}".format(enums.EntryType(entry.type).name))
+    print("Linked resource: {}".format(entry.linked_resource))
 
 
 # [END datacatalog_lookup_entry]

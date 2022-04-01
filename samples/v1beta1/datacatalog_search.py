@@ -56,15 +56,13 @@ def sample_search_catalog(include_project_id, include_gcp_public_datasets, query
     # Iterate over all results
     for response_item in client.search_catalog(scope, query):
         print(
-            u"Result type: {}".format(
+            "Result type: {}".format(
                 enums.SearchResultType(response_item.search_result_type).name
             )
         )
-        print(u"Result subtype: {}".format(response_item.search_result_subtype))
-        print(
-            u"Relative resource name: {}".format(response_item.relative_resource_name)
-        )
-        print(u"Linked resource: {}\n".format(response_item.linked_resource))
+        print("Result subtype: {}".format(response_item.search_result_subtype))
+        print("Relative resource name: {}".format(response_item.relative_resource_name))
+        print("Linked resource: {}\n".format(response_item.linked_resource))
 
 
 # [END datacatalog_search]

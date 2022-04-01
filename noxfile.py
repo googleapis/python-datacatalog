@@ -23,14 +23,19 @@ import shutil
 import nox
 
 
-BLACK_VERSION = "black==19.3b0"
+BLACK_VERSION = "black==22.3.0"
 BLACK_PATHS = ["docs", "google", "tests", "noxfile.py", "setup.py"]
 
 if os.path.exists("samples"):
     BLACK_PATHS.append("samples")
 
+DEFAULT_PYTHON_VERSION = "3.8"
 
-@nox.session(python="3.7")
+# Error if a python version is missing
+nox.options.error_on_missing_interpreters = True
+
+
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def lint(session):
     """Run linters.
 
@@ -42,7 +47,7 @@ def lint(session):
     session.run("flake8", "google", "tests")
 
 
-@nox.session(python="3.6")
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def blacken(session):
     """Run black.
 
@@ -56,7 +61,7 @@ def blacken(session):
     session.run("black", *BLACK_PATHS)
 
 
-@nox.session(python="3.7")
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def lint_setup_py(session):
     """Verify that setup.py is valid (including RST check)."""
     session.install("docutils", "pygments")
@@ -90,7 +95,7 @@ def unit(session):
     default(session)
 
 
-@nox.session(python=["2.7", "3.7"])
+@nox.session(python=["2.7", "3.8"])
 def system(session):
     """Run the system test suite."""
     system_test_path = os.path.join("tests", "system.py")
@@ -120,7 +125,7 @@ def system(session):
         session.run("py.test", "--quiet", system_test_folder_path, *session.posargs)
 
 
-@nox.session(python=["2.7", "3.7"])
+@nox.session(python=["2.7", "3.8"])
 def samples(session):
     requirements_path = os.path.join("samples", "requirements.txt")
     requirements_exists = os.path.exists(requirements_path)
@@ -137,7 +142,7 @@ def samples(session):
     session.run("py.test", "--quiet", "samples", *session.posargs)
 
 
-@nox.session(python="3.7")
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def cover(session):
     """Run the final coverage report.
 
@@ -150,12 +155,12 @@ def cover(session):
     session.run("coverage", "erase")
 
 
-@nox.session(python="3.7")
+@nox.session(python=DEFAULT_PYTHON_VERSION)
 def docs(session):
     """Build the docs for this library."""
 
     session.install("-e", ".")
-    session.install("sphinx<3.0.0", "alabaster", "recommonmark")
+    session.install("sphinx<3.0.0", "alabaster", "recommonmark", "Jinja2<3.1")
 
     shutil.rmtree(os.path.join("docs", "_build"), ignore_errors=True)
     session.run(

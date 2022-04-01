@@ -50,9 +50,9 @@ def sample_get_entry(project_id, location_id, entry_group_id, entry_id):
 
     response = client.get_entry(name)
     entry = response
-    print(u"Entry name: {}".format(entry.name))
-    print(u"Entry type: {}".format(enums.EntryType(entry.type).name))
-    print(u"Linked resource: {}".format(entry.linked_resource))
+    print("Entry name: {}".format(entry.name))
+    print("Entry type: {}".format(enums.EntryType(entry.type).name))
+    print("Linked resource: {}".format(entry.linked_resource))
 
 
 # [END datacatalog_get_entry]

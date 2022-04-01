@@ -202,8 +202,10 @@ class PolicyTagManagerClient(object):
                     )
                 self.transport = transport
         else:
-            self.transport = policy_tag_manager_grpc_transport.PolicyTagManagerGrpcTransport(
-                address=api_endpoint, channel=channel, credentials=credentials
+            self.transport = (
+                policy_tag_manager_grpc_transport.PolicyTagManagerGrpcTransport(
+                    address=api_endpoint, channel=channel, credentials=credentials
+                )
             )
 
         if client_info is None:
