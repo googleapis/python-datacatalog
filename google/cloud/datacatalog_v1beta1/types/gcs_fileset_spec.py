@@ -23,7 +23,10 @@ from google.cloud.datacatalog_v1beta1.types import timestamps
 
 __protobuf__ = proto.module(
     package="google.cloud.datacatalog.v1beta1",
-    manifest={"GcsFilesetSpec", "GcsFileSpec",},
+    manifest={
+        "GcsFilesetSpec",
+        "GcsFileSpec",
+    },
 )
 
 
@@ -73,7 +76,9 @@ class GcsFilesetSpec(proto.Message):
     file_patterns = proto.RepeatedField(proto.STRING, number=1)
 
     sample_gcs_file_specs = proto.RepeatedField(
-        proto.MESSAGE, number=2, message="GcsFileSpec",
+        proto.MESSAGE,
+        number=2,
+        message="GcsFileSpec",
     )
 
 
@@ -94,7 +99,9 @@ class GcsFileSpec(proto.Message):
     file_path = proto.Field(proto.STRING, number=1)
 
     gcs_timestamps = proto.Field(
-        proto.MESSAGE, number=2, message=timestamps.SystemTimestamps,
+        proto.MESSAGE,
+        number=2,
+        message=timestamps.SystemTimestamps,
     )
 
     size_bytes = proto.Field(proto.INT64, number=4)

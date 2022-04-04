@@ -58,7 +58,9 @@ class SerializedTaxonomy(proto.Message):
     description = proto.Field(proto.STRING, number=2)
 
     policy_tags = proto.RepeatedField(
-        proto.MESSAGE, number=3, message="SerializedPolicyTag",
+        proto.MESSAGE,
+        number=3,
+        message="SerializedPolicyTag",
     )
 
 
@@ -84,7 +86,9 @@ class SerializedPolicyTag(proto.Message):
     description = proto.Field(proto.STRING, number=3)
 
     child_policy_tags = proto.RepeatedField(
-        proto.MESSAGE, number=4, message="SerializedPolicyTag",
+        proto.MESSAGE,
+        number=4,
+        message="SerializedPolicyTag",
     )
 
 
@@ -103,7 +107,10 @@ class ImportTaxonomiesRequest(proto.Message):
     parent = proto.Field(proto.STRING, number=1)
 
     inline_source = proto.Field(
-        proto.MESSAGE, number=2, oneof="source", message="InlineSource",
+        proto.MESSAGE,
+        number=2,
+        oneof="source",
+        message="InlineSource",
     )
 
 
@@ -116,7 +123,9 @@ class InlineSource(proto.Message):
     """
 
     taxonomies = proto.RepeatedField(
-        proto.MESSAGE, number=1, message=SerializedTaxonomy,
+        proto.MESSAGE,
+        number=1,
+        message=SerializedTaxonomy,
     )
 
 
@@ -130,7 +139,9 @@ class ImportTaxonomiesResponse(proto.Message):
     """
 
     taxonomies = proto.RepeatedField(
-        proto.MESSAGE, number=1, message=policytagmanager.Taxonomy,
+        proto.MESSAGE,
+        number=1,
+        message=policytagmanager.Taxonomy,
     )
 
 
@@ -167,7 +178,9 @@ class ExportTaxonomiesResponse(proto.Message):
     """
 
     taxonomies = proto.RepeatedField(
-        proto.MESSAGE, number=1, message=SerializedTaxonomy,
+        proto.MESSAGE,
+        number=1,
+        message=SerializedTaxonomy,
     )
 
 

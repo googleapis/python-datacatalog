@@ -297,7 +297,9 @@ def test_data_catalog_client_client_options_scopes(
     client_class, transport_class, transport_name
 ):
     # Check the case scopes are provided.
-    options = client_options.ClientOptions(scopes=["1", "2"],)
+    options = client_options.ClientOptions(
+        scopes=["1", "2"],
+    )
     with mock.patch.object(transport_class, "__init__") as patched:
         patched.return_value = None
         client = client_class(client_options=options)
@@ -363,7 +365,8 @@ def test_search_catalog(
     transport: str = "grpc", request_type=datacatalog.SearchCatalogRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -374,7 +377,8 @@ def test_search_catalog(
     with mock.patch.object(type(client._transport.search_catalog), "__call__") as call:
         # Designate an appropriate return value for the call.
         call.return_value = datacatalog.SearchCatalogResponse(
-            next_page_token="next_page_token_value", unreachable=["unreachable_value"],
+            next_page_token="next_page_token_value",
+            unreachable=["unreachable_value"],
         )
 
         response = client.search_catalog(request)
@@ -400,7 +404,8 @@ def test_search_catalog_from_dict():
 @pytest.mark.asyncio
 async def test_search_catalog_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -436,7 +441,9 @@ async def test_search_catalog_async(transport: str = "grpc_asyncio"):
 
 
 def test_search_catalog_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.search_catalog), "__call__") as call:
@@ -465,7 +472,9 @@ def test_search_catalog_flattened():
 
 
 def test_search_catalog_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -481,7 +490,9 @@ def test_search_catalog_flattened_error():
 
 @pytest.mark.asyncio
 async def test_search_catalog_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -516,7 +527,9 @@ async def test_search_catalog_flattened_async():
 
 @pytest.mark.asyncio
 async def test_search_catalog_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -531,7 +544,9 @@ async def test_search_catalog_flattened_error_async():
 
 
 def test_search_catalog_pager():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.search_catalog), "__call__") as call:
@@ -545,12 +560,21 @@ def test_search_catalog_pager():
                 ],
                 next_page_token="abc",
             ),
-            datacatalog.SearchCatalogResponse(results=[], next_page_token="def",),
             datacatalog.SearchCatalogResponse(
-                results=[search.SearchCatalogResult(),], next_page_token="ghi",
+                results=[],
+                next_page_token="def",
             ),
             datacatalog.SearchCatalogResponse(
-                results=[search.SearchCatalogResult(), search.SearchCatalogResult(),],
+                results=[
+                    search.SearchCatalogResult(),
+                ],
+                next_page_token="ghi",
+            ),
+            datacatalog.SearchCatalogResponse(
+                results=[
+                    search.SearchCatalogResult(),
+                    search.SearchCatalogResult(),
+                ],
             ),
             RuntimeError,
         )
@@ -566,7 +590,9 @@ def test_search_catalog_pager():
 
 
 def test_search_catalog_pages():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.search_catalog), "__call__") as call:
@@ -580,12 +606,21 @@ def test_search_catalog_pages():
                 ],
                 next_page_token="abc",
             ),
-            datacatalog.SearchCatalogResponse(results=[], next_page_token="def",),
             datacatalog.SearchCatalogResponse(
-                results=[search.SearchCatalogResult(),], next_page_token="ghi",
+                results=[],
+                next_page_token="def",
             ),
             datacatalog.SearchCatalogResponse(
-                results=[search.SearchCatalogResult(), search.SearchCatalogResult(),],
+                results=[
+                    search.SearchCatalogResult(),
+                ],
+                next_page_token="ghi",
+            ),
+            datacatalog.SearchCatalogResponse(
+                results=[
+                    search.SearchCatalogResult(),
+                    search.SearchCatalogResult(),
+                ],
             ),
             RuntimeError,
         )
@@ -596,7 +631,9 @@ def test_search_catalog_pages():
 
 @pytest.mark.asyncio
 async def test_search_catalog_async_pager():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -614,16 +651,27 @@ async def test_search_catalog_async_pager():
                 ],
                 next_page_token="abc",
             ),
-            datacatalog.SearchCatalogResponse(results=[], next_page_token="def",),
             datacatalog.SearchCatalogResponse(
-                results=[search.SearchCatalogResult(),], next_page_token="ghi",
+                results=[],
+                next_page_token="def",
             ),
             datacatalog.SearchCatalogResponse(
-                results=[search.SearchCatalogResult(), search.SearchCatalogResult(),],
+                results=[
+                    search.SearchCatalogResult(),
+                ],
+                next_page_token="ghi",
+            ),
+            datacatalog.SearchCatalogResponse(
+                results=[
+                    search.SearchCatalogResult(),
+                    search.SearchCatalogResult(),
+                ],
             ),
             RuntimeError,
         )
-        async_pager = await client.search_catalog(request={},)
+        async_pager = await client.search_catalog(
+            request={},
+        )
         assert async_pager.next_page_token == "abc"
         responses = []
         async for response in async_pager:
@@ -635,7 +683,9 @@ async def test_search_catalog_async_pager():
 
 @pytest.mark.asyncio
 async def test_search_catalog_async_pages():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -653,12 +703,21 @@ async def test_search_catalog_async_pages():
                 ],
                 next_page_token="abc",
             ),
-            datacatalog.SearchCatalogResponse(results=[], next_page_token="def",),
             datacatalog.SearchCatalogResponse(
-                results=[search.SearchCatalogResult(),], next_page_token="ghi",
+                results=[],
+                next_page_token="def",
             ),
             datacatalog.SearchCatalogResponse(
-                results=[search.SearchCatalogResult(), search.SearchCatalogResult(),],
+                results=[
+                    search.SearchCatalogResult(),
+                ],
+                next_page_token="ghi",
+            ),
+            datacatalog.SearchCatalogResponse(
+                results=[
+                    search.SearchCatalogResult(),
+                    search.SearchCatalogResult(),
+                ],
             ),
             RuntimeError,
         )
@@ -673,7 +732,8 @@ def test_create_entry_group(
     transport: str = "grpc", request_type=datacatalog.CreateEntryGroupRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -716,7 +776,8 @@ def test_create_entry_group_from_dict():
 @pytest.mark.asyncio
 async def test_create_entry_group_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -755,7 +816,9 @@ async def test_create_entry_group_async(transport: str = "grpc_asyncio"):
 
 
 def test_create_entry_group_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -777,12 +840,17 @@ def test_create_entry_group_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_create_entry_group_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -806,11 +874,16 @@ async def test_create_entry_group_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_create_entry_group_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -840,7 +913,9 @@ def test_create_entry_group_flattened():
 
 
 def test_create_entry_group_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -855,7 +930,9 @@ def test_create_entry_group_flattened_error():
 
 @pytest.mark.asyncio
 async def test_create_entry_group_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -889,7 +966,9 @@ async def test_create_entry_group_flattened_async():
 
 @pytest.mark.asyncio
 async def test_create_entry_group_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -906,7 +985,8 @@ def test_get_entry_group(
     transport: str = "grpc", request_type=datacatalog.GetEntryGroupRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -947,7 +1027,8 @@ def test_get_entry_group_from_dict():
 @pytest.mark.asyncio
 async def test_get_entry_group_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -986,7 +1067,9 @@ async def test_get_entry_group_async(transport: str = "grpc_asyncio"):
 
 
 def test_get_entry_group_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -1006,12 +1089,17 @@ def test_get_entry_group_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_get_entry_group_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -1035,11 +1123,16 @@ async def test_get_entry_group_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_get_entry_group_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.get_entry_group), "__call__") as call:
@@ -1049,7 +1142,8 @@ def test_get_entry_group_flattened():
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         client.get_entry_group(
-            name="name_value", read_mask=field_mask.FieldMask(paths=["paths_value"]),
+            name="name_value",
+            read_mask=field_mask.FieldMask(paths=["paths_value"]),
         )
 
         # Establish that the underlying call was made with the expected
@@ -1063,7 +1157,9 @@ def test_get_entry_group_flattened():
 
 
 def test_get_entry_group_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -1077,7 +1173,9 @@ def test_get_entry_group_flattened_error():
 
 @pytest.mark.asyncio
 async def test_get_entry_group_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1092,7 +1190,8 @@ async def test_get_entry_group_flattened_async():
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         response = await client.get_entry_group(
-            name="name_value", read_mask=field_mask.FieldMask(paths=["paths_value"]),
+            name="name_value",
+            read_mask=field_mask.FieldMask(paths=["paths_value"]),
         )
 
         # Establish that the underlying call was made with the expected
@@ -1107,7 +1206,9 @@ async def test_get_entry_group_flattened_async():
 
 @pytest.mark.asyncio
 async def test_get_entry_group_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -1123,7 +1224,8 @@ def test_update_entry_group(
     transport: str = "grpc", request_type=datacatalog.UpdateEntryGroupRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1166,7 +1268,8 @@ def test_update_entry_group_from_dict():
 @pytest.mark.asyncio
 async def test_update_entry_group_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1205,7 +1308,9 @@ async def test_update_entry_group_async(transport: str = "grpc_asyncio"):
 
 
 def test_update_entry_group_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -1227,14 +1332,17 @@ def test_update_entry_group_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "entry_group.name=entry_group.name/value",) in kw[
-        "metadata"
-    ]
+    assert (
+        "x-goog-request-params",
+        "entry_group.name=entry_group.name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_update_entry_group_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -1258,13 +1366,16 @@ async def test_update_entry_group_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "entry_group.name=entry_group.name/value",) in kw[
-        "metadata"
-    ]
+    assert (
+        "x-goog-request-params",
+        "entry_group.name=entry_group.name/value",
+    ) in kw["metadata"]
 
 
 def test_update_entry_group_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1291,7 +1402,9 @@ def test_update_entry_group_flattened():
 
 
 def test_update_entry_group_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -1305,7 +1418,9 @@ def test_update_entry_group_flattened_error():
 
 @pytest.mark.asyncio
 async def test_update_entry_group_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1336,7 +1451,9 @@ async def test_update_entry_group_flattened_async():
 
 @pytest.mark.asyncio
 async def test_update_entry_group_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -1352,7 +1469,8 @@ def test_delete_entry_group(
     transport: str = "grpc", request_type=datacatalog.DeleteEntryGroupRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1385,7 +1503,8 @@ def test_delete_entry_group_from_dict():
 @pytest.mark.asyncio
 async def test_delete_entry_group_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1412,7 +1531,9 @@ async def test_delete_entry_group_async(transport: str = "grpc_asyncio"):
 
 
 def test_delete_entry_group_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -1434,12 +1555,17 @@ def test_delete_entry_group_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_delete_entry_group_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -1461,11 +1587,16 @@ async def test_delete_entry_group_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_delete_entry_group_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1476,7 +1607,9 @@ def test_delete_entry_group_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.delete_entry_group(name="name_value",)
+        client.delete_entry_group(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -1487,19 +1620,24 @@ def test_delete_entry_group_flattened():
 
 
 def test_delete_entry_group_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.delete_entry_group(
-            datacatalog.DeleteEntryGroupRequest(), name="name_value",
+            datacatalog.DeleteEntryGroupRequest(),
+            name="name_value",
         )
 
 
 @pytest.mark.asyncio
 async def test_delete_entry_group_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1511,7 +1649,9 @@ async def test_delete_entry_group_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.delete_entry_group(name="name_value",)
+        response = await client.delete_entry_group(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -1523,13 +1663,16 @@ async def test_delete_entry_group_flattened_async():
 
 @pytest.mark.asyncio
 async def test_delete_entry_group_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         await client.delete_entry_group(
-            datacatalog.DeleteEntryGroupRequest(), name="name_value",
+            datacatalog.DeleteEntryGroupRequest(),
+            name="name_value",
         )
 
 
@@ -1537,7 +1680,8 @@ def test_list_entry_groups(
     transport: str = "grpc", request_type=datacatalog.ListEntryGroupsRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1574,7 +1718,8 @@ def test_list_entry_groups_from_dict():
 @pytest.mark.asyncio
 async def test_list_entry_groups_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1607,7 +1752,9 @@ async def test_list_entry_groups_async(transport: str = "grpc_asyncio"):
 
 
 def test_list_entry_groups_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -1629,12 +1776,17 @@ def test_list_entry_groups_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_list_entry_groups_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -1658,11 +1810,16 @@ async def test_list_entry_groups_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_list_entry_groups_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1673,7 +1830,9 @@ def test_list_entry_groups_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.list_entry_groups(parent="parent_value",)
+        client.list_entry_groups(
+            parent="parent_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -1684,19 +1843,24 @@ def test_list_entry_groups_flattened():
 
 
 def test_list_entry_groups_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.list_entry_groups(
-            datacatalog.ListEntryGroupsRequest(), parent="parent_value",
+            datacatalog.ListEntryGroupsRequest(),
+            parent="parent_value",
         )
 
 
 @pytest.mark.asyncio
 async def test_list_entry_groups_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1710,7 +1874,9 @@ async def test_list_entry_groups_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_entry_groups(parent="parent_value",)
+        response = await client.list_entry_groups(
+            parent="parent_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -1722,18 +1888,23 @@ async def test_list_entry_groups_flattened_async():
 
 @pytest.mark.asyncio
 async def test_list_entry_groups_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         await client.list_entry_groups(
-            datacatalog.ListEntryGroupsRequest(), parent="parent_value",
+            datacatalog.ListEntryGroupsRequest(),
+            parent="parent_value",
         )
 
 
 def test_list_entry_groups_pager():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1750,13 +1921,20 @@ def test_list_entry_groups_pager():
                 next_page_token="abc",
             ),
             datacatalog.ListEntryGroupsResponse(
-                entry_groups=[], next_page_token="def",
+                entry_groups=[],
+                next_page_token="def",
             ),
             datacatalog.ListEntryGroupsResponse(
-                entry_groups=[datacatalog.EntryGroup(),], next_page_token="ghi",
+                entry_groups=[
+                    datacatalog.EntryGroup(),
+                ],
+                next_page_token="ghi",
             ),
             datacatalog.ListEntryGroupsResponse(
-                entry_groups=[datacatalog.EntryGroup(), datacatalog.EntryGroup(),],
+                entry_groups=[
+                    datacatalog.EntryGroup(),
+                    datacatalog.EntryGroup(),
+                ],
             ),
             RuntimeError,
         )
@@ -1775,7 +1953,9 @@ def test_list_entry_groups_pager():
 
 
 def test_list_entry_groups_pages():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1792,13 +1972,20 @@ def test_list_entry_groups_pages():
                 next_page_token="abc",
             ),
             datacatalog.ListEntryGroupsResponse(
-                entry_groups=[], next_page_token="def",
+                entry_groups=[],
+                next_page_token="def",
             ),
             datacatalog.ListEntryGroupsResponse(
-                entry_groups=[datacatalog.EntryGroup(),], next_page_token="ghi",
+                entry_groups=[
+                    datacatalog.EntryGroup(),
+                ],
+                next_page_token="ghi",
             ),
             datacatalog.ListEntryGroupsResponse(
-                entry_groups=[datacatalog.EntryGroup(), datacatalog.EntryGroup(),],
+                entry_groups=[
+                    datacatalog.EntryGroup(),
+                    datacatalog.EntryGroup(),
+                ],
             ),
             RuntimeError,
         )
@@ -1809,7 +1996,9 @@ def test_list_entry_groups_pages():
 
 @pytest.mark.asyncio
 async def test_list_entry_groups_async_pager():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1828,17 +2017,26 @@ async def test_list_entry_groups_async_pager():
                 next_page_token="abc",
             ),
             datacatalog.ListEntryGroupsResponse(
-                entry_groups=[], next_page_token="def",
+                entry_groups=[],
+                next_page_token="def",
             ),
             datacatalog.ListEntryGroupsResponse(
-                entry_groups=[datacatalog.EntryGroup(),], next_page_token="ghi",
+                entry_groups=[
+                    datacatalog.EntryGroup(),
+                ],
+                next_page_token="ghi",
             ),
             datacatalog.ListEntryGroupsResponse(
-                entry_groups=[datacatalog.EntryGroup(), datacatalog.EntryGroup(),],
+                entry_groups=[
+                    datacatalog.EntryGroup(),
+                    datacatalog.EntryGroup(),
+                ],
             ),
             RuntimeError,
         )
-        async_pager = await client.list_entry_groups(request={},)
+        async_pager = await client.list_entry_groups(
+            request={},
+        )
         assert async_pager.next_page_token == "abc"
         responses = []
         async for response in async_pager:
@@ -1850,7 +2048,9 @@ async def test_list_entry_groups_async_pager():
 
 @pytest.mark.asyncio
 async def test_list_entry_groups_async_pages():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -1869,13 +2069,20 @@ async def test_list_entry_groups_async_pages():
                 next_page_token="abc",
             ),
             datacatalog.ListEntryGroupsResponse(
-                entry_groups=[], next_page_token="def",
+                entry_groups=[],
+                next_page_token="def",
             ),
             datacatalog.ListEntryGroupsResponse(
-                entry_groups=[datacatalog.EntryGroup(),], next_page_token="ghi",
+                entry_groups=[
+                    datacatalog.EntryGroup(),
+                ],
+                next_page_token="ghi",
             ),
             datacatalog.ListEntryGroupsResponse(
-                entry_groups=[datacatalog.EntryGroup(), datacatalog.EntryGroup(),],
+                entry_groups=[
+                    datacatalog.EntryGroup(),
+                    datacatalog.EntryGroup(),
+                ],
             ),
             RuntimeError,
         )
@@ -1890,7 +2097,8 @@ def test_create_entry(
     transport: str = "grpc", request_type=datacatalog.CreateEntryRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1939,7 +2147,8 @@ def test_create_entry_from_dict():
 @pytest.mark.asyncio
 async def test_create_entry_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -1981,7 +2190,9 @@ async def test_create_entry_async(transport: str = "grpc_asyncio"):
 
 
 def test_create_entry_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2001,12 +2212,17 @@ def test_create_entry_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_create_entry_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2028,11 +2244,16 @@ async def test_create_entry_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_create_entry_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.create_entry), "__call__") as call:
@@ -2060,7 +2281,9 @@ def test_create_entry_flattened():
 
 
 def test_create_entry_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -2075,7 +2298,9 @@ def test_create_entry_flattened_error():
 
 @pytest.mark.asyncio
 async def test_create_entry_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -2107,7 +2332,9 @@ async def test_create_entry_flattened_async():
 
 @pytest.mark.asyncio
 async def test_create_entry_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -2124,7 +2351,8 @@ def test_update_entry(
     transport: str = "grpc", request_type=datacatalog.UpdateEntryRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2173,7 +2401,8 @@ def test_update_entry_from_dict():
 @pytest.mark.asyncio
 async def test_update_entry_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2215,7 +2444,9 @@ async def test_update_entry_async(transport: str = "grpc_asyncio"):
 
 
 def test_update_entry_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2235,12 +2466,17 @@ def test_update_entry_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "entry.name=entry.name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "entry.name=entry.name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_update_entry_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2262,11 +2498,16 @@ async def test_update_entry_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "entry.name=entry.name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "entry.name=entry.name/value",
+    ) in kw["metadata"]
 
 
 def test_update_entry_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.update_entry), "__call__") as call:
@@ -2291,7 +2532,9 @@ def test_update_entry_flattened():
 
 
 def test_update_entry_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -2305,7 +2548,9 @@ def test_update_entry_flattened_error():
 
 @pytest.mark.asyncio
 async def test_update_entry_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -2334,7 +2579,9 @@ async def test_update_entry_flattened_async():
 
 @pytest.mark.asyncio
 async def test_update_entry_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -2350,7 +2597,8 @@ def test_delete_entry(
     transport: str = "grpc", request_type=datacatalog.DeleteEntryRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2381,7 +2629,8 @@ def test_delete_entry_from_dict():
 @pytest.mark.asyncio
 async def test_delete_entry_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2408,7 +2657,9 @@ async def test_delete_entry_async(transport: str = "grpc_asyncio"):
 
 
 def test_delete_entry_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2428,12 +2679,17 @@ def test_delete_entry_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_delete_entry_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2455,11 +2711,16 @@ async def test_delete_entry_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_delete_entry_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.delete_entry), "__call__") as call:
@@ -2468,7 +2729,9 @@ def test_delete_entry_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.delete_entry(name="name_value",)
+        client.delete_entry(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -2479,19 +2742,24 @@ def test_delete_entry_flattened():
 
 
 def test_delete_entry_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.delete_entry(
-            datacatalog.DeleteEntryRequest(), name="name_value",
+            datacatalog.DeleteEntryRequest(),
+            name="name_value",
         )
 
 
 @pytest.mark.asyncio
 async def test_delete_entry_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -2503,7 +2771,9 @@ async def test_delete_entry_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.delete_entry(name="name_value",)
+        response = await client.delete_entry(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -2515,19 +2785,23 @@ async def test_delete_entry_flattened_async():
 
 @pytest.mark.asyncio
 async def test_delete_entry_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         await client.delete_entry(
-            datacatalog.DeleteEntryRequest(), name="name_value",
+            datacatalog.DeleteEntryRequest(),
+            name="name_value",
         )
 
 
 def test_get_entry(transport: str = "grpc", request_type=datacatalog.GetEntryRequest):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2576,7 +2850,8 @@ def test_get_entry_from_dict():
 @pytest.mark.asyncio
 async def test_get_entry_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2618,7 +2893,9 @@ async def test_get_entry_async(transport: str = "grpc_asyncio"):
 
 
 def test_get_entry_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2638,12 +2915,17 @@ def test_get_entry_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_get_entry_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2665,11 +2947,16 @@ async def test_get_entry_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_get_entry_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.get_entry), "__call__") as call:
@@ -2678,7 +2965,9 @@ def test_get_entry_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.get_entry(name="name_value",)
+        client.get_entry(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -2689,19 +2978,24 @@ def test_get_entry_flattened():
 
 
 def test_get_entry_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.get_entry(
-            datacatalog.GetEntryRequest(), name="name_value",
+            datacatalog.GetEntryRequest(),
+            name="name_value",
         )
 
 
 @pytest.mark.asyncio
 async def test_get_entry_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -2713,7 +3007,9 @@ async def test_get_entry_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(datacatalog.Entry())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.get_entry(name="name_value",)
+        response = await client.get_entry(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -2725,13 +3021,16 @@ async def test_get_entry_flattened_async():
 
 @pytest.mark.asyncio
 async def test_get_entry_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         await client.get_entry(
-            datacatalog.GetEntryRequest(), name="name_value",
+            datacatalog.GetEntryRequest(),
+            name="name_value",
         )
 
 
@@ -2739,7 +3038,8 @@ def test_lookup_entry(
     transport: str = "grpc", request_type=datacatalog.LookupEntryRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2788,7 +3088,8 @@ def test_lookup_entry_from_dict():
 @pytest.mark.asyncio
 async def test_lookup_entry_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2833,7 +3134,8 @@ def test_list_entries(
     transport: str = "grpc", request_type=datacatalog.ListEntriesRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2868,7 +3170,8 @@ def test_list_entries_from_dict():
 @pytest.mark.asyncio
 async def test_list_entries_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -2881,7 +3184,9 @@ async def test_list_entries_async(transport: str = "grpc_asyncio"):
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            datacatalog.ListEntriesResponse(next_page_token="next_page_token_value",)
+            datacatalog.ListEntriesResponse(
+                next_page_token="next_page_token_value",
+            )
         )
 
         response = await client.list_entries(request)
@@ -2899,7 +3204,9 @@ async def test_list_entries_async(transport: str = "grpc_asyncio"):
 
 
 def test_list_entries_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2919,12 +3226,17 @@ def test_list_entries_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_list_entries_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -2948,11 +3260,16 @@ async def test_list_entries_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_list_entries_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.list_entries), "__call__") as call:
@@ -2961,7 +3278,9 @@ def test_list_entries_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.list_entries(parent="parent_value",)
+        client.list_entries(
+            parent="parent_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -2972,19 +3291,24 @@ def test_list_entries_flattened():
 
 
 def test_list_entries_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.list_entries(
-            datacatalog.ListEntriesRequest(), parent="parent_value",
+            datacatalog.ListEntriesRequest(),
+            parent="parent_value",
         )
 
 
 @pytest.mark.asyncio
 async def test_list_entries_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -2998,7 +3322,9 @@ async def test_list_entries_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_entries(parent="parent_value",)
+        response = await client.list_entries(
+            parent="parent_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -3010,18 +3336,23 @@ async def test_list_entries_flattened_async():
 
 @pytest.mark.asyncio
 async def test_list_entries_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         await client.list_entries(
-            datacatalog.ListEntriesRequest(), parent="parent_value",
+            datacatalog.ListEntriesRequest(),
+            parent="parent_value",
         )
 
 
 def test_list_entries_pager():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.list_entries), "__call__") as call:
@@ -3035,12 +3366,21 @@ def test_list_entries_pager():
                 ],
                 next_page_token="abc",
             ),
-            datacatalog.ListEntriesResponse(entries=[], next_page_token="def",),
             datacatalog.ListEntriesResponse(
-                entries=[datacatalog.Entry(),], next_page_token="ghi",
+                entries=[],
+                next_page_token="def",
             ),
             datacatalog.ListEntriesResponse(
-                entries=[datacatalog.Entry(), datacatalog.Entry(),],
+                entries=[
+                    datacatalog.Entry(),
+                ],
+                next_page_token="ghi",
+            ),
+            datacatalog.ListEntriesResponse(
+                entries=[
+                    datacatalog.Entry(),
+                    datacatalog.Entry(),
+                ],
             ),
             RuntimeError,
         )
@@ -3059,7 +3399,9 @@ def test_list_entries_pager():
 
 
 def test_list_entries_pages():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.list_entries), "__call__") as call:
@@ -3073,12 +3415,21 @@ def test_list_entries_pages():
                 ],
                 next_page_token="abc",
             ),
-            datacatalog.ListEntriesResponse(entries=[], next_page_token="def",),
             datacatalog.ListEntriesResponse(
-                entries=[datacatalog.Entry(),], next_page_token="ghi",
+                entries=[],
+                next_page_token="def",
             ),
             datacatalog.ListEntriesResponse(
-                entries=[datacatalog.Entry(), datacatalog.Entry(),],
+                entries=[
+                    datacatalog.Entry(),
+                ],
+                next_page_token="ghi",
+            ),
+            datacatalog.ListEntriesResponse(
+                entries=[
+                    datacatalog.Entry(),
+                    datacatalog.Entry(),
+                ],
             ),
             RuntimeError,
         )
@@ -3089,7 +3440,9 @@ def test_list_entries_pages():
 
 @pytest.mark.asyncio
 async def test_list_entries_async_pager():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -3107,16 +3460,27 @@ async def test_list_entries_async_pager():
                 ],
                 next_page_token="abc",
             ),
-            datacatalog.ListEntriesResponse(entries=[], next_page_token="def",),
             datacatalog.ListEntriesResponse(
-                entries=[datacatalog.Entry(),], next_page_token="ghi",
+                entries=[],
+                next_page_token="def",
             ),
             datacatalog.ListEntriesResponse(
-                entries=[datacatalog.Entry(), datacatalog.Entry(),],
+                entries=[
+                    datacatalog.Entry(),
+                ],
+                next_page_token="ghi",
+            ),
+            datacatalog.ListEntriesResponse(
+                entries=[
+                    datacatalog.Entry(),
+                    datacatalog.Entry(),
+                ],
             ),
             RuntimeError,
         )
-        async_pager = await client.list_entries(request={},)
+        async_pager = await client.list_entries(
+            request={},
+        )
         assert async_pager.next_page_token == "abc"
         responses = []
         async for response in async_pager:
@@ -3128,7 +3492,9 @@ async def test_list_entries_async_pager():
 
 @pytest.mark.asyncio
 async def test_list_entries_async_pages():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -3146,12 +3512,21 @@ async def test_list_entries_async_pages():
                 ],
                 next_page_token="abc",
             ),
-            datacatalog.ListEntriesResponse(entries=[], next_page_token="def",),
             datacatalog.ListEntriesResponse(
-                entries=[datacatalog.Entry(),], next_page_token="ghi",
+                entries=[],
+                next_page_token="def",
             ),
             datacatalog.ListEntriesResponse(
-                entries=[datacatalog.Entry(), datacatalog.Entry(),],
+                entries=[
+                    datacatalog.Entry(),
+                ],
+                next_page_token="ghi",
+            ),
+            datacatalog.ListEntriesResponse(
+                entries=[
+                    datacatalog.Entry(),
+                    datacatalog.Entry(),
+                ],
             ),
             RuntimeError,
         )
@@ -3166,7 +3541,8 @@ def test_create_tag_template(
     transport: str = "grpc", request_type=datacatalog.CreateTagTemplateRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3179,7 +3555,8 @@ def test_create_tag_template(
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = tags.TagTemplate(
-            name="name_value", display_name="display_name_value",
+            name="name_value",
+            display_name="display_name_value",
         )
 
         response = client.create_tag_template(request)
@@ -3205,7 +3582,8 @@ def test_create_tag_template_from_dict():
 @pytest.mark.asyncio
 async def test_create_tag_template_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3218,7 +3596,10 @@ async def test_create_tag_template_async(transport: str = "grpc_asyncio"):
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            tags.TagTemplate(name="name_value", display_name="display_name_value",)
+            tags.TagTemplate(
+                name="name_value",
+                display_name="display_name_value",
+            )
         )
 
         response = await client.create_tag_template(request)
@@ -3238,7 +3619,9 @@ async def test_create_tag_template_async(transport: str = "grpc_asyncio"):
 
 
 def test_create_tag_template_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -3260,12 +3643,17 @@ def test_create_tag_template_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_create_tag_template_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -3287,11 +3675,16 @@ async def test_create_tag_template_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_create_tag_template_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -3321,7 +3714,9 @@ def test_create_tag_template_flattened():
 
 
 def test_create_tag_template_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -3336,7 +3731,9 @@ def test_create_tag_template_flattened_error():
 
 @pytest.mark.asyncio
 async def test_create_tag_template_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -3368,7 +3765,9 @@ async def test_create_tag_template_flattened_async():
 
 @pytest.mark.asyncio
 async def test_create_tag_template_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -3385,7 +3784,8 @@ def test_get_tag_template(
     transport: str = "grpc", request_type=datacatalog.GetTagTemplateRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3398,7 +3798,8 @@ def test_get_tag_template(
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = tags.TagTemplate(
-            name="name_value", display_name="display_name_value",
+            name="name_value",
+            display_name="display_name_value",
         )
 
         response = client.get_tag_template(request)
@@ -3424,7 +3825,8 @@ def test_get_tag_template_from_dict():
 @pytest.mark.asyncio
 async def test_get_tag_template_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3437,7 +3839,10 @@ async def test_get_tag_template_async(transport: str = "grpc_asyncio"):
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            tags.TagTemplate(name="name_value", display_name="display_name_value",)
+            tags.TagTemplate(
+                name="name_value",
+                display_name="display_name_value",
+            )
         )
 
         response = await client.get_tag_template(request)
@@ -3457,7 +3862,9 @@ async def test_get_tag_template_async(transport: str = "grpc_asyncio"):
 
 
 def test_get_tag_template_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -3479,12 +3886,17 @@ def test_get_tag_template_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_get_tag_template_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -3506,11 +3918,16 @@ async def test_get_tag_template_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_get_tag_template_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -3521,7 +3938,9 @@ def test_get_tag_template_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.get_tag_template(name="name_value",)
+        client.get_tag_template(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -3532,19 +3951,24 @@ def test_get_tag_template_flattened():
 
 
 def test_get_tag_template_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.get_tag_template(
-            datacatalog.GetTagTemplateRequest(), name="name_value",
+            datacatalog.GetTagTemplateRequest(),
+            name="name_value",
         )
 
 
 @pytest.mark.asyncio
 async def test_get_tag_template_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -3556,7 +3980,9 @@ async def test_get_tag_template_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(tags.TagTemplate())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.get_tag_template(name="name_value",)
+        response = await client.get_tag_template(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -3568,13 +3994,16 @@ async def test_get_tag_template_flattened_async():
 
 @pytest.mark.asyncio
 async def test_get_tag_template_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         await client.get_tag_template(
-            datacatalog.GetTagTemplateRequest(), name="name_value",
+            datacatalog.GetTagTemplateRequest(),
+            name="name_value",
         )
 
 
@@ -3582,7 +4011,8 @@ def test_update_tag_template(
     transport: str = "grpc", request_type=datacatalog.UpdateTagTemplateRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3595,7 +4025,8 @@ def test_update_tag_template(
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = tags.TagTemplate(
-            name="name_value", display_name="display_name_value",
+            name="name_value",
+            display_name="display_name_value",
         )
 
         response = client.update_tag_template(request)
@@ -3621,7 +4052,8 @@ def test_update_tag_template_from_dict():
 @pytest.mark.asyncio
 async def test_update_tag_template_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3634,7 +4066,10 @@ async def test_update_tag_template_async(transport: str = "grpc_asyncio"):
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            tags.TagTemplate(name="name_value", display_name="display_name_value",)
+            tags.TagTemplate(
+                name="name_value",
+                display_name="display_name_value",
+            )
         )
 
         response = await client.update_tag_template(request)
@@ -3654,7 +4089,9 @@ async def test_update_tag_template_async(transport: str = "grpc_asyncio"):
 
 
 def test_update_tag_template_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -3684,7 +4121,9 @@ def test_update_tag_template_field_headers():
 
 @pytest.mark.asyncio
 async def test_update_tag_template_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -3713,7 +4152,9 @@ async def test_update_tag_template_field_headers_async():
 
 
 def test_update_tag_template_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -3740,7 +4181,9 @@ def test_update_tag_template_flattened():
 
 
 def test_update_tag_template_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -3754,7 +4197,9 @@ def test_update_tag_template_flattened_error():
 
 @pytest.mark.asyncio
 async def test_update_tag_template_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -3783,7 +4228,9 @@ async def test_update_tag_template_flattened_async():
 
 @pytest.mark.asyncio
 async def test_update_tag_template_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -3799,7 +4246,8 @@ def test_delete_tag_template(
     transport: str = "grpc", request_type=datacatalog.DeleteTagTemplateRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3832,7 +4280,8 @@ def test_delete_tag_template_from_dict():
 @pytest.mark.asyncio
 async def test_delete_tag_template_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -3859,7 +4308,9 @@ async def test_delete_tag_template_async(transport: str = "grpc_asyncio"):
 
 
 def test_delete_tag_template_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -3881,12 +4332,17 @@ def test_delete_tag_template_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_delete_tag_template_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -3908,11 +4364,16 @@ async def test_delete_tag_template_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_delete_tag_template_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -3924,7 +4385,8 @@ def test_delete_tag_template_flattened():
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         client.delete_tag_template(
-            name="name_value", force=True,
+            name="name_value",
+            force=True,
         )
 
         # Establish that the underlying call was made with the expected
@@ -3938,19 +4400,25 @@ def test_delete_tag_template_flattened():
 
 
 def test_delete_tag_template_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.delete_tag_template(
-            datacatalog.DeleteTagTemplateRequest(), name="name_value", force=True,
+            datacatalog.DeleteTagTemplateRequest(),
+            name="name_value",
+            force=True,
         )
 
 
 @pytest.mark.asyncio
 async def test_delete_tag_template_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -3962,7 +4430,10 @@ async def test_delete_tag_template_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.delete_tag_template(name="name_value", force=True,)
+        response = await client.delete_tag_template(
+            name="name_value",
+            force=True,
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -3976,13 +4447,17 @@ async def test_delete_tag_template_flattened_async():
 
 @pytest.mark.asyncio
 async def test_delete_tag_template_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         await client.delete_tag_template(
-            datacatalog.DeleteTagTemplateRequest(), name="name_value", force=True,
+            datacatalog.DeleteTagTemplateRequest(),
+            name="name_value",
+            force=True,
         )
 
 
@@ -3990,7 +4465,8 @@ def test_create_tag_template_field(
     transport: str = "grpc", request_type=datacatalog.CreateTagTemplateFieldRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4036,7 +4512,8 @@ def test_create_tag_template_field_from_dict():
 @pytest.mark.asyncio
 async def test_create_tag_template_field_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4078,7 +4555,9 @@ async def test_create_tag_template_field_async(transport: str = "grpc_asyncio"):
 
 
 def test_create_tag_template_field_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -4100,12 +4579,17 @@ def test_create_tag_template_field_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_create_tag_template_field_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -4129,11 +4613,16 @@ async def test_create_tag_template_field_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_create_tag_template_field_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -4163,7 +4652,9 @@ def test_create_tag_template_field_flattened():
 
 
 def test_create_tag_template_field_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -4178,7 +4669,9 @@ def test_create_tag_template_field_flattened_error():
 
 @pytest.mark.asyncio
 async def test_create_tag_template_field_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -4212,7 +4705,9 @@ async def test_create_tag_template_field_flattened_async():
 
 @pytest.mark.asyncio
 async def test_create_tag_template_field_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -4229,7 +4724,8 @@ def test_update_tag_template_field(
     transport: str = "grpc", request_type=datacatalog.UpdateTagTemplateFieldRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4275,7 +4771,8 @@ def test_update_tag_template_field_from_dict():
 @pytest.mark.asyncio
 async def test_update_tag_template_field_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4317,7 +4814,9 @@ async def test_update_tag_template_field_async(transport: str = "grpc_asyncio"):
 
 
 def test_update_tag_template_field_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -4339,12 +4838,17 @@ def test_update_tag_template_field_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_update_tag_template_field_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -4368,11 +4872,16 @@ async def test_update_tag_template_field_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_update_tag_template_field_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -4402,7 +4911,9 @@ def test_update_tag_template_field_flattened():
 
 
 def test_update_tag_template_field_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -4417,7 +4928,9 @@ def test_update_tag_template_field_flattened_error():
 
 @pytest.mark.asyncio
 async def test_update_tag_template_field_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -4451,7 +4964,9 @@ async def test_update_tag_template_field_flattened_async():
 
 @pytest.mark.asyncio
 async def test_update_tag_template_field_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -4468,7 +4983,8 @@ def test_rename_tag_template_field(
     transport: str = "grpc", request_type=datacatalog.RenameTagTemplateFieldRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4514,7 +5030,8 @@ def test_rename_tag_template_field_from_dict():
 @pytest.mark.asyncio
 async def test_rename_tag_template_field_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4556,7 +5073,9 @@ async def test_rename_tag_template_field_async(transport: str = "grpc_asyncio"):
 
 
 def test_rename_tag_template_field_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -4578,12 +5097,17 @@ def test_rename_tag_template_field_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_rename_tag_template_field_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -4607,11 +5131,16 @@ async def test_rename_tag_template_field_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_rename_tag_template_field_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -4638,7 +5167,9 @@ def test_rename_tag_template_field_flattened():
 
 
 def test_rename_tag_template_field_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -4652,7 +5183,9 @@ def test_rename_tag_template_field_flattened_error():
 
 @pytest.mark.asyncio
 async def test_rename_tag_template_field_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -4683,7 +5216,9 @@ async def test_rename_tag_template_field_flattened_async():
 
 @pytest.mark.asyncio
 async def test_rename_tag_template_field_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -4699,7 +5234,8 @@ def test_delete_tag_template_field(
     transport: str = "grpc", request_type=datacatalog.DeleteTagTemplateFieldRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4732,7 +5268,8 @@ def test_delete_tag_template_field_from_dict():
 @pytest.mark.asyncio
 async def test_delete_tag_template_field_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4759,7 +5296,9 @@ async def test_delete_tag_template_field_async(transport: str = "grpc_asyncio"):
 
 
 def test_delete_tag_template_field_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -4781,12 +5320,17 @@ def test_delete_tag_template_field_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_delete_tag_template_field_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -4808,11 +5352,16 @@ async def test_delete_tag_template_field_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_delete_tag_template_field_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -4824,7 +5373,8 @@ def test_delete_tag_template_field_flattened():
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         client.delete_tag_template_field(
-            name="name_value", force=True,
+            name="name_value",
+            force=True,
         )
 
         # Establish that the underlying call was made with the expected
@@ -4838,19 +5388,25 @@ def test_delete_tag_template_field_flattened():
 
 
 def test_delete_tag_template_field_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.delete_tag_template_field(
-            datacatalog.DeleteTagTemplateFieldRequest(), name="name_value", force=True,
+            datacatalog.DeleteTagTemplateFieldRequest(),
+            name="name_value",
+            force=True,
         )
 
 
 @pytest.mark.asyncio
 async def test_delete_tag_template_field_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -4863,7 +5419,8 @@ async def test_delete_tag_template_field_flattened_async():
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         response = await client.delete_tag_template_field(
-            name="name_value", force=True,
+            name="name_value",
+            force=True,
         )
 
         # Establish that the underlying call was made with the expected
@@ -4878,19 +5435,24 @@ async def test_delete_tag_template_field_flattened_async():
 
 @pytest.mark.asyncio
 async def test_delete_tag_template_field_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         await client.delete_tag_template_field(
-            datacatalog.DeleteTagTemplateFieldRequest(), name="name_value", force=True,
+            datacatalog.DeleteTagTemplateFieldRequest(),
+            name="name_value",
+            force=True,
         )
 
 
 def test_create_tag(transport: str = "grpc", request_type=datacatalog.CreateTagRequest):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4932,7 +5494,8 @@ def test_create_tag_from_dict():
 @pytest.mark.asyncio
 async def test_create_tag_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -4971,7 +5534,9 @@ async def test_create_tag_async(transport: str = "grpc_asyncio"):
 
 
 def test_create_tag_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -4991,12 +5556,17 @@ def test_create_tag_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_create_tag_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -5018,11 +5588,16 @@ async def test_create_tag_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_create_tag_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.create_tag), "__call__") as call:
@@ -5032,7 +5607,8 @@ def test_create_tag_flattened():
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         client.create_tag(
-            parent="parent_value", tag=tags.Tag(name="name_value"),
+            parent="parent_value",
+            tag=tags.Tag(name="name_value"),
         )
 
         # Establish that the underlying call was made with the expected
@@ -5046,7 +5622,9 @@ def test_create_tag_flattened():
 
 
 def test_create_tag_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -5060,7 +5638,9 @@ def test_create_tag_flattened_error():
 
 @pytest.mark.asyncio
 async def test_create_tag_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -5073,7 +5653,8 @@ async def test_create_tag_flattened_async():
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
         response = await client.create_tag(
-            parent="parent_value", tag=tags.Tag(name="name_value"),
+            parent="parent_value",
+            tag=tags.Tag(name="name_value"),
         )
 
         # Establish that the underlying call was made with the expected
@@ -5088,7 +5669,9 @@ async def test_create_tag_flattened_async():
 
 @pytest.mark.asyncio
 async def test_create_tag_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -5102,7 +5685,8 @@ async def test_create_tag_flattened_error_async():
 
 def test_update_tag(transport: str = "grpc", request_type=datacatalog.UpdateTagRequest):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -5144,7 +5728,8 @@ def test_update_tag_from_dict():
 @pytest.mark.asyncio
 async def test_update_tag_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -5183,7 +5768,9 @@ async def test_update_tag_async(transport: str = "grpc_asyncio"):
 
 
 def test_update_tag_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -5203,12 +5790,17 @@ def test_update_tag_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "tag.name=tag.name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "tag.name=tag.name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_update_tag_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -5230,11 +5822,16 @@ async def test_update_tag_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "tag.name=tag.name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "tag.name=tag.name/value",
+    ) in kw["metadata"]
 
 
 def test_update_tag_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.update_tag), "__call__") as call:
@@ -5259,7 +5856,9 @@ def test_update_tag_flattened():
 
 
 def test_update_tag_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -5273,7 +5872,9 @@ def test_update_tag_flattened_error():
 
 @pytest.mark.asyncio
 async def test_update_tag_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -5302,7 +5903,9 @@ async def test_update_tag_flattened_async():
 
 @pytest.mark.asyncio
 async def test_update_tag_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
@@ -5316,7 +5919,8 @@ async def test_update_tag_flattened_error_async():
 
 def test_delete_tag(transport: str = "grpc", request_type=datacatalog.DeleteTagRequest):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -5347,7 +5951,8 @@ def test_delete_tag_from_dict():
 @pytest.mark.asyncio
 async def test_delete_tag_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -5374,7 +5979,9 @@ async def test_delete_tag_async(transport: str = "grpc_asyncio"):
 
 
 def test_delete_tag_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -5394,12 +6001,17 @@ def test_delete_tag_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_delete_tag_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -5421,11 +6033,16 @@ async def test_delete_tag_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "name=name/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "name=name/value",
+    ) in kw["metadata"]
 
 
 def test_delete_tag_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.delete_tag), "__call__") as call:
@@ -5434,7 +6051,9 @@ def test_delete_tag_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.delete_tag(name="name_value",)
+        client.delete_tag(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -5445,19 +6064,24 @@ def test_delete_tag_flattened():
 
 
 def test_delete_tag_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.delete_tag(
-            datacatalog.DeleteTagRequest(), name="name_value",
+            datacatalog.DeleteTagRequest(),
+            name="name_value",
         )
 
 
 @pytest.mark.asyncio
 async def test_delete_tag_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -5469,7 +6093,9 @@ async def test_delete_tag_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(None)
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.delete_tag(name="name_value",)
+        response = await client.delete_tag(
+            name="name_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -5481,19 +6107,23 @@ async def test_delete_tag_flattened_async():
 
 @pytest.mark.asyncio
 async def test_delete_tag_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         await client.delete_tag(
-            datacatalog.DeleteTagRequest(), name="name_value",
+            datacatalog.DeleteTagRequest(),
+            name="name_value",
         )
 
 
 def test_list_tags(transport: str = "grpc", request_type=datacatalog.ListTagsRequest):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -5528,7 +6158,8 @@ def test_list_tags_from_dict():
 @pytest.mark.asyncio
 async def test_list_tags_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -5541,7 +6172,9 @@ async def test_list_tags_async(transport: str = "grpc_asyncio"):
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            datacatalog.ListTagsResponse(next_page_token="next_page_token_value",)
+            datacatalog.ListTagsResponse(
+                next_page_token="next_page_token_value",
+            )
         )
 
         response = await client.list_tags(request)
@@ -5559,7 +6192,9 @@ async def test_list_tags_async(transport: str = "grpc_asyncio"):
 
 
 def test_list_tags_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -5579,12 +6214,17 @@ def test_list_tags_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_list_tags_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -5608,11 +6248,16 @@ async def test_list_tags_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_list_tags_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.list_tags), "__call__") as call:
@@ -5621,7 +6266,9 @@ def test_list_tags_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.list_tags(parent="parent_value",)
+        client.list_tags(
+            parent="parent_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -5632,19 +6279,24 @@ def test_list_tags_flattened():
 
 
 def test_list_tags_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.list_tags(
-            datacatalog.ListTagsRequest(), parent="parent_value",
+            datacatalog.ListTagsRequest(),
+            parent="parent_value",
         )
 
 
 @pytest.mark.asyncio
 async def test_list_tags_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -5658,7 +6310,9 @@ async def test_list_tags_flattened_async():
         )
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.list_tags(parent="parent_value",)
+        response = await client.list_tags(
+            parent="parent_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -5670,29 +6324,52 @@ async def test_list_tags_flattened_async():
 
 @pytest.mark.asyncio
 async def test_list_tags_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         await client.list_tags(
-            datacatalog.ListTagsRequest(), parent="parent_value",
+            datacatalog.ListTagsRequest(),
+            parent="parent_value",
         )
 
 
 def test_list_tags_pager():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.list_tags), "__call__") as call:
         # Set the response to a series of pages.
         call.side_effect = (
             datacatalog.ListTagsResponse(
-                tags=[tags.Tag(), tags.Tag(), tags.Tag(),], next_page_token="abc",
+                tags=[
+                    tags.Tag(),
+                    tags.Tag(),
+                    tags.Tag(),
+                ],
+                next_page_token="abc",
             ),
-            datacatalog.ListTagsResponse(tags=[], next_page_token="def",),
-            datacatalog.ListTagsResponse(tags=[tags.Tag(),], next_page_token="ghi",),
-            datacatalog.ListTagsResponse(tags=[tags.Tag(), tags.Tag(),],),
+            datacatalog.ListTagsResponse(
+                tags=[],
+                next_page_token="def",
+            ),
+            datacatalog.ListTagsResponse(
+                tags=[
+                    tags.Tag(),
+                ],
+                next_page_token="ghi",
+            ),
+            datacatalog.ListTagsResponse(
+                tags=[
+                    tags.Tag(),
+                    tags.Tag(),
+                ],
+            ),
             RuntimeError,
         )
 
@@ -5710,18 +6387,38 @@ def test_list_tags_pager():
 
 
 def test_list_tags_pages():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.list_tags), "__call__") as call:
         # Set the response to a series of pages.
         call.side_effect = (
             datacatalog.ListTagsResponse(
-                tags=[tags.Tag(), tags.Tag(), tags.Tag(),], next_page_token="abc",
+                tags=[
+                    tags.Tag(),
+                    tags.Tag(),
+                    tags.Tag(),
+                ],
+                next_page_token="abc",
             ),
-            datacatalog.ListTagsResponse(tags=[], next_page_token="def",),
-            datacatalog.ListTagsResponse(tags=[tags.Tag(),], next_page_token="ghi",),
-            datacatalog.ListTagsResponse(tags=[tags.Tag(), tags.Tag(),],),
+            datacatalog.ListTagsResponse(
+                tags=[],
+                next_page_token="def",
+            ),
+            datacatalog.ListTagsResponse(
+                tags=[
+                    tags.Tag(),
+                ],
+                next_page_token="ghi",
+            ),
+            datacatalog.ListTagsResponse(
+                tags=[
+                    tags.Tag(),
+                    tags.Tag(),
+                ],
+            ),
             RuntimeError,
         )
         pages = list(client.list_tags(request={}).pages)
@@ -5731,7 +6428,9 @@ def test_list_tags_pages():
 
 @pytest.mark.asyncio
 async def test_list_tags_async_pager():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -5742,14 +6441,34 @@ async def test_list_tags_async_pager():
         # Set the response to a series of pages.
         call.side_effect = (
             datacatalog.ListTagsResponse(
-                tags=[tags.Tag(), tags.Tag(), tags.Tag(),], next_page_token="abc",
+                tags=[
+                    tags.Tag(),
+                    tags.Tag(),
+                    tags.Tag(),
+                ],
+                next_page_token="abc",
             ),
-            datacatalog.ListTagsResponse(tags=[], next_page_token="def",),
-            datacatalog.ListTagsResponse(tags=[tags.Tag(),], next_page_token="ghi",),
-            datacatalog.ListTagsResponse(tags=[tags.Tag(), tags.Tag(),],),
+            datacatalog.ListTagsResponse(
+                tags=[],
+                next_page_token="def",
+            ),
+            datacatalog.ListTagsResponse(
+                tags=[
+                    tags.Tag(),
+                ],
+                next_page_token="ghi",
+            ),
+            datacatalog.ListTagsResponse(
+                tags=[
+                    tags.Tag(),
+                    tags.Tag(),
+                ],
+            ),
             RuntimeError,
         )
-        async_pager = await client.list_tags(request={},)
+        async_pager = await client.list_tags(
+            request={},
+        )
         assert async_pager.next_page_token == "abc"
         responses = []
         async for response in async_pager:
@@ -5761,7 +6480,9 @@ async def test_list_tags_async_pager():
 
 @pytest.mark.asyncio
 async def test_list_tags_async_pages():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials,)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials,
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -5772,11 +6493,29 @@ async def test_list_tags_async_pages():
         # Set the response to a series of pages.
         call.side_effect = (
             datacatalog.ListTagsResponse(
-                tags=[tags.Tag(), tags.Tag(), tags.Tag(),], next_page_token="abc",
+                tags=[
+                    tags.Tag(),
+                    tags.Tag(),
+                    tags.Tag(),
+                ],
+                next_page_token="abc",
             ),
-            datacatalog.ListTagsResponse(tags=[], next_page_token="def",),
-            datacatalog.ListTagsResponse(tags=[tags.Tag(),], next_page_token="ghi",),
-            datacatalog.ListTagsResponse(tags=[tags.Tag(), tags.Tag(),],),
+            datacatalog.ListTagsResponse(
+                tags=[],
+                next_page_token="def",
+            ),
+            datacatalog.ListTagsResponse(
+                tags=[
+                    tags.Tag(),
+                ],
+                next_page_token="ghi",
+            ),
+            datacatalog.ListTagsResponse(
+                tags=[
+                    tags.Tag(),
+                    tags.Tag(),
+                ],
+            ),
             RuntimeError,
         )
         pages = []
@@ -5790,7 +6529,8 @@ def test_set_iam_policy(
     transport: str = "grpc", request_type=iam_policy.SetIamPolicyRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -5800,7 +6540,10 @@ def test_set_iam_policy(
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.set_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
-        call.return_value = policy.Policy(version=774, etag=b"etag_blob",)
+        call.return_value = policy.Policy(
+            version=774,
+            etag=b"etag_blob",
+        )
 
         response = client.set_iam_policy(request)
 
@@ -5825,7 +6568,8 @@ def test_set_iam_policy_from_dict():
 @pytest.mark.asyncio
 async def test_set_iam_policy_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -5838,7 +6582,10 @@ async def test_set_iam_policy_async(transport: str = "grpc_asyncio"):
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            policy.Policy(version=774, etag=b"etag_blob",)
+            policy.Policy(
+                version=774,
+                etag=b"etag_blob",
+            )
         )
 
         response = await client.set_iam_policy(request)
@@ -5858,7 +6605,9 @@ async def test_set_iam_policy_async(transport: str = "grpc_asyncio"):
 
 
 def test_set_iam_policy_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -5878,12 +6627,17 @@ def test_set_iam_policy_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "resource=resource/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_set_iam_policy_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -5905,11 +6659,16 @@ async def test_set_iam_policy_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "resource=resource/value",
+    ) in kw["metadata"]
 
 
 def test_set_iam_policy_from_dict():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.set_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
@@ -5925,7 +6684,9 @@ def test_set_iam_policy_from_dict():
 
 
 def test_set_iam_policy_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.set_iam_policy), "__call__") as call:
@@ -5934,7 +6695,9 @@ def test_set_iam_policy_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.set_iam_policy(resource="resource_value",)
+        client.set_iam_policy(
+            resource="resource_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -5945,19 +6708,24 @@ def test_set_iam_policy_flattened():
 
 
 def test_set_iam_policy_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.set_iam_policy(
-            iam_policy.SetIamPolicyRequest(), resource="resource_value",
+            iam_policy.SetIamPolicyRequest(),
+            resource="resource_value",
         )
 
 
 @pytest.mark.asyncio
 async def test_set_iam_policy_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -5969,7 +6737,9 @@ async def test_set_iam_policy_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(policy.Policy())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.set_iam_policy(resource="resource_value",)
+        response = await client.set_iam_policy(
+            resource="resource_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -5981,13 +6751,16 @@ async def test_set_iam_policy_flattened_async():
 
 @pytest.mark.asyncio
 async def test_set_iam_policy_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         await client.set_iam_policy(
-            iam_policy.SetIamPolicyRequest(), resource="resource_value",
+            iam_policy.SetIamPolicyRequest(),
+            resource="resource_value",
         )
 
 
@@ -5995,7 +6768,8 @@ def test_get_iam_policy(
     transport: str = "grpc", request_type=iam_policy.GetIamPolicyRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -6005,7 +6779,10 @@ def test_get_iam_policy(
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.get_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
-        call.return_value = policy.Policy(version=774, etag=b"etag_blob",)
+        call.return_value = policy.Policy(
+            version=774,
+            etag=b"etag_blob",
+        )
 
         response = client.get_iam_policy(request)
 
@@ -6030,7 +6807,8 @@ def test_get_iam_policy_from_dict():
 @pytest.mark.asyncio
 async def test_get_iam_policy_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -6043,7 +6821,10 @@ async def test_get_iam_policy_async(transport: str = "grpc_asyncio"):
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            policy.Policy(version=774, etag=b"etag_blob",)
+            policy.Policy(
+                version=774,
+                etag=b"etag_blob",
+            )
         )
 
         response = await client.get_iam_policy(request)
@@ -6063,7 +6844,9 @@ async def test_get_iam_policy_async(transport: str = "grpc_asyncio"):
 
 
 def test_get_iam_policy_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -6083,12 +6866,17 @@ def test_get_iam_policy_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "resource=resource/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_get_iam_policy_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -6110,11 +6898,16 @@ async def test_get_iam_policy_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "resource=resource/value",
+    ) in kw["metadata"]
 
 
 def test_get_iam_policy_from_dict():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.get_iam_policy), "__call__") as call:
         # Designate an appropriate return value for the call.
@@ -6130,7 +6923,9 @@ def test_get_iam_policy_from_dict():
 
 
 def test_get_iam_policy_flattened():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(type(client._transport.get_iam_policy), "__call__") as call:
@@ -6139,7 +6934,9 @@ def test_get_iam_policy_flattened():
 
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        client.get_iam_policy(resource="resource_value",)
+        client.get_iam_policy(
+            resource="resource_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -6150,19 +6947,24 @@ def test_get_iam_policy_flattened():
 
 
 def test_get_iam_policy_flattened_error():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         client.get_iam_policy(
-            iam_policy.GetIamPolicyRequest(), resource="resource_value",
+            iam_policy.GetIamPolicyRequest(),
+            resource="resource_value",
         )
 
 
 @pytest.mark.asyncio
 async def test_get_iam_policy_flattened_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
@@ -6174,7 +6976,9 @@ async def test_get_iam_policy_flattened_async():
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(policy.Policy())
         # Call the method with a truthy value for each flattened field,
         # using the keyword arguments to the method.
-        response = await client.get_iam_policy(resource="resource_value",)
+        response = await client.get_iam_policy(
+            resource="resource_value",
+        )
 
         # Establish that the underlying call was made with the expected
         # request object values.
@@ -6186,13 +6990,16 @@ async def test_get_iam_policy_flattened_async():
 
 @pytest.mark.asyncio
 async def test_get_iam_policy_flattened_error_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Attempting to call a method with both a request object and flattened
     # fields is an error.
     with pytest.raises(ValueError):
         await client.get_iam_policy(
-            iam_policy.GetIamPolicyRequest(), resource="resource_value",
+            iam_policy.GetIamPolicyRequest(),
+            resource="resource_value",
         )
 
 
@@ -6200,7 +7007,8 @@ def test_test_iam_permissions(
     transport: str = "grpc", request_type=iam_policy.TestIamPermissionsRequest
 ):
     client = DataCatalogClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -6237,7 +7045,8 @@ def test_test_iam_permissions_from_dict():
 @pytest.mark.asyncio
 async def test_test_iam_permissions_async(transport: str = "grpc_asyncio"):
     client = DataCatalogAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -6250,7 +7059,9 @@ async def test_test_iam_permissions_async(transport: str = "grpc_asyncio"):
     ) as call:
         # Designate an appropriate return value for the call.
         call.return_value = grpc_helpers_async.FakeUnaryUnaryCall(
-            iam_policy.TestIamPermissionsResponse(permissions=["permissions_value"],)
+            iam_policy.TestIamPermissionsResponse(
+                permissions=["permissions_value"],
+            )
         )
 
         response = await client.test_iam_permissions(request)
@@ -6268,7 +7079,9 @@ async def test_test_iam_permissions_async(transport: str = "grpc_asyncio"):
 
 
 def test_test_iam_permissions_field_headers():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -6290,12 +7103,17 @@ def test_test_iam_permissions_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "resource=resource/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
 async def test_test_iam_permissions_field_headers_async():
-    client = DataCatalogAsyncClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogAsyncClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
 
     # Any value that is part of the HTTP/1.1 URI should be sent as
     # a field header. Set these to a non-empty value.
@@ -6319,11 +7137,16 @@ async def test_test_iam_permissions_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "resource=resource/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "resource=resource/value",
+    ) in kw["metadata"]
 
 
 def test_test_iam_permissions_from_dict():
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
     # Mock the actual call within the gRPC stub, and fake the request.
     with mock.patch.object(
         type(client._transport.test_iam_permissions), "__call__"
@@ -6347,7 +7170,8 @@ def test_credentials_transport_error():
     )
     with pytest.raises(ValueError):
         client = DataCatalogClient(
-            credentials=credentials.AnonymousCredentials(), transport=transport,
+            credentials=credentials.AnonymousCredentials(),
+            transport=transport,
         )
 
     # It is an error to provide a credentials file and a transport instance.
@@ -6366,7 +7190,8 @@ def test_credentials_transport_error():
     )
     with pytest.raises(ValueError):
         client = DataCatalogClient(
-            client_options={"scopes": ["1", "2"]}, transport=transport,
+            client_options={"scopes": ["1", "2"]},
+            transport=transport,
         )
 
 
@@ -6396,8 +7221,13 @@ def test_transport_get_channel():
 
 def test_transport_grpc_default():
     # A client should use the gRPC transport by default.
-    client = DataCatalogClient(credentials=credentials.AnonymousCredentials(),)
-    assert isinstance(client._transport, transports.DataCatalogGrpcTransport,)
+    client = DataCatalogClient(
+        credentials=credentials.AnonymousCredentials(),
+    )
+    assert isinstance(
+        client._transport,
+        transports.DataCatalogGrpcTransport,
+    )
 
 
 def test_data_catalog_base_transport_error():
@@ -6465,7 +7295,8 @@ def test_data_catalog_base_transport_with_credentials_file():
         Transport.return_value = None
         load_creds.return_value = (credentials.AnonymousCredentials(), None)
         transport = transports.DataCatalogTransport(
-            credentials_file="credentials.json", quota_project_id="octopus",
+            credentials_file="credentials.json",
+            quota_project_id="octopus",
         )
         load_creds.assert_called_once_with(
             "credentials.json",
@@ -6704,7 +7535,10 @@ def test_tag_template_field_path():
     field = "octopus"
 
     expected = "projects/{project}/locations/{location}/tagTemplates/{tag_template}/fields/{field}".format(
-        project=project, location=location, tag_template=tag_template, field=field,
+        project=project,
+        location=location,
+        tag_template=tag_template,
+        field=field,
     )
     actual = DataCatalogClient.tag_template_field_path(
         project, location, tag_template, field
@@ -6731,8 +7565,12 @@ def test_tag_template_path():
     location = "clam"
     tag_template = "whelk"
 
-    expected = "projects/{project}/locations/{location}/tagTemplates/{tag_template}".format(
-        project=project, location=location, tag_template=tag_template,
+    expected = (
+        "projects/{project}/locations/{location}/tagTemplates/{tag_template}".format(
+            project=project,
+            location=location,
+            tag_template=tag_template,
+        )
     )
     actual = DataCatalogClient.tag_template_path(project, location, tag_template)
     assert expected == actual
@@ -6758,7 +7596,10 @@ def test_entry_path():
     entry = "octopus"
 
     expected = "projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{entry}".format(
-        project=project, location=location, entry_group=entry_group, entry=entry,
+        project=project,
+        location=location,
+        entry_group=entry_group,
+        entry=entry,
     )
     actual = DataCatalogClient.entry_path(project, location, entry_group, entry)
     assert expected == actual
@@ -6816,8 +7657,12 @@ def test_entry_group_path():
     location = "clam"
     entry_group = "whelk"
 
-    expected = "projects/{project}/locations/{location}/entryGroups/{entry_group}".format(
-        project=project, location=location, entry_group=entry_group,
+    expected = (
+        "projects/{project}/locations/{location}/entryGroups/{entry_group}".format(
+            project=project,
+            location=location,
+            entry_group=entry_group,
+        )
     )
     actual = DataCatalogClient.entry_group_path(project, location, entry_group)
     assert expected == actual

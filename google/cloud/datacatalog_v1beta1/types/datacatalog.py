@@ -156,7 +156,11 @@ class SearchCatalogRequest(proto.Message):
 
         include_gcp_public_datasets = proto.Field(proto.BOOL, number=7)
 
-    scope = proto.Field(proto.MESSAGE, number=6, message=Scope,)
+    scope = proto.Field(
+        proto.MESSAGE,
+        number=6,
+        message=Scope,
+    )
 
     query = proto.Field(proto.STRING, number=1)
 
@@ -184,7 +188,9 @@ class SearchCatalogResponse(proto.Message):
         return self
 
     results = proto.RepeatedField(
-        proto.MESSAGE, number=1, message=search.SearchCatalogResult,
+        proto.MESSAGE,
+        number=1,
+        message=search.SearchCatalogResult,
     )
 
     next_page_token = proto.Field(proto.STRING, number=3)
@@ -218,7 +224,11 @@ class CreateEntryGroupRequest(proto.Message):
 
     entry_group_id = proto.Field(proto.STRING, number=3)
 
-    entry_group = proto.Field(proto.MESSAGE, number=2, message="EntryGroup",)
+    entry_group = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="EntryGroup",
+    )
 
 
 class UpdateEntryGroupRequest(proto.Message):
@@ -235,9 +245,17 @@ class UpdateEntryGroupRequest(proto.Message):
             updated.
     """
 
-    entry_group = proto.Field(proto.MESSAGE, number=1, message="EntryGroup",)
+    entry_group = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="EntryGroup",
+    )
 
-    update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask,)
+    update_mask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask.FieldMask,
+    )
 
 
 class GetEntryGroupRequest(proto.Message):
@@ -255,7 +273,11 @@ class GetEntryGroupRequest(proto.Message):
 
     name = proto.Field(proto.STRING, number=1)
 
-    read_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask,)
+    read_mask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask.FieldMask,
+    )
 
 
 class DeleteEntryGroupRequest(proto.Message):
@@ -319,7 +341,11 @@ class ListEntryGroupsResponse(proto.Message):
     def raw_page(self):
         return self
 
-    entry_groups = proto.RepeatedField(proto.MESSAGE, number=1, message="EntryGroup",)
+    entry_groups = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message="EntryGroup",
+    )
 
     next_page_token = proto.Field(proto.STRING, number=2)
 
@@ -347,7 +373,11 @@ class CreateEntryRequest(proto.Message):
 
     entry_id = proto.Field(proto.STRING, number=3)
 
-    entry = proto.Field(proto.MESSAGE, number=2, message="Entry",)
+    entry = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message="Entry",
+    )
 
 
 class UpdateEntryRequest(proto.Message):
@@ -387,9 +417,17 @@ class UpdateEntryRequest(proto.Message):
                -  source_system_timestamps
     """
 
-    entry = proto.Field(proto.MESSAGE, number=1, message="Entry",)
+    entry = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message="Entry",
+    )
 
-    update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask,)
+    update_mask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask.FieldMask,
+    )
 
 
 class DeleteEntryRequest(proto.Message):
@@ -555,12 +593,20 @@ class Entry(proto.Message):
 
     linked_resource = proto.Field(proto.STRING, number=9)
 
-    type = proto.Field(proto.ENUM, number=2, oneof="entry_type", enum="EntryType",)
+    type = proto.Field(
+        proto.ENUM,
+        number=2,
+        oneof="entry_type",
+        enum="EntryType",
+    )
 
     user_specified_type = proto.Field(proto.STRING, number=16, oneof="entry_type")
 
     integrated_system = proto.Field(
-        proto.ENUM, number=17, oneof="system", enum=common.IntegratedSystem,
+        proto.ENUM,
+        number=17,
+        oneof="system",
+        enum=common.IntegratedSystem,
     )
 
     user_specified_system = proto.Field(proto.STRING, number=18, oneof="system")
@@ -590,10 +636,16 @@ class Entry(proto.Message):
 
     description = proto.Field(proto.STRING, number=4)
 
-    schema = proto.Field(proto.MESSAGE, number=5, message=gcd_schema.Schema,)
+    schema = proto.Field(
+        proto.MESSAGE,
+        number=5,
+        message=gcd_schema.Schema,
+    )
 
     source_system_timestamps = proto.Field(
-        proto.MESSAGE, number=7, message=timestamps.SystemTimestamps,
+        proto.MESSAGE,
+        number=7,
+        message=timestamps.SystemTimestamps,
     )
 
 
@@ -631,7 +683,9 @@ class EntryGroup(proto.Message):
     description = proto.Field(proto.STRING, number=3)
 
     data_catalog_timestamps = proto.Field(
-        proto.MESSAGE, number=4, message=timestamps.SystemTimestamps,
+        proto.MESSAGE,
+        number=4,
+        message=timestamps.SystemTimestamps,
     )
 
 
@@ -658,7 +712,11 @@ class CreateTagTemplateRequest(proto.Message):
 
     tag_template_id = proto.Field(proto.STRING, number=3)
 
-    tag_template = proto.Field(proto.MESSAGE, number=2, message=gcd_tags.TagTemplate,)
+    tag_template = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=gcd_tags.TagTemplate,
+    )
 
 
 class GetTagTemplateRequest(proto.Message):
@@ -695,9 +753,17 @@ class UpdateTagTemplateRequest(proto.Message):
             updated.
     """
 
-    tag_template = proto.Field(proto.MESSAGE, number=1, message=gcd_tags.TagTemplate,)
+    tag_template = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=gcd_tags.TagTemplate,
+    )
 
-    update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask,)
+    update_mask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask.FieldMask,
+    )
 
 
 class DeleteTagTemplateRequest(proto.Message):
@@ -740,7 +806,11 @@ class CreateTagRequest(proto.Message):
 
     parent = proto.Field(proto.STRING, number=1)
 
-    tag = proto.Field(proto.MESSAGE, number=2, message=gcd_tags.Tag,)
+    tag = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=gcd_tags.Tag,
+    )
 
 
 class UpdateTagRequest(proto.Message):
@@ -757,9 +827,17 @@ class UpdateTagRequest(proto.Message):
             field is the field ``fields``.
     """
 
-    tag = proto.Field(proto.MESSAGE, number=1, message=gcd_tags.Tag,)
+    tag = proto.Field(
+        proto.MESSAGE,
+        number=1,
+        message=gcd_tags.Tag,
+    )
 
-    update_mask = proto.Field(proto.MESSAGE, number=2, message=field_mask.FieldMask,)
+    update_mask = proto.Field(
+        proto.MESSAGE,
+        number=2,
+        message=field_mask.FieldMask,
+    )
 
 
 class DeleteTagRequest(proto.Message):
@@ -803,7 +881,9 @@ class CreateTagTemplateFieldRequest(proto.Message):
     tag_template_field_id = proto.Field(proto.STRING, number=2)
 
     tag_template_field = proto.Field(
-        proto.MESSAGE, number=3, message=gcd_tags.TagTemplateField,
+        proto.MESSAGE,
+        number=3,
+        message=gcd_tags.TagTemplateField,
     )
 
 
@@ -839,10 +919,16 @@ class UpdateTagTemplateFieldRequest(proto.Message):
     name = proto.Field(proto.STRING, number=1)
 
     tag_template_field = proto.Field(
-        proto.MESSAGE, number=2, message=gcd_tags.TagTemplateField,
+        proto.MESSAGE,
+        number=2,
+        message=gcd_tags.TagTemplateField,
     )
 
-    update_mask = proto.Field(proto.MESSAGE, number=3, message=field_mask.FieldMask,)
+    update_mask = proto.Field(
+        proto.MESSAGE,
+        number=3,
+        message=field_mask.FieldMask,
+    )
 
 
 class RenameTagTemplateFieldRequest(proto.Message):
@@ -933,7 +1019,11 @@ class ListTagsResponse(proto.Message):
     def raw_page(self):
         return self
 
-    tags = proto.RepeatedField(proto.MESSAGE, number=1, message=gcd_tags.Tag,)
+    tags = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=gcd_tags.Tag,
+    )
 
     next_page_token = proto.Field(proto.STRING, number=2)
 
@@ -968,7 +1058,11 @@ class ListEntriesRequest(proto.Message):
 
     page_token = proto.Field(proto.STRING, number=3)
 
-    read_mask = proto.Field(proto.MESSAGE, number=4, message=field_mask.FieldMask,)
+    read_mask = proto.Field(
+        proto.MESSAGE,
+        number=4,
+        message=field_mask.FieldMask,
+    )
 
 
 class ListEntriesResponse(proto.Message):
@@ -988,7 +1082,11 @@ class ListEntriesResponse(proto.Message):
     def raw_page(self):
         return self
 
-    entries = proto.RepeatedField(proto.MESSAGE, number=1, message=Entry,)
+    entries = proto.RepeatedField(
+        proto.MESSAGE,
+        number=1,
+        message=Entry,
+    )
 
     next_page_token = proto.Field(proto.STRING, number=2)
 

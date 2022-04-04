@@ -23,7 +23,10 @@ from google.cloud.datacatalog_v1.types import common
 
 __protobuf__ = proto.module(
     package="google.cloud.datacatalog.v1",
-    manifest={"SearchResultType", "SearchCatalogResult",},
+    manifest={
+        "SearchResultType",
+        "SearchCatalogResult",
+    },
 )
 
 
@@ -76,7 +79,11 @@ class SearchCatalogResult(proto.Message):
             with.
     """
 
-    search_result_type = proto.Field(proto.ENUM, number=1, enum="SearchResultType",)
+    search_result_type = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum="SearchResultType",
+    )
 
     search_result_subtype = proto.Field(proto.STRING, number=2)
 
@@ -85,7 +92,10 @@ class SearchCatalogResult(proto.Message):
     linked_resource = proto.Field(proto.STRING, number=4)
 
     integrated_system = proto.Field(
-        proto.ENUM, number=8, oneof="system", enum=common.IntegratedSystem,
+        proto.ENUM,
+        number=8,
+        oneof="system",
+        enum=common.IntegratedSystem,
     )
 
     user_specified_system = proto.Field(proto.STRING, number=9, oneof="system")

@@ -19,7 +19,10 @@ import proto  # type: ignore
 
 
 __protobuf__ = proto.module(
-    package="google.cloud.datacatalog.v1beta1", manifest={"IntegratedSystem",},
+    package="google.cloud.datacatalog.v1beta1",
+    manifest={
+        "IntegratedSystem",
+    },
 )
 
 

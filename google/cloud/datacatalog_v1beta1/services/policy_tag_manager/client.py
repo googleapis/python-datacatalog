@@ -54,7 +54,10 @@ class PolicyTagManagerClientMeta(type):
     _transport_registry["grpc"] = PolicyTagManagerGrpcTransport
     _transport_registry["grpc_asyncio"] = PolicyTagManagerGrpcAsyncIOTransport
 
-    def get_transport_class(cls, label: str = None,) -> Type[PolicyTagManagerTransport]:
+    def get_transport_class(
+        cls,
+        label: str = None,
+    ) -> Type[PolicyTagManagerTransport]:
         """Return an appropriate transport class.
 
         Args:
@@ -134,7 +137,10 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
 
     @staticmethod
     def policy_tag_path(
-        project: str, location: str, taxonomy: str, policy_tag: str,
+        project: str,
+        location: str,
+        taxonomy: str,
+        policy_tag: str,
     ) -> str:
         """Return a fully-qualified policy_tag string."""
         return "projects/{project}/locations/{location}/taxonomies/{taxonomy}/policyTags/{policy_tag}".format(
@@ -154,10 +160,16 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         return m.groupdict() if m else {}
 
     @staticmethod
-    def taxonomy_path(project: str, location: str, taxonomy: str,) -> str:
+    def taxonomy_path(
+        project: str,
+        location: str,
+        taxonomy: str,
+    ) -> str:
         """Return a fully-qualified taxonomy string."""
         return "projects/{project}/locations/{location}/taxonomies/{taxonomy}".format(
-            project=project, location=location, taxonomy=taxonomy,
+            project=project,
+            location=location,
+            taxonomy=taxonomy,
         )
 
     @staticmethod
@@ -341,7 +353,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
@@ -412,7 +429,10 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
 
         # Send the request.
         rpc(
-            request, retry=retry, timeout=timeout, metadata=metadata,
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
     def update_taxonomy(
@@ -490,7 +510,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
@@ -567,12 +592,20 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__iter__` convenience method.
         response = pagers.ListTaxonomiesPager(
-            method=rpc, request=request, response=response, metadata=metadata,
+            method=rpc,
+            request=request,
+            response=response,
+            metadata=metadata,
         )
 
         # Done; return the response.
@@ -651,7 +684,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
@@ -739,7 +777,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
@@ -809,7 +852,10 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
 
         # Send the request.
         rpc(
-            request, retry=retry, timeout=timeout, metadata=metadata,
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
         )
 
     def update_policy_tag(
@@ -889,7 +935,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
@@ -965,12 +1016,20 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # This method is paged; wrap the response in a pager, which provides
         # an `__iter__` convenience method.
         response = pagers.ListPolicyTagsPager(
-            method=rpc, request=request, response=response, metadata=metadata,
+            method=rpc,
+            request=request,
+            response=response,
+            metadata=metadata,
         )
 
         # Done; return the response.
@@ -1050,7 +1109,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
@@ -1163,7 +1227,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
@@ -1276,7 +1345,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response
@@ -1325,7 +1399,12 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         )
 
         # Send the request.
-        response = rpc(request, retry=retry, timeout=timeout, metadata=metadata,)
+        response = rpc(
+            request,
+            retry=retry,
+            timeout=timeout,
+            metadata=metadata,
+        )
 
         # Done; return the response.
         return response

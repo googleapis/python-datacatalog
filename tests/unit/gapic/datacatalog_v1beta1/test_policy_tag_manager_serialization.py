@@ -313,7 +313,9 @@ def test_policy_tag_manager_serialization_client_client_options_scopes(
     client_class, transport_class, transport_name
 ):
     # Check the case scopes are provided.
-    options = client_options.ClientOptions(scopes=["1", "2"],)
+    options = client_options.ClientOptions(
+        scopes=["1", "2"],
+    )
     with mock.patch.object(transport_class, "__init__") as patched:
         patched.return_value = None
         client = client_class(client_options=options)
@@ -386,7 +388,8 @@ def test_import_taxonomies(
     request_type=policytagmanagerserialization.ImportTaxonomiesRequest,
 ):
     client = PolicyTagManagerSerializationClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -419,7 +422,8 @@ def test_import_taxonomies_from_dict():
 @pytest.mark.asyncio
 async def test_import_taxonomies_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerSerializationAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -472,7 +476,10 @@ def test_import_taxonomies_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -503,7 +510,10 @@ async def test_import_taxonomies_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_export_taxonomies(
@@ -511,7 +521,8 @@ def test_export_taxonomies(
     request_type=policytagmanagerserialization.ExportTaxonomiesRequest,
 ):
     client = PolicyTagManagerSerializationClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -544,7 +555,8 @@ def test_export_taxonomies_from_dict():
 @pytest.mark.asyncio
 async def test_export_taxonomies_async(transport: str = "grpc_asyncio"):
     client = PolicyTagManagerSerializationAsyncClient(
-        credentials=credentials.AnonymousCredentials(), transport=transport,
+        credentials=credentials.AnonymousCredentials(),
+        transport=transport,
     )
 
     # Everything is optional in proto3 as far as the runtime is concerned,
@@ -597,7 +609,10 @@ def test_export_taxonomies_field_headers():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 @pytest.mark.asyncio
@@ -628,7 +643,10 @@ async def test_export_taxonomies_field_headers_async():
 
     # Establish that the field header was sent.
     _, _, kw = call.mock_calls[0]
-    assert ("x-goog-request-params", "parent=parent/value",) in kw["metadata"]
+    assert (
+        "x-goog-request-params",
+        "parent=parent/value",
+    ) in kw["metadata"]
 
 
 def test_credentials_transport_error():
@@ -638,7 +656,8 @@ def test_credentials_transport_error():
     )
     with pytest.raises(ValueError):
         client = PolicyTagManagerSerializationClient(
-            credentials=credentials.AnonymousCredentials(), transport=transport,
+            credentials=credentials.AnonymousCredentials(),
+            transport=transport,
         )
 
     # It is an error to provide a credentials file and a transport instance.
@@ -657,7 +676,8 @@ def test_credentials_transport_error():
     )
     with pytest.raises(ValueError):
         client = PolicyTagManagerSerializationClient(
-            client_options={"scopes": ["1", "2"]}, transport=transport,
+            client_options={"scopes": ["1", "2"]},
+            transport=transport,
         )
 
 
@@ -691,7 +711,8 @@ def test_transport_grpc_default():
         credentials=credentials.AnonymousCredentials(),
     )
     assert isinstance(
-        client._transport, transports.PolicyTagManagerSerializationGrpcTransport,
+        client._transport,
+        transports.PolicyTagManagerSerializationGrpcTransport,
     )
 
 
@@ -735,7 +756,8 @@ def test_policy_tag_manager_serialization_base_transport_with_credentials_file()
         Transport.return_value = None
         load_creds.return_value = (credentials.AnonymousCredentials(), None)
         transport = transports.PolicyTagManagerSerializationTransport(
-            credentials_file="credentials.json", quota_project_id="octopus",
+            credentials_file="credentials.json",
+            quota_project_id="octopus",
         )
         load_creds.assert_called_once_with(
             "credentials.json",

@@ -51,14 +51,24 @@ class BigQueryTableSpec(proto.Message):
             populated if ``table_source_type`` is ``BIGQUERY_TABLE``.
     """
 
-    table_source_type = proto.Field(proto.ENUM, number=1, enum="TableSourceType",)
+    table_source_type = proto.Field(
+        proto.ENUM,
+        number=1,
+        enum="TableSourceType",
+    )
 
     view_spec = proto.Field(
-        proto.MESSAGE, number=2, oneof="type_spec", message="ViewSpec",
+        proto.MESSAGE,
+        number=2,
+        oneof="type_spec",
+        message="ViewSpec",
     )
 
     table_spec = proto.Field(
-        proto.MESSAGE, number=3, oneof="type_spec", message="TableSpec",
+        proto.MESSAGE,
+        number=3,
+        oneof="type_spec",
+        message="TableSpec",
     )
 
 
