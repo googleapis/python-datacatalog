@@ -22,7 +22,9 @@ from .common import (
     PersonalDetails,
     IntegratedSystem,
 )
-from .data_source import DataSource
+from .data_source import (
+    DataSource,
+)
 from .datacatalog import (
     BusinessContext,
     Contacts,
@@ -122,7 +124,9 @@ from .tags import (
     TagTemplate,
     TagTemplateField,
 )
-from .timestamps import SystemTimestamps
+from .timestamps import (
+    SystemTimestamps,
+)
 from .usage import (
     UsageSignal,
     UsageStats,
