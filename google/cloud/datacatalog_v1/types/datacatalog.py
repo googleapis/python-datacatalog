@@ -835,7 +835,7 @@ class Entry(proto.Message):
             to an empty timestamp.
         usage_signal (google.cloud.datacatalog_v1.types.UsageSignal):
             Output only. Resource usage statistics.
-        labels (Sequence[google.cloud.datacatalog_v1.types.Entry.LabelsEntry]):
+        labels (Mapping[str, str]):
             Cloud labels attached to the entry.
             In Data Catalog, you can create and modify
             labels attached only to custom entries. Synced

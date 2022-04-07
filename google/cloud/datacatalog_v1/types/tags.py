@@ -67,7 +67,7 @@ class Tag(proto.Message):
             with a dot (``.``). Example: ``column.nested_column``.
 
             This field is a member of `oneof`_ ``scope``.
-        fields (Sequence[google.cloud.datacatalog_v1.types.Tag.FieldsEntry]):
+        fields (Mapping[str, google.cloud.datacatalog_v1.types.TagField]):
             Required. Maps the ID of a tag field to its
             value and additional information about that
             field.
@@ -247,7 +247,7 @@ class TagTemplate(proto.Message):
 
             Additionally, you can search for a public tag by value with
             a simple search query instead of using a ``tag:`` predicate.
-        fields (Sequence[google.cloud.datacatalog_v1.types.TagTemplate.FieldsEntry]):
+        fields (Mapping[str, google.cloud.datacatalog_v1.types.TagTemplateField]):
             Required. Map of tag template field IDs to the settings for
             the field. This map is an exhaustive list of the allowed
             fields. The map must contain at least one field and at most
