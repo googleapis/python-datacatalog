@@ -16,7 +16,7 @@
 from collections import OrderedDict
 import os
 import re
-from typing import Dict, Optional, Sequence, Tuple, Type, Union
+from typing import Dict, Mapping, Optional, Sequence, Tuple, Type, Union
 import pkg_resources
 
 from google.api_core import client_options as client_options_lib
@@ -565,7 +565,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_search_catalog():
                 # Create a client
@@ -701,7 +701,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_create_entry_group():
                 # Create a client
@@ -833,7 +833,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_update_entry_group():
                 # Create a client
@@ -943,7 +943,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_get_entry_group():
                 # Create a client
@@ -1056,7 +1056,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_delete_entry_group():
                 # Create a client
@@ -1139,7 +1139,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_list_entry_groups():
                 # Create a client
@@ -1262,7 +1262,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_create_entry():
                 # Create a client
@@ -1401,7 +1401,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_update_entry():
                 # Create a client
@@ -1553,7 +1553,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_delete_entry():
                 # Create a client
@@ -1637,7 +1637,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_get_entry():
                 # Create a client
@@ -1746,7 +1746,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_lookup_entry():
                 # Create a client
@@ -1825,7 +1825,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_list_entries():
                 # Create a client
@@ -1942,7 +1942,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_create_tag_template():
                 # Create a client
@@ -2066,7 +2066,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_get_tag_template():
                 # Create a client
@@ -2179,7 +2179,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_update_tag_template():
                 # Create a client
@@ -2304,7 +2304,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_delete_tag_template():
                 # Create a client
@@ -2408,7 +2408,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_create_tag_template_field():
                 # Create a client
@@ -2545,7 +2545,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_update_tag_template_field():
                 # Create a client
@@ -2682,7 +2682,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_rename_tag_template_field():
                 # Create a client
@@ -2797,7 +2797,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_delete_tag_template_field():
                 # Create a client
@@ -2904,7 +2904,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_create_tag():
                 # Create a client
@@ -3023,7 +3023,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_update_tag():
                 # Create a client
@@ -3138,7 +3138,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_delete_tag():
                 # Create a client
@@ -3224,7 +3224,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_list_tags():
                 # Create a client
@@ -3356,7 +3356,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_set_iam_policy():
                 # Create a client
@@ -3532,7 +3532,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_get_iam_policy():
                 # Create a client
@@ -3700,7 +3700,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
         .. code-block:: python
 
-            from google.cloud import datacatalog_v1beta1
+                    from google.cloud import datacatalog_v1beta1
 
             def sample_test_iam_permissions():
                 # Create a client
