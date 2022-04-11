@@ -16,7 +16,7 @@
 from collections import OrderedDict
 import os
 import re
-from typing import Dict, Optional, Sequence, Tuple, Type, Union
+from typing import Dict, Mapping, Optional, Sequence, Tuple, Type, Union
 import pkg_resources
 
 from google.api_core import client_options as client_options_lib
@@ -575,7 +575,6 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
         all policy tags in this taxonomy along with their
         associated policies.
 
-
         .. code-block:: python
 
             from google.cloud import datacatalog_v1beta1
@@ -760,7 +759,6 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
     ) -> pagers.ListTaxonomiesPager:
         r"""Lists all taxonomies in a project in a particular
         location that the caller has permission to view.
-
 
         .. code-block:: python
 
@@ -1079,7 +1077,6 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
     ) -> None:
         r"""Deletes a policy tag. Also deletes all of its
         descendant policy tags.
-
 
         .. code-block:: python
 
@@ -1744,7 +1741,6 @@ class PolicyTagManagerClient(metaclass=PolicyTagManagerClientMeta):
     ) -> iam_policy_pb2.TestIamPermissionsResponse:
         r"""Returns the permissions that a caller has on the
         specified taxonomy or policy tag.
-
 
         .. code-block:: python
 

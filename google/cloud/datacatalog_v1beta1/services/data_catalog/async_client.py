@@ -16,7 +16,7 @@
 from collections import OrderedDict
 import functools
 import re
-from typing import Dict, Optional, Sequence, Tuple, Type, Union
+from typing import Dict, Mapping, Optional, Sequence, Tuple, Type, Union
 import pkg_resources
 
 from google.api_core.client_options import ClientOptions
@@ -248,7 +248,6 @@ class DataCatalogAsyncClient:
         Syntax <https://cloud.google.com/data-catalog/docs/how-to/search-reference>`__
         for more information.
 
-
         .. code-block:: python
 
             from google.cloud import datacatalog_v1beta1
@@ -384,7 +383,6 @@ class DataCatalogAsyncClient:
         (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
         for more information).
 
-
         .. code-block:: python
 
             from google.cloud import datacatalog_v1beta1
@@ -515,7 +513,6 @@ class DataCatalogAsyncClient:
         parameter (see [Data Catalog Resource Project]
         (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
         for more information).
-
 
         .. code-block:: python
 
@@ -707,8 +704,7 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=60.0,
             ),
@@ -748,7 +744,6 @@ class DataCatalogAsyncClient:
         Catalog Resource Project]
         (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
         for more information).
-
 
         .. code-block:: python
 
@@ -809,8 +804,7 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=60.0,
             ),
@@ -965,7 +959,6 @@ class DataCatalogAsyncClient:
 
         A maximum of 100,000 entries may be created per entry group.
 
-
         .. code-block:: python
 
             from google.cloud import datacatalog_v1beta1
@@ -1103,7 +1096,6 @@ class DataCatalogAsyncClient:
         (see [Data Catalog Resource Project]
         (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
         for more information).
-
 
         .. code-block:: python
 
@@ -1256,7 +1248,6 @@ class DataCatalogAsyncClient:
         (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
         for more information).
 
-
         .. code-block:: python
 
             from google.cloud import datacatalog_v1beta1
@@ -1317,8 +1308,7 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=60.0,
             ),
@@ -1430,8 +1420,7 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=60.0,
             ),
@@ -1468,7 +1457,6 @@ class DataCatalogAsyncClient:
         allows clients to use the resource name from the source
         Google Cloud Platform service to get the Data Catalog
         Entry.
-
 
         .. code-block:: python
 
@@ -1527,8 +1515,7 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=60.0,
             ),
@@ -1673,7 +1660,6 @@ class DataCatalogAsyncClient:
         `Data Catalog Resource
         Project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__
         for more information).
-
 
         .. code-block:: python
 
@@ -1875,8 +1861,7 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=60.0,
             ),
@@ -1920,7 +1905,6 @@ class DataCatalogAsyncClient:
         Project]
         (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
         for more information).
-
 
         .. code-block:: python
 
@@ -2046,7 +2030,6 @@ class DataCatalogAsyncClient:
         (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
         for more information).
 
-
         .. code-block:: python
 
             from google.cloud import datacatalog_v1beta1
@@ -2120,8 +2103,7 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=60.0,
             ),
@@ -2159,7 +2141,6 @@ class DataCatalogAsyncClient:
         parameter (see `Data Catalog Resource
         Project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__
         for more information).
-
 
         .. code-block:: python
 
@@ -2295,7 +2276,6 @@ class DataCatalogAsyncClient:
         (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
         for more information).
 
-
         .. code-block:: python
 
             from google.cloud import datacatalog_v1beta1
@@ -2430,7 +2410,6 @@ class DataCatalogAsyncClient:
         Project <https://cloud.google.com/data-catalog/docs/concepts/resource-project>`__
         for more information).
 
-
         .. code-block:: python
 
             from google.cloud import datacatalog_v1beta1
@@ -2543,7 +2522,6 @@ class DataCatalogAsyncClient:
         (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
         for more information).
 
-
         .. code-block:: python
 
             from google.cloud import datacatalog_v1beta1
@@ -2617,8 +2595,7 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=60.0,
             ),
@@ -2657,7 +2634,6 @@ class DataCatalogAsyncClient:
         and the `tag
         template <https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters>`__
         used to create the tag must be from the same organization.
-
 
         .. code-block:: python
 
@@ -2953,8 +2929,7 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=60.0,
             ),
@@ -2987,7 +2962,6 @@ class DataCatalogAsyncClient:
     ) -> pagers.ListTagsAsyncPager:
         r"""Lists the tags on an
         [Entry][google.cloud.datacatalog.v1beta1.Entry].
-
 
         .. code-block:: python
 
@@ -3068,8 +3042,7 @@ class DataCatalogAsyncClient:
                 maximum=60.0,
                 multiplier=1.3,
                 predicate=retries.if_exception_type(
-                    core_exceptions.DeadlineExceeded,
-                    core_exceptions.ServiceUnavailable,
+                    core_exceptions.GoogleAPICallError,
                 ),
                 deadline=60.0,
             ),
@@ -3129,7 +3102,6 @@ class DataCatalogAsyncClient:
            entries.
         -  ``datacatalog.entryGroups.setIamPolicy`` to set policies on
            entry groups.
-
 
         .. code-block:: python
 
@@ -3309,7 +3281,6 @@ class DataCatalogAsyncClient:
         -  ``datacatalog.entryGroups.getIamPolicy`` to get policies on
            entry groups.
 
-
         .. code-block:: python
 
             from google.cloud import datacatalog_v1beta1
@@ -3479,7 +3450,6 @@ class DataCatalogAsyncClient:
 
         A caller is not required to have Google IAM permission to make
         this request.
-
 
         .. code-block:: python
 
