@@ -4,6 +4,13 @@
 
 [1]: https://pypi.org/project/google-cloud-datacatalog/#history
 
+## [1.0.2](https://github.com/googleapis/python-datacatalog/compare/v1.0.1...v1.0.2) (2022-06-07)
+
+
+### Bug Fixes
+
+* **deps:** require protobuf<4.0.0 on v1 branch ([#393](https://github.com/googleapis/python-datacatalog/issues/393)) ([4a2fe56](https://github.com/googleapis/python-datacatalog/commit/4a2fe565977bdfd2a6f81a9341e47999c1b11933))
+
 ### [1.0.1](https://github.com/googleapis/python-datacatalog/compare/v1.0.0...v1.0.1) (2022-04-01)
 
 
