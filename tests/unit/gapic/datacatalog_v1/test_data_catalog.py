@@ -9262,7 +9262,6 @@ def test_data_catalog_transport_auth_adc(transport_class):
     [
         transports.DataCatalogGrpcTransport,
         transports.DataCatalogGrpcAsyncIOTransport,
-        transports.DataCatalogRestTransport,
     ],
 )
 def test_data_catalog_transport_auth_gdch_credentials(transport_class):

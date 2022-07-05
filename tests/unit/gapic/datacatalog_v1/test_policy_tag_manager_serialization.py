@@ -1427,7 +1427,6 @@ def test_policy_tag_manager_serialization_transport_auth_adc(transport_class):
     [
         transports.PolicyTagManagerSerializationGrpcTransport,
         transports.PolicyTagManagerSerializationGrpcAsyncIOTransport,
-        transports.PolicyTagManagerSerializationRestTransport,
     ],
 )
 def test_policy_tag_manager_serialization_transport_auth_gdch_credentials(

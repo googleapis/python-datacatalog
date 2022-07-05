@@ -4299,7 +4299,6 @@ def test_policy_tag_manager_transport_auth_adc(transport_class):
     [
         transports.PolicyTagManagerGrpcTransport,
         transports.PolicyTagManagerGrpcAsyncIOTransport,
-        transports.PolicyTagManagerRestTransport,
     ],
 )
 def test_policy_tag_manager_transport_auth_gdch_credentials(transport_class):
