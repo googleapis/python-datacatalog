@@ -773,13 +773,13 @@ class Entry(proto.Message):
 
             This field is a member of `oneof`_ ``type_spec``.
         bigquery_table_spec (google.cloud.datacatalog_v1.types.BigQueryTableSpec):
-            Specification that applies to a BigQuery table. Valid only
-            for entries with the ``TABLE`` type.
+            Output only. Specification that applies to a BigQuery table.
+            Valid only for entries with the ``TABLE`` type.
 
             This field is a member of `oneof`_ ``type_spec``.
         bigquery_date_sharded_spec (google.cloud.datacatalog_v1.types.BigQueryDateShardedSpec):
-            Specification for a group of BigQuery tables with the
-            ``[prefix]YYYYMMDD`` name pattern.
+            Output only. Specification for a group of BigQuery tables
+            with the ``[prefix]YYYYMMDD`` name pattern.
 
             For more information, see [Introduction to partitioned
             tables]
@@ -834,12 +834,12 @@ class Entry(proto.Message):
             Timestamps from the underlying resource, not from the Data
             Catalog entry.
 
-            Output only when the entry has a type listed in the
-            ``EntryType`` enum. For entries with
-            ``user_specified_type``, this field is optional and defaults
-            to an empty timestamp.
+            Output only when the entry has a system listed in the
+            ``IntegratedSystem`` enum. For entries with
+            ``user_specified_system``, this field is optional and
+            defaults to an empty timestamp.
         usage_signal (google.cloud.datacatalog_v1.types.UsageSignal):
-            Output only. Resource usage statistics.
+            Resource usage statistics.
         labels (Mapping[str, str]):
             Cloud labels attached to the entry.
             In Data Catalog, you can create and modify
@@ -982,8 +982,9 @@ class DatabaseTableSpec(proto.Message):
         type_ (google.cloud.datacatalog_v1.types.DatabaseTableSpec.TableType):
             Type of this table.
         dataplex_table (google.cloud.datacatalog_v1.types.DataplexTableSpec):
-            Fields specific to a Dataplex table and
-            present only in the Dataplex table entries.
+            Output only. Fields specific to a Dataplex
+            table and present only in the Dataplex table
+            entries.
     """
 
     class TableType(proto.Enum):
@@ -1023,11 +1024,13 @@ class FilesetSpec(proto.Message):
 
 class DataSourceConnectionSpec(proto.Message):
     r"""Specification that applies to a data source connection. Valid only
-    for entries with the ``DATA_SOURCE_CONNECTION`` type.
+    for entries with the ``DATA_SOURCE_CONNECTION`` type. Only one of
+    internal specs can be set at the time, and cannot be changed later.
 
     Attributes:
         bigquery_connection_spec (google.cloud.datacatalog_v1.types.BigQueryConnectionSpec):
-            Fields specific to BigQuery connections.
+            Output only. Fields specific to BigQuery
+            connections.
     """
 
     bigquery_connection_spec = proto.Field(

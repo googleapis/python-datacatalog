@@ -80,7 +80,8 @@ class UsageSignal(proto.Message):
             The end timestamp of the duration of usage
             statistics.
         usage_within_time_range (Mapping[str, google.cloud.datacatalog_v1.types.UsageStats]):
-            Usage statistics over each of the predefined time ranges.
+            Output only. BigQuery usage statistics over each of the
+            predefined time ranges.
 
             Supported time ranges are ``{"24H", "7D", "30D"}``.
     """
