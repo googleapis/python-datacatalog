@@ -16,7 +16,18 @@
 from collections import OrderedDict
 import os
 import re
-from typing import Dict, Mapping, Optional, Sequence, Tuple, Type, Union, cast
+from typing import (
+    Dict,
+    Mapping,
+    MutableMapping,
+    MutableSequence,
+    Optional,
+    Sequence,
+    Tuple,
+    Type,
+    Union,
+    cast,
+)
 
 from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
@@ -69,7 +80,7 @@ class DataCatalogClientMeta(type):
 
     def get_transport_class(
         cls,
-        label: str = None,
+        label: Optional[str] = None,
     ) -> Type[DataCatalogTransport]:
         """Returns an appropriate transport class.
 
@@ -444,7 +455,7 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
         self,
         *,
         credentials: Optional[ga_credentials.Credentials] = None,
-        transport: Union[str, DataCatalogTransport, None] = None,
+        transport: Optional[Union[str, DataCatalogTransport]] = None,
         client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
     ) -> None:
@@ -542,12 +553,12 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def search_catalog(
         self,
-        request: Union[datacatalog.SearchCatalogRequest, dict] = None,
+        request: Optional[Union[datacatalog.SearchCatalogRequest, dict]] = None,
         *,
-        scope: datacatalog.SearchCatalogRequest.Scope = None,
-        query: str = None,
+        scope: Optional[datacatalog.SearchCatalogRequest.Scope] = None,
+        query: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> pagers.SearchCatalogPager:
         r"""Searches Data Catalog for multiple resources like entries, tags
@@ -692,13 +703,13 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def create_entry_group(
         self,
-        request: Union[datacatalog.CreateEntryGroupRequest, dict] = None,
+        request: Optional[Union[datacatalog.CreateEntryGroupRequest, dict]] = None,
         *,
-        parent: str = None,
-        entry_group_id: str = None,
-        entry_group: datacatalog.EntryGroup = None,
+        parent: Optional[str] = None,
+        entry_group_id: Optional[str] = None,
+        entry_group: Optional[datacatalog.EntryGroup] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.EntryGroup:
         r"""A maximum of 10,000 entry groups may be created per organization
@@ -834,12 +845,12 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def update_entry_group(
         self,
-        request: Union[datacatalog.UpdateEntryGroupRequest, dict] = None,
+        request: Optional[Union[datacatalog.UpdateEntryGroupRequest, dict]] = None,
         *,
-        entry_group: datacatalog.EntryGroup = None,
-        update_mask: field_mask_pb2.FieldMask = None,
+        entry_group: Optional[datacatalog.EntryGroup] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.EntryGroup:
         r"""Updates an EntryGroup. The user should enable the Data Catalog
@@ -955,12 +966,12 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def get_entry_group(
         self,
-        request: Union[datacatalog.GetEntryGroupRequest, dict] = None,
+        request: Optional[Union[datacatalog.GetEntryGroupRequest, dict]] = None,
         *,
-        name: str = None,
-        read_mask: field_mask_pb2.FieldMask = None,
+        name: Optional[str] = None,
+        read_mask: Optional[field_mask_pb2.FieldMask] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.EntryGroup:
         r"""Gets an EntryGroup.
@@ -1070,11 +1081,11 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def delete_entry_group(
         self,
-        request: Union[datacatalog.DeleteEntryGroupRequest, dict] = None,
+        request: Optional[Union[datacatalog.DeleteEntryGroupRequest, dict]] = None,
         *,
-        name: str = None,
+        name: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
         r"""Deletes an EntryGroup. Only entry groups that do not contain
@@ -1165,11 +1176,11 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def list_entry_groups(
         self,
-        request: Union[datacatalog.ListEntryGroupsRequest, dict] = None,
+        request: Optional[Union[datacatalog.ListEntryGroupsRequest, dict]] = None,
         *,
-        parent: str = None,
+        parent: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> pagers.ListEntryGroupsPager:
         r"""Lists entry groups.
@@ -1283,13 +1294,13 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def create_entry(
         self,
-        request: Union[datacatalog.CreateEntryRequest, dict] = None,
+        request: Optional[Union[datacatalog.CreateEntryRequest, dict]] = None,
         *,
-        parent: str = None,
-        entry_id: str = None,
-        entry: datacatalog.Entry = None,
+        parent: Optional[str] = None,
+        entry_id: Optional[str] = None,
+        entry: Optional[datacatalog.Entry] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.Entry:
         r"""Creates an entry. Only entries of 'FILESET' type or
@@ -1434,12 +1445,12 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def update_entry(
         self,
-        request: Union[datacatalog.UpdateEntryRequest, dict] = None,
+        request: Optional[Union[datacatalog.UpdateEntryRequest, dict]] = None,
         *,
-        entry: datacatalog.Entry = None,
-        update_mask: field_mask_pb2.FieldMask = None,
+        entry: Optional[datacatalog.Entry] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.Entry:
         r"""Updates an existing entry. Users should enable the Data Catalog
@@ -1591,11 +1602,11 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def delete_entry(
         self,
-        request: Union[datacatalog.DeleteEntryRequest, dict] = None,
+        request: Optional[Union[datacatalog.DeleteEntryRequest, dict]] = None,
         *,
-        name: str = None,
+        name: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
         r"""Deletes an existing entry. Only entries created through
@@ -1688,11 +1699,11 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def get_entry(
         self,
-        request: Union[datacatalog.GetEntryRequest, dict] = None,
+        request: Optional[Union[datacatalog.GetEntryRequest, dict]] = None,
         *,
-        name: str = None,
+        name: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.Entry:
         r"""Gets an entry.
@@ -1801,10 +1812,10 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def lookup_entry(
         self,
-        request: Union[datacatalog.LookupEntryRequest, dict] = None,
+        request: Optional[Union[datacatalog.LookupEntryRequest, dict]] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> datacatalog.Entry:
         r"""Get an entry by target resource name. This method
@@ -1889,11 +1900,11 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def list_entries(
         self,
-        request: Union[datacatalog.ListEntriesRequest, dict] = None,
+        request: Optional[Union[datacatalog.ListEntriesRequest, dict]] = None,
         *,
-        parent: str = None,
+        parent: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> pagers.ListEntriesPager:
         r"""Lists entries.
@@ -2006,13 +2017,13 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def create_tag_template(
         self,
-        request: Union[datacatalog.CreateTagTemplateRequest, dict] = None,
+        request: Optional[Union[datacatalog.CreateTagTemplateRequest, dict]] = None,
         *,
-        parent: str = None,
-        tag_template_id: str = None,
-        tag_template: tags.TagTemplate = None,
+        parent: Optional[str] = None,
+        tag_template_id: Optional[str] = None,
+        tag_template: Optional[tags.TagTemplate] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplate:
         r"""Creates a tag template. The user should enable the Data Catalog
@@ -2143,11 +2154,11 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def get_tag_template(
         self,
-        request: Union[datacatalog.GetTagTemplateRequest, dict] = None,
+        request: Optional[Union[datacatalog.GetTagTemplateRequest, dict]] = None,
         *,
-        name: str = None,
+        name: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplate:
         r"""Gets a tag template.
@@ -2253,12 +2264,12 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def update_tag_template(
         self,
-        request: Union[datacatalog.UpdateTagTemplateRequest, dict] = None,
+        request: Optional[Union[datacatalog.UpdateTagTemplateRequest, dict]] = None,
         *,
-        tag_template: tags.TagTemplate = None,
-        update_mask: field_mask_pb2.FieldMask = None,
+        tag_template: Optional[tags.TagTemplate] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplate:
         r"""Updates a tag template. This method cannot be used to update the
@@ -2388,12 +2399,12 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def delete_tag_template(
         self,
-        request: Union[datacatalog.DeleteTagTemplateRequest, dict] = None,
+        request: Optional[Union[datacatalog.DeleteTagTemplateRequest, dict]] = None,
         *,
-        name: str = None,
-        force: bool = None,
+        name: Optional[str] = None,
+        force: Optional[bool] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
         r"""Deletes a tag template and all tags using the template. Users
@@ -2497,13 +2508,15 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def create_tag_template_field(
         self,
-        request: Union[datacatalog.CreateTagTemplateFieldRequest, dict] = None,
+        request: Optional[
+            Union[datacatalog.CreateTagTemplateFieldRequest, dict]
+        ] = None,
         *,
-        parent: str = None,
-        tag_template_field_id: str = None,
-        tag_template_field: tags.TagTemplateField = None,
+        parent: Optional[str] = None,
+        tag_template_field_id: Optional[str] = None,
+        tag_template_field: Optional[tags.TagTemplateField] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplateField:
         r"""Creates a field in a tag template. The user should enable the
@@ -2639,13 +2652,15 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def update_tag_template_field(
         self,
-        request: Union[datacatalog.UpdateTagTemplateFieldRequest, dict] = None,
+        request: Optional[
+            Union[datacatalog.UpdateTagTemplateFieldRequest, dict]
+        ] = None,
         *,
-        name: str = None,
-        tag_template_field: tags.TagTemplateField = None,
-        update_mask: field_mask_pb2.FieldMask = None,
+        name: Optional[str] = None,
+        tag_template_field: Optional[tags.TagTemplateField] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplateField:
         r"""Updates a field in a tag template. This method cannot be used to
@@ -2784,12 +2799,14 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def rename_tag_template_field(
         self,
-        request: Union[datacatalog.RenameTagTemplateFieldRequest, dict] = None,
+        request: Optional[
+            Union[datacatalog.RenameTagTemplateFieldRequest, dict]
+        ] = None,
         *,
-        name: str = None,
-        new_tag_template_field_id: str = None,
+        name: Optional[str] = None,
+        new_tag_template_field_id: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.TagTemplateField:
         r"""Renames a field in a tag template. The user should enable the
@@ -2904,12 +2921,14 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def delete_tag_template_field(
         self,
-        request: Union[datacatalog.DeleteTagTemplateFieldRequest, dict] = None,
+        request: Optional[
+            Union[datacatalog.DeleteTagTemplateFieldRequest, dict]
+        ] = None,
         *,
-        name: str = None,
-        force: bool = None,
+        name: Optional[str] = None,
+        force: Optional[bool] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
         r"""Deletes a field in a tag template and all uses of that field.
@@ -3016,12 +3035,12 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def create_tag(
         self,
-        request: Union[datacatalog.CreateTagRequest, dict] = None,
+        request: Optional[Union[datacatalog.CreateTagRequest, dict]] = None,
         *,
-        parent: str = None,
-        tag: tags.Tag = None,
+        parent: Optional[str] = None,
+        tag: Optional[tags.Tag] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.Tag:
         r"""Creates a tag on an
@@ -3148,12 +3167,12 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def update_tag(
         self,
-        request: Union[datacatalog.UpdateTagRequest, dict] = None,
+        request: Optional[Union[datacatalog.UpdateTagRequest, dict]] = None,
         *,
-        tag: tags.Tag = None,
-        update_mask: field_mask_pb2.FieldMask = None,
+        tag: Optional[tags.Tag] = None,
+        update_mask: Optional[field_mask_pb2.FieldMask] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> tags.Tag:
         r"""Updates an existing tag.
@@ -3271,11 +3290,11 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def delete_tag(
         self,
-        request: Union[datacatalog.DeleteTagRequest, dict] = None,
+        request: Optional[Union[datacatalog.DeleteTagRequest, dict]] = None,
         *,
-        name: str = None,
+        name: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
         r"""Deletes a tag.
@@ -3362,11 +3381,11 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def list_tags(
         self,
-        request: Union[datacatalog.ListTagsRequest, dict] = None,
+        request: Optional[Union[datacatalog.ListTagsRequest, dict]] = None,
         *,
-        parent: str = None,
+        parent: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> pagers.ListTagsPager:
         r"""Lists the tags on an
@@ -3485,11 +3504,11 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def set_iam_policy(
         self,
-        request: Union[iam_policy_pb2.SetIamPolicyRequest, dict] = None,
+        request: Optional[Union[iam_policy_pb2.SetIamPolicyRequest, dict]] = None,
         *,
-        resource: str = None,
+        resource: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> policy_pb2.Policy:
         r"""Sets the access control policy for a resource. Replaces any
@@ -3664,11 +3683,11 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def get_iam_policy(
         self,
-        request: Union[iam_policy_pb2.GetIamPolicyRequest, dict] = None,
+        request: Optional[Union[iam_policy_pb2.GetIamPolicyRequest, dict]] = None,
         *,
-        resource: str = None,
+        resource: Optional[str] = None,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> policy_pb2.Policy:
         r"""Gets the access control policy for a resource. A ``NOT_FOUND``
@@ -3847,10 +3866,10 @@ class DataCatalogClient(metaclass=DataCatalogClientMeta):
 
     def test_iam_permissions(
         self,
-        request: Union[iam_policy_pb2.TestIamPermissionsRequest, dict] = None,
+        request: Optional[Union[iam_policy_pb2.TestIamPermissionsRequest, dict]] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> iam_policy_pb2.TestIamPermissionsResponse:
         r"""Returns the caller's permissions on a resource. If the resource

@@ -16,7 +16,18 @@
 from collections import OrderedDict
 import os
 import re
-from typing import Dict, Mapping, Optional, Sequence, Tuple, Type, Union, cast
+from typing import (
+    Dict,
+    Mapping,
+    MutableMapping,
+    MutableSequence,
+    Optional,
+    Sequence,
+    Tuple,
+    Type,
+    Union,
+    cast,
+)
 
 from google.api_core import client_options as client_options_lib
 from google.api_core import exceptions as core_exceptions
@@ -63,7 +74,7 @@ class PolicyTagManagerSerializationClientMeta(type):
 
     def get_transport_class(
         cls,
-        label: str = None,
+        label: Optional[str] = None,
     ) -> Type[PolicyTagManagerSerializationTransport]:
         """Returns an appropriate transport class.
 
@@ -344,7 +355,7 @@ class PolicyTagManagerSerializationClient(
         self,
         *,
         credentials: Optional[ga_credentials.Credentials] = None,
-        transport: Union[str, PolicyTagManagerSerializationTransport, None] = None,
+        transport: Optional[Union[str, PolicyTagManagerSerializationTransport]] = None,
         client_options: Optional[Union[client_options_lib.ClientOptions, dict]] = None,
         client_info: gapic_v1.client_info.ClientInfo = DEFAULT_CLIENT_INFO,
     ) -> None:
@@ -442,12 +453,12 @@ class PolicyTagManagerSerializationClient(
 
     def replace_taxonomy(
         self,
-        request: Union[
-            policytagmanagerserialization.ReplaceTaxonomyRequest, dict
+        request: Optional[
+            Union[policytagmanagerserialization.ReplaceTaxonomyRequest, dict]
         ] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> policytagmanager.Taxonomy:
         r"""Replaces (updates) a taxonomy and all its policy tags.
@@ -553,12 +564,12 @@ class PolicyTagManagerSerializationClient(
 
     def import_taxonomies(
         self,
-        request: Union[
-            policytagmanagerserialization.ImportTaxonomiesRequest, dict
+        request: Optional[
+            Union[policytagmanagerserialization.ImportTaxonomiesRequest, dict]
         ] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> policytagmanagerserialization.ImportTaxonomiesResponse:
         r"""Creates new taxonomies (including their policy tags)
@@ -649,12 +660,12 @@ class PolicyTagManagerSerializationClient(
 
     def export_taxonomies(
         self,
-        request: Union[
-            policytagmanagerserialization.ExportTaxonomiesRequest, dict
+        request: Optional[
+            Union[policytagmanagerserialization.ExportTaxonomiesRequest, dict]
         ] = None,
         *,
         retry: OptionalRetry = gapic_v1.method.DEFAULT,
-        timeout: float = None,
+        timeout: Optional[float] = None,
         metadata: Sequence[Tuple[str, str]] = (),
     ) -> policytagmanagerserialization.ExportTaxonomiesResponse:
         r"""Exports taxonomies in the requested type and returns them,
