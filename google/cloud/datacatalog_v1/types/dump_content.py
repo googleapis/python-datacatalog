@@ -19,15 +19,13 @@ from typing import MutableMapping, MutableSequence
 
 import proto  # type: ignore
 
-from google.cloud.datacatalog_v1.types import datacatalog
-from google.cloud.datacatalog_v1.types import tags
-
+from google.cloud.datacatalog_v1.types import datacatalog, tags
 
 __protobuf__ = proto.module(
-    package='google.cloud.datacatalog.v1',
+    package="google.cloud.datacatalog.v1",
     manifest={
-        'TaggedEntry',
-        'DumpItem',
+        "TaggedEntry",
+        "DumpItem",
     },
 )
 
@@ -57,7 +55,7 @@ class TaggedEntry(proto.Message):
     v1_entry: datacatalog.Entry = proto.Field(
         proto.MESSAGE,
         number=1,
-        oneof='entry',
+        oneof="entry",
         message=datacatalog.Entry,
     )
     present_tags: MutableSequence[tags.Tag] = proto.RepeatedField(
@@ -84,11 +82,11 @@ class DumpItem(proto.Message):
             This field is a member of `oneof`_ ``item``.
     """
 
-    tagged_entry: 'TaggedEntry' = proto.Field(
+    tagged_entry: "TaggedEntry" = proto.Field(
         proto.MESSAGE,
         number=1,
-        oneof='item',
-        message='TaggedEntry',
+        oneof="item",
+        message="TaggedEntry",
     )
 
 
